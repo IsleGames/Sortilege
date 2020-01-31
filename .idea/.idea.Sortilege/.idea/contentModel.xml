@@ -4,8 +4,16 @@
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
       <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
       <e p="Assets" t="Include">
-        <e p="Code" t="Include">
+        <e p="Scripts" t="Include">
+          <e p="Card.cs" t="Include" />
+          <e p="Character.cs" t="Include" />
           <e p="DDOL.cs" t="Include" />
+          <e p="Library" t="Include">
+            <e p="Constant.cs" t="Include" />
+          </e>
+          <e p="Manager" t="Include">
+            <e p="BattleManager.cs" t="Include" />
+          </e>
         </e>
       </e>
       <e p="obj" t="ExcludeRecursive" />
