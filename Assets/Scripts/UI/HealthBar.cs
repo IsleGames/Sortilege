@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,6 +13,7 @@ public class HealthBar : MonoBehaviour
     public float rate = 1f; // health units per frame
 
     public Slider healthSlider;
+    public Text healthText;
     
 
     public void Init(float health, float maxHealth = 100) {
@@ -24,6 +26,7 @@ public class HealthBar : MonoBehaviour
     public void Update()
     {
         healthSlider.value = currentHealth;
+        healthText.text = $"{(int)currentHealth} / {(int)maxHealth}";
 
     }
 
