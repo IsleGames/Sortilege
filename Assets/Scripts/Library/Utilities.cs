@@ -1,32 +1,34 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-public static class Utilities
+namespace Library
 {
-
-	public static T Draw<T>(this IList<T> list)  
+	public static class Utilities
 	{
-		int k = Random.Range(0, list.Count);
+		public static T Draw<T>(this IList<T> list)  
+		{
+			int k = Random.Range(0, list.Count);
 
-		T ret = list[k];
-	    list.RemoveAt(k);
+			T ret = list[k];
+			list.RemoveAt(k);
 
-	    return ret;
-	}  
+			return ret;
+		}  
 
-	// Source: https://stackoverflow.com/questions/273313/randomize-a-listt
-	public static void Shuffle<T>(this IList<T> list)  
-	{  
-		int n = list.Count;  
+		// Source: https://stackoverflow.com/questions/273313/randomize-a-listt
+		public static void Shuffle<T>(this IList<T> list)  
+		{  
+			int n = list.Count;  
 
-		while (n > 1) {  
-			int k = Random.Range(0, n);
-		    n--;  
+			while (n > 1) {  
+				int k = Random.Range(0, n);
+				n--;  
 
-		    T value = list[k];  
-		    list[k] = list[n];  
-		    list[n] = value;  
-		}
-	}  
+				T value = list[k];  
+				list[k] = list[n];  
+				list[n] = value;  
+			}
+		}  
 
+	}
 }

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4041411778843685330
+--- !u!1 &4293719886661245812
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,23 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1916410530256604426}
-  - component: {fileID: 2670348234703212253}
-  - component: {fileID: 7059932824889039424}
-  - component: {fileID: 6031793383107909187}
+  - component: {fileID: 6104315097899423247}
+  - component: {fileID: -1402230281280895885}
+  - component: {fileID: 5097562844836626886}
   m_Layer: 0
-  m_Name: Card
+  m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1916410530256604426
+--- !u!4 &6104315097899423247
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4041411778843685330}
+  m_GameObject: {fileID: 4293719886661245812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -33,43 +32,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2670348234703212253
+--- !u!114 &-1402230281280895885
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4041411778843685330}
+  m_GameObject: {fileID: 4293719886661245812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7a16b79d39de424a8039be3d9671d68, type: 3}
+  m_Script: {fileID: 11500000, guid: 49146bb3d1edb4fd3b22144f2b927fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &7059932824889039424
+  initialized: 0
+  buffList: []
+--- !u!114 &5097562844836626886
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4041411778843685330}
+  m_GameObject: {fileID: 4293719886661245812}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ccfe116fe280f4da2bef0d127cf15cbd, type: 3}
+  m_Script: {fileID: 11500000, guid: 837e16d47d1e142268eec9b3a317ac1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  strategy: 0
-  attribute: 0
-  level: 0
-  maxLevel: 0
---- !u!114 &6031793383107909187
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4041411778843685330}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afba3787d7e14c7fbb59c21e4f08c163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  health: 0
+  maximumHealth: 0
