@@ -9,7 +9,7 @@ namespace Units
 
 		public override void Initialize()
 		{
-			
+			Game.Ctx.Continue();
 		}
 
 		public override void Play()

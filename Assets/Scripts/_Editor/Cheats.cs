@@ -18,12 +18,19 @@ namespace _Editor
         {
             _cardPrefab = Resources.Load("Card");
             
-            GetTemporalCard();
         }
 
+        public void Update()
+        {
+            if (Input.GetKeyUp(KeyCode.G))
+            {
+                GetTemporalCard();
+            }
+        }
+        
         public void GetTemporalCard()
         {
-            Effect e1 = new Effect(UnitType.Player, 3);
+            // Effect e1 = new Effect(UnitType.Player, 3);
 
             GameObject newCard = Instantiate(_cardPrefab) as GameObject;
 
@@ -39,11 +46,16 @@ namespace _Editor
                 newCardMD.level = 0;
                 newCardMD.maxLevel = 0;
                 
-                Debugger.Log(newCardMD.title);
+                Debugger.Log(newCard);
                 
-                newCard.GetComponent<Ability>().AddEffect(e1);
+                // newCard.GetComponent<Ability>().AddEffect(e1);
 
-                Game.Ctx.CardOperator.AddCard(newCard.GetComponent<Card>());
+                Card tempc = newCard.GetComponent<Card>();
+                Debugger.Log(tempc);
+                
+                Debugger.Log(Game.Ctx);
+                
+                Game.Ctx.CardOperator.AddCard(tempc);
             }
             else
             {

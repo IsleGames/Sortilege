@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
+using _Editor;
 using Library;
 using Object = UnityEngine.Object;
 using Cards;
+using UnityEngine;
 
 namespace Managers
 {
-	public class CardManager : Object
+	public class CardManager : MonoBehaviour
 	{
 		public List<Card> CardList;
 		public List<Card> Deck, Hand, DiscardPile;
@@ -24,6 +26,7 @@ namespace Managers
 
 		public void AddCard(Card card)
 		{
+			Debugger.Log(card.GetComponent<MetaData>().title);
 			CardList.Add(card);
 		}
 

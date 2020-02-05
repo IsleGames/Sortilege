@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Editor;
 using UnityEngine;
 using Managers;
 using Units;
@@ -16,24 +17,18 @@ public class Game : MonoBehaviour
 
     public Player Player;
     public Enemy Enemy;
-    
-    public delegate void OnGoingMethod();
-
-    public OnGoingMethod onGoingMove;
-
 
     private void Start()
     {
         Ctx = this;
         
-        CardOperator = new CardManager();
-        BattleOperator = new BattleManager();
+        CardOperator = GetComponent<CardManager>();
+        BattleOperator = GetComponent<BattleManager>();
 
-        Player = GameObject.Find("Player").GetComponent<Player>();
-        Enemy = GameObject.Find("Enemy").GetComponent<Enemy>();
+        Player = gameObject.transform.GetComponentInChildren<Player>();
+        Enemy = gameObject.transform.GetComponentInChildren<Enemy>();
         
         Continue();
-        
     }
     
     public bool IsBattleEnded()
@@ -44,6 +39,7 @@ public class Game : MonoBehaviour
     
     public void Continue()
     {
+        Debugger.Log(BattleOperator);
         IEnumerator enumerator = BattleOperator.Continue();
     }
 }

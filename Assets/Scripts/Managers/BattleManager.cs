@@ -6,14 +6,12 @@ using UnityEngine;
 
 namespace Managers
 {
-    public class BattleManager
+    public class BattleManager : MonoBehaviour
     {
         public BattleManager()
         {
             
         }
-        
-        
 
         public bool IsBattleEnded()
         {

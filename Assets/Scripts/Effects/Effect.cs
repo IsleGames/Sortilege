@@ -14,7 +14,7 @@ namespace Effects
 		Unknown
 	}
 
-	public class Effect
+	public class Effect : MonoBehaviour
 	{
 		public UnitType AffectiveUnit { get; protected set; }
 		public float Diff { get; protected set; }
