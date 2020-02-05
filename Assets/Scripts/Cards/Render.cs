@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Cards
 {
-    public class Renderer : MonoBehaviour
+    public class Render : MonoBehaviour
     {
         
     }

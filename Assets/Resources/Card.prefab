@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 1916410530256604426}
   - component: {fileID: 2670348234703212253}
   - component: {fileID: 7059932824889039424}
-  - component: {fileID: 6031793383107909187}
+  - component: {fileID: 7794130922400942529}
+  - component: {fileID: 3775279253067367441}
   m_Layer: 0
   m_Name: Card
   m_TagString: Untagged
@@ -57,11 +58,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccfe116fe280f4da2bef0d127cf15cbd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  title: 
   strategy: 0
   attribute: 0
   level: 0
   maxLevel: 0
---- !u!114 &6031793383107909187
+--- !u!114 &7794130922400942529
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -71,5 +73,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: afba3787d7e14c7fbb59c21e4f08c163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3775279253067367441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4041411778843685330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3f7e1b14224ac98198c88f7abc458e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

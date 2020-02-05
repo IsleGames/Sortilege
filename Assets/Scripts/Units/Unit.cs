@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Effect = Effects.Effect;
 
 namespace Units
@@ -10,22 +11,8 @@ namespace Units
 	{
 		public bool initialized = false;
 
-		public Health health;
+		public abstract void Initialize();
+		public abstract void Play();
 
-		// Calling the Effect list BuffList makes it clearer
-		public List<Effect> buffList;
-
-		private void Start()
-		{
-			buffList = new List<Effect>();
-			health = gameObject.GetComponent<Health>();
-		}
-
-		private void LoadData()
-		{
-			throw new NotImplementedException();
-		}
-    
-    
 	}
 }

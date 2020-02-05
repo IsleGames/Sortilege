@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Library;
 using Object = UnityEngine.Object;
-using Card = Cards.Card;
+using Cards;
 
 namespace Managers
 {
@@ -22,14 +22,9 @@ namespace Managers
 			DiscardPile = new List<Card>();
 		}
 
-		public void LoadData()
+		public void AddCard(Card card)
 		{
-			throw new NotImplementedException();
-		}
-
-		public void Add(List<Card> newCards)
-		{
-			CardList.AddRange(newCards);
+			CardList.Add(card);
 		}
 
 		public void AddCards(List<Card> newCards)

@@ -7,9 +7,19 @@ namespace Units
 		{
 		}
 
-		public void NewTurn()
+		public override void Initialize()
+		{
+			
+		}
+
+		public override void Play()
 		{
 			chainStreak = 0;
+		}
+
+		public void EndTurn()
+		{
+			Game.Ctx.Continue();
 		}
 	}
 }

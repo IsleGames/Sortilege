@@ -3,6 +3,8 @@ using Units;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
+using _Editor;
+
 namespace Effects
 {
 	public enum UnitType : int
@@ -12,9 +14,8 @@ namespace Effects
 		Unknown
 	}
 
-	public class Effect : Object
+	public class Effect
 	{
-
 		public UnitType AffectiveUnit { get; protected set; }
 		public float Diff { get; protected set; }
 
@@ -25,7 +26,8 @@ namespace Effects
 
 			// Positive Number for Damage, Negative Number for Heal
 			Diff = diff;
-
+			
+			Debugger.Log("hi");
 		}
 
 		public void Apply(GameObject unit)

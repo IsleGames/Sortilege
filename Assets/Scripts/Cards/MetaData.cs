@@ -27,6 +27,8 @@ namespace Cards
     }
     public class MetaData : MonoBehaviour
     {
+        public string title;
+        
         public StrategyType strategy = StrategyType.None;
         public AttributeType attribute = AttributeType.None;
 
@@ -36,11 +38,6 @@ namespace Cards
         private void Start()
         {
             
-        }
-
-        public void LoadData()
-        {
-            throw new NotImplementedException();
         }
 
         public bool HasSharedProperty(GameObject otherCard) 
