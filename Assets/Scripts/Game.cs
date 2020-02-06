@@ -18,28 +18,68 @@ public class Game : MonoBehaviour
     public Player Player;
     public Enemy Enemy;
 
+    public Cheats Cheat;
+
+    public delegate void RoutineMethod();
+
+    public RoutineMethod RunningMethod;
+        
+    public IEnumerator BattleSeq;
+
     private void Start()
     {
         Ctx = this;
         
-        CardOperator = GetComponent<CardManager>();
-        BattleOperator = GetComponent<BattleManager>();
+        CardOperator = gameObject.AddComponent<CardManager>();
+        BattleOperator = gameObject.AddComponent<BattleManager>();
 
-        Player = gameObject.transform.GetComponentInChildren<Player>();
-        Enemy = gameObject.transform.GetComponentInChildren<Enemy>();
+        Player = transform.GetComponentInChildren<Player>();
+        Enemy = transform.GetComponentInChildren<Enemy>();
+
+        BattleSeq = BattleOperator.Continue();
         
+        // Temporary Initialize Method
+        Cheat = GameObject.Find("Cheat").GetComponent<Cheats>();
+        Cheat.SetUnitStatus();
+            
         Continue();
     }
     
     public bool IsBattleEnded()
     {
-        return Mathf.Approximately(Game.Ctx.Player.GetComponent<Health>().health, 0) ||
-               Mathf.Approximately(Game.Ctx.Enemy.GetComponent<Health>().health, 0);
+        return Player.GetComponent<Health>().IsDead() || Enemy.GetComponent<Health>().IsDead();
+    }
+    
+    public bool HasPlayerLost()
+    {
+        return Player.GetComponent<Health>().IsDead();
     }
     
     public void Continue()
     {
-        Debugger.Log(BattleOperator);
-        IEnumerator enumerator = BattleOperator.Continue();
+        if (IsBattleEnded()) return;
+            
+        // The IEnumerator returns the next procedure back to Game.Ctx.RunningMethod
+        // We don't use StartCoroutine since no separate thread(approx.) is required
+        BattleSeq.MoveNext();
+        
+        // Since yield return cannot return a method, we let this method calls the next step
+        // instead
+        RunningMethod();
+    }
+
+    public void EndGame()
+    {
+        if (IsBattleEnded())
+        {
+            if (!HasPlayerLost())
+            {
+                Debugger.Log("player wins");
+            }
+            else
+            {
+                Debugger.Log("player lost");
+            }
+        }
     }
 }

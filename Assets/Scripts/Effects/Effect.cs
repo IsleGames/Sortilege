@@ -5,6 +5,7 @@ using Object = UnityEngine.Object;
 
 using _Editor;
 
+// Task: Rewrite the file using Scriptable Objects
 namespace Effects
 {
 	public enum UnitType : int
@@ -35,7 +36,7 @@ namespace Effects
 			if (!unit.GetComponent(this.AffectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.AffectiveUnit);
 
-			unit.GetComponent<Health>().ChangeHealth(Diff);
+			unit.GetComponent<Health>().Damage(Diff);
 		}
 
 	}

@@ -5,8 +5,10 @@ using UnityEngine;
 using Cards;
 using Effects;
 using Library;
+using Units;
 using Object = UnityEngine.Object;
 using Card = Cards.Card;
+using Debug = System.Diagnostics.Debug;
 
 namespace _Editor
 {
@@ -22,13 +24,30 @@ namespace _Editor
 
         public void Update()
         {
-            if (Input.GetKeyUp(KeyCode.G))
+            if (Input.GetKeyUp(KeyCode.A))
             {
                 GetTemporalCard();
             }
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                SetUnitStatus();
+            }
+            else if (Input.GetKeyUp(KeyCode.D))
+            {
+                PlayTemporalCard();
+            }
+        }
+
+        public void SetUnitStatus()
+        {
+            Game.Ctx.Player.GetComponent<Health>().Initialize(10);
+            Game.Ctx.Enemy.GetComponent<Health>().Initialize(8);
+            
+            Debugger.Log("Player HP: " + Game.Ctx.Player.GetComponent<Health>().health);
+            Debugger.Log("Enemy HP: " + Game.Ctx.Enemy.GetComponent<Health>().health);
         }
         
-        public void GetTemporalCard()
+        private void GetTemporalCard()
         {
             // Effect e1 = new Effect(UnitType.Player, 3);
 
@@ -46,14 +65,9 @@ namespace _Editor
                 newCardMD.level = 0;
                 newCardMD.maxLevel = 0;
                 
-                Debugger.Log(newCard);
-                
                 // newCard.GetComponent<Ability>().AddEffect(e1);
 
                 Card tempc = newCard.GetComponent<Card>();
-                Debugger.Log(tempc);
-                
-                Debugger.Log(Game.Ctx);
                 
                 Game.Ctx.CardOperator.AddCard(tempc);
             }
@@ -61,12 +75,18 @@ namespace _Editor
             {
                 throw new NullReferenceException();
             }
+            
+            Debugger.Log("Card Added");
         }
         
         
         public void PlayTemporalCard()
         {
-
+            Debugger.Log("Player Play Card 0");
+            Debugger.Log("Cardlist Length: " + Game.Ctx.CardOperator.CardList.Count);
+            
+            Game.Ctx.CardOperator.CardList[0].Apply(Game.Ctx.Enemy);
+            Game.Ctx.Player.EndTurn();
         }
     }
 }

@@ -1,3 +1,4 @@
+using _Editor;
 using UnityEngine;
 
 namespace Units
@@ -12,27 +13,38 @@ namespace Units
             
         }
 
-        public void SetMaximumHealth(int maxHealth, bool fillHealth = false)
+        public void Initialize(float maxHealth)
         {
             maximumHealth = maxHealth;
-            if (fillHealth) health = maxHealth;
+            health = maxHealth;
         }
 
-        public void ChangeHealth(float amount)
+        private float ValidityCheck(float expectedHitPoint)
         {
-            float expectedHitPoint = health + amount;
-
-            if (amount > 0)
-            {
-                if (expectedHitPoint < 0) expectedHitPoint = 0;
-            }
-            else if (amount < 0)
-                if (expectedHitPoint > maximumHealth) expectedHitPoint = maximumHealth;
-
-            health = expectedHitPoint;
+            if (expectedHitPoint < 0) expectedHitPoint = 0;
+            if (expectedHitPoint > maximumHealth) expectedHitPoint = maximumHealth;
+            
+            return expectedHitPoint;
         }
 
-        public bool IsZeroHealth()
+        public void Damage(float amount)
+        {
+            if (amount < 0)
+                Debugger.Warning("Negative amount detected for Damage", this);
+                
+            Debugger.Log("Deal " + amount + " Damage to " + health + " Health", this);
+            health = ValidityCheck(health - amount);
+        }
+        
+        public void Heal(float amount)
+        {
+            if (amount < 0)
+                Debugger.Warning("Negative amount detected for Damage", this);
+                
+            health = ValidityCheck(health + amount);
+        }
+        
+        public bool IsDead()
         {
             return Mathf.Approximately(health, 0f);
         }

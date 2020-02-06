@@ -13,6 +13,7 @@ namespace Units
 
 		public abstract void Initialize();
 		public abstract void Play();
+		public abstract void EndTurn();
 
 	}
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using _Editor;
 using Units;
 using UnityEngine;
 
@@ -23,18 +24,23 @@ namespace Managers
         // And a bunch of notes from CS376
         public IEnumerator Continue()
         {
-            Game.Ctx.Player.Initialize();
+            Debugger.Log("player init");
+            Game.Ctx.RunningMethod = Game.Ctx.Player.Initialize;
             yield return null;
             
-            Game.Ctx.Enemy.Initialize();
+            Debugger.Log("enemy init");
+            Game.Ctx.RunningMethod = Game.Ctx.Enemy.Initialize;
             yield return null;
             
             while (true)
             {
-                // Game.Ctx.Player;
+                Debugger.Log("player play");
+                Game.Ctx.RunningMethod = Game.Ctx.Player.Play;
                 yield return null;
                 
-                // Game.Ctx.Enemy;
+                Debugger.Log("Yes!");
+                Debugger.Log("enemy play");
+                Game.Ctx.RunningMethod = Game.Ctx.Enemy.Play;
                 yield return null;
             }
         }

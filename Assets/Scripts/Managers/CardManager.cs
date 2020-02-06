@@ -26,7 +26,6 @@ namespace Managers
 
 		public void AddCard(Card card)
 		{
-			Debugger.Log(card.GetComponent<MetaData>().title);
 			CardList.Add(card);
 		}
 

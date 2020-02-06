@@ -5,6 +5,8 @@ using UnityEngine;
 using Units;
 using Effects;
 
+using _Editor;
+
 namespace Cards
 {
     // public enum CardStatus : int
@@ -18,12 +20,11 @@ namespace Cards
 
     public class Card : MonoBehaviour
     {
-        private void Start()
+        public void Apply(Enemy enemy)
         {
-        }
-
-        public void Apply(Player player, Enemy enemy)
-        {
+            enemy.GetComponent<Health>().Damage(2f);
+            Debugger.OneOnOneStat();
+            if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }
     }
 }

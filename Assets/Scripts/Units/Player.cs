@@ -17,7 +17,7 @@ namespace Units
 			chainStreak = 0;
 		}
 
-		public void EndTurn()
+		public override void EndTurn()
 		{
 			Game.Ctx.Continue();
 		}
