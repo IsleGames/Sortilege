@@ -32,7 +32,7 @@ namespace Cards
             }
         }
 
-        public GameObject MakeCard(string name, StrategyType strategy, AttributeType attr, Ability ability)
+        public GameObject MakeCard(string name, StrategyType strategy, AttributeType attr, List<Effects.Effect> effects)
         {
             var newCard = GameObject.Instantiate(cardPrefab);
             var meta = newCard.GetComponent<MetaData>();
@@ -40,9 +40,12 @@ namespace Cards
             meta.attribute = attr;
             meta.title = name;
             var card_ability = newCard.GetComponent<Ability>();
-            foreach (var effect in ability.EffectList){
-                card_ability.AddEffect(effect);
-            } 
+            foreach (var effect in effects){
+                if (effect != null)
+                {
+                    card_ability.AddEffect(effect);
+                }
+            }
 
 
             setCardImage(newCard);
@@ -51,7 +54,8 @@ namespace Cards
 
         void setCardImage(GameObject newCard)
         {
-            var newCardImage = GameObject.Instantiate(cardImagePrefab);
+            var newCardImage = Instantiate(cardImagePrefab);
+            newCardImage.transform.SetParent(newCard.transform);
             var meta = newCard.GetComponent<MetaData>();
             // Set strategy color
 
@@ -60,11 +64,24 @@ namespace Cards
             // Set attribute sprite
 
             // Set name
-            var cardNameObject = newCard.transform.Find("CardName");
-            cardNameObject.GetComponent<TextMeshProUGUI>().text = meta.title;
+            var cardNameObject = newCardImage.transform.Find("CardName");
+            if (cardNameObject == null) Debug.Log("Could not find card name");
+            else
+            {
+                var text = cardNameObject.GetComponent<TextMeshProUGUI>();
+                if (text == null) Debug.Log("Could not find card name text");
+                else text.text = meta.title;
+            }
             // Set text
-            var cardTextObject = newCard.transform.Find("CardText");
-            cardTextObject.GetComponent<TextMeshProUGUI>().text = newCard.GetComponent<Ability>().Text();
+            // Set name
+            var cardTextObject = newCardImage.transform.Find("CardText");
+            if (cardTextObject == null) Debug.Log("Could not find card text");
+            else
+            {
+                var text = cardTextObject.GetComponent<TextMeshProUGUI>();
+                if (text == null) Debug.Log("Could not find card text text");
+                else text.text = newCard.GetComponent<Ability>().Text();
+            }
         }
     }
 }

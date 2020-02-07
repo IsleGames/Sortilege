@@ -18,9 +18,14 @@ namespace Cards
     //     Discarded,
     // }
 
-    public class Ability : MonoBehaviour
+    public class Ability: MonoBehaviour
     {
         public List<Effect> EffectList { get; protected set; }
+
+        Ability()
+        {
+            EffectList = new List<Effect>();
+        }
     
         private void Start()
         {
@@ -50,9 +55,12 @@ namespace Cards
         public string Text()
         {
             var text = "";
-            foreach(var effect in EffectList)
+            if (EffectList != null)
             {
-                text += effect.Text() + "\n";
+                foreach (var effect in EffectList)
+                {
+                    text += effect?.Text() + "\n";
+                }
             }
             return text;
         }
