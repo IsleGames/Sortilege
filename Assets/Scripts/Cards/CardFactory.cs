@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
+using Effects;
 
 namespace Cards
 {
@@ -32,22 +33,23 @@ namespace Cards
             }
         }
 
-        public GameObject MakeCard(string name, StrategyType strategy, AttributeType attr, List<Effects.Effect> effects)
+        public GameObject MakeCard(string title, StrategyType strategy, AttributeType attr, List<Effect> effects)
         {
-            var newCard = GameObject.Instantiate(cardPrefab);
-            var meta = newCard.GetComponent<MetaData>();
+            GameObject newCard = Instantiate(cardPrefab);
+            
+            MetaData meta = newCard.GetComponent<MetaData>();
+            meta.title = title;
             meta.strategy = strategy;
             meta.attribute = attr;
-            meta.title = name;
-            var card_ability = newCard.GetComponent<Ability>();
+            
+            var cardAbility = newCard.GetComponent<Ability>();
             foreach (var effect in effects){
                 if (effect != null)
                 {
-                    card_ability.AddEffect(effect);
+                    cardAbility.AddEffect(effect);
                 }
             }
-
-
+            
             setCardImage(newCard);
             return newCard;
         }
