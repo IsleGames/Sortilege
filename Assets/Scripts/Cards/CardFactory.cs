@@ -22,9 +22,17 @@ namespace Cards
             {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
             {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
         };
-                
 
-        private void Start()
+        static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>() {
+                    { AttributeType.Infernal, "Sprites/Icons/icon-fire" },
+                    { AttributeType.Storm, "Sprites/Icons/icon-snow" },
+                    { AttributeType.Thunder, "Sprites/Icons/icon-lightning" },
+                    { AttributeType.Venom, "Sprites/Icons/icon-skull"}
+                };
+
+
+
+        private void Awake()
         {
             if (cardFactory == null){
                 cardFactory = this;
@@ -33,7 +41,7 @@ namespace Cards
             }
         }
 
-        public GameObject MakeCard(string title, StrategyType strategy, AttributeType attr, List<Effect> effects)
+        public static GameObject MakeCard(string title, StrategyType strategy, AttributeType attr, List<Effect> effects)
         {
             GameObject newCard = Instantiate(cardPrefab);
             
@@ -54,7 +62,7 @@ namespace Cards
             return newCard;
         }
 
-        void setCardImage(GameObject newCard)
+        static void setCardImage(GameObject newCard)
         {
             var newCardImage = Instantiate(cardImagePrefab);
             newCardImage.transform.SetParent(newCard.transform);
@@ -75,7 +83,6 @@ namespace Cards
                 else text.text = meta.title;
             }
             // Set text
-            // Set name
             var cardTextObject = newCardImage.transform.Find("CardText");
             if (cardTextObject == null) Debug.Log("Could not find card text");
             else
@@ -84,6 +91,17 @@ namespace Cards
                 if (text == null) Debug.Log("Could not find card text text");
                 else text.text = newCard.GetComponent<Ability>().Text();
             }
+            // Set icon
+            var IconSpriteObject= newCardImage.transform.Find("AttributeSprite");
+            if (IconSpriteObject == null) Debug.Log("Could not find attribute sprite object");
+            else
+            {
+                var renderer = IconSpriteObject.GetComponent<SpriteRenderer>();
+                renderer.sprite = Resources.Load<Sprite>(AttributeSpritePaths[meta.attribute]);
+                Debug.Log(renderer.sprite);
+
+            }
+
         }
     }
 }
