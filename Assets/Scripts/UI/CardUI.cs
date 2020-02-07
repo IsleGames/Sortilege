@@ -17,15 +17,15 @@ public class CardUI : MonoBehaviour {
     public void OnMouseDown()
     {
         home = transform.position;
-        cursorhome = Input.mousePosition;
+        cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     public void OnMouseDrag()
     {
         if (canPlay)
         {
-            var cursorPosition = Input.mousePosition;
-            gameObject.transform.position = home + cursorPosition - cursorhome;
+            var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            gameObject.transform.position = home + cursorPositionWorld - cursorhome;
         }
     }
 
