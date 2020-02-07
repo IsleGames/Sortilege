@@ -18,7 +18,7 @@ namespace _Editor
 
         private void Start()
         {
-            _cardPrefab = Resources.Load("Card");
+            _cardPrefab = Resources.Load("Prefabs/Card");
             
         }
 
@@ -40,7 +40,7 @@ namespace _Editor
 
         public void SetUnitStatus()
         {
-            Game.Ctx.Player.GetComponent<Health>().Initialize(10);
+            Game.Ctx.Player.GetComponent<Health>().Initialize(100);
             Game.Ctx.Enemy.GetComponent<Health>().Initialize(8);
             
             Debugger.Log("Player HP: " + Game.Ctx.Player.GetComponent<Health>().health);

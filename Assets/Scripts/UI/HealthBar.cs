@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System;
+using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,15 +9,23 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     // defaults
-    public float maxHealth = 100;
-    public float currentHealth = 100;
+    public float maxHealth;
+    public float currentHealth;
     public float rate = 1f; // health units per frame
+    public bool isplayer;
 
     public Slider healthSlider;
     public Text healthText;
-    
 
-    public void Init(float health, float maxHealth = 100) {
+    public void Init(bool isitplayer, float health = 100, float maxHealth = 100)
+    {
+        isplayer = isitplayer;
+        if (isplayer)
+        {
+            health = GameObject.Find("Player").GetComponent<Health>().health;
+            maxHealth = GameObject.Find("Player").GetComponent<Health>().maximumHealth;
+        }
+        
         currentHealth = health;
         healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
@@ -25,22 +34,14 @@ public class HealthBar : MonoBehaviour
 
     public void Update()
     {
+        if (isplayer)
+        {
+            currentHealth = GameObject.Find("Player").GetComponent<Health>().health;
+            maxHealth = GameObject.Find("Player").GetComponent<Health>().maximumHealth;
+        }
         healthSlider.value = currentHealth;
         healthText.text = $"{(int)currentHealth} / {(int)maxHealth}";
 
     }
-
-
-    public IEnumerator takeDamage(float damage)
-    {
-        while (damage > 0 && currentHealth > 0) {
-            currentHealth -= rate;
-            damage = Mathf.Clamp(damage - rate, 0, damage);
-            yield return null;
-        }
-
-        yield return null;
-    }
-
-     
+    
 }
