@@ -12,10 +12,12 @@ public class CardUI : MonoBehaviour {
     public float moveSpeed = 1f;
     public Transform discardPile;
     Vector3 home;
+    private Vector3 cursorhome;
 
     public void OnMouseDown()
     {
         home = transform.position;
+        cursorhome = Input.mousePosition;
     }
 
     public void OnMouseDrag()
@@ -23,8 +25,7 @@ public class CardUI : MonoBehaviour {
         if (canPlay)
         {
             var cursorPosition = Input.mousePosition;
-            var cursorPositionWorld = Camera.main.ScreenToWorldPoint(cursorPosition);
-            gameObject.transform.position = new Vector3(cursorPositionWorld.x, cursorPositionWorld.y);
+            gameObject.transform.position = home + cursorPosition - cursorhome;
         }
     }
 
