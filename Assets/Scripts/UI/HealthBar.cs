@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class HealthBar : MonoBehaviour
 {
     // defaults
+    // This needs to be integrated
     public float maxHealth = 100;
     public float currentHealth = 100;
     public float rate = 1f; // health units per frame
