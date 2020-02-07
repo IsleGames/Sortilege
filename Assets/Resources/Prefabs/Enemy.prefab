@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initialized: 0
-  buffList: []
 --- !u!114 &5097562844836626886
 MonoBehaviour:
   m_ObjectHideFlags: 0

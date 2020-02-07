@@ -19,6 +19,7 @@ namespace Effects
 	{
 		public UnitType AffectiveUnit { get; protected set; }
 		public float Diff { get; protected set; }
+        
 
 		public Effect(UnitType affectiveUnit, float diff)
 		{
@@ -39,5 +40,13 @@ namespace Effects
 			unit.GetComponent<Health>().Damage(Diff);
 		}
 
-	}
+        public string Text()
+        {
+            if (Diff > 0) return $"{Diff} Damage";
+            else return $"{-Diff} Health";
+        }
+
+
+
+    }
 }

@@ -20,7 +20,7 @@ namespace Cards
 
     public class Ability : MonoBehaviour
     {
-        protected List<Effect> EffectList;
+        public List<Effect> EffectList { get; protected set; }
     
         private void Start()
         {
@@ -45,6 +45,16 @@ namespace Cards
                 else
                     throw new NullReferenceException("Unknown Unit Type");
             }
+        }
+
+        public string Text()
+        {
+            var text = "";
+            foreach(var effect in EffectList)
+            {
+                text += effect.Text() + "\n";
+            }
+            return text;
         }
     }
 }

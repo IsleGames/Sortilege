@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Cards
@@ -26,7 +27,8 @@ namespace Cards
         Storm
     }
     public class MetaData : MonoBehaviour
-    {
+    {            
+
         public string title;
         
         public StrategyType strategy = StrategyType.None;
