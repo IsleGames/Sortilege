@@ -1466,7 +1466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canPlay: 1
   beingPlayed: 0
-  moveSpeed: 1
+  moveSpeed: 0.1
   discardPile: {fileID: 1450625060}
 --- !u!61 &1650481810
 BoxCollider2D:

@@ -52,7 +52,6 @@ public class CardUI : MonoBehaviour {
             
         {
             float i = t / moveSpeed;
-            Debug.Log(i);
             transform.SetPositionAndRotation(i * dest + (1f - i) * init,
                 transform.rotation);
             t += Time.deltaTime;
@@ -62,7 +61,6 @@ public class CardUI : MonoBehaviour {
 
     private void OnMouseUp()
     {
-        Debug.Log("Release");
         if (beingPlayed)
         {
             //play this card

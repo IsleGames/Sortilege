@@ -15,7 +15,6 @@ class MoveTo : MonoBehaviour
         while (t < duration)
         {
             float i = t / duration;
-            Debug.Log(i);
             g.transform.SetPositionAndRotation(i * destination.position + (1f - i) * init,
                 g.transform.rotation);
             t += Time.deltaTime;
