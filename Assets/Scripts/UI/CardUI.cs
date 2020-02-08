@@ -9,7 +9,7 @@ public class CardUI : MonoBehaviour {
 
     public bool canPlay = true; // TODO: default to false, check in update() based on game state
     public bool beingPlayed = false;
-    public float moveSpeed = 1f;
+    public float moveSpeed = 0.1f;
     public Transform discardPile;
     Vector3 home;
     private Vector3 cursorhome;

@@ -11,6 +11,7 @@ public class HealthBar : MonoBehaviour
     // defaults
     public float maxHealth;
     public float currentHealth;
+
     public float rate = 1f; // health units per frame
     public bool isplayer;
 
