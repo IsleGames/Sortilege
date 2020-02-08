@@ -18,7 +18,7 @@ namespace _Editor
 
         private void Start()
         {
-            _cardPrefab = Resources.Load("Card");
+            _cardPrefab = Resources.Load("Prefabs/Card");
             
         }
 
@@ -69,7 +69,7 @@ namespace _Editor
 
                 Card tempc = newCard.GetComponent<Card>();
                 
-                Game.Ctx.CardOperator.AddCard(tempc);
+                Game.Ctx.CardOperator.Hand.Add(tempc);
             }
             else
             {
@@ -85,7 +85,7 @@ namespace _Editor
             Debugger.Log("Player Play Card 0");
             Debugger.Log("Cardlist Length: " + Game.Ctx.CardOperator.CardList.Count);
             
-            Game.Ctx.CardOperator.CardList[0].Apply(Game.Ctx.Enemy);
+            Game.Ctx.CardOperator.Hand[0].Apply(Game.Ctx.Enemy);
             Game.Ctx.Player.EndTurn();
         }
     }

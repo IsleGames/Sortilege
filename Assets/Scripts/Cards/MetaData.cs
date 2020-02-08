@@ -37,11 +37,6 @@ namespace Cards
         public int level;
         public int maxLevel;
 
-        private void Start()
-        {
-            
-        }
-
         public bool HasSharedProperty(GameObject otherCard) 
         {
             MetaData otherMeta = otherCard.GetComponent<MetaData>();

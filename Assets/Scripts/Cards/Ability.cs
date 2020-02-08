@@ -20,32 +20,27 @@ namespace Cards
 
     public class Ability: MonoBehaviour
     {
-        public List<Effect> EffectList { get; protected set; }
+        public List<Effect> effectList;
 
-        Ability()
-        {
-            EffectList = new List<Effect>();
-        }
-    
         private void Start()
         {
-            EffectList = new List<Effect>();
+            effectList = new List<Effect>();
         }
 
         public void AddEffect(Effect effect)
         {
-            Debugger.Log(effect.Diff);
+            Debugger.Log(effect.damage);
             
-            EffectList.Add(effect);
+            effectList.Add(effect);
         }
 
         public void Apply(Player player, Enemy enemy)
         {
-            foreach (Effect effect in EffectList)
+            foreach (Effect effect in effectList)
             {
-                if (effect.AffectiveUnit == UnitType.Player)
+                if (effect.affectiveUnit == UnitType.Player)
                     effect.Apply(player.gameObject);
-                else if (effect.AffectiveUnit == UnitType.Enemy)
+                else if (effect.affectiveUnit == UnitType.Enemy)
                     effect.Apply(enemy.gameObject);
                 else
                     throw new NullReferenceException("Unknown Unit Type");
@@ -55,9 +50,9 @@ namespace Cards
         public string Text()
         {
             var text = "";
-            if (EffectList != null)
+            if (effectList != null)
             {
-                foreach (var effect in EffectList)
+                foreach (var effect in effectList)
                 {
                     text += effect?.Text() + "\n";
                 }

@@ -16,6 +16,9 @@
             <e p="MetaData.cs" t="Include" />
             <e p="Render.cs" t="Include" />
           </e>
+          <e p="Data" t="Include">
+            <e p="CardData.cs" t="Include" />
+          </e>
           <e p="DDOL.cs" t="Include" />
           <e p="Effects" t="Include">
             <e p="Effect.cs" t="Include" />

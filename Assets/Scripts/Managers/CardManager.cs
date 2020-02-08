@@ -1,42 +1,59 @@
 using System;
+using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
-using _Editor;
-using Library;
 using Object = UnityEngine.Object;
+
+using Library;
 using Cards;
 using UnityEngine;
+using Data;
+
+using _Editor;
 
 namespace Managers
 {
 	public class CardManager : MonoBehaviour
 	{
-		public List<Card> CardList;
+		// Data Field will be moved to somewhere else
+		// [SerializeField]
+		// private List<CardData> _cardDataArray;
+		
+		public List<CardData> CardList;
 		public List<Card> Deck, Hand, DiscardPile;
 
-		public int HandLimit;
+		private GameObject _cardPrefab;
 
-		public CardManager()
+		public int HandLimit;
+		
+		private void Start()
 		{
-			CardList = new List<Card>();
+			_cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
 
 			Deck = new List<Card>();
 			Hand = new List<Card>();
 			DiscardPile = new List<Card>();
+			
+			// Grab the list from the Inspector for now
+			// CardList = new List<Card>();
+			
+			Initialize();
 		}
-
-		public void AddCard(Card card)
+		
+		public void Initialize()
 		{
-			CardList.Add(card);
-		}
-
-		public void AddCards(List<Card> newCards)
-		{
-			CardList.AddRange(newCards);
+			foreach (CardData cardData in CardList)
+			{
+				GameObject newCardObj = Instantiate(_cardPrefab);
+				Card newCard = newCardObj.GetComponent<Card>();
+				
+				newCard.Initialize(cardData);
+				Deck.Add(newCard);
+			}
 		}
 
 		public Card DrawCard(List<Card> pile, bool onEmptyReturnNull = true)
 		{
-
 			if (IsEmpty(pile))
 				if (onEmptyReturnNull)
 					return null;

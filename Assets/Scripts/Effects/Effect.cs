@@ -15,35 +15,32 @@ namespace Effects
 		Unknown
 	}
 
-	public class Effect 
+	[Serializable]
+	public class Effect
 	{
-		public UnitType AffectiveUnit { get; protected set; }
-		public float Diff { get; protected set; }
-        
-
-		public Effect(UnitType affectiveUnit, float diff)
+		public UnitType affectiveUnit;
+		public float damage;
+		
+		public Effect(UnitType affectiveUnit, float amount)
 		{
-
-			AffectiveUnit = affectiveUnit;
+			this.affectiveUnit = affectiveUnit;
 
 			// Positive Number for Damage, Negative Number for Heal
-			Diff = diff;
-			
-			Debugger.Log("hi");
+			this.damage = amount;
 		}
 
 		public void Apply(GameObject unit)
 		{
-			if (!unit.GetComponent(this.AffectiveUnit.ToString("G")))
-				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.AffectiveUnit);
+			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
+				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
 
-			unit.GetComponent<Health>().Damage(Diff);
+			unit.GetComponent<Health>().Damage(damage);
 		}
 
         public string Text()
         {
-            if (Diff > 0) return $"{Diff} Damage";
-            else return $"{-Diff} Health";
+            if (damage > 0) return $"{damage} Damage";
+            else return $"{-damage} Health";
         }
 
 

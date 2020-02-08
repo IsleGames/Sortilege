@@ -18,8 +18,6 @@ public class Game : MonoBehaviour
     public Player Player;
     public Enemy Enemy;
 
-    public Cheats Cheat;
-
     public delegate void RoutineMethod();
 
     public RoutineMethod RunningMethod;
@@ -29,9 +27,6 @@ public class Game : MonoBehaviour
     private void Start()
     {
         Ctx = this;
-        
-        CardOperator = gameObject.AddComponent<CardManager>();
-        BattleOperator = gameObject.AddComponent<BattleManager>();
 
         Player = transform.GetComponentInChildren<Player>();
         Enemy = transform.GetComponentInChildren<Enemy>();
@@ -39,7 +34,7 @@ public class Game : MonoBehaviour
         BattleSeq = BattleOperator.Continue();
         
         // Temporary Initialize Method
-        Cheat = GameObject.Find("Cheat").GetComponent<Cheats>();
+        Cheats Cheat = GameObject.Find("Cheat").GetComponent<Cheats>();
         Cheat.SetUnitStatus();
             
         Continue();

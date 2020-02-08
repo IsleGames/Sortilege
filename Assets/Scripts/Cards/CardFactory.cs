@@ -14,6 +14,7 @@ namespace Cards
         static CardFactory cardFactory = null;
         static GameObject cardPrefab;
         static GameObject cardImagePrefab;
+        
         static Dictionary<StrategyType, Color> StrategyColors = new Dictionary<StrategyType, Color>(){
             {StrategyType.None, Color.white },
             {StrategyType.Detriment, new Color(0f, 0.3f, 0.2f)},

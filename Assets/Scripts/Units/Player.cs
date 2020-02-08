@@ -9,6 +9,7 @@ namespace Units
 
 		public override void Initialize()
 		{
+			// Load all existing cards from 
 			Game.Ctx.Continue();
 		}
 
