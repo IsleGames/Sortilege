@@ -10,10 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: New CardData
+  m_Name: Shockwave
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
-  attribute: 0
+  title: Shockwave
+  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
+  strategy: 2
+  attribute: 1
   description: 
-  effectList: []
+  effectList:
+  - affectiveUnit: 2
+    damage: 2

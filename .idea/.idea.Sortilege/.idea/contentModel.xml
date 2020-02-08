@@ -12,7 +12,6 @@
           <e p="Cards" t="Include">
             <e p="Ability.cs" t="Include" />
             <e p="Card.cs" t="Include" />
-            <e p="CardFactory.cs" t="Include" />
             <e p="MetaData.cs" t="Include" />
             <e p="Render.cs" t="Include" />
           </e>

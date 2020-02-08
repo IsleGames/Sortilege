@@ -40,7 +40,8 @@ namespace Cards
             GetComponent<MetaData>().attribute = cardData.attribute;
 
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
-            // Debugger.Log(GetComponent<Ability>().effectList[0].damage);
+            
+            GetComponent<Render>().SetCardImage();
         }
         
         public void Apply(Unit target)

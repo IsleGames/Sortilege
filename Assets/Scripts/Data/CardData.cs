@@ -11,6 +11,7 @@ namespace Data
     public class CardData : UnityEngine.ScriptableObject
     {
         public string title;
+
         public StrategyType strategy;
         public AttributeType attribute;
         public string description;
