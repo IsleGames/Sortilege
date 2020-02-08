@@ -25,26 +25,30 @@ namespace Cards
         [SerializeField]
         private CardData cardData;
 
-        // private void OnMouseDown()
-        // {
-        //     Debugger.Log(cardData.title + ' ' + cardData.strategy + ' ' + cardData.attribute);
-        // }
+        public void LogInfo()
+        {
+            Debugger.Log(cardData.title + ' ' + cardData.strategy + ' ' + cardData.attribute);
+        }
 
         public void Initialize(CardData newCardData)
         {
+            // Debugger.Log("hi");
             cardData = newCardData;
             
             GetComponent<MetaData>().title = cardData.title;
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
 
-            GetComponent<Ability>().effectList = cardData.effectList;
+            GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
+            // Debugger.Log(GetComponent<Ability>().effectList[0].damage);
         }
         
-        public void Apply(Enemy enemy)
+        public void Apply(Unit target)
         {
-            enemy.GetComponent<Health>().Damage(2f);
+            GetComponent<Ability>().Apply(target);
+                
             Debugger.OneOnOneStat();
+            
             if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }
     }

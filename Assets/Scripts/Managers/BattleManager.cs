@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Resources;
 using _Editor;
 using Units;
 using UnityEngine;
@@ -9,11 +10,6 @@ namespace Managers
 {
     public class BattleManager : MonoBehaviour
     {
-        public BattleManager()
-        {
-            
-        }
-
         public bool IsBattleEnded()
         {
             return Mathf.Approximately(Game.Ctx.Player.GetComponent<Health>().health, 0) ||
@@ -34,11 +30,12 @@ namespace Managers
             
             while (true)
             {
+                Game.Ctx.turnCount += 1;
+                
                 Debugger.Log("player play");
                 Game.Ctx.RunningMethod = Game.Ctx.Player.Play;
                 yield return null;
                 
-                Debugger.Log("Yes!");
                 Debugger.Log("enemy play");
                 Game.Ctx.RunningMethod = Game.Ctx.Enemy.Play;
                 yield return null;

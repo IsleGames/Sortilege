@@ -9,39 +9,18 @@ using _Editor;
 
 namespace Cards
 {
-    // public enum CardStatus : int
-    // {
-    //     Unknown,
-    //     Stored,
-    //     Decked,
-    //     Held,
-    //     Discarded,
-    // }
-
     public class Ability: MonoBehaviour
     {
         public List<Effect> effectList;
 
-        private void Start()
-        {
-            effectList = new List<Effect>();
-        }
-
-        public void AddEffect(Effect effect)
-        {
-            Debugger.Log(effect.damage);
-            
-            effectList.Add(effect);
-        }
-
-        public void Apply(Player player, Enemy enemy)
+        public void Apply(Unit target)
         {
             foreach (Effect effect in effectList)
             {
                 if (effect.affectiveUnit == UnitType.Player)
-                    effect.Apply(player.gameObject);
+                    effect.Apply(Game.Ctx.Player);
                 else if (effect.affectiveUnit == UnitType.Enemy)
-                    effect.Apply(enemy.gameObject);
+                    effect.Apply(target);
                 else
                     throw new NullReferenceException("Unknown Unit Type");
             }

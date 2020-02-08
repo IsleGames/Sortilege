@@ -24,69 +24,66 @@ namespace _Editor
 
         public void Update()
         {
-            if (Input.GetKeyUp(KeyCode.A))
+            if (Input.GetKeyUp(KeyCode.Alpha1))
             {
-                GetTemporalCard();
+                PlayCard(0);
             }
-            else if (Input.GetKeyUp(KeyCode.S))
+            else if (Input.GetKeyUp(KeyCode.Alpha2))
             {
-                SetUnitStatus();
+                PlayCard(1);
             }
-            else if (Input.GetKeyUp(KeyCode.D))
+            else if (Input.GetKeyUp(KeyCode.E))
             {
-                PlayTemporalCard();
+                Game.Ctx.Player.EndTurn();
             }
         }
 
-        public void SetUnitStatus()
+        private void PlayCard(int index)
         {
-            Game.Ctx.Player.GetComponent<Health>().Initialize(10);
-            Game.Ctx.Enemy.GetComponent<Health>().Initialize(8);
-            
-            Debugger.Log("Player HP: " + Game.Ctx.Player.GetComponent<Health>().health);
-            Debugger.Log("Enemy HP: " + Game.Ctx.Enemy.GetComponent<Health>().health);
+            Game.Ctx.CardOperator.PlayCard(Game.Ctx.CardOperator.Hand[index]);
         }
-        
-        private void GetTemporalCard()
-        {
-            // Effect e1 = new Effect(UnitType.Player, 3);
 
-            GameObject newCard = Instantiate(_cardPrefab) as GameObject;
-
-            if (newCard != null)
-            {
-                MetaData newCardMD = newCard.GetComponent<MetaData>();
-                
-                newCardMD.title = "testCard";
-                
-                newCardMD.strategy = StrategyType.Berserker;
-                newCardMD.attribute = AttributeType.None;
-
-                newCardMD.level = 0;
-                newCardMD.maxLevel = 0;
-                
-                // newCard.GetComponent<Ability>().AddEffect(e1);
-
-                Card tempc = newCard.GetComponent<Card>();
-                
-                Game.Ctx.CardOperator.Hand.Add(tempc);
-            }
-            else
-            {
-                throw new NullReferenceException();
-            }
-            
-            Debugger.Log("Card Added");
-        }
-        
-        
-        public void PlayTemporalCard()
-        {
-            Debugger.Log("Player Play Card 0");
-            Debugger.Log("Cardlist Length: " + Game.Ctx.CardOperator.CardList.Count);
-            
-            Game.Ctx.CardOperator.Hand[0].Apply(Game.Ctx.Enemy);
-            Game.Ctx.Player.EndTurn();
-        }
     }
 }
+
+// private void GetTemporalCard()
+// {
+//     // Effect e1 = new Effect(UnitType.Player, 3);
+//
+//     GameObject newCard = Instantiate(_cardPrefab) as GameObject;
+//
+//     if (newCard != null)
+//     {
+//         MetaData newCardMD = newCard.GetComponent<MetaData>();
+//         
+//         newCardMD.title = "testCard";
+//         
+//         newCardMD.strategy = StrategyType.Berserker;
+//         newCardMD.attribute = AttributeType.None;
+//
+//         newCardMD.level = 0;
+//         newCardMD.maxLevel = 0;
+//         
+//         // newCard.GetComponent<Ability>().AddEffect(e1);
+//
+//         Card tempc = newCard.GetComponent<Card>();
+//         
+//         Game.Ctx.CardOperator.Hand.Add(tempc);
+//     }
+//     else
+//     {
+//         throw new NullReferenceException();
+//     }
+//     
+//     Debugger.Log("Card Added");
+// }
+        
+        
+// public void PlayTemporalCard()
+// {
+//     Debugger.Log("Player Play Card 0");
+//     Debugger.Log("Cardlist Length: " + Game.Ctx.CardOperator.CardList.Count);
+//     
+//     Game.Ctx.CardOperator.Hand[0].Apply(Game.Ctx.Enemy);
+//     Game.Ctx.Player.EndTurn();
+// }

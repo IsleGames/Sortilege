@@ -18,6 +18,8 @@ public class Game : MonoBehaviour
     public Player Player;
     public Enemy Enemy;
 
+    public int turnCount;
+
     public delegate void RoutineMethod();
 
     public RoutineMethod RunningMethod;
@@ -32,11 +34,9 @@ public class Game : MonoBehaviour
         Enemy = transform.GetComponentInChildren<Enemy>();
 
         BattleSeq = BattleOperator.Continue();
-        
-        // Temporary Initialize Method
-        Cheats Cheat = GameObject.Find("Cheat").GetComponent<Cheats>();
-        Cheat.SetUnitStatus();
-            
+
+        turnCount = 0;
+
         Continue();
     }
     

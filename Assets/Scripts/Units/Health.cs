@@ -5,18 +5,17 @@ namespace Units
 {
     public class Health : MonoBehaviour
     {
+        private bool _initialized = false;
+        
         public float health;
         public float maximumHealth;
-
-        private void Start()
-        {
-            
-        }
 
         public void Initialize(float maxHealth)
         {
             maximumHealth = maxHealth;
             health = maxHealth;
+
+            _initialized = true;
         }
 
         private float ValidityCheck(float expectedHitPoint)
@@ -46,12 +45,12 @@ namespace Units
         
         public bool IsDead()
         {
-            return Mathf.Approximately(health, 0f);
+            return _initialized && Mathf.Approximately(health, 0f);
         }
         
         public bool IsFullHealth()
         {
-            return Mathf.Approximately(health, maximumHealth);
+            return _initialized && Mathf.Approximately(health, maximumHealth);
         }
     }
 }

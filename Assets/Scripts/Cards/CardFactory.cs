@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿// The methods should be moved to render component
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -47,7 +49,7 @@ namespace Cards
             foreach (var effect in effects){
                 if (effect != null)
                 {
-                    cardAbility.AddEffect(effect);
+                    //cardAbility.AddEffect(effect);
                 }
             }
             

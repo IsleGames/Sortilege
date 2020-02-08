@@ -24,7 +24,7 @@ namespace Managers
 
 		private GameObject _cardPrefab;
 
-		public int HandLimit;
+		public int handLimit;
 		
 		private void Start()
 		{
@@ -36,6 +36,8 @@ namespace Managers
 			
 			// Grab the list from the Inspector for now
 			// CardList = new List<Card>();
+
+			handLimit = 2;
 			
 			Initialize();
 		}
@@ -89,7 +91,7 @@ namespace Managers
 
 		public void DrawFullHand(bool onEmptyShuffle = true)
 		{
-			while (Hand.Count < HandLimit)
+			while (Hand.Count < handLimit)
 			{
 				if (IsEmpty(Deck))
 					if (onEmptyShuffle)
@@ -101,17 +103,27 @@ namespace Managers
 				Hand.Add(card);
 			}
 		}
+		
+		public void PlayCard(Card card)
+		{
+			bool ret = Hand.Remove(card);
+			
+			card.Apply(Game.Ctx.Enemy);
 
+			if (!ret)
+				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
+			else
+				DiscardPile.Add(card);
+		}
+		
 		public void PopCard(Card card)
 		{
-
 			bool ret = Hand.Remove(card);
 
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
 			else
 				DiscardPile.Add(card);
-
 		}
 
 		public bool IsEmpty(List<Card> pile)

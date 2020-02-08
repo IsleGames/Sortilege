@@ -10,9 +10,17 @@ namespace Effects
 {
 	public enum UnitType : int
 	{
+		Unknown,
 		Player,
-		Enemy,
-		Unknown
+		Enemy
+	}
+
+	public enum EffectType : int
+	{
+		Damage,
+		Heal,
+		BlockUp,
+		BlockDown
 	}
 
 	[Serializable]
@@ -25,11 +33,10 @@ namespace Effects
 		{
 			this.affectiveUnit = affectiveUnit;
 
-			// Positive Number for Damage, Negative Number for Heal
 			this.damage = amount;
 		}
 
-		public void Apply(GameObject unit)
+		public void Apply(Unit unit)
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);

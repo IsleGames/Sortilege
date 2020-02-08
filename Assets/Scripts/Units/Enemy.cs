@@ -6,6 +6,11 @@ namespace Units
 	{
 		public override void Initialize()
 		{
+			// Pending: ask for HP from upper Manager instead of doing it here
+			
+			GetComponent<Health>().Initialize(8);
+			Debugger.Log("Enemy HP: " + GetComponent<Health>().health);
+			
 			Game.Ctx.Continue();
 		}
 
