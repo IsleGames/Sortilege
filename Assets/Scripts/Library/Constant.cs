@@ -9,7 +9,6 @@ namespace Library
          public int testVar;
          private void Awake()
          {
-             testVar = 2;
          }
      }
 
