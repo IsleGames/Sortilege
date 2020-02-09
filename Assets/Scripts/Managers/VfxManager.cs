@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -38,9 +39,28 @@ namespace Managers
          }
          
          // Temporary Method
-         public void MoveCardToSomePosition(Transform trans)
+         public void MoveCardToRandomPosition(Transform trans)
          {
-             trans.position = new Vector3(Random.Range(-150f, 150f), Random.Range(-150f, 150f), 0);
+             trans.position = new Vector3(Random.Range(-550f, -450), Random.Range(0,1f), 0);
          }
+
+        public void SetCardPosition(Card card, Vector3 pos)
+        {
+            card.transform.position = pos;
+        }
+
+        public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
+        {
+            float t = 0f;
+            Vector3 init = card.transform.position;
+
+            while (t < time) 
+            {
+                float i = t / time;
+                card.transform.position = i * pos + (1f - i) * init;
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
      }
  }

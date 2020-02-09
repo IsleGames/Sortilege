@@ -33,7 +33,7 @@ namespace Cards
             // Set rules text
             newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<Ability>()?.Text();
 
-            Game.Ctx.VfxOperator.MoveCardToSomePosition(newCardImage.transform);
+            Game.Ctx.VfxOperator.MoveCardToRandomPosition(newCardImage.transform);
             
         }
     }
