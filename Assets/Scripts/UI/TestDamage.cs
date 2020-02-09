@@ -7,12 +7,14 @@ using UnityEngine.UI;
 public class TestDamage : MonoBehaviour
 {
 
-    public HealthBar healthbar;
+    public HealthBar playerHealthBar;
+    public HealthBar enemyHealthBar;
     // Start is called before the first frame update
 
     public void Start()
     { 
-        healthbar.Init("Player");
+        playerHealthBar.Init("Player");
+        enemyHealthBar.Init("Enemy");
     }
 
     public void Damage()

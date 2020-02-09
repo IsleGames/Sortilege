@@ -26,10 +26,7 @@ public class HealthBar : MonoBehaviour
     public void Init(Health healthObj)
     {
         health = healthObj;
-        currentHealth = health.health;
-        maxHealth = health.maximumHealth;
         
-        /// set width;
     }
 
     /*
@@ -43,12 +40,13 @@ public class HealthBar : MonoBehaviour
 
     public void Update()
     {
-        if (isplayer)
-        {
-            currentHealth = GameObject.Find("Player").GetComponent<Health>().health;
-            maxHealth = GameObject.Find("Player").GetComponent<Health>().maximumHealth;
-        }
+        currentHealth = health.health;
+        maxHealth = health.maximumHealth;
+
+        // set width
+        healthSlider.maxValue = maxHealth;
         healthSlider.value = currentHealth;
+
         healthText.text = $"{(int)currentHealth} / {(int)maxHealth}";
 
     }
