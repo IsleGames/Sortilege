@@ -18,19 +18,27 @@ public class HealthBar : MonoBehaviour
     public Slider healthSlider;
     public Text healthText;
 
-    public void Init(bool isitplayer, float health = 100, float maxHealth = 100)
+    private Health health;
+
+    /*
+     * Initializes a healthbar from a Units.Health object
+     */
+    public void Init(Health healthObj)
     {
-        isplayer = isitplayer;
-        if (isplayer)
-        {
-            health = GameObject.Find("Player").GetComponent<Health>().health;
-            maxHealth = GameObject.Find("Player").GetComponent<Health>().maximumHealth;
-        }
+        health = healthObj;
+        currentHealth = health.health;
+        maxHealth = health.maximumHealth;
         
-        currentHealth = health;
-        healthSlider.maxValue = maxHealth;
-        healthSlider.value = currentHealth;
         /// set width;
+    }
+
+    /*
+     * Initializes a healthbar from a named GameObject
+     */
+    public void Init(string gameObjectName)
+    {
+        Health health = GameObject.Find(gameObjectName).GetComponent<Health>();
+        Init(health);
     }
 
     public void Update()
@@ -44,5 +52,7 @@ public class HealthBar : MonoBehaviour
         healthText.text = $"{(int)currentHealth} / {(int)maxHealth}";
 
     }
+
+    // TODO: animate changes in health
     
 }

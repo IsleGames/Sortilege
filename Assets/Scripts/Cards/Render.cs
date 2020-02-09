@@ -21,12 +21,17 @@ namespace Cards
             // Set strategy color
             var bgSprite = newCardImage.GetComponent<SpriteRenderer>();
             bgSprite.color = VfxManager.strategyColors[meta.strategy];
-            
-            // Set attribute sprite
-            // Missing
-            
+
+            // Set attribute 
+            Debug.Log(VfxManager.attributeSpritePaths[meta.attribute]);
+            var renderer = newCardImage.transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
+            Debug.Log(renderer);
+            renderer.sprite = Resources.Load<Sprite>(
+                VfxManager.attributeSpritePaths[meta.attribute]);
+            Debug.Log(renderer.sprite);
             // Set name
             newCardImage.transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
+            // Set rules text
             newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<Ability>()?.Text();
 
             Game.Ctx.VfxOperator.MoveCardToSomePosition(newCardImage.transform);

@@ -25,10 +25,15 @@ namespace Managers
 		private GameObject _cardPrefab;
 
 		public int handLimit;
-		
-		private void Start()
+
+        private void Awake()
+        {
+            _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+        }
+
+        private void Start()
 		{
-			_cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+			
 
 			Deck = new List<Card>();
 			Hand = new List<Card>();
@@ -100,6 +105,7 @@ namespace Managers
 						throw new InvalidOperationException("The Deck pile is empty");
 
 				Card card = Deck.Draw();
+                Debug.Log(card);
 				Hand.Add(card);
 			}
 		}

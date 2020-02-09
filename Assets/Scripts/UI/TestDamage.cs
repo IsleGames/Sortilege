@@ -11,8 +11,8 @@ public class TestDamage : MonoBehaviour
     // Start is called before the first frame update
 
     public void Start()
-    {
-        healthbar.Init(true);
+    { 
+        healthbar.Init("Player");
     }
 
     public void Damage()

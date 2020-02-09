@@ -20,9 +20,21 @@ namespace Managers
              {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
              {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
          };
+
+        public static Dictionary<AttributeType, string> attributeSpritePaths = new Dictionary<AttributeType, string>()
+        {
+            { AttributeType.Infernal, "Sprites/Icons/icon-fire"      },
+            { AttributeType.Storm,    "Sprites/Icons/icon-snowflake" },
+            { AttributeType.Thunder,  "Sprites/Icons/icon-lightning" },
+            { AttributeType.Venom,    "Sprites/Icons/icon-skull"     },
+            { AttributeType.None,    "Sprites/Icons/icon-none"       },
+        };
+
          private void Start()
          {
              cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject;
+
+
          }
          
          // Temporary Method
