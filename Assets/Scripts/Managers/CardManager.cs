@@ -24,7 +24,8 @@ namespace Managers
 
 		private GameObject _cardPrefab;
 
-		public int handLimit;
+        public int handLimit = 2;
+        private MetaData lastPlayed = null;
 
         private void Awake()
         {
@@ -42,7 +43,6 @@ namespace Managers
 			// Grab the list from the Inspector for now
 			// CardList = new List<Card>();
 
-			handLimit = 2;
 			
 			Initialize();
 		}
@@ -58,6 +58,18 @@ namespace Managers
 				Deck.Add(newCard);
 			}
 		}
+
+        public bool CanPlay(MetaData meta)
+        {
+            if (lastPlayed == null) return true;
+            return (meta.attribute == lastPlayed.attribute || meta.strategy == lastPlayed.strategy);
+        }
+
+        public bool CanPlay(Card card)
+        {
+
+            return CanPlay(card.GetComponent<MetaData>());
+        }
 
 		public Card DrawCard(List<Card> pile, bool onEmptyReturnNull = true)
 		{
@@ -109,18 +121,23 @@ namespace Managers
 				Hand.Add(card);
 			}
 		}
-		
-		public void PlayCard(Card card)
-		{
-			bool ret = Hand.Remove(card);
-			
-			card.Apply(Game.Ctx.Enemy);
 
-			if (!ret)
-				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-			else
-				DiscardPile.Add(card);
-		}
+        public void PlayCard(Card card)
+        {
+            bool ret = Hand.Remove(card);
+            card.Apply(Game.Ctx.Enemy);
+            lastPlayed = card.GetComponent<MetaData>();
+            if (!ret)
+            {
+                throw new InvalidOperationException("The popped card does not appear in the Hand pile");
+            }
+            else
+            {
+                
+
+                DiscardPile.Add(card);
+            }
+        }
 		
 		public void PopCard(Card card)
 		{
