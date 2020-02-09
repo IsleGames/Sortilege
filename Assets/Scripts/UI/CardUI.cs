@@ -1,18 +1,24 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // This should maybe just be Collider? 
 // We'll see how many dimensions we use
-[RequireComponent(typeof(Collider2D))] 
+[RequireComponent(typeof(Collider2D))]
 public class CardUI : MonoBehaviour {
 
     public bool canPlay = true; // TODO: default to false, check in update() based on game state
     public bool beingPlayed = false;
     public float moveSpeed = 0.1f;
     public Transform discardPile;
+
+    private Cards.Card card;
     Vector3 home;
     private Vector3 cursorhome;
+
+    public void SetCard(Cards.Card c)
+    {
+        card = c;
+    }
 
     public void OnMouseDown()
     {
@@ -65,7 +71,7 @@ public class CardUI : MonoBehaviour {
         if (beingPlayed)
         {
             //play this card
-            //getComponent<Card>().play()
+            Game.Ctx.CardOperator.PlayCard(card);
 
             //Move to discard pile
             // Note: the movement should maybe be done with springs,
