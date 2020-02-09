@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 // This should maybe just be Collider? 
@@ -71,19 +72,44 @@ public class CardUI : MonoBehaviour {
         if (beingPlayed)
         {
             //play this card
-            Game.Ctx.CardOperator.PlayCard(card);
-
+            Debug.Log("Playing");
+            //TODO: get rid of this try/
+            try
+            {
+                Game.Ctx.CardOperator.PlayCard(card);
+            }
+            catch (InvalidOperationException)
+            { }// this is a really bad hack 
+            Hide();
+            
             //Move to discard pile
             // Note: the movement should maybe be done with springs,
             // rather than scripts?
 
-            StartCoroutine(MoveCard(discardPile.position, 0.5f));
+            //StartCoroutine(MoveCard(discardPile.position, 0.5f));
             canPlay = false;
         }
         else
         {
             StartCoroutine(MoveCard(home, 0f));
         }
+    }
+
+    public void Hide()
+    {
+        Debug.Log("Hiding");
+        GetComponent<SpriteRenderer>().enabled = false;
+        transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
+        transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
+        transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public void Show()
+    {
+        GetComponent<SpriteRenderer>().enabled = true;
+        transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+        transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+        transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = true;
     }
 
 
