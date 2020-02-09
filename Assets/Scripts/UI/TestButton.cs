@@ -21,7 +21,7 @@ public class TestButton : MonoBehaviour
     public void SpawnCard() { 
     
         var effect = new Effects.Effect(Effects.UnitType.Enemy, 10);
-        factory.MakeCard("Test", StrategyType.Berserker, AttributeType.Infernal, new List<Effect>() { effect });
+        CardFactory.MakeCard("Test", StrategyType.Berserker, AttributeType.Infernal, new List<Effect>() { effect });
     }
 
 }
