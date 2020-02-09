@@ -70,6 +70,12 @@ public class Game : MonoBehaviour
             if (!HasPlayerLost())
             {
                 Debugger.Log("player wins");
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
+
             }
             else
             {
