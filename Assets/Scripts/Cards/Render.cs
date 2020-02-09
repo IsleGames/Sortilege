@@ -27,9 +27,11 @@ namespace Cards
             
             // Set name
             newCardImage.transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
-            
+            newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<Ability>()?.Text();
+
             Game.Ctx.VfxOperator.MoveCardToSomePosition(newCardImage.transform);
             
+
             // // Set text
             // var cardTextObject = newCardImage.transform.Find("CardText");
             // if (cardTextObject == null)
