@@ -32,7 +32,7 @@ namespace Cards
 
         public void Initialize(CardData newCardData)
         {
-            // Debugger.Log("hi");
+            Debugger.Log("hi");
             cardData = newCardData;
             
             GetComponent<MetaData>().title = cardData.title;
