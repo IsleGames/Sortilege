@@ -26,6 +26,9 @@ namespace Cards
             cardData = newCardData;
             
             GetComponent<MetaData>().title = cardData.title;
+
+            gameObject.name = cardData.title;
+            
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
 
