@@ -36,8 +36,7 @@ public class Game : MonoBehaviour
         BattleSeq = BattleOperator.Continue();
 
         turnCount = 0;
-        RunningMethod = null;
-        
+
         Continue();
     }
     
@@ -71,11 +70,11 @@ public class Game : MonoBehaviour
             if (!HasPlayerLost())
             {
                 Debugger.Log("player wins");
-// #if UNITY_EDITOR
-//                 UnityEditor.EditorApplication.isPlaying = false;
-// #else
-//                 Application.Quit();
-// #endif
+#if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+#else
+                Application.Quit();
+#endif
 
             }
             else
