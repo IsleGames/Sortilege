@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [RequireComponent(typeof(Button))]
 public class TestDamage : MonoBehaviour
 {
-
+/*
     public HealthBar playerHealthBar;
     public HealthBar enemyHealthBar;
     // Start is called before the first frame update
@@ -21,5 +21,5 @@ public class TestDamage : MonoBehaviour
     {
         GameObject.Find("Player").GetComponent<Health>().Damage(10);
     }
-
+*/
 }

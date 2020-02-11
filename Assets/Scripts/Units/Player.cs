@@ -8,10 +8,6 @@ namespace Units
 	{
 		public int chainStreak;
 		
-		void Start()
-		{
-		}
-
 		public override void Initialize()
 		{
 			// CardManager Loads itself

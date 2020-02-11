@@ -11,15 +11,6 @@ using _Editor;
 
 namespace Cards
 {
-    // public enum CardStatus : int
-    // {
-    //     Unknown,
-    //     Stored,
-    //     Decked,
-    //     Held,
-    //     Discarded,
-    // }    [SerializeField]
-
     public class Card : MonoBehaviour
     {
         [SerializeField]
@@ -32,7 +23,6 @@ namespace Cards
 
         public void Initialize(CardData newCardData)
         {
-            // Debugger.Log("hi");
             cardData = newCardData;
             
             GetComponent<MetaData>().title = cardData.title;
@@ -40,8 +30,6 @@ namespace Cards
             GetComponent<MetaData>().attribute = cardData.attribute;
 
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
-            
-            GetComponent<Render>().SetCardImage();
         }
         
         public void Apply(Unit target)

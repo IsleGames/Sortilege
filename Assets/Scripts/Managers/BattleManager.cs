@@ -24,6 +24,10 @@ namespace Managers
             Game.Ctx.RunningMethod = Game.Ctx.Player.Initialize;
             yield return null;
             
+            Debugger.Log("deck init");
+            Game.Ctx.RunningMethod = Game.Ctx.CardOperator.Initialize;
+            yield return null;
+            
             Debugger.Log("enemy init");
             Game.Ctx.RunningMethod = Game.Ctx.Enemy.Initialize;
             yield return null;

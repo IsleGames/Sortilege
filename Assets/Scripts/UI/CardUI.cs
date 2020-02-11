@@ -73,13 +73,12 @@ public class CardUI : MonoBehaviour {
         {
             //play this card
             Debug.Log("Playing");
-            //TODO: get rid of this try/
-            try
-            {
-                Game.Ctx.CardOperator.PlayCard(card);
-            }
-            catch (InvalidOperationException)
-            { }// this is a really bad hack 
+            // TODO: get rid of this try
+            // Follow up: throw new exceptions doesn't work here
+            // Switched to Debugger.Error (basically Debug.Error)
+            
+            Game.Ctx.CardOperator.PlayCard(card);
+            
             Hide();
             
             //Move to discard pile

@@ -12,8 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
   m_Name: Chained Blaze
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
-  attribute: 0
-  description: 
-  effectList: []
+  title: Chained Blaze
+  strategy: 5
+  attribute: 2
+  description: Something
+  effectList:
+  - affectiveUnit: 2
+    damage: 4
+  - affectiveUnit: 1
+    damage: 2

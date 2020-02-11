@@ -12,7 +12,7 @@ namespace Cards
 {
     public class Render : MonoBehaviour
     {
-        public void SetCardImage()
+        public void Start()
         {
             GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
             newCardImage.GetComponent<CardUI>()?.SetCard(GetComponent<Card>());
