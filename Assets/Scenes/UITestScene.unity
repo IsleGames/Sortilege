@@ -864,6 +864,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardImagePrefab: {fileID: 0}
+  cardCanvas: {fileID: 0}
 --- !u!114 &1051549745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1351,7 +1352,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 696178585
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &1554743010
 RectTransform:

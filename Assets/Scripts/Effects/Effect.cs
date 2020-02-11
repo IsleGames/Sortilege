@@ -46,8 +46,8 @@ namespace Effects
 
         public string Text()
         {
-            if (damage > 0) return $"{damage} Damage";
-            else return $"{-damage} Health";
+            if (damage > 0) return $"{damage}\nDMG";
+            else return $"{-damage}\nHEAL";
         }
 
 
