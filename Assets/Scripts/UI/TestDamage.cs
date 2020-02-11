@@ -1,17 +1,25 @@
-﻿using UnityEngine;
+﻿using System;
+using Units;
+using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Button))]
 public class TestDamage : MonoBehaviour
 {
 
-    public HealthBar healthbar;
+    public HealthBar playerHealthBar;
+    public HealthBar enemyHealthBar;
     // Start is called before the first frame update
-    
-        
+
+    public void Start()
+    { 
+        playerHealthBar.Init("Player");
+        enemyHealthBar.Init("Enemy");
+    }
+
     public void Damage()
     {
-        healthbar.StartCoroutine("takeDamage", 10);
+        GameObject.Find("Player").GetComponent<Health>().Damage(10);
     }
 
 }

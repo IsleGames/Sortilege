@@ -15,33 +15,26 @@ namespace Cards
         public void SetCardImage()
         {
             GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
-            
+            newCardImage.GetComponent<CardUI>()?.SetCard(GetComponent<Card>());
+
             MetaData meta = GetComponent<MetaData>();
             
             // Set strategy color
             var bgSprite = newCardImage.GetComponent<SpriteRenderer>();
             bgSprite.color = VfxManager.strategyColors[meta.strategy];
-            
-            // Set attribute sprite
-            // Missing
-            
+
+            // Set attribute 
+            var renderer = newCardImage.transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
+            renderer.sprite = Resources.Load<Sprite>(
+                VfxManager.attributeSpritePaths[meta.attribute]);
+
             // Set name
             newCardImage.transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
+            // Set rules text
+            newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<Ability>()?.Text();
+
+            Game.Ctx.VfxOperator.MoveCardToRandomPosition(newCardImage.transform);
             
-            Game.Ctx.VfxOperator.MoveCardToSomePosition(newCardImage.transform);
-            
-            // // Set text
-            // var cardTextObject = newCardImage.transform.Find("CardText");
-            // if (cardTextObject == null)
-            //     Debug.Log("Could not find card text");
-            // else
-            // {
-            //     var text = cardTextObject.GetComponent<TextMeshProUGUI>();
-            //     if (text == null)
-            //         Debugger.Log("Could not find card text");
-            //     else
-            //         text.text = newCard.GetComponent<Ability>().Text();
-            // }
         }
     }
 }

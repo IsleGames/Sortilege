@@ -1,18 +1,25 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 // This should maybe just be Collider? 
 // We'll see how many dimensions we use
-[RequireComponent(typeof(Collider2D))] 
+[RequireComponent(typeof(Collider2D))]
 public class CardUI : MonoBehaviour {
 
     public bool canPlay = true; // TODO: default to false, check in update() based on game state
     public bool beingPlayed = false;
-    public float moveSpeed = 1f;
+    public float moveSpeed = 0.1f;
     public Transform discardPile;
+
+    private Cards.Card card;
     Vector3 home;
     private Vector3 cursorhome;
+
+    public void SetCard(Cards.Card c)
+    {
+        card = c;
+    }
 
     public void OnMouseDown()
     {
@@ -65,19 +72,44 @@ public class CardUI : MonoBehaviour {
         if (beingPlayed)
         {
             //play this card
-            //getComponent<Card>().play()
-
+            Debug.Log("Playing");
+            //TODO: get rid of this try/
+            try
+            {
+                Game.Ctx.CardOperator.PlayCard(card);
+            }
+            catch (InvalidOperationException)
+            { }// this is a really bad hack 
+            Hide();
+            
             //Move to discard pile
             // Note: the movement should maybe be done with springs,
             // rather than scripts?
 
-            StartCoroutine(MoveCard(discardPile.position, 0.5f));
+            //StartCoroutine(MoveCard(discardPile.position, 0.5f));
             canPlay = false;
         }
         else
         {
             StartCoroutine(MoveCard(home, 0f));
         }
+    }
+
+    public void Hide()
+    {
+        Debug.Log("Hiding");
+        GetComponent<SpriteRenderer>().enabled = false;
+        transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
+        transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
+        transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = false;
+    }
+
+    public void Show()
+    {
+        GetComponent<SpriteRenderer>().enabled = true;
+        transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+        transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+        transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = true;
     }
 
 
