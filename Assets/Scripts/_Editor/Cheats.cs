@@ -26,6 +26,7 @@ namespace _Editor
         {
             if (Input.GetKeyUp(KeyCode.Alpha1))
             {
+                Debugger.Log("test");
                 PlayCard(0);
             }
             else if (Input.GetKeyUp(KeyCode.Alpha2))
