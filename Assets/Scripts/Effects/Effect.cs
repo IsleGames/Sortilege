@@ -49,8 +49,6 @@ namespace Effects
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
 			
-			Debugger.Log("I am applied!");
-			
 			switch (type)
 			{
 			  case EffectType.Damage: 
