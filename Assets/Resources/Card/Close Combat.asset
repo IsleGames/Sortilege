@@ -10,13 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Strike
+  m_Name: Close Combat
   m_EditorClassIdentifier: 
-  title: Strike
+  title: Clost Combat
   strategy: 2
   attribute: 0
-  description: Something
+  description: 
   effectList:
+  - affectiveUnit: 1
+    type: 4
+    amount: 2
+  - affectiveUnit: 1
+    type: 3
+    amount: 2
   - affectiveUnit: 2
     type: 0
-    amount: 3
+    amount: 5

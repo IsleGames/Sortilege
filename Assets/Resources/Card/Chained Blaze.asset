@@ -10,13 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Strike
+  m_Name: Chained Blaze
   m_EditorClassIdentifier: 
-  title: Strike
-  strategy: 2
-  attribute: 0
+  title: Chained Blaze
+  strategy: 5
+  attribute: 2
   description: Something
   effectList:
   - affectiveUnit: 2
     type: 0
-    amount: 3
+    amount: 4
+  - affectiveUnit: 1
+    type: 0
+    amount: 2
