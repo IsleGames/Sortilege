@@ -12,6 +12,7 @@ namespace Managers
      public class VfxManager : MonoBehaviour
      {
          public GameObject cardImagePrefab;
+        public GameObject cardCanvas;
          
          public static Dictionary<StrategyType, Color> strategyColors = new Dictionary<StrategyType, Color>(){
              {StrategyType.None, Color.white },
@@ -34,14 +35,14 @@ namespace Managers
          private void Start()
          {
              cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject;
-
+            cardCanvas = GameObject.Find("CardCanvas");
 
          }
          
          // Temporary Method
          public void MoveCardToRandomPosition(Transform trans)
          {
-             trans.position = new Vector3(Random.Range(-550f, -450), Random.Range(0,1f), 0);
+             trans.position = new Vector3(Random.Range(-500f, 500f), -190f, 0);
          }
 
         public void SetCardPosition(Card card, Vector3 pos)

@@ -89,10 +89,11 @@ public class CardUI : MonoBehaviour {
             //StartCoroutine(MoveCard(discardPile.position, 0.5f));
             canPlay = false;
         }
+        /*
         else
         {
             StartCoroutine(MoveCard(home, 0f));
-        }
+        }*/
     }
 
     public void Hide()

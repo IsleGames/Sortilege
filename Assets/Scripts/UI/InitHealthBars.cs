@@ -3,8 +3,7 @@ using Units;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class TestDamage : MonoBehaviour
+public class InitHealthBars: MonoBehaviour
 {
 
     public HealthBar playerHealthBar;
@@ -15,11 +14,6 @@ public class TestDamage : MonoBehaviour
     { 
         playerHealthBar.Init("Player");
         enemyHealthBar.Init("Enemy");
-    }
-
-    public void Damage()
-    {
-        GameObject.Find("Player").GetComponent<Health>().Damage(10);
     }
 
 }
