@@ -19,11 +19,15 @@ namespace Managers
         // And a bunch of notes from CS376
         public IEnumerator Continue()
         {
-            Debugger.Log("player init");
+            Debugger.Log("Player Init");
             Game.Ctx.RunningMethod = Game.Ctx.Player.Initialize;
             yield return null;
             
-            Debugger.Log("enemy init");
+            Debugger.Log("Deck Init");
+            Game.Ctx.RunningMethod = Game.Ctx.CardOperator.Initialize;
+            yield return null;
+            
+            Debugger.Log("Enemy Init");
             Game.Ctx.RunningMethod = Game.Ctx.Enemy.Initialize;
             yield return null;
             
@@ -31,11 +35,11 @@ namespace Managers
             {
                 Game.Ctx.turnCount += 1;
                 
-                Debugger.Log("player play");
+                Debugger.Log("Player Turn");
                 Game.Ctx.RunningMethod = Game.Ctx.Player.Play;
                 yield return null;
                 
-                Debugger.Log("enemy play");
+                Debugger.Log("Enemy Turn");
                 Game.Ctx.RunningMethod = Game.Ctx.Enemy.Play;
                 yield return null;
             }

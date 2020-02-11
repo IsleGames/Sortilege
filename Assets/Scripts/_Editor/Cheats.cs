@@ -24,6 +24,11 @@ namespace _Editor
 
         public void Update()
         {
+            // if (Input.GetKeyUp(KeyCode.S))
+            // {
+            //     Game.Ctx.Continue();
+            // }
+            // else 
             if (Input.GetKeyUp(KeyCode.Alpha1))
             {
                 PlayCard(0);

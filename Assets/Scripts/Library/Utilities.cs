@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
-using UnityEngine;
+using _Editor;
+using Random = UnityEngine.Random;
 
 namespace Library
 {
@@ -10,8 +12,8 @@ namespace Library
 			int k = Random.Range(0, list.Count);
 
 			T ret = list[k];
-			list.RemoveAt(k);
 
+			list.RemoveAt(k);
 			return ret;
 		}  
 

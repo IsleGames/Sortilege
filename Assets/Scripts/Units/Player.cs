@@ -8,17 +8,13 @@ namespace Units
 	{
 		public int chainStreak;
 		
-		void Start()
-		{
-		}
-
 		public override void Initialize()
 		{
 			// CardManager Loads itself
 			
 			// Pending: ask for HP from upper Manager instead of doing it here
 			
-			GetComponent<Health>().Initialize(10);
+			GetComponent<Health>().Initialize();
 			Debugger.Log("Player HP: " + GetComponent<Health>().health);
 			
 			Game.Ctx.Continue();
