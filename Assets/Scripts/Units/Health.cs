@@ -55,9 +55,6 @@ namespace Units
         
         public void BlockAlter(float amount)
         {
-            if (amount < 0)
-                Debugger.Warning("Negative amount detected for BlockAlter", this);
-                
             block += amount;
         }
         

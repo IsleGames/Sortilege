@@ -16,11 +16,13 @@ public class HealthBar : MonoBehaviour
 
     public Slider healthSlider;
     public Text healthText;
+    public TMPro.TextMeshProUGUI name;
 
     // Temporal Solution; change it later
     public GameObject unitObject;
     
     private Health health;
+
 
     /*
      * Initializes a healthbar from a Units.Health object

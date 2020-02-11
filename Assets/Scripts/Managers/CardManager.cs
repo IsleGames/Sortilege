@@ -16,7 +16,8 @@ namespace Managers
 		// private List<CardData> _cardDataArray;
 		
 		public List<CardData> CardList;
-		public List<Card> Deck, Hand, DiscardPile;
+        public List<Card> Deck, Hand;
+        public Stack<Card> DiscardPile;
 
 		public int handLimit;
         
@@ -29,7 +30,7 @@ namespace Managers
             
 			Deck = new List<Card>();
 			Hand = new List<Card>();
-			DiscardPile = new List<Card>();
+			DiscardPile = new Stack<Card>();
 			
 			handLimit = 2;
         }
@@ -123,7 +124,7 @@ namespace Managers
             card.Apply(Game.Ctx.Enemy);
             
             _lastPlayed = card;
-            DiscardPile.Add(card);
+            DiscardPile.Push(card);
         }
 		
 		public void PopCard(Card card)
@@ -132,7 +133,7 @@ namespace Managers
 
 			if (!ret)
 				throw new InvalidDataException("The popped card does not appear in the Hand pile");
-			DiscardPile.Add(card);
+			DiscardPile.Push(card);
 		}
 
 		public bool IsEmpty(List<Card> pile)
