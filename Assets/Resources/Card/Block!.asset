@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
   m_Name: New CardData
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
+  title: Block!
+  strategy: 3
   attribute: 0
   description: 
-  effectList: []
+  effectList:
+  - affectiveUnit: 1
+    type: 2
+    amount: 3

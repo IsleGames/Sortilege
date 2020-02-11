@@ -18,6 +18,8 @@ MonoBehaviour:
   description: Something
   effectList:
   - affectiveUnit: 2
-    damage: 4
+    type: 0
+    amount: 4
   - affectiveUnit: 1
-    damage: 2
+    type: 0
+    amount: 2

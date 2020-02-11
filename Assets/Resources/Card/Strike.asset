@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: Strike
   m_EditorClassIdentifier: 
   title: Strike
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
   strategy: 2
   attribute: 0
   description: Something
   effectList:
   - affectiveUnit: 2
-    damage: 3
+    type: 0
+    amount: 3
