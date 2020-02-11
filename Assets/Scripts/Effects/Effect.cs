@@ -1,5 +1,4 @@
 using System;
-using System.Data;
 using Units;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -20,61 +19,35 @@ namespace Effects
 	{
 		Damage,
 		Heal,
-		IncBlock,
-		DecBlock,
-		DamageIgnoreBlock
+		BlockUp,
+		BlockDown
 	}
 
 	[Serializable]
 	public class Effect
 	{
 		public UnitType affectiveUnit;
-
-		public EffectType type;
-		public float amount;
+		public float damage;
 		
-		public Effect(UnitType affectiveUnit, EffectType effectType, float amount)
+		public Effect(UnitType affectiveUnit, float amount)
 		{
 			this.affectiveUnit = affectiveUnit;
-			this.type = type;
-			
-			if (amount < 0f)
-				throw new ConstraintException("Effect amount should be larger than zero");
-			
-			this.amount = amount;
+
+			this.damage = amount;
 		}
 
 		public void Apply(Unit unit)
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
-			
-			Debugger.Log("I am applied!");
-			
-			switch (type)
-			{
-			  case EffectType.Damage: 
-				  unit.GetComponent<Health>().Damage(amount);
-				  break;
-			  case EffectType.Heal:
-				  unit.GetComponent<Health>().Heal(amount);
-				  break;
-			  case EffectType.IncBlock:
-				  unit.GetComponent<Health>().BlockAlter(amount);
-				  break;
-			  case EffectType.DecBlock:
-				  unit.GetComponent<Health>().BlockAlter(-amount);
-				  break;
-			  case EffectType.DamageIgnoreBlock: 
-				  unit.GetComponent<Health>().Damage(amount, true);
-				  break;
-			}
+
+			unit.GetComponent<Health>().Damage(damage);
 		}
 
-		// Need change
         public string Text()
         {
-	        return affectiveUnit + " " + type + " " + amount;
+            if (damage > 0) return $"{damage}\nDMG";
+            else return $"{-damage}\nHEAL";
         }
 
 

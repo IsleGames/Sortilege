@@ -1,4 +1,3 @@
-using System;
 using _Editor;
 using UnityEngine;
 
@@ -8,18 +7,13 @@ namespace Units
     {
         private bool _initialized = false;
         
-        // Make it SerializableField For now
-        // Later it will read from an upper level
-        [NonSerialized]
         public float health;
         public float maximumHealth;
 
-        public float block;
-
-        public void Initialize()
+        public void Initialize(float maxHealth)
         {
-            // maximumHealth = maxHealth;
-            health = maximumHealth;
+            maximumHealth = maxHealth;
+            health = maxHealth;
 
             _initialized = true;
         }
@@ -31,31 +25,22 @@ namespace Units
             
             return expectedHitPoint;
         }
-        
-        public void Damage(float amount, bool ignoreBlock = false)
+
+        public void Damage(float amount)
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
                 
             Debugger.Log("Deal " + amount + " Damage to " + health + " Health", this);
-            if (!ignoreBlock) 
-                health = ValidityCheck(health - Mathf.Max(amount - block, 0));
-            else
-                health = ValidityCheck(health - Mathf.Max(amount, 0));
+            health = ValidityCheck(health - amount);
         }
         
-
         public void Heal(float amount)
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
                 
             health = ValidityCheck(health + amount);
-        }
-        
-        public void BlockAlter(float amount)
-        {
-            block += amount;
         }
         
         public bool IsDead()

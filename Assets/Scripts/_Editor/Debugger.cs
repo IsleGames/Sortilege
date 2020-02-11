@@ -27,15 +27,6 @@ namespace _Editor
                     Debug.LogWarning(obj.ToString(), source);
         }
         
-        public static void Error<T>(T obj, Object source = null)
-        {
-            if (EnableDebugOutput)
-                if (source == null)
-                    Debug.LogError(obj.ToString());
-                else
-                    Debug.LogError(obj.ToString(), source);
-        }
-        
         public static void OneOnOneStat()
         {
             Debug.Log("player hp: " + Game.Ctx.Player.GetComponent<Health>().health);

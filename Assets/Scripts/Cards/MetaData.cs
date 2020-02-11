@@ -27,7 +27,8 @@ namespace Cards
         Storm
     }
     public class MetaData : MonoBehaviour
-    {
+    {            
+
         public string title;
         
         public StrategyType strategy = StrategyType.None;
@@ -36,7 +37,7 @@ namespace Cards
         public int level;
         public int maxLevel;
 
-        public bool HasSharedProperty(Card otherCard) 
+        public bool HasSharedProperty(GameObject otherCard) 
         {
             MetaData otherMeta = otherCard.GetComponent<MetaData>();
 
