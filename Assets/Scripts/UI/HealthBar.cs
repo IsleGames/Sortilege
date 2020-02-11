@@ -13,29 +13,42 @@ public class HealthBar : MonoBehaviour
     public float currentHealth;
 
     public float rate = 1f; // health units per frame
-    public bool isplayer;
 
     public Slider healthSlider;
     public Text healthText;
 
+    // Temporal Solution; change it later
+    public GameObject unitObject;
+    
     private Health health;
 
     /*
      * Initializes a healthbar from a Units.Health object
      */
-    public void Init(Health healthObj)
-    {
-        health = healthObj;
-        
-    }
+    
+    // TBH I don't think overloading methods is a good habit; It messes up your code even more
+    
+    // public void Init(Health healthObj)
+    // {
+    //     health = healthObj;
+    // }
 
     /*
      * Initializes a healthbar from a named GameObject
      */
-    public void Init(string gameObjectName)
+    public void Start()
     {
-        Health health = GameObject.Find(gameObjectName).GetComponent<Health>();
-        Init(health);
+        // Cm'on, don't initialize this under TestDamage.cs!
+        // Create a general enemy Prefab and hook the healthbar as a sub-object would be the best choice
+        
+        if (unitObject != null)
+        {
+            health = unitObject.GetComponent<Health>();
+        }
+        else
+        {
+            throw new NullReferenceException("unitObject not defined");
+        }
     }
 
     public void Update()

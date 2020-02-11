@@ -7,13 +7,17 @@ namespace Units
     {
         private bool _initialized = false;
         
+        // Make it SerializableField For now
+        // Later it will read from an upper level
         public float health;
         public float maximumHealth;
 
-        public void Initialize(float maxHealth)
+        public float block;
+
+        public void Initialize()
         {
-            maximumHealth = maxHealth;
-            health = maxHealth;
+            // maximumHealth = maxHealth;
+            health = maximumHealth;
 
             _initialized = true;
         }
@@ -32,7 +36,7 @@ namespace Units
                 Debugger.Warning("Negative amount detected for Damage", this);
                 
             Debugger.Log("Deal " + amount + " Damage to " + health + " Health", this);
-            health = ValidityCheck(health - amount);
+            health = ValidityCheck(health - Mathf.Max(amount - block, 0));
         }
         
         public void Heal(float amount)

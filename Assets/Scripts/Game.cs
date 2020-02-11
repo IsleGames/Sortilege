@@ -36,7 +36,8 @@ public class Game : MonoBehaviour
         BattleSeq = BattleOperator.Continue();
 
         turnCount = 0;
-
+        RunningMethod = null;
+        
         Continue();
     }
     

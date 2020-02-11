@@ -118,7 +118,8 @@ namespace Managers
             bool ret = Hand.Remove(card);
             if (!ret)
                 throw new InvalidDataException("The popped card does not appear in the Hand pile");
-            
+
+            Game.Ctx.Player.chainStreak += 1;
             card.Apply(Game.Ctx.Enemy);
             
             _lastPlayed = card;
