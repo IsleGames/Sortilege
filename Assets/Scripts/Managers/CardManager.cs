@@ -1,11 +1,15 @@
 using System;
+using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
-using System.IO;
-using _Editor;
-using Cards;
-using Data;
+using Object = UnityEngine.Object;
+
 using Library;
+using Cards;
 using UnityEngine;
+using Data;
+
+using _Editor;
 
 namespace Managers
 {
@@ -19,45 +23,54 @@ namespace Managers
         public List<Card> Deck, Hand;
         public Stack<Card> DiscardPile;
 
-		public int handLimit;
-        
 		private GameObject _cardPrefab;
-		private Card _lastPlayed = null;
+
+        public int handLimit = 2;
 
         private void Awake()
         {
             _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-            
-			Deck = new List<Card>();
-			Hand = new List<Card>();
-			DiscardPile = new Stack<Card>();
-			
-			handLimit = 2;
         }
 
         private void Start()
 		{
 			
+
+			Deck = new List<Card>();
+			Hand = new List<Card>();
+			DiscardPile = new Stack<Card>();
+			
 			// Grab the list from the Inspector for now
+			// CardList = new List<Card>();
+
+			
+			Initialize();
 		}
 		
 		public void Initialize()
 		{
-			// All Initialize functions should have Game.Ctx.Continue() for seq control
-
 			foreach (CardData cardData in CardList)
 			{
 				GameObject newCardObj = Instantiate(_cardPrefab);
 				Card newCard = newCardObj.GetComponent<Card>();
-
+				
 				newCard.Initialize(cardData);
 				Deck.Add(newCard);
 			}
-			
-			Debugger.Log("Deck initialize complete!");
-			
-			Game.Ctx.Continue();
 		}
+
+        public bool CanPlay(MetaData meta)
+        {
+            var lastPlayed = DiscardPile.Peek()?.GetComponent<MetaData>();
+            if (lastPlayed == null) return true;
+            return (meta.attribute == lastPlayed.attribute || meta.strategy == lastPlayed.strategy);
+        }
+
+        public bool CanPlay(Card card)
+        {
+
+            return CanPlay(card.GetComponent<MetaData>());
+        }
 
 		public Card DrawCard(List<Card> pile, bool onEmptyReturnNull = true)
 		{
@@ -96,8 +109,6 @@ namespace Managers
 
 		public void DrawFullHand(bool onEmptyShuffle = true)
 		{
-			Debugger.Log("Hand now has " + Hand.Count + ". Drawing up to " + handLimit + "...");
-			
 			while (Hand.Count < handLimit)
 			{
 				if (IsEmpty(Deck))
@@ -107,9 +118,7 @@ namespace Managers
 						throw new InvalidOperationException("The Deck pile is empty");
 
 				Card card = Deck.Draw();
-				
-                Debugger.Log(card);
-                
+                Debug.Log(card);
 				Hand.Add(card);
 			}
 		}
@@ -117,14 +126,17 @@ namespace Managers
         public void PlayCard(Card card)
         {
             bool ret = Hand.Remove(card);
-            if (!ret)
-                throw new InvalidDataException("The popped card does not appear in the Hand pile");
-
-            Game.Ctx.Player.chainStreak += 1;
             card.Apply(Game.Ctx.Enemy);
-            
-            _lastPlayed = card;
-            DiscardPile.Push(card);
+            if (!ret)
+            {
+                throw new InvalidOperationException("The popped card does not appear in the Hand pile");
+            }
+            else
+            {
+                
+
+                DiscardPile.Push(card);
+            }
         }
 		
 		public void PopCard(Card card)
@@ -132,8 +144,9 @@ namespace Managers
 			bool ret = Hand.Remove(card);
 
 			if (!ret)
-				throw new InvalidDataException("The popped card does not appear in the Hand pile");
-			DiscardPile.Push(card);
+				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
+			else
+				DiscardPile.Push(card);
 		}
 
 		public bool IsEmpty(List<Card> pile)
