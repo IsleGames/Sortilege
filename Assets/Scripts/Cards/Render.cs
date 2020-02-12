@@ -4,9 +4,7 @@ using _Editor;
 using UnityEngine;
 using TMPro;
 
-using Effects;
 using Managers;
-using UnityEngine.SocialPlatforms.GameCenter;
 
 namespace Cards
 {
@@ -17,7 +15,13 @@ namespace Cards
         public void SetCardImage()
         {
             GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
-            newCardImage.GetComponent<CardUI>()?.SetCard(GetComponent<Card>());
+            Card c = GetComponent<Card>();
+            CardUI cardui = newCardImage.GetComponent<CardUI>();
+
+            cardui.SetCard(c);
+            c.onPlay.AddListener(() => cardui.Hide());
+            c.onDraw.AddListener(() => cardui.Show());
+
             var canvas = newCardImage.GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
@@ -42,7 +46,7 @@ namespace Cards
             newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<Ability>()?.Text();
             sortOrder += 2;
 
-
+            cardui.Hide();
             Game.Ctx.VfxOperator.MoveCardToRandomPosition(newCardImage.transform);
         }
     }

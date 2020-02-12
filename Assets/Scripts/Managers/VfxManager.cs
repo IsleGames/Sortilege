@@ -32,7 +32,7 @@ namespace Managers
             { AttributeType.None,    "Sprites/Icons/icon-none"       },
         };
 
-         private void Start()
+         private void Awake()
          {
              cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject;
             cardCanvas = GameObject.Find("CardCanvas");

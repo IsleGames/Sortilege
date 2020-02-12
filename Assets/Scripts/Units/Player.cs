@@ -29,6 +29,7 @@ namespace Units
 			chainStreak = 0;
 
 			CardManager op = Game.Ctx.CardOperator;
+            op.Initialize();
 			
 			op.DrawFullHand();
 			op.Hand[0].LogInfo();

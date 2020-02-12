@@ -17,7 +17,6 @@ public class HealthBar : MonoBehaviour
 
     public Slider healthSlider;
     public Text healthText;
-    public TMPro.TextMeshProUGUI name;
 
     private Health health;
 
