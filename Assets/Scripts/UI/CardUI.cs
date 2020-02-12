@@ -80,7 +80,6 @@ public class CardUI : MonoBehaviour {
             }
             catch (InvalidOperationException)
             { }// this is a really bad hack 
-            Hide();
             
             //Move to discard pile
             // Note: the movement should maybe be done with springs,
@@ -89,16 +88,11 @@ public class CardUI : MonoBehaviour {
             //StartCoroutine(MoveCard(discardPile.position, 0.5f));
             canPlay = false;
         }
-        /*
-        else
-        {
-            StartCoroutine(MoveCard(home, 0f));
-        }*/
     }
 
     public void Hide()
     {
-        Debug.Log("Hiding");
+
         GetComponent<SpriteRenderer>().enabled = false;
         transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;

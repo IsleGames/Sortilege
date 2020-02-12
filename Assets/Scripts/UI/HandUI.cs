@@ -19,7 +19,6 @@ public class HandUI : MonoBehaviour
         if (cardnum == handLimit) return;
         Vector3 position = new Vector3(transform.position.x, transform.position.y);
         position.x += cardnum * width;
-        //Game.Ctx.VfxOperator.SetCardPosition(card, position);
         cardnum += 1;
         
     }

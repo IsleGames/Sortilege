@@ -21,7 +21,7 @@ namespace Managers
 		
 		public List<CardData> CardList;
         public List<Card> Deck, Hand;
-        public Stack<Card> DiscardPile;
+        public List<Card> DiscardPile;
 
 		private GameObject _cardPrefab;
 
@@ -30,25 +30,21 @@ namespace Managers
         private void Awake()
         {
             _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-        }
-
-        private void Start()
-		{
 			
 
 			Deck = new List<Card>();
 			Hand = new List<Card>();
-			DiscardPile = new Stack<Card>();
+			DiscardPile = new List<Card>();
 			
 			// Grab the list from the Inspector for now
 			// CardList = new List<Card>();
 
 			
-			Initialize();
 		}
 		
 		public void Initialize()
 		{
+            if (Deck.Count > 0) return;
 			foreach (CardData cardData in CardList)
 			{
 				GameObject newCardObj = Instantiate(_cardPrefab);
@@ -58,19 +54,6 @@ namespace Managers
 				Deck.Add(newCard);
 			}
 		}
-
-        public bool CanPlay(MetaData meta)
-        {
-            var lastPlayed = DiscardPile.Peek()?.GetComponent<MetaData>();
-            if (lastPlayed == null) return true;
-            return (meta.attribute == lastPlayed.attribute || meta.strategy == lastPlayed.strategy);
-        }
-
-        public bool CanPlay(Card card)
-        {
-
-            return CanPlay(card.GetComponent<MetaData>());
-        }
 
 		public Card DrawCard(List<Card> pile, bool onEmptyReturnNull = true)
 		{
@@ -101,7 +84,7 @@ namespace Managers
 					else
 						throw new InvalidOperationException("The drawn pile is empty");
 
-				Card card = drawPile.Draw();
+                Card card = drawPile.Draw();
 			}
 
 			return newPile;
@@ -109,24 +92,28 @@ namespace Managers
 
 		public void DrawFullHand(bool onEmptyShuffle = true)
 		{
+            
 			while (Hand.Count < handLimit)
 			{
-				if (IsEmpty(Deck))
-					if (onEmptyShuffle)
-						ShuffleOnDeckEmpty();
-					else
-						throw new InvalidOperationException("The Deck pile is empty");
-
-				Card card = Deck.Draw();
-                Debug.Log(card);
-				Hand.Add(card);
+                if (IsEmpty(Deck))
+                {
+                    if (onEmptyShuffle)
+                        ShuffleOnDeckEmpty();
+                    else
+                        throw new InvalidOperationException("The Deck pile is empty");
+                }
+                Card card = Deck.Draw();
+                card.onDraw.Invoke();
+            	Hand.Add(card);
 			}
 		}
 
         public void PlayCard(Card card)
         {
             bool ret = Hand.Remove(card);
+            Game.Ctx.Player.chainStreak += 1;
             card.Apply(Game.Ctx.Enemy);
+            card.onPlay.Invoke();
             if (!ret)
             {
                 throw new InvalidOperationException("The popped card does not appear in the Hand pile");
@@ -135,7 +122,7 @@ namespace Managers
             {
                 
 
-                DiscardPile.Push(card);
+                DiscardPile.Add(card);
             }
         }
 		
@@ -146,7 +133,7 @@ namespace Managers
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
 			else
-				DiscardPile.Push(card);
+				DiscardPile.Add(card);
 		}
 
 		public bool IsEmpty(List<Card> pile)

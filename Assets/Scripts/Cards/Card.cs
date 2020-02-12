@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 using Units;
 using Effects;
@@ -25,6 +26,10 @@ namespace Cards
         [SerializeField]
         private CardData cardData;
 
+        public UnityEvent onDraw = new UnityEvent();
+        public UnityEvent onPlay = new UnityEvent();
+
+
         public void LogInfo()
         {
             Debugger.Log(cardData.title + ' ' + cardData.strategy + ' ' + cardData.attribute);
@@ -32,7 +37,7 @@ namespace Cards
 
         public void Initialize(CardData newCardData)
         {
-            Debugger.Log("hi");
+
             cardData = newCardData;
             
             GetComponent<MetaData>().title = cardData.title;
