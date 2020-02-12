@@ -41,7 +41,24 @@ namespace Effects
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
 
-			unit.GetComponent<Health>().Damage(damage);
+			switch (type)
+			{
+			  case EffectType.Damage: 
+				  unit.GetComponent<Health>().Damage(amount);
+				  break;
+			  case EffectType.Heal:
+				  unit.GetComponent<Health>().Heal(amount);
+				  break;
+			  case EffectType.IncBlock:
+				  unit.GetComponent<Health>().BlockAlter(amount);
+				  break;
+			  case EffectType.DecBlock:
+				  unit.GetComponent<Health>().BlockAlter(-amount);
+				  break;
+			  case EffectType.DamageIgnoreBlock: 
+				  unit.GetComponent<Health>().Damage(amount, true);
+				  break;
+			}
 		}
 
         public string Text()
