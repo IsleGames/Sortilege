@@ -11,15 +11,6 @@ using _Editor;
 
 namespace Cards
 {
-    // public enum CardStatus : int
-    // {
-    //     Unknown,
-    //     Stored,
-    //     Decked,
-    //     Held,
-    //     Discarded,
-    // }    [SerializeField]
-
     public class Card : MonoBehaviour
     {
         [SerializeField]
