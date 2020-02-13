@@ -33,7 +33,7 @@ namespace Effects
 		public EffectType type;
 		public float amount;
 		
-		public Effect(UnitType affectiveUnit, EffectType effectType, float amount)
+		public Effect(UnitType affectiveUnit, EffectType type, float amount)
 		{
 			this.affectiveUnit = affectiveUnit;
 			this.type = type;

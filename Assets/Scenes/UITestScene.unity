@@ -270,6 +270,11 @@ PrefabInstance:
       propertyPath: unitObject
       value: 
       objectReference: {fileID: 1744480926}
+    - target: {fileID: 4225535027248695791, guid: 11b2ee317c05cc4428a748375f867801,
+        type: 3}
+      propertyPath: linkedObject
+      value: 
+      objectReference: {fileID: 1744480926}
     - target: {fileID: 4225535027262364130, guid: 11b2ee317c05cc4428a748375f867801,
         type: 3}
       propertyPath: m_FontData.m_Alignment
@@ -1228,7 +1233,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CardOperator: {fileID: 1051549746}
-  BattleOperator: {fileID: 1051549745}
   VfxOperator: {fileID: 1051549744}
   Player: {fileID: 0}
   Enemy: {fileID: 0}
@@ -1291,14 +1295,15 @@ MonoBehaviour:
   CardList:
   - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
   - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
-  - {fileID: 11400000, guid: 9ed0cec7c9c1c43cbaf0fa5bea4b30ee, type: 2}
-  - {fileID: 11400000, guid: 9ed0cec7c9c1c43cbaf0fa5bea4b30ee, type: 2}
-  - {fileID: 11400000, guid: 13fe8cddc36034d05a3cd776784ac37a, type: 2}
+  - {fileID: 11400000, guid: 64e3d4235111b4b6aaeaab6e152791b1, type: 2}
+  - {fileID: 11400000, guid: 64e3d4235111b4b6aaeaab6e152791b1, type: 2}
   - {fileID: 11400000, guid: 84097e0b7c75a4b0a8ca4e94d7ffedb5, type: 2}
   - {fileID: 11400000, guid: 84097e0b7c75a4b0a8ca4e94d7ffedb5, type: 2}
-  - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
+  - {fileID: 11400000, guid: b708cc1b3679848c7a991a230b7fab52, type: 2}
+  - {fileID: 11400000, guid: e4ba1b618829844b688431b8e38d05e6, type: 2}
   Deck: []
   Hand: []
+  DiscardPile: []
   handLimit: 2
 --- !u!1001 &1340187528
 PrefabInstance:
@@ -1389,7 +1394,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1409189783}
   - component: {fileID: 1409189782}
-  - component: {fileID: 1409189781}
   - component: {fileID: 1409189784}
   - component: {fileID: 1409189785}
   m_Layer: 0
@@ -1399,18 +1403,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1409189781
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1409189780}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62363b169a1584c429aa77d0d4557ede, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!61 &1409189782
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -1995,6 +1987,11 @@ PrefabInstance:
     - target: {fileID: 4225535027248695791, guid: 11b2ee317c05cc4428a748375f867801,
         type: 3}
       propertyPath: unitObject
+      value: 
+      objectReference: {fileID: 1470156583}
+    - target: {fileID: 4225535027248695791, guid: 11b2ee317c05cc4428a748375f867801,
+        type: 3}
+      propertyPath: linkedObject
       value: 
       objectReference: {fileID: 1470156583}
     - target: {fileID: 4225535027262364131, guid: 11b2ee317c05cc4428a748375f867801,

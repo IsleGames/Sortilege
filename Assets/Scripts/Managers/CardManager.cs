@@ -21,34 +21,24 @@ namespace Managers
 		
 		public List<CardData> CardList;
         public List<Card> Deck, Hand;
-        public Stack<Card> DiscardPile;
+        public List<Card> DiscardPile;
 
 		private GameObject _cardPrefab;
 
         public int handLimit = 2;
 
-        private void Awake()
-        {
-            _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-        }
+        private Card _lastCard = null;
 
-        private void Start()
+		public void Start()
 		{
-			
-
+            _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
 			Deck = new List<Card>();
 			Hand = new List<Card>();
-			DiscardPile = new Stack<Card>();
+			DiscardPile = new List<Card>();
 			
 			// Grab the list from the Inspector for now
 			// CardList = new List<Card>();
 
-			
-			Initialize();
-		}
-		
-		public void Initialize()
-		{
 			foreach (CardData cardData in CardList)
 			{
 				GameObject newCardObj = Instantiate(_cardPrefab);
@@ -58,19 +48,6 @@ namespace Managers
 				Deck.Add(newCard);
 			}
 		}
-
-        public bool CanPlay(MetaData meta)
-        {
-            var lastPlayed = DiscardPile.Peek()?.GetComponent<MetaData>();
-            if (lastPlayed == null) return true;
-            return (meta.attribute == lastPlayed.attribute || meta.strategy == lastPlayed.strategy);
-        }
-
-        public bool CanPlay(Card card)
-        {
-
-            return CanPlay(card.GetComponent<MetaData>());
-        }
 
 		public Card DrawCard(List<Card> pile, bool onEmptyReturnNull = true)
 		{
@@ -127,16 +104,12 @@ namespace Managers
         {
             bool ret = Hand.Remove(card);
             card.Apply(Game.Ctx.Enemy);
-            if (!ret)
-            {
-                throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-            }
-            else
-            {
-                
 
-                DiscardPile.Push(card);
-            }
+            if (!ret)
+                throw new InvalidOperationException("The popped card does not appear in the Hand pile");
+            
+            _lastCard = card;
+	        DiscardPile.Add(card);
         }
 		
 		public void PopCard(Card card)
@@ -145,8 +118,8 @@ namespace Managers
 
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-			else
-				DiscardPile.Push(card);
+			
+			DiscardPile.Add(card);
 		}
 
 		public bool IsEmpty(List<Card> pile)

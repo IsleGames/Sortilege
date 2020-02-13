@@ -23,16 +23,15 @@ namespace Cards
 
         public void Initialize(CardData newCardData)
         {
-            Debugger.Log("hi");
             cardData = newCardData;
+            
+            // For inspector visualization
+            gameObject.name = cardData.title;
             
             GetComponent<MetaData>().title = cardData.title;
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
-
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
-            
-            GetComponent<Render>().SetCardImage();
         }
         
         public void Apply(Unit target)

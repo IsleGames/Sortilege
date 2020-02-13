@@ -17,32 +17,24 @@ public class HealthBar : MonoBehaviour
 
     public Slider healthSlider;
     public Text healthText;
-    public TMPro.TextMeshProUGUI name;
+    public TMPro.TextMeshProUGUI title;
 
     private Health health;
 
-
-    /*
-     * Initializes a healthbar from a Units.Health object
-     */
-    public void Init(Health healthObj)
-    {
-        health = healthObj;
-        
-    }
-
+    // Temperal Solution
+    public GameObject linkedObject;
+    
     /*
      * Initializes a healthbar from a named GameObject
      */
-    public void Init(string gameObjectName)
+    public void Start()
     {
-        Health health = GameObject.Find(gameObjectName).GetComponent<Health>();
-        Init(health);
+        health = linkedObject.GetComponent<Health>();
     }
 
     public void Update()
     {
-        currentHealth = health.health;
+        currentHealth = health.HitPoints;
         maxHealth = health.maximumHealth;
 
         // set width
