@@ -14,7 +14,7 @@ namespace Cards
     {
         private static int sortOrder;
 
-        public void SetCardImage()
+        public void Start()
         {
             GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
             newCardImage.GetComponent<CardUI>()?.SetCard(GetComponent<Card>());

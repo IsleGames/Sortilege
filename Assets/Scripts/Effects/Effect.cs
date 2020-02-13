@@ -1,4 +1,5 @@
 using System;
+using System.Data;
 using Units;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -19,28 +20,35 @@ namespace Effects
 	{
 		Damage,
 		Heal,
-		BlockUp,
-		BlockDown
+		IncBlock,
+		DecBlock,
+		DamageIgnoreBlock
 	}
 
 	[Serializable]
 	public class Effect
 	{
 		public UnitType affectiveUnit;
-		public float damage;
+
+		public EffectType type;
+		public float amount;
 		
-		public Effect(UnitType affectiveUnit, float amount)
+		public Effect(UnitType affectiveUnit, EffectType type, float amount)
 		{
 			this.affectiveUnit = affectiveUnit;
-
-			this.damage = amount;
+			this.type = type;
+			
+			if (amount < 0f)
+				throw new ConstraintException("Effect amount should be larger than zero");
+			
+			this.amount = amount;
 		}
 
 		public void Apply(Unit unit)
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
-
+			
 			switch (type)
 			{
 			  case EffectType.Damage: 
@@ -61,10 +69,10 @@ namespace Effects
 			}
 		}
 
+		// Need change
         public string Text()
         {
-            if (damage > 0) return $"{damage}\nDMG";
-            else return $"{-damage}\nHEAL";
+	        return affectiveUnit + " " + type + " " + amount;
         }
 
 
