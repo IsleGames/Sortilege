@@ -1211,7 +1211,6 @@ GameObject:
   - component: {fileID: 1051549743}
   - component: {fileID: 1051549742}
   - component: {fileID: 1051549746}
-  - component: {fileID: 1051549745}
   - component: {fileID: 1051549744}
   m_Layer: 0
   m_Name: Game
@@ -1268,18 +1267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardImagePrefab: {fileID: 0}
   cardCanvas: {fileID: 0}
---- !u!114 &1051549745
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1051549741}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4b9f9a82517784ea1ba1c6501b651bff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1051549746
 MonoBehaviour:
   m_ObjectHideFlags: 0
