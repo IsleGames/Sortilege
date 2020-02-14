@@ -22,7 +22,6 @@ namespace Cards
             GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
             Card c = GetComponent<Card>();
             CardUI cardui = newCardImage.GetComponent<CardUI>();
-            c.cardUI = cardui;
 
             cardui.SetCard(c);
             c.onPlay.AddListener(() => cardui.Hide());

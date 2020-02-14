@@ -117,20 +117,14 @@ namespace Managers
         public void PlayCard(Card card)
         {
             bool ret = Hand.Remove(card);
-            Game.Ctx.Player.chainStreak += 1;
             card.Apply(Game.Ctx.Enemy);
             card.onPlay.Invoke();
 
-            if (!ret) {
+            if (!ret)
                 throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-            }
-            else
-            {
 
-
-                _lastCard = card;
-                DiscardPile.Add(card);
-            }
+            _lastCard = card;
+	        DiscardPile.Add(card);
         }
 		
 		public void PopCard(Card card)

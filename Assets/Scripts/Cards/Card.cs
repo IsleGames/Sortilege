@@ -17,7 +17,6 @@ namespace Cards
         [SerializeField]
         private CardData cardData;
 
-        public CardUI cardUI;
 
         public UnityEvent onDraw = new UnityEvent();
         public UnityEvent onPlay = new UnityEvent();
