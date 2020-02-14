@@ -37,16 +37,6 @@ namespace Managers
 			Hand = new List<Card>();
 			DiscardPile = new List<Card>();
 			PlayQueue = new List<Card>();
-			
-			// Grab the list from the Inspector for now
-			// CardList = new List<Card>();
-
-			
-		}
-		
-		public void Initialize()
-		{
-            if (Deck.Count > 0) return;
 
 			foreach (CardData cardData in CardList)
 			{

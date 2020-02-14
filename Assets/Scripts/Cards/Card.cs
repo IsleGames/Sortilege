@@ -16,11 +16,9 @@ namespace Cards
     {
         [SerializeField]
         private CardData cardData;
-
-
+        
         public UnityEvent onDraw = new UnityEvent();
         public UnityEvent onPlay = new UnityEvent();
-
 
         public void LogInfo()
         {
