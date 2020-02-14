@@ -36,9 +36,9 @@ namespace Cards
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
         }
         
-        public void Apply(Unit target, float multiplier)
+        public void Apply(Unit target, float streakCount)
         {
-            GetComponent<Ability>().Apply(target, multiplier);
+            GetComponent<Ability>().Apply(target, streakCount);
                 
             Debugger.OneOnOneStat();
             

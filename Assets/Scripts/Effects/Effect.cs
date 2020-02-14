@@ -33,16 +33,24 @@ namespace Effects
 		public EffectType type;
 		public float amount;
 
-		public bool notAmplified;
+		public int minStreak = 1;
+		public bool notAmplified = false;
 
-		public Effect(UnitType affectiveUnit, EffectType type, float amount, bool notAmplified = false)
+		public Effect(
+			UnitType affectiveUnit,
+			EffectType type,
+			float amount,
+			int streakCount = 1,
+			bool notAmplified = false
+		)
 		{
-			this.affectiveUnit = affectiveUnit;
-			this.type = type;
-			
 			if (amount < 0f)
 				throw new ConstraintException("Effect amount should be larger than zero");
 			
+			this.affectiveUnit = affectiveUnit;
+			this.type = type;
+			this.amount = amount;
+			this.minStreak = streakCount;
 			this.notAmplified = notAmplified;
 		}
 
@@ -50,11 +58,10 @@ namespace Effects
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
-			
-			Debugger.Log(amount.ToString() + " " + multiplier.ToString());
+			if (Game.Ctx.CardOperator.PlayQueue.Count < minStreak)
+				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 
 			float totAmount;
-			// Recalculate amount with multiplier
 			if (notAmplified)
 				totAmount = amount;
 			else
@@ -62,19 +69,19 @@ namespace Effects
 			
 			switch (type)
 			{
-			  case EffectType.Damage: 
+				case EffectType.Damage: 
 				  unit.GetComponent<Health>().Damage(totAmount);
 				  break;
-			  case EffectType.Heal:
+				case EffectType.Heal:
 				  unit.GetComponent<Health>().Heal(totAmount);
 				  break;
-			  case EffectType.IncBlock:
+				case EffectType.IncBlock:
 				  unit.GetComponent<Health>().BlockAlter(totAmount);
 				  break;
-			  case EffectType.DecBlock:
+				case EffectType.DecBlock:
 				  unit.GetComponent<Health>().BlockAlter(-totAmount);
 				  break;
-			  case EffectType.DamageIgnoreBlock: 
+				case EffectType.DamageIgnoreBlock: 
 				  unit.GetComponent<Health>().Damage(totAmount, true);
 				  break;
 			}
