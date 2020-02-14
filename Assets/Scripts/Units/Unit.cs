@@ -12,7 +12,7 @@ namespace Units
 		public bool initialized = false;
 
 		// public abstract void Initialize();
-		public abstract void Play();
+		public abstract void StartTurn();
 		public abstract void EndTurn();
 
 	}

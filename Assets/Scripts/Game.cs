@@ -5,6 +5,8 @@ using _Editor;
 using UnityEngine;
 using Managers;
 using Units;
+using Random = System.Random;
+
 // ReSharper disable InconsistentNaming
 
 public class Game : MonoBehaviour
@@ -28,6 +30,8 @@ public class Game : MonoBehaviour
     private void Start()
     {
         Ctx = this;
+
+        UnityEngine.Random.InitState(42);
 
         Player = transform.GetComponentInChildren<Player>();
         Enemy = transform.GetComponentInChildren<Enemy>();
@@ -54,11 +58,11 @@ public class Game : MonoBehaviour
             turnCount += 1;
             
             Debugger.Log("player play");
-            RunningMethod = Player.Play;
+            RunningMethod = Player.StartTurn;
             yield return null;
             
             Debugger.Log("enemy play");
-            RunningMethod = Enemy.Play;
+            RunningMethod = Enemy.StartTurn;
             yield return null;
         }
     }

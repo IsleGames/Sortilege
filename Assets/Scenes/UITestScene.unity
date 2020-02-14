@@ -1304,7 +1304,8 @@ MonoBehaviour:
   Deck: []
   Hand: []
   DiscardPile: []
-  handLimit: 2
+  PlayQueue: []
+  cardsDrawnPerTurn: 2
 --- !u!1001 &1340187528
 PrefabInstance:
   m_ObjectHideFlags: 0

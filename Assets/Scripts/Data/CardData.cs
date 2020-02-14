@@ -16,6 +16,8 @@ namespace Data
         public AttributeType attribute;
         public string description;
         
+        public bool disableRetract = false;
+        
         public List<Effect> effectList;
     }
 }
