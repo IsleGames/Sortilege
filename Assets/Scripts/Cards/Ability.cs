@@ -11,16 +11,18 @@ namespace Cards
 {
     public class Ability: MonoBehaviour
     {
+        public bool disableRetract;
+        
         public List<Effect> effectList;
 
-        public void Apply(Unit target)
+        public void Apply(Unit target, float multiplier)
         {
             foreach (Effect effect in effectList)
             {
                 if (effect.affectiveUnit == UnitType.Player)
-                    effect.Apply(Game.Ctx.Player);
+                    effect.Apply(Game.Ctx.Player, multiplier);
                 else if (effect.affectiveUnit == UnitType.Enemy)
-                    effect.Apply(target);
+                    effect.Apply(target, multiplier);
                 else
                     throw new NullReferenceException("Unknown Unit Type");
             }

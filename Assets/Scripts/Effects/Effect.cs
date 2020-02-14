@@ -32,8 +32,10 @@ namespace Effects
 
 		public EffectType type;
 		public float amount;
-		
-		public Effect(UnitType affectiveUnit, EffectType type, float amount)
+
+		public bool notAmplified;
+
+		public Effect(UnitType affectiveUnit, EffectType type, float amount, bool notAmplified = false)
 		{
 			this.affectiveUnit = affectiveUnit;
 			this.type = type;
@@ -41,30 +43,39 @@ namespace Effects
 			if (amount < 0f)
 				throw new ConstraintException("Effect amount should be larger than zero");
 			
-			this.amount = amount;
+			this.notAmplified = notAmplified;
 		}
 
-		public void Apply(Unit unit)
+		public void Apply(Unit unit, float multiplier)
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
 			
+			Debugger.Log(amount.ToString() + " " + multiplier.ToString());
+
+			float totAmount;
+			// Recalculate amount with multiplier
+			if (notAmplified)
+				totAmount = amount;
+			else
+				totAmount = amount * multiplier;
+			
 			switch (type)
 			{
 			  case EffectType.Damage: 
-				  unit.GetComponent<Health>().Damage(amount);
+				  unit.GetComponent<Health>().Damage(totAmount);
 				  break;
 			  case EffectType.Heal:
-				  unit.GetComponent<Health>().Heal(amount);
+				  unit.GetComponent<Health>().Heal(totAmount);
 				  break;
 			  case EffectType.IncBlock:
-				  unit.GetComponent<Health>().BlockAlter(amount);
+				  unit.GetComponent<Health>().BlockAlter(totAmount);
 				  break;
 			  case EffectType.DecBlock:
-				  unit.GetComponent<Health>().BlockAlter(-amount);
+				  unit.GetComponent<Health>().BlockAlter(-totAmount);
 				  break;
 			  case EffectType.DamageIgnoreBlock: 
-				  unit.GetComponent<Health>().Damage(amount, true);
+				  unit.GetComponent<Health>().Damage(totAmount, true);
 				  break;
 			}
 		}

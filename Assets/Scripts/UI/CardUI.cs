@@ -76,7 +76,7 @@ public class CardUI : MonoBehaviour {
             //TODO: get rid of this try/
             try
             {
-                Game.Ctx.CardOperator.PlayCard(card);
+                Game.Ctx.CardOperator.AddCardToQueue(card);
             }
             catch (InvalidOperationException)
             { }// this is a really bad hack 
