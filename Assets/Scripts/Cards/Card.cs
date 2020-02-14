@@ -12,19 +12,12 @@ using _Editor;
 
 namespace Cards
 {
-    // public enum CardStatus : int
-    // {
-    //     Unknown,
-    //     Stored,
-    //     Decked,
-    //     Held,
-    //     Discarded,
-    // }    [SerializeField]
-
     public class Card : MonoBehaviour
     {
         [SerializeField]
         private CardData cardData;
+
+        public CardUI cardUI;
 
         public UnityEvent onDraw = new UnityEvent();
         public UnityEvent onPlay = new UnityEvent();
@@ -37,16 +30,15 @@ namespace Cards
 
         public void Initialize(CardData newCardData)
         {
-
             cardData = newCardData;
+            
+            // For inspector visualization
+            gameObject.name = cardData.title;
             
             GetComponent<MetaData>().title = cardData.title;
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
-
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
-            
-            GetComponent<Render>().SetCardImage();
         }
         
         public void Apply(Unit target)

@@ -24,14 +24,15 @@ namespace Managers
         public List<Card> DiscardPile;
 
 		private GameObject _cardPrefab;
+        private Card _lastCard = null;
 
-        public int handLimit = 2;
+        public int handLimit = 2;		
 
-        private void Awake()
-        {
+        
+
+		public void Start()
+		{
             _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-			
-
 			Deck = new List<Card>();
 			Hand = new List<Card>();
 			DiscardPile = new List<Card>();
@@ -45,12 +46,15 @@ namespace Managers
 		public void Initialize()
 		{
             if (Deck.Count > 0) return;
+
 			foreach (CardData cardData in CardList)
 			{
 				GameObject newCardObj = Instantiate(_cardPrefab);
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);
+                newCard.GetComponent<Render>().Initialize();
+
 				Deck.Add(newCard);
 			}
 		}
@@ -64,6 +68,7 @@ namespace Managers
 					throw new InvalidOperationException("The drawn pile is empty");
 
 			Card card = pile.Draw();
+            card.onDraw.Invoke();
 			return card;
 
 		}
@@ -85,6 +90,7 @@ namespace Managers
 						throw new InvalidOperationException("The drawn pile is empty");
 
                 Card card = drawPile.Draw();
+                card.onDraw.Invoke();
 			}
 
 			return newPile;
@@ -114,14 +120,15 @@ namespace Managers
             Game.Ctx.Player.chainStreak += 1;
             card.Apply(Game.Ctx.Enemy);
             card.onPlay.Invoke();
-            if (!ret)
-            {
+
+            if (!ret) {
                 throw new InvalidOperationException("The popped card does not appear in the Hand pile");
             }
             else
             {
-                
 
+
+                _lastCard = card;
                 DiscardPile.Add(card);
             }
         }
@@ -132,8 +139,9 @@ namespace Managers
 
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-			else
-				DiscardPile.Add(card);
+			
+			
+			DiscardPile.Add(card);
 		}
 
 		public bool IsEmpty(List<Card> pile)

@@ -12,7 +12,6 @@ public class Game : MonoBehaviour
     public static Game Ctx;
 
     public CardManager CardOperator;
-    public BattleManager BattleOperator;
     public VfxManager VfxOperator;
 
     public Player Player;
@@ -33,11 +32,42 @@ public class Game : MonoBehaviour
         Player = transform.GetComponentInChildren<Player>();
         Enemy = transform.GetComponentInChildren<Enemy>();
 
-        BattleSeq = BattleOperator.Continue();
-
         turnCount = 0;
 
+        BattleSeq = NextStep();
+
+        StartCoroutine(ContinueAfterLoadScene());
+    }
+    
+    private IEnumerator ContinueAfterLoadScene()
+    {
+        // Wait a frame so every Awake and Start method is called
+        yield return new WaitForEndOfFrame();
+        
         Continue();
+    }
+    
+    private IEnumerator NextStep()
+    {
+        while (true)
+        {
+            turnCount += 1;
+            
+            Debugger.Log("player play");
+            RunningMethod = Player.Play;
+            yield return null;
+            
+            Debugger.Log("enemy play");
+            RunningMethod = Enemy.Play;
+            yield return null;
+        }
+    }
+    
+    public void Continue()
+    {
+        if (IsBattleEnded()) return;
+        BattleSeq.MoveNext();
+        RunningMethod();
     }
     
     public bool IsBattleEnded()
@@ -49,19 +79,6 @@ public class Game : MonoBehaviour
     {
         return Player.GetComponent<Health>().IsDead();
     }
-    
-    public void Continue()
-    {
-        if (IsBattleEnded()) return;
-            
-        // The IEnumerator returns the next procedure back to Game.Ctx.RunningMethod
-        // We don't use StartCoroutine since no separate thread(approx.) is required
-        BattleSeq.MoveNext();
-        
-        // Since yield return cannot return a method, we let this method calls the next step
-        // instead
-        RunningMethod();
-    }
 
     public void EndGame()
     {
@@ -70,11 +87,12 @@ public class Game : MonoBehaviour
             if (!HasPlayerLost())
             {
                 Debugger.Log("player wins");
-#if UNITY_EDITOR
-                UnityEditor.EditorApplication.isPlaying = false;
-#else
-                Application.Quit();
-#endif
+                
+// #if UNITY_EDITOR
+//                 UnityEditor.EditorApplication.isPlaying = false;
+// #else
+//                 Application.Quit();
+// #endif
 
             }
             else

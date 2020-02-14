@@ -12,15 +12,22 @@ namespace Cards
     {
         private static int sortOrder;
 
-        public void SetCardImage()
+        public void Start()
+        {
+            Initialize();
+        }
+
+        public void Initialize()
         {
             GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
             Card c = GetComponent<Card>();
             CardUI cardui = newCardImage.GetComponent<CardUI>();
+            c.cardUI = cardui;
 
             cardui.SetCard(c);
             c.onPlay.AddListener(() => cardui.Hide());
             c.onDraw.AddListener(() => cardui.Show());
+
 
             var canvas = newCardImage.GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";

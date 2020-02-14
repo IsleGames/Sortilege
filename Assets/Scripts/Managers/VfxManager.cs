@@ -63,5 +63,15 @@ namespace Managers
                 yield return null;
             }
         }
+
+        public void Hide(Card card)
+        {
+            card.cardUI.Hide();
+        }
+
+        public void Show(Card card)
+        {
+            card.cardUI.Show();
+        }
      }
  }

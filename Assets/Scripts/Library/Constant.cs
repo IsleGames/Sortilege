@@ -7,7 +7,7 @@ namespace Library
      public class Constant: MonoBehaviour
      {
          public int testVar;
-         private void Awake()
+         private void Start()
          {
          }
      }
