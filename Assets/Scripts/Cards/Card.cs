@@ -31,12 +31,14 @@ namespace Cards
             GetComponent<MetaData>().title = cardData.title;
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
+
+            GetComponent<Ability>().disableRetract = cardData.disableRetract;
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
         }
         
-        public void Apply(Unit target)
+        public void Apply(Unit target, float streakCount)
         {
-            GetComponent<Ability>().Apply(target);
+            GetComponent<Ability>().Apply(target, streakCount);
                 
             Debugger.OneOnOneStat();
             

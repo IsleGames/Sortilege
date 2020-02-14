@@ -32,6 +32,14 @@ namespace _Editor
             {
                 PlayCard(1);
             }
+            else if (Input.GetKeyUp(KeyCode.Alpha3))
+            {
+                PlayCard(2);
+            }
+            else if (Input.GetKeyUp(KeyCode.Alpha4))
+            {
+                PlayCard(3);
+            }
             else if (Input.GetKeyUp(KeyCode.E))
             {
                 Game.Ctx.Player.EndTurn();
@@ -40,7 +48,7 @@ namespace _Editor
 
         private void PlayCard(int index)
         {
-            Game.Ctx.CardOperator.PlayCard(Game.Ctx.CardOperator.Hand[index]);
+            Game.Ctx.CardOperator.AddCardToQueue(Game.Ctx.CardOperator.Hand[index]);
         }
 
     }

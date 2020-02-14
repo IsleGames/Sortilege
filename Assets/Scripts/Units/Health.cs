@@ -32,7 +32,6 @@ namespace Units
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
                 
-            Debugger.Log("Deal " + amount + " Damage to " + HitPoints + " Health", this);
             if (!ignoreBlock) 
                 HitPoints = ValidityCheck(HitPoints - Mathf.Max(amount - block, 0));
             else

@@ -11,19 +11,25 @@ namespace Cards
 {
     public class Ability: MonoBehaviour
     {
+        public bool disableRetract;
+        
         public List<Effect> effectList;
 
-        public void Apply(Unit target)
+        public void Apply(Unit target, float streakCount)
         {
             foreach (Effect effect in effectList)
-            {
-                if (effect.affectiveUnit == UnitType.Player)
-                    effect.Apply(Game.Ctx.Player);
-                else if (effect.affectiveUnit == UnitType.Enemy)
-                    effect.Apply(target);
-                else
-                    throw new NullReferenceException("Unknown Unit Type");
-            }
+                if (streakCount >= effect.minStreak)
+                    switch (effect.affectiveUnit)
+                    {
+                        case UnitType.Player:
+                            effect.Apply(Game.Ctx.Player, streakCount);
+                            break;
+                        case UnitType.Enemy:
+                            effect.Apply(target, streakCount);
+                            break;
+                        default:
+                            throw new NullReferenceException("Unknown Unit Type");
+                    }
         }
 
         public string Text()

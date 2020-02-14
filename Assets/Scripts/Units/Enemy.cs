@@ -5,7 +5,7 @@ namespace Units
 	public class Enemy : Unit
 	{
 
-		public override void Play()
+		public override void StartTurn()
 		{
 			// Debugger.Log("hi");
 			Game.Ctx.Player.GetComponent<Health>().Damage(6f);
