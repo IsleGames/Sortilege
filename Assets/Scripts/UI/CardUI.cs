@@ -93,18 +93,22 @@ public class CardUI : MonoBehaviour {
     public void Hide()
     {
 
-        GetComponent<SpriteRenderer>().enabled = false;
+       
         transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = false;
+        transform.Find("CardBackground").GetComponent<SpriteRenderer>().enabled = false;
+        transform.Find("CardBorder").GetComponent<SpriteRenderer>().enabled = false;
     }
 
     public void Show()
     {
-        GetComponent<SpriteRenderer>().enabled = true;
+
         transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
         transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
         transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = true;
+        transform.Find("CardBackground").GetComponent<SpriteRenderer>().enabled = true;
+        transform.Find("CardBorder").GetComponent<SpriteRenderer>().enabled = true;
     }
 
 

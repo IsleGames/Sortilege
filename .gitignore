@@ -70,3 +70,8 @@ crashlytics-build.properties
 # Mac File
 .DS_Store
 
+# IDE-generated files
+.idea/*
+
+#temporary files
+**~

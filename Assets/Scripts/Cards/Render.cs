@@ -36,9 +36,12 @@ namespace Cards
             MetaData meta = GetComponent<MetaData>();
             
             // Set strategy color
-            var bgSprite = newCardImage.GetComponent<SpriteRenderer>();
-            bgSprite.color = VfxManager.strategyColors[meta.strategy];
-            bgSprite.sortingOrder = sortOrder;
+            var bordersprite = newCardImage.transform.Find("CardBorder").GetComponent<SpriteRenderer>();
+            bordersprite.color = VfxManager.strategyColors[meta.strategy];
+            bordersprite.sortingOrder = sortOrder;
+
+            var bgsprite = newCardImage.transform.Find("CardBackground").GetComponent<SpriteRenderer>();
+            bgsprite.sortingOrder = sortOrder;
 
             // Set attribute 
             var renderer = newCardImage.transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
