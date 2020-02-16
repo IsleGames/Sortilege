@@ -127,6 +127,7 @@ namespace Managers
 				{
 					Card thisCard = PlayQueue[i];
                     PlayQueue.RemoveAt(i);
+                    thisCard.onDiscard.Invoke();
 					DiscardPile.Add(thisCard);
 				}
 	        }

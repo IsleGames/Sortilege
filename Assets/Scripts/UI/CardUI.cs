@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using UnityEngine;
+using _Editor;
+using Cards;
 
 // This should maybe just be Collider? 
 // We'll see how many dimensions we use
@@ -10,7 +12,11 @@ public class CardUI : MonoBehaviour {
     public bool canPlay = true; // TODO: default to false, check in update() based on game state
     public bool beingPlayed = false;
     public float moveSpeed = 0.1f;
-    public Transform discardPile;
+
+    void Awake()
+    {
+        GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>() as Camera;
+    }
 
     private Cards.Card card;
     Vector3 home;
@@ -19,6 +25,19 @@ public class CardUI : MonoBehaviour {
     public void SetCard(Cards.Card c)
     {
         card = c;
+    }
+
+    public void setCallbacks()
+    {
+        card.onDiscard.AddListener(() => Hide());
+        card.onPlay.AddListener(() => Debugger.Log("Played " + card.GetComponent<MetaData>().name));
+        card.onPlay.AddListener(() => Board.Ctx.Queue.AddObject(gameObject, 0.1f));
+        card.onPlay.AddListener(() => Board.Ctx.Hand.RemoveObject(gameObject));
+
+        card.onDraw.AddListener(() => Debugger.Log("Drew " + card.GetComponent<MetaData>().name));
+        card.onDraw.AddListener(() => Show());
+        card.onDraw.AddListener(() => Board.Ctx.Hand.AddObject(gameObject, 5f));
+
     }
 
     public void OnMouseDown()
@@ -38,14 +57,14 @@ public class CardUI : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        var mover = collider.gameObject.GetComponent<PlayZone>();
+        var mover = collider.gameObject.GetComponent<PlayArea>();
         if (mover != null) beingPlayed = true;
     }
 
     private void OnTriggerExit2D(Collider2D collider)
     {
         // leaving play zone
-        if (collider.gameObject.GetComponent<PlayZone>() != null)
+        if (collider.gameObject.GetComponent<PlayArea>() != null)
         { 
             beingPlayed = false;
         }
@@ -92,8 +111,7 @@ public class CardUI : MonoBehaviour {
 
     public void Hide()
     {
-
-       
+        
         transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = false;
@@ -103,12 +121,12 @@ public class CardUI : MonoBehaviour {
 
     public void Show()
     {
-
-        transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
-        transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
         transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = true;
         transform.Find("CardBackground").GetComponent<SpriteRenderer>().enabled = true;
         transform.Find("CardBorder").GetComponent<SpriteRenderer>().enabled = true;
+        transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+        transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;
+
     }
 
 

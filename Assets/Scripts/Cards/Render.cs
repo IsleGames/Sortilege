@@ -26,9 +26,9 @@ namespace Cards
             CardUI cardui = newCardImage.GetComponent<CardUI>();
 
             cardui.SetCard(c);
-            c.onDiscard.AddListener(() => cardui.Hide());
-            c.onDraw.AddListener(() => cardui.Show());
 
+            cardui.setCallbacks();
+          
 
             var canvas = newCardImage.GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";
