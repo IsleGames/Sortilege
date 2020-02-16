@@ -73,6 +73,7 @@ namespace Managers
 				throw new InvalidOperationException("Card not in Hand");
 			
 			PlayQueue.Add(card);
+            card.onPlay.Invoke();
 			Hand.Remove(card);
 		}
 
@@ -110,6 +111,7 @@ namespace Managers
 						throw new InvalidOperationException("The drawn pile is empty");
 
 				Card card = Deck.Draw();
+                card.onDraw.Invoke();
 				Hand.Add(card);
 			}
 		}
@@ -124,7 +126,7 @@ namespace Managers
 				for (int i = PlayQueue.Count - 1; i >= 0; i--)
 				{
 					Card thisCard = PlayQueue[i];
-					PlayQueue.RemoveAt(i);
+                    PlayQueue.RemoveAt(i);
 					DiscardPile.Add(thisCard);
 				}
 	        }
@@ -136,8 +138,8 @@ namespace Managers
 
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-			
-			
+
+            card.onDiscard.Invoke();
 			DiscardPile.Add(card);
 		}
 

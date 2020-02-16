@@ -24,7 +24,7 @@ namespace Cards
             CardUI cardui = newCardImage.GetComponent<CardUI>();
 
             cardui.SetCard(c);
-            c.onPlay.AddListener(() => cardui.Hide());
+            c.onDiscard.AddListener(() => cardui.Hide());
             c.onDraw.AddListener(() => cardui.Show());
 
 
