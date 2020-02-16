@@ -44,7 +44,7 @@ namespace Managers
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);
-                newCard.GetComponent<Render>().Initialize();
+                //newCard.GetComponent<Render>().Initialize();
 
 				Deck.Add(newCard);
 			}

@@ -12,6 +12,8 @@ namespace Cards
     {
         private static int sortOrder;
 
+        
+
         public void Start()
         {
             Initialize();
