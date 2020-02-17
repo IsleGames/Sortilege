@@ -62,6 +62,7 @@ public class CardZone : MonoBehaviour
     public void Reset()
     {
         start = new Vector3(transform.position.x, transform.position.y, 0);
+        objects = new List<GameObject>();
     }
 
     public void RemoveObject(GameObject obj)

@@ -144,6 +144,18 @@ namespace Managers
 			DiscardPile.Add(card);
 		}
 
+        public void PopHand()
+        {
+            foreach (Card card in Hand)
+            {
+                
+                card.onDiscard.Invoke();
+                DiscardPile.Add(card);
+            }
+            Hand.RemoveAll((Card c)=>true);
+
+        }
+
 		public bool IsEmpty(List<Card> pile)
 		{
 			return pile.Count == 0;
