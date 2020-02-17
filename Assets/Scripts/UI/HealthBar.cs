@@ -16,7 +16,9 @@ public class HealthBar : MonoBehaviour
     public bool isplayer;
 
     public Slider healthSlider;
+    public Slider blockSlider;
     public Text healthText;
+    public Text blockText;
     public TMPro.TextMeshProUGUI title;
 
     private Health health;
@@ -42,6 +44,10 @@ public class HealthBar : MonoBehaviour
         healthSlider.value = currentHealth;
 
         healthText.text = $"{(int)currentHealth} / {(int)maxHealth}";
+
+        blockSlider.maxValue = maxHealth;
+        blockSlider.value = health.block;
+        blockText.text = $"{(int)health.block}";
 
     }
 
