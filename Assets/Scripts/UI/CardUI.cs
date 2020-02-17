@@ -109,6 +109,7 @@ public class CardUI : MonoBehaviour {
         transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("CardText").GetComponent<TMPro.TextMeshProUGUI>().enabled = false;
         transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = false;
+        transform.Find("StrategySprite").GetComponent<SpriteRenderer>().enabled = false;
         transform.Find("CardBackground").GetComponent<SpriteRenderer>().enabled = false;
         transform.Find("CardBorder").GetComponent<SpriteRenderer>().enabled = false;
     }
@@ -116,6 +117,7 @@ public class CardUI : MonoBehaviour {
     public void Show()
     {
         transform.Find("AttributeSprite").GetComponent<SpriteRenderer>().enabled = true;
+        transform.Find("StrategySprite").GetComponent<SpriteRenderer>().enabled = true;
         transform.Find("CardBackground").GetComponent<SpriteRenderer>().enabled = true;
         transform.Find("CardBorder").GetComponent<SpriteRenderer>().enabled = true;
         transform.Find("CardName").GetComponent<TMPro.TextMeshProUGUI>().enabled = true;

@@ -23,20 +23,28 @@ namespace Managers
              {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
          };
 
-        public static Dictionary<AttributeType, string> attributeSpritePaths = new Dictionary<AttributeType, string>()
+        public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
         {
             { AttributeType.Infernal, "Sprites/Icons/icon-fire"      },
             { AttributeType.Storm,    "Sprites/Icons/icon-snowflake" },
             { AttributeType.Thunder,  "Sprites/Icons/icon-lightning" },
             { AttributeType.Venom,    "Sprites/Icons/icon-skull"     },
-            { AttributeType.None,    "Sprites/Icons/icon-none"       },
+            { AttributeType.None,     "Sprites/Icons/icon-none"       },
+        };
+        
+        public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
+        {
+            { StrategyType.Detriment,    "Sprites/Icons/icon-none"},
+            { StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
+            { StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
+            { StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
+            { StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
         };
 
          private void Awake()
-         {
-             cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject;
-            cardCanvas = GameObject.Find("CardCanvas");
-
+         { 
+             cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject; 
+             cardCanvas = GameObject.Find("CardCanvas");
          }
          
          // Temporary Method
