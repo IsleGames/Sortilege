@@ -36,6 +36,8 @@ namespace Cards
             GetComponent<MetaData>().title = cardData.title;
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
+            
+            GetComponent<MetaData>().description = cardData.description;
 
             GetComponent<Ability>().disableRetract = cardData.disableRetract;
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);

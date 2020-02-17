@@ -26,7 +26,6 @@ namespace Managers
         public List<Card> Deck, Hand, DiscardPile, PlayQueue;
 
 		private GameObject _cardPrefab;
-        private Card _lastCard = null;
 
 		public int cardsDrawnPerTurn = -1;
 		

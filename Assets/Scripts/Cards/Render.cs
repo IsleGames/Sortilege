@@ -54,7 +54,7 @@ namespace Cards
             // Set name
             newCardImage.transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
             // Set rules text
-            newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<Ability>()?.Text();
+            newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
             sortOrder += 2;
 
             cardui.Hide();

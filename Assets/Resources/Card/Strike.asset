@@ -15,8 +15,11 @@ MonoBehaviour:
   title: Strike
   strategy: 2
   attribute: 0
-  description: Something
+  description: Deal 3 Damage
+  disableRetract: 0
   effectList:
   - affectiveUnit: 2
     type: 0
     amount: 3
+    minStreak: 0
+    notAmplified: 0

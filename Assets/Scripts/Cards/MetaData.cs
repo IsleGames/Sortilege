@@ -30,6 +30,7 @@ namespace Cards
     {            
 
         public string title;
+        public string description;
         
         public StrategyType strategy = StrategyType.None;
         public AttributeType attribute = AttributeType.None;

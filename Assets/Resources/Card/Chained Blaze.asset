@@ -15,11 +15,16 @@ MonoBehaviour:
   title: Chained Blaze
   strategy: 5
   attribute: 2
-  description: Something
+  description: Deal 4 Damage and 2 Self Damage
+  disableRetract: 0
   effectList:
   - affectiveUnit: 2
     type: 0
     amount: 4
+    minStreak: 0
+    notAmplified: 0
   - affectiveUnit: 1
     type: 0
     amount: 2
+    minStreak: 0
+    notAmplified: 0

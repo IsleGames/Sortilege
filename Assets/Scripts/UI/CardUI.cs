@@ -75,9 +75,7 @@ public class CardUI : MonoBehaviour {
         Vector3 init = new Vector3(transform.position.x, transform.position.y);
         float t = 0f;
         yield return new WaitForSeconds(delay);
-        while (t < moveSpeed)
-            
-        {
+        while (t < moveSpeed) {
             float i = t / moveSpeed;
             transform.SetPositionAndRotation(i * dest + (1f - i) * init,
                 transform.rotation);
@@ -92,13 +90,9 @@ public class CardUI : MonoBehaviour {
         {
             //play this card
             Debug.Log("Playing");
-            //TODO: get rid of this try/
-            try
-            {
-                Game.Ctx.CardOperator.AddCardToQueue(card);
-            }
-            catch (InvalidOperationException)
-            { }// this is a really bad hack 
+            // TODO: Add meta data check
+
+            Game.Ctx.CardOperator.AddCardToQueue(card); 
             
             //Move to discard pile
             // Note: the movement should maybe be done with springs,
