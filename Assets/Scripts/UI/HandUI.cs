@@ -18,7 +18,6 @@ public class HandUI : MonoBehaviour
         
         Vector3 position = new Vector3(transform.position.x, transform.position.y);
         position.x += cardnum * width;
-        //Game.Ctx.VfxOperator.SetCardPosition(card, position);
         cardnum += 1;
         
     }

@@ -15,8 +15,11 @@ MonoBehaviour:
   title: Block!
   strategy: 3
   attribute: 0
-  description: 
+  description: Increase Block by 3
+  disableRetract: 0
   effectList:
   - affectiveUnit: 1
     type: 2
     amount: 3
+    minStreak: 0
+    notAmplified: 0

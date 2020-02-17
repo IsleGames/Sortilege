@@ -13,10 +13,18 @@ MonoBehaviour:
   m_Name: Shockwave
   m_EditorClassIdentifier: 
   title: Shockwave
-  backgroundColor: {r: 0, g: 0, b: 0, a: 0}
   strategy: 2
   attribute: 1
-  description: 
+  description: Deal 2 Damage, Decrease Enemey Block by 1
+  disableRetract: 0
   effectList:
   - affectiveUnit: 2
-    damage: 2
+    type: 0
+    amount: 2
+    minStreak: 0
+    notAmplified: 0
+  - affectiveUnit: 2
+    type: 3
+    amount: 1
+    minStreak: 0
+    notAmplified: 0

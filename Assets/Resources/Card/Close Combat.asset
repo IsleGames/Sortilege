@@ -15,14 +15,21 @@ MonoBehaviour:
   title: Close Combat
   strategy: 2
   attribute: 0
-  description: 
+  description: Deal 5 Damage with 2 Self Damage, Decrease Self Block by 3
+  disableRetract: 0
   effectList:
   - affectiveUnit: 1
     type: 4
     amount: 2
+    minStreak: 0
+    notAmplified: 0
   - affectiveUnit: 1
     type: 3
     amount: 2
+    minStreak: 0
+    notAmplified: 0
   - affectiveUnit: 2
     type: 0
     amount: 5
+    minStreak: 0
+    notAmplified: 0

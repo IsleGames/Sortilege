@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 using Units;
 using Effects;
@@ -15,6 +16,10 @@ namespace Cards
     {
         [SerializeField]
         private CardData cardData;
+        
+        public UnityEvent onDraw = new UnityEvent();
+        public UnityEvent onPlay = new UnityEvent();
+        public UnityEvent onDiscard = new UnityEvent();
 
         public void LogInfo()
         {
@@ -31,6 +36,8 @@ namespace Cards
             GetComponent<MetaData>().title = cardData.title;
             GetComponent<MetaData>().strategy = cardData.strategy;
             GetComponent<MetaData>().attribute = cardData.attribute;
+            
+            GetComponent<MetaData>().description = cardData.description;
 
             GetComponent<Ability>().disableRetract = cardData.disableRetract;
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);

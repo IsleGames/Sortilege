@@ -36,9 +36,6 @@ namespace Managers
 			Hand = new List<Card>();
 			DiscardPile = new List<Card>();
 			PlayQueue = new List<Card>();
-			
-			// Grab the list from the Inspector for now
-			// CardList = new List<Card>();
 
 			foreach (CardData cardData in CardList)
 			{
@@ -46,12 +43,15 @@ namespace Managers
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);
+                //newCard.GetComponent<Render>().Initialize();
+
 				Deck.Add(newCard);
 			}
 		}
 
 		public void StartTurn()
 		{
+
 			if (PlayQueue.Count > 0)
 				throw new InvalidConstraintException("PlayQueue is not empty at the start of the turn");
 			
@@ -72,6 +72,7 @@ namespace Managers
 				throw new InvalidOperationException("Card not in Hand");
 			
 			PlayQueue.Add(card);
+            card.onPlay.Invoke();
 			Hand.Remove(card);
 		}
 
@@ -79,6 +80,7 @@ namespace Managers
 		{
 			if (card.GetComponent<Ability>().disableRetract)
 			{
+
 				// This is a fail-safe error; Show it in the UI directly
 				throw new InvalidOperationException("Card is not retractable");
 			}
@@ -108,6 +110,7 @@ namespace Managers
 						throw new InvalidOperationException("The drawn pile is empty");
 
 				Card card = Deck.Draw();
+                card.onDraw.Invoke();
 				Hand.Add(card);
 			}
 		}
@@ -122,7 +125,8 @@ namespace Managers
 				for (int i = PlayQueue.Count - 1; i >= 0; i--)
 				{
 					Card thisCard = PlayQueue[i];
-					PlayQueue.RemoveAt(i);
+                    PlayQueue.RemoveAt(i);
+                    thisCard.onDiscard.Invoke();
 					DiscardPile.Add(thisCard);
 				}
 	        }
@@ -134,9 +138,22 @@ namespace Managers
 
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-			
+
+            card.onDiscard.Invoke();
 			DiscardPile.Add(card);
 		}
+
+        public void PopHand()
+        {
+            foreach (Card card in Hand)
+            {
+                
+                card.onDiscard.Invoke();
+                DiscardPile.Add(card);
+            }
+            Hand.RemoveAll((Card c)=>true);
+
+        }
 
 		public bool IsEmpty(List<Card> pile)
 		{
