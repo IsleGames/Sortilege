@@ -47,7 +47,7 @@ public class HealthBar : MonoBehaviour
 
         blockSlider.maxValue = maxHealth;
         blockSlider.value = health.block;
-        blockText.text = health.block > 0 ? $"{(int)health.block}" : "";
+        blockText.text = $"{(int)health.block}";
 
     }
 
