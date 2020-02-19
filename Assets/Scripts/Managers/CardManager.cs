@@ -137,7 +137,7 @@ namespace Managers
 		        
 		        poweredCard.Apply(target, pilePlay.Count());
 		        List<Card> discardList = pilePlay.DrawAll();
-				pileDeck.AddRange(discardList);
+				pileDiscard.AddRange(discardList);
 	        }
         }
 		
