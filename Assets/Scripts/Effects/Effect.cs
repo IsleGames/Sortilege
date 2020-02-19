@@ -58,7 +58,7 @@ namespace Effects
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
-			if (Game.Ctx.CardOperator.PlayQueue.Count < minStreak)
+			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 
 			float totAmount;

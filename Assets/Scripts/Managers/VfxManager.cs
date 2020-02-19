@@ -46,12 +46,8 @@ namespace Managers
          }
          
          // Temporary Method
-         public void MoveCardToRandomPosition(Transform trans)
-         {
-             trans.position = new Vector3(Random.Range(-500f, 500f), -190f, 0);
-         }
 
-        public void SetCardPosition(Card card, Vector3 pos)
+         public void SetCardPosition(Card card, Vector3 pos)
         {
             card.transform.position = pos;
         }

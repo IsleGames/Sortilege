@@ -18,7 +18,7 @@ namespace Cards
 
             cardui.SetCard();
 
-            cardui.setCallbacks();
+            //cardui.setCallbacks();
             
             var canvas = GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";
@@ -51,8 +51,8 @@ namespace Cards
             transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
             sortOrder += 2;
 
-            cardui.Hide();
-            Game.Ctx.VfxOperator.MoveCardToRandomPosition(transform);
+            // cardui.Hide();
+            // Game.Ctx.VfxOperator.MoveCardToRandomPosition(transform);
         }
     }
 }
