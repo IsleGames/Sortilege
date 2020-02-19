@@ -31,7 +31,7 @@ public class CardUI : MonoBehaviour {
     
     public void OnMouseDown()
     {
-        Debugger.Log("hi");
+        // Debugger.Log("hi");
         home = transform.position;
         cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
@@ -75,7 +75,7 @@ public class CardUI : MonoBehaviour {
         if (enterPlayArea)
         {
             //play this card
-            Debug.Log("Playing");
+            // Debug.Log("Playing");
 
             Game.Ctx.CardOperator.AddCardToQueue(card);
         }

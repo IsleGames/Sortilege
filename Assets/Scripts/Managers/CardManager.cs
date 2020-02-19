@@ -30,6 +30,7 @@ namespace Managers
 		private GameObject _cardPrefab;
 
 		public int cardsDrawnPerTurn = -1;
+		public int maxCardCount = 5;
 		
 		public void Start()
 		{
@@ -39,6 +40,12 @@ namespace Managers
 			pileHand = GameObject.Find("HandPile").GetComponent<Pile>();
 			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
 			pilePlay = GameObject.Find("PlayPile").GetComponent<Pile>();
+
+			if (CardList.Count > maxCardCount)
+			{
+				CardList.Shuffle();
+				CardList.RemoveRange(maxCardCount, CardList.Count - maxCardCount);
+			} 
 
 			foreach (CardData cardData in CardList)
 			{
@@ -108,9 +115,12 @@ namespace Managers
 			{
 				if (IsEmpty(pileDeck))
 					if (onEmptyShuffle)
-						ShuffleOnDeckEmpty();
+						if (IsEmpty(pileDiscard))
+							break;
+						else
+							ShuffleOnDeckEmpty();
 					else
-						throw new InvalidOperationException("The drawn pile is empty");
+						break;
 
 				Card card = pileDeck.Draw();
                 card.onDraw.Invoke();
