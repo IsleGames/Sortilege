@@ -29,7 +29,7 @@ namespace UI
         private PileAlignType align = PileAlignType.Left;
         // public bool zoomOnMouseOver = false;
         
-        private Vector3 _centerPosition;
+        private Vector3 queueCenter;
         // Allowing float due to PileAlignType.Middle
         private float _startingIndex;
         
@@ -37,7 +37,7 @@ namespace UI
         {
 			_pile = new List<Card>();
 
-            _centerPosition = transform.position;
+            queueCenter = transform.Find("QueueCenter").transform.position;
             _startingIndex = 0;
         }
 
@@ -68,11 +68,9 @@ namespace UI
             float thisWidth = thisRec.rect.width * scaleFactor;
 
             thisTrans.position = new Vector3(
-                _centerPosition.x + (thisWidth + offsetMargin) * (index - _startingIndex),
-                _centerPosition.y,
-                _centerPosition.z);
-            
-            
+                queueCenter.x + (thisWidth + offsetMargin) * (index - _startingIndex),
+                queueCenter.y,
+                queueCenter.z);
         }
 
         private void AdjustAllPositions()

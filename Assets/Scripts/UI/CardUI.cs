@@ -2,6 +2,7 @@
 using _Editor;
 using Cards;
 using TMPro;
+using UI;
 using UnityEngine;
 
 // This should maybe just be Collider? 
@@ -58,14 +59,13 @@ public class CardUI : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        var mover = other.gameObject.GetComponent<PlayArea>();
-        if (mover != null) beingPlayed = true;
+        if (other.gameObject.GetComponent<PlayPile>()) beingPlayed = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // leaving play zone
-        if (other.gameObject.GetComponent<PlayArea>() != null)
+        if (other.gameObject.GetComponent<PlayPile>())
         { 
             beingPlayed = false;
         }
@@ -110,7 +110,6 @@ public class CardUI : MonoBehaviour {
         foreach (var r in tmPros) {
             r.enabled = false;
         }
-        
         SpriteRenderer[] spRenderers = GetComponentsInChildren<SpriteRenderer>();
         foreach (var r in spRenderers) {
             r.enabled = false;
@@ -123,7 +122,6 @@ public class CardUI : MonoBehaviour {
         foreach (var r in tmPros) {
             r.enabled = true;
         }
-        
         SpriteRenderer[] spRenderers = GetComponentsInChildren<SpriteRenderer>();
         foreach (var r in spRenderers) {
             r.enabled = true;
