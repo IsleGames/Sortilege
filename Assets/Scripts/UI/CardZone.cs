@@ -7,7 +7,7 @@ public class CardZone : MonoBehaviour
 {
 
     public Vector3 start;
-    List<GameObject> objects;
+    public List<GameObject> objects;
     public float moveSpeed = 0.1f;
 
 
@@ -19,7 +19,6 @@ public class CardZone : MonoBehaviour
         start = transform.position;
         start.z = 0;
         objects = new List<GameObject>();
-        
     }
 
     // Update is called once per frame

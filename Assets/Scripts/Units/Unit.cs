@@ -9,9 +9,6 @@ namespace Units
 
 	public abstract class Unit : MonoBehaviour
 	{
-		public bool initialized = false;
-
-		// public abstract void Initialize();
 		public abstract void StartTurn();
 		public abstract void EndTurn();
 

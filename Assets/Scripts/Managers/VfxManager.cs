@@ -10,9 +10,8 @@ using Cards;
 namespace Managers
  {
      public class VfxManager : MonoBehaviour
-     {
-         public GameObject cardImagePrefab;
-        public GameObject cardCanvas;
+     { 
+         public GameObject cardCanvas;
          
          public static Dictionary<StrategyType, Color> strategyColors = new Dictionary<StrategyType, Color>(){
              {StrategyType.None, Color.white },
@@ -43,7 +42,6 @@ namespace Managers
 
          private void Awake()
          { 
-             cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject; 
              cardCanvas = GameObject.Find("CardCanvas");
          }
          
