@@ -47,7 +47,7 @@ namespace Cards
         {
             GetComponent<Ability>().Apply(target, streakCount);
                 
-            Debugger.OneOnOneStat();
+            // Debugger.OneOnOneStat();
             
             if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }

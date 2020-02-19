@@ -11,11 +11,11 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class CardUI : MonoBehaviour {
 
-    public bool canPlay = true; // TODO: default to false, check in update() based on game state
-    public bool beingPlayed;
+    public bool allowChained = true; // TODO: default to false, check in update() based on game state
+    public bool enterPlayArea;
     public float moveSpeed = 0.1f;
 
-    void Awake()
+    void Start()
     {
         GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
     }
@@ -28,29 +28,17 @@ public class CardUI : MonoBehaviour {
     {
         card = GetComponent<Card>();
     }
-
-    public void setCallbacks()
-    {
-        card.onDiscard.AddListener(() => Hide());
-        
-        card.onPlay.AddListener(() => Debugger.Log("Played " + card.GetComponent<MetaData>().name));
-        card.onPlay.AddListener(() => Board.Ctx.Queue.AddObject(gameObject, 0.1f));
-        card.onPlay.AddListener(() => Board.Ctx.Hand.RemoveObject(gameObject));
-
-        card.onDraw.AddListener(() => Debugger.Log("Drew " + card.GetComponent<MetaData>().name));
-        card.onDraw.AddListener(() => Show());
-        card.onDraw.AddListener(() => Board.Ctx.Hand.AddObject(gameObject, 5f));
-    }
-
+    
     public void OnMouseDown()
     {
+        Debugger.Log("hi");
         home = transform.position;
         cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     public void OnMouseDrag()
     {
-        if (canPlay)
+        if (allowChained)
         {
             var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             gameObject.transform.position = home + cursorPositionWorld - cursorhome;
@@ -59,16 +47,13 @@ public class CardUI : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<PlayPile>()) beingPlayed = true;
+        if (other.gameObject.GetComponent<PlayPile>()) enterPlayArea = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // leaving play zone
         if (other.gameObject.GetComponent<PlayPile>())
-        { 
-            beingPlayed = false;
-        }
+            enterPlayArea = false;
     }
 
     IEnumerator MoveCard(Vector3 dest, float delay = 0)
@@ -87,20 +72,12 @@ public class CardUI : MonoBehaviour {
 
     private void OnMouseUp()
     {
-        if (beingPlayed)
+        if (enterPlayArea)
         {
             //play this card
             Debug.Log("Playing");
-            // TODO: Add meta data check
 
-            Game.Ctx.CardOperator.AddCardToQueue(card); 
-            
-            //Move to discard pile
-            // Note: the movement should maybe be done with springs,
-            // rather than scripts?
-
-            //StartCoroutine(MoveCard(discardPile.position, 0.5f));
-            canPlay = false;
+            Game.Ctx.CardOperator.AddCardToQueue(card);
         }
     }
 
