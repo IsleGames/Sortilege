@@ -79,7 +79,7 @@ namespace Managers
 
 		public void AddCardToQueue(Card card)
 		{
-			if (!pileHand.Remove(card))
+			if (!pileHand.Contains(card))
 				throw new InvalidOperationException("Card not in Hand");
 			
 			pilePlay.Add(card);
