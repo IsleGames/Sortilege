@@ -4,12 +4,9 @@ using UnityEngine;
 
 namespace Library
 {    
-     public class Constant: MonoBehaviour
+     public static class Constant
      {
-         public int testVar;
-         private void Start()
-         {
-         }
+         public static float cardWidth = 66f;
      }
 
 }

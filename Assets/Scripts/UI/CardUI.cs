@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using _Editor;
 using Cards;
 using TMPro;
@@ -11,8 +12,11 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class CardUI : MonoBehaviour {
 
-    public bool allowChained = true; // TODO: default to false, check in update() based on game state
-    public bool enterPlayArea;
+    public bool movable = true; // TODO: default to false, check in update() based on game state
+    
+    [SerializeField]
+    private bool triggerPlayArea, triggerHandArea;
+    
     public float moveSpeed = 0.1f;
 
     void Start()
@@ -20,40 +24,75 @@ public class CardUI : MonoBehaviour {
         GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
     }
 
-    private Card card;
+    // private Card card;
     Vector3 home;
     private Vector3 cursorhome;
 
-    public void SetCard()
-    {
-        card = GetComponent<Card>();
-    }
-    
     public void OnMouseDown()
     {
-        // Debugger.Log("hi");
         home = transform.position;
         cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        Debugger.Log(GetComponent<MetaData>().title + " MouseDown");
     }
 
     public void OnMouseDrag()
     {
-        if (allowChained)
-        {
-            var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            gameObject.transform.position = home + cursorPositionWorld - cursorhome;
-        }
+        // Debugger.Log("hi");
+        
+        if (!movable) return;
+        
+        var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        transform.position = home + cursorPositionWorld - cursorhome;
+
+        if (triggerHandArea)
+            Game.Ctx.CardOperator.pileHand.VirtualPositionChecker(transform.position);
     }
 
+    private void OnMouseUp()
+    {
+        if (triggerPlayArea)
+        {
+            Game.Ctx.CardOperator.AddCardToQueue(GetComponent<Card>());
+        }
+        if (triggerHandArea)
+        {
+            Game.Ctx.CardOperator.RemoveCardAndAfterFromQueue(GetComponent<Card>());
+        }
+
+        triggerHandArea = false;
+        triggerPlayArea = false;
+    }
+    
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.GetComponent<PlayPile>()) enterPlayArea = true;
+        if (other.gameObject.GetComponent<PlayPile>())
+        {
+            if (!Game.Ctx.CardOperator.pilePlay.Contains(GetComponent<Card>()))
+            {
+                triggerPlayArea = true;
+                triggerHandArea = false;
+                Game.Ctx.CardOperator.pileHand.VirtualRemove();
+            }
+        }
+        else if (other.gameObject.GetComponent<HandPile>())
+            if (!Game.Ctx.CardOperator.pileHand.Contains(GetComponent<Card>()))
+                triggerHandArea = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<PlayPile>())
-            enterPlayArea = false;
+        {
+            if (!Game.Ctx.CardOperator.pilePlay.Contains(GetComponent<Card>()))
+                triggerPlayArea = false;
+        }
+        else if (other.gameObject.GetComponent<HandPile>())
+            if (!Game.Ctx.CardOperator.pileHand.Contains(GetComponent<Card>()))
+            {
+                triggerHandArea = false;
+                Game.Ctx.CardOperator.pileHand.VirtualRemove();
+            }
     }
 
     IEnumerator MoveCard(Vector3 dest, float delay = 0)
@@ -67,17 +106,6 @@ public class CardUI : MonoBehaviour {
                 transform.rotation);
             t += Time.deltaTime;
             yield return null;
-        }
-    }
-
-    private void OnMouseUp()
-    {
-        if (enterPlayArea)
-        {
-            //play this card
-            // Debug.Log("Playing");
-
-            Game.Ctx.CardOperator.AddCardToQueue(card);
         }
     }
 

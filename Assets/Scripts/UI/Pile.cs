@@ -5,6 +5,7 @@ using UnityEngine;
 
 using _Editor;
 using Cards;
+using Data;
 using Library;
 
 namespace UI
@@ -19,26 +20,28 @@ namespace UI
     public class Pile : MonoBehaviour
     {
         [SerializeField]
-        private List<Card> _pile;
+        protected List<Card> _pile;
 
         public float scaleFactor = 1.8f;
 
         public float offsetMargin = 10f;
 
         [SerializeField]
-        private PileAlignType align = PileAlignType.Left;
+        protected PileAlignType align = PileAlignType.Left;
         // public bool zoomOnMouseOver = false;
         
-        private Vector3 queueCenter;
+        protected Vector3 QueueCenter;
         // Allowing float due to PileAlignType.Middle
-        private float _startingIndex;
+        protected float StartingIndex;
+        protected float TotalCardWidth;
         
-        private void Start()
+        protected virtual void Start()
         {
 			_pile = new List<Card>();
 
-            queueCenter = transform.Find("QueueCenter").transform.position;
-            _startingIndex = 0;
+            QueueCenter = transform.Find("QueueCenter").transform.position;
+            StartingIndex = 0;
+            TotalCardWidth = Constant.cardWidth * scaleFactor + offsetMargin;
         }
 
         private void SetAlign()
@@ -46,18 +49,18 @@ namespace UI
             switch (align)
             {
                 case PileAlignType.Left:
-                    _startingIndex = 0;
+                    StartingIndex = 0;
                     break;
                 case PileAlignType.Middle:
-                    _startingIndex = (float)(_pile.Count - 1) / 2;
+                    StartingIndex = (float)(_pile.Count - 1) / 2;
                     break;
                 case PileAlignType.Right:
-                    _startingIndex = _pile.Count - 1;
+                    StartingIndex = _pile.Count - 1;
                     break;
             }
         }
 
-        private void AdjustPosition(int index, bool setAlign = false)
+        protected void AdjustPosition(int index, bool setAlign = false)
         {
             if (setAlign) SetAlign();
 
@@ -65,15 +68,14 @@ namespace UI
             thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
             
             RectTransform thisRec = thisTrans.GetComponent<RectTransform>();
-            float thisWidth = thisRec.rect.width * scaleFactor;
 
             thisTrans.position = new Vector3(
-                queueCenter.x + (thisWidth + offsetMargin) * (index - _startingIndex),
-                queueCenter.y,
-                queueCenter.z);
+                QueueCenter.x + TotalCardWidth * (index - StartingIndex),
+                QueueCenter.y,
+                QueueCenter.z);
         }
 
-        private void AdjustAllPositions()
+        protected void AdjustAllPositions()
         {
             SetAlign();
             for (var i = 0; i < _pile.Count; i++)
@@ -107,10 +109,21 @@ namespace UI
             _pile.Clear();
         }
 
+        public bool Contains(Card card)
+        {
+            return _pile.Contains(card);
+        }
+        
         public Card Get(int index)
         {
             return _pile[index]; 
         }
+        
+        public int IndexOf(Card card)
+        {
+            return _pile.IndexOf(card);
+        }
+        
         public bool Remove(Card card)
         {
             bool ret = _pile.Remove(card);
@@ -118,17 +131,19 @@ namespace UI
             return ret;
         }
         
-        public void RemoveAt(int Index)
+        public void RemoveAt(int index)
         {
-            _pile.RemoveAt(Index);
+            _pile.RemoveAt(index);
             AdjustAllPositions();
         }
+        
         public Card Draw()
         {
             Card drawnCard = _pile.Draw();
             AdjustAllPositions();
             return drawnCard;
         }
+        
         public List<Card> DrawAll()
         {
             List<Card> ret = _pile;

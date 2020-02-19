@@ -12,7 +12,7 @@ namespace Managers
      public class VfxManager : MonoBehaviour
      { 
          public GameObject cardCanvas;
-         
+
          public static Dictionary<StrategyType, Color> strategyColors = new Dictionary<StrategyType, Color>(){
              {StrategyType.None, Color.white },
              {StrategyType.Detriment, new Color(0f, 0.3f, 0.2f)},

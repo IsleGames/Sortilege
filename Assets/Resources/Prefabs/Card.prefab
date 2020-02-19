@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 155027010400881919}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 25, y: 40, z: 0}
-  m_LocalScale: {x: 4, y: 4, z: 0}
+  m_LocalScale: {x: 0.18, y: 0.18, z: 0}
   m_Children: []
   m_Father: {fileID: 3739844958693504397}
   m_RootOrder: 1
@@ -448,8 +448,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9a6038e7d8a7bb4dbc91d989b96a537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canPlay: 1
-  beingPlayed: 0
+  movable: 1
+  enterPlayArea: 0
+  enterHandArea: 0
   moveSpeed: 1
 --- !u!223 &3739844958693504396
 Canvas:

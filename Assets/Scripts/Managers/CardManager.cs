@@ -25,21 +25,23 @@ namespace Managers
 		// private List<CardData> _cardDataArray;
 		
 		public List<CardData> CardList;
-        public Pile pileDeck, pileHand, pileDiscard, pilePlay;
+        public Pile pileDeck, pileDiscard;
+        public HandPile pileHand;
+        public PlayPile pilePlay;
 
-		private GameObject _cardPrefab;
+        public GameObject cardPrefab;
 
 		public int cardsDrawnPerTurn = -1;
 		public int maxCardCount = 5;
 		
 		public void Start()
 		{
-            _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
             
 			pileDeck = GameObject.Find("DeckPile").GetComponent<Pile>();
-			pileHand = GameObject.Find("HandPile").GetComponent<Pile>();
+			pileHand = GameObject.Find("HandPile").GetComponent<HandPile>();
 			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
-			pilePlay = GameObject.Find("PlayPile").GetComponent<Pile>();
+			pilePlay = GameObject.Find("PlayPile").GetComponent<PlayPile>();
 
 			if (CardList.Count > maxCardCount)
 			{
@@ -49,7 +51,7 @@ namespace Managers
 
 			foreach (CardData cardData in CardList)
 			{
-				GameObject newCardObj = Instantiate(_cardPrefab);
+				GameObject newCardObj = Instantiate(cardPrefab);
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);
@@ -81,32 +83,36 @@ namespace Managers
 				throw new InvalidOperationException("Card not in Hand");
 			
 			pilePlay.Add(card);
-            card.onPlay.Invoke();
+			// card.onAddToPlayPile.Invoke();
 			pileHand.Remove(card);
 		}
-/*
+
 		public void RemoveCardAndAfterFromQueue(Card card)
 		{
 			if (card.GetComponent<Ability>().disableRetract)
 			{
-
 				// This is a fail-safe error; Show it in the UI directly
 				throw new InvalidOperationException("Card is not retractable");
 			}
 
 			int cardID = pilePlay.IndexOf(card);
-			
 			if (cardID == -1)
 				throw new InvalidOperationException("Card not in Hand");
 			
-			for (int i = pilePlay.Count - 1; i >= cardID; i--)
+			pileHand.AddOnVirtual(card);
+			// card.onDeleteFromPlayPile.Invoke();
+			pilePlay.Remove(card);
+			
+			List<Card> discardList = new List<Card>();
+			
+			for (int i = pilePlay.Count() - 1; i >= cardID; i--)
 			{
-				Card thisCard = pilePlay[i];
+				discardList.Add(pilePlay.Get(i));
 				pilePlay.RemoveAt(i);
-				pileHand.Add(thisCard);
 			}
+
+			pileHand.AddRange(discardList);
 		}
-*/
 
 		public void DrawCards(int number, bool onEmptyShuffle = true)
 		{

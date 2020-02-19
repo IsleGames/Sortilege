@@ -16,8 +16,6 @@ namespace Cards
         {
             CardUI cardui = GetComponent<CardUI>();
 
-            cardui.SetCard();
-
             //cardui.setCallbacks();
             
             var canvas = GetComponent<Canvas>();
