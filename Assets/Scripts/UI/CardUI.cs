@@ -5,6 +5,7 @@ using Cards;
 using TMPro;
 using UI;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 
 // This should maybe just be Collider? 
 // We'll see how many dimensions we use
@@ -12,16 +13,19 @@ using UnityEngine;
 [RequireComponent(typeof(Collider2D))]
 public class CardUI : MonoBehaviour {
 
-    public bool movable = true; // TODO: default to false, check in update() based on game state
+    public bool movable; // TODO: default to false, check in update() based on game state
     
     [SerializeField]
-    private bool triggerPlayArea, triggerHandArea;
+    private bool triggerPlayArea, triggerHandArea, isDragged;
+    public Pile thisPile;
     
     public float moveSpeed = 0.1f;
 
     void Start()
     {
         GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+        
+        isDragged = false;
     }
 
     // private Card card;
@@ -30,16 +34,29 @@ public class CardUI : MonoBehaviour {
 
     public void OnMouseDown()
     {
+        thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
+
+        if (!(thisPile.gameObject.name == "HandPile" || thisPile.gameObject.name == "PlayPile"))
+        {
+            movable = false;
+            return;
+        }
+        
         home = transform.position;
         cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
+        isDragged = true;
         
-        Debugger.Log(GetComponent<MetaData>().title + " MouseDown");
+        if (thisPile == Game.Ctx.CardOperator.pileHand)
+        {
+            Game.Ctx.CardOperator.pileHand.ReplaceWithVirtualCard(GetComponent<Card>());
+        }
+        
+        // Debugger.Log(GetComponent<MetaData>().title + " MouseDown");
     }
 
     public void OnMouseDrag()
     {
-        // Debugger.Log("hi");
-        
         if (!movable) return;
         
         var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -47,52 +64,69 @@ public class CardUI : MonoBehaviour {
 
         if (triggerHandArea)
             Game.Ctx.CardOperator.pileHand.VirtualPositionChecker(transform.position);
+        else
+            Game.Ctx.CardOperator.pileHand.VirtualRemove();
+            
     }
 
     private void OnMouseUp()
     {
+        // Debugger.Log(triggerPlayArea + " " + triggerHandArea);
+        Card card = GetComponent<Card>();
+        
         if (triggerPlayArea)
         {
-            Game.Ctx.CardOperator.AddCardToQueue(GetComponent<Card>());
+            if (thisPile == Game.Ctx.CardOperator.pileHand)
+                Game.Ctx.CardOperator.AddCardToQueue(card);
+            else
+                thisPile.AdjustAllPositions();
         }
-        if (triggerHandArea)
+        else if (triggerHandArea)
         {
-            Game.Ctx.CardOperator.RemoveCardAndAfterFromQueue(GetComponent<Card>());
+            if (thisPile == Game.Ctx.CardOperator.pilePlay)
+                Game.Ctx.CardOperator.RemoveCardAndAfterFromQueue(card);
+            else if (thisPile == Game.Ctx.CardOperator.pileHand)
+                Game.Ctx.CardOperator.pileHand.ReplaceWithRealCard(card);
         }
+        else
+        {
+            if (thisPile == Game.Ctx.CardOperator.pileHand)
+                Game.Ctx.CardOperator.pileHand.Add(card);
+            else
+                thisPile.AdjustAllPositions();
+        }
+        
+        Game.Ctx.CardOperator.pileHand.VirtualRemove();
 
-        triggerHandArea = false;
-        triggerPlayArea = false;
+        isDragged = false;
     }
     
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<PlayPile>())
         {
-            if (!Game.Ctx.CardOperator.pilePlay.Contains(GetComponent<Card>()))
-            {
-                triggerPlayArea = true;
-                triggerHandArea = false;
-                Game.Ctx.CardOperator.pileHand.VirtualRemove();
-            }
+            triggerPlayArea = true;
         }
         else if (other.gameObject.GetComponent<HandPile>())
-            if (!Game.Ctx.CardOperator.pileHand.Contains(GetComponent<Card>()))
-                triggerHandArea = true;
+        {
+            triggerHandArea = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         if (other.gameObject.GetComponent<PlayPile>())
         {
-            if (!Game.Ctx.CardOperator.pilePlay.Contains(GetComponent<Card>()))
-                triggerPlayArea = false;
+            triggerPlayArea = false;
         }
         else if (other.gameObject.GetComponent<HandPile>())
-            if (!Game.Ctx.CardOperator.pileHand.Contains(GetComponent<Card>()))
+        {
+            triggerHandArea = false;
+            if (isDragged)
             {
-                triggerHandArea = false;
                 Game.Ctx.CardOperator.pileHand.VirtualRemove();
             }
+        }
     }
 
     IEnumerator MoveCard(Vector3 dest, float delay = 0)

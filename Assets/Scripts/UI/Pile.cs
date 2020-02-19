@@ -60,7 +60,7 @@ namespace UI
             }
         }
 
-        protected void AdjustPosition(int index, bool setAlign = false)
+        public void AdjustPosition(int index, bool setAlign = false)
         {
             if (setAlign) SetAlign();
 
@@ -75,7 +75,7 @@ namespace UI
                 QueueCenter.z);
         }
 
-        protected void AdjustAllPositions()
+        public void AdjustAllPositions()
         {
             SetAlign();
             for (var i = 0; i < _pile.Count; i++)

@@ -43,7 +43,6 @@ namespace UI
         public void VirtualPositionChecker(Vector3 mousePosition)
         {
             float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + StartingIndex);
-            
             int curIndex = (int) Mathf.Clamp(curIndexf, 0, RealCount());
 
             if (_virtualCardIndex != curIndex)
@@ -51,7 +50,7 @@ namespace UI
                 if (_virtualCardIndex != -1)
                     VirtualMove(curIndex);
                 else
-                    VirtualInsert(curIndex);
+                    VirtualInsertAt(curIndex);
             }
         }
         
@@ -61,26 +60,49 @@ namespace UI
             AdjustAllPositions();
         }
 
-        public void VirtualInsert(int index)
+        public void VirtualInsertAt(int index, bool adjust = true)
         {
             _pile.Insert(index, _virtualCard);
-            AdjustAllPositions();
+            if (adjust) AdjustAllPositions();
             _virtualCardIndex = index;
         }
-        public void VirtualRemove()
+        
+        public void VirtualRemove(bool adjust = true)
         {
+            if (_virtualCardIndex == -1) return;
+            
             _pile.Remove(_virtualCard);
-            AdjustAllPositions();
+            if (adjust) AdjustAllPositions();
             _virtualCardIndex = -1;
         }
-        public void VirtualMove(int index)
+        
+        public void VirtualMove(int index, bool adjust = true)
         {
             Card temp = _pile[_virtualCardIndex];
             _pile[_virtualCardIndex] = _pile[index];
             _pile[index] = temp;
             _virtualCardIndex = index;
             
-            AdjustAllPositions();
+            if (adjust) AdjustAllPositions();
+        }
+        public void ReplaceWithVirtualCard(Card card)
+        {
+            int i = _pile.IndexOf(card);
+            _pile[i] = _virtualCard;
+            _virtualCardIndex = i;
+            AdjustPosition(i);
+        }
+        
+        public void ReplaceWithRealCard(Card card)
+        {
+            // Debugger.Log("hi");
+            
+            if (_virtualCardIndex == -1) 
+                throw new InvalidOperationException("No virtual card exists");
+            
+            _pile[_virtualCardIndex] = card;
+            AdjustPosition(_virtualCardIndex);
+            _virtualCardIndex = -1;
         }
     }
 }

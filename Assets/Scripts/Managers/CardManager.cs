@@ -76,15 +76,27 @@ namespace Managers
 			// 	card.LogInfo();
 			// }
 		}
-
+		public Pile GetCardPile(Card card)
+		{
+			if (pileHand.Contains(card))
+				return pileHand;
+			if (pilePlay.Contains(card))
+				return pilePlay;
+			if (pileDeck.Contains(card))
+				return pileDeck;
+			if (pileDiscard.Contains(card))
+				return pileDiscard;
+			throw new ArgumentOutOfRangeException("Card not found in any pile");
+		}
+		
 		public void AddCardToQueue(Card card)
 		{
-			if (!pileHand.Contains(card))
+			if (!pileHand.Contains(card) && card.GetComponent<CardUI>().thisPile != pileHand)
 				throw new InvalidOperationException("Card not in Hand");
 			
 			pilePlay.Add(card);
 			// card.onAddToPlayPile.Invoke();
-			pileHand.Remove(card);
+			pileHand.VirtualRemove();
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)

@@ -31,7 +31,7 @@ public class Game : MonoBehaviour
     {
         Ctx = this;
 
-        // UnityEngine.Random.InitState(42);
+        UnityEngine.Random.InitState(42);
 
         Player = transform.GetComponentInChildren<Player>();
         Enemy = transform.GetComponentInChildren<Enemy>();
