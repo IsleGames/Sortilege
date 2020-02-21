@@ -7,6 +7,7 @@ using _Editor;
 using Cards;
 using Data;
 using Library;
+using Debug = System.Diagnostics.Debug;
 
 namespace UI
 {
@@ -44,7 +45,7 @@ namespace UI
             TotalCardWidth = Constant.cardWidth * scaleFactor + offsetMargin;
         }
 
-        private void SetAlign()
+        protected void SetAlign()
         {
             switch (align)
             {
@@ -60,19 +61,18 @@ namespace UI
             }
         }
 
-        public void AdjustPosition(int index, bool setAlign = false)
+        protected void AdjustPosition(int index, bool setAlign = false)
         {
             if (setAlign) SetAlign();
 
             Transform thisTrans = _pile[index].transform;
             thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
-            
-            RectTransform thisRec = thisTrans.GetComponent<RectTransform>();
 
-            thisTrans.position = new Vector3(
+            Vector3 newPos = new Vector3(
                 QueueCenter.x + TotalCardWidth * (index - StartingIndex),
                 QueueCenter.y,
                 QueueCenter.z);
+            thisTrans.position = newPos;
         }
 
         public void AdjustAllPositions()
@@ -88,13 +88,24 @@ namespace UI
         {
             return _pile.Count;
         }
-
+        public bool Contains(Card card)
+        {
+            return _pile.Contains(card);
+        }
+        public Card Get(int index)
+        {
+            return _pile[index]; 
+        }
+        public int IndexOf(Card card)
+        {
+            return _pile.IndexOf(card);
+        }
+        
         public void Add(Card card)
         {
             _pile.Add(card);
             AdjustAllPositions();
         }
-
         public void AddRange(List<Card> cardList, bool shuffleAfter = false)
         {
             _pile.AddRange(cardList);
@@ -103,27 +114,15 @@ namespace UI
             else
                 AdjustAllPositions();
         }
-        
         public void Clear()
         {
             _pile.Clear();
         }
-
-        public bool Contains(Card card)
+        public void Insert(int index, Card card)
         {
-            return _pile.Contains(card);
+            _pile.Insert(index, card);
+            AdjustAllPositions();
         }
-        
-        public Card Get(int index)
-        {
-            return _pile[index]; 
-        }
-        
-        public int IndexOf(Card card)
-        {
-            return _pile.IndexOf(card);
-        }
-        
         public bool Remove(Card card)
         {
             bool ret = _pile.Remove(card);
@@ -151,7 +150,6 @@ namespace UI
             
             return ret;
         }
-        
         public void Shuffle()
         {
             _pile.Shuffle();

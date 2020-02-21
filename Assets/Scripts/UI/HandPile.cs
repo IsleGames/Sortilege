@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using _Editor;
 using Cards;
 using UnityEditor;
@@ -13,6 +14,10 @@ namespace UI
         private Card _virtualCard;
         [SerializeField]
         private int _virtualCardIndex;
+
+        [SerializeField] private List<Card> _virtualPile;
+        [SerializeField] public bool isVirtualOn = false;
+        [SerializeField] private float startingVirtualIndex;
         
         private new void Start()
         {
@@ -26,83 +31,154 @@ namespace UI
             _virtualCardIndex = -1;
         }
 
-        public int RealCount()
+        public void Update()
         {
-            if (_virtualCardIndex == -1)
-                return _pile.Count;
-            else
-                return _pile.Count - 1;
-        }
-
-        public void Insert(int index, Card card)
-        {
-            _pile.Insert(index, card);
-            AdjustAllPositions();
-        }
-
-        public void VirtualPositionChecker(Vector3 mousePosition)
-        {
-            float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + StartingIndex);
-            int curIndex = (int) Mathf.Clamp(curIndexf, 0, RealCount());
-
-            if (_virtualCardIndex != curIndex)
+            if (isVirtualOn)
             {
-                if (_virtualCardIndex != -1)
-                    VirtualMove(curIndex);
-                else
-                    VirtualInsertAt(curIndex);
+                VirtualMove(Game.Ctx.VfxOperator.draggedCard.transform.position);
             }
         }
         
-        public void AddOnVirtual(Card card)
+        protected void SetVirtualAlign()
         {
-            _pile[_virtualCardIndex] = card;
-            AdjustAllPositions();
+            switch (align)
+            {
+                case PileAlignType.Left:
+                    startingVirtualIndex = 0;
+                    break;
+                case PileAlignType.Middle:
+                    startingVirtualIndex = (float)(_virtualPile.Count - 1) / 2;
+                    break;
+                case PileAlignType.Right:
+                    startingVirtualIndex = _virtualPile.Count - 1;
+                    break;
+            }
+        }
+        protected void AdjustVirtualPosition(int index, bool setAlign = false)
+        {
+            if (setAlign) SetVirtualAlign();
+
+            Transform thisTrans = _virtualPile[index].transform;
+            thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+
+            Vector3 newPos = new Vector3(
+                QueueCenter.x + TotalCardWidth * (index - startingVirtualIndex),
+                QueueCenter.y,
+                QueueCenter.z);
+            thisTrans.position = newPos;
+
+            if (thisTrans.gameObject.name == "Shockwave")
+            {
+                Debugger.Log("AdjustPosition(skwv) " + Time.time + " " + thisTrans.position + " " + newPos);
+            }
+        }
+        public void AdjustAllVirtualPositions()
+        {
+            SetVirtualAlign();
+            for (var i = 0; i < _virtualPile.Count; i++)
+            {
+                AdjustVirtualPosition(i);
+            }
         }
 
-        public void VirtualInsertAt(int index, bool adjust = true)
-        {
-            _pile.Insert(index, _virtualCard);
-            if (adjust) AdjustAllPositions();
-            _virtualCardIndex = index;
-        }
         
-        public void VirtualRemove(bool adjust = true)
+        public void VirtualInitialize()
         {
-            if (_virtualCardIndex == -1) return;
+            isVirtualOn = true;
+            _virtualPile = new List<Card>(_pile);
+            _virtualPile.Add(_virtualCard);
+
+            if (Contains(Game.Ctx.VfxOperator.draggedCard))
+                _virtualPile.Remove(Game.Ctx.VfxOperator.draggedCard);
             
-            _pile.Remove(_virtualCard);
-            if (adjust) AdjustAllPositions();
+            _virtualCardIndex = _virtualPile.Count - 1;
+            
+            VirtualMove(Game.Ctx.VfxOperator.draggedCard.transform.position, true);
+        }
+
+        public void VirtualDestroy(bool adjust = false)
+        {
+            if (!isVirtualOn) return;
+
+            if (Contains(Game.Ctx.VfxOperator.draggedCard))
+            {
+                _pile.Remove(Game.Ctx.VfxOperator.draggedCard);
+                _pile.Insert(_virtualCardIndex, Game.Ctx.VfxOperator.draggedCard);
+            }
+            
+            _virtualPile = null;
             _virtualCardIndex = -1;
-        }
-        
-        public void VirtualMove(int index, bool adjust = true)
-        {
-            Card temp = _pile[_virtualCardIndex];
-            _pile[_virtualCardIndex] = _pile[index];
-            _pile[index] = temp;
-            _virtualCardIndex = index;
+            isVirtualOn = false;
             
             if (adjust) AdjustAllPositions();
-        }
-        public void ReplaceWithVirtualCard(Card card)
-        {
-            int i = _pile.IndexOf(card);
-            _pile[i] = _virtualCard;
-            _virtualCardIndex = i;
-            AdjustPosition(i);
+            
+            // Debugger.Log("I am called");
         }
         
-        public void ReplaceWithRealCard(Card card)
+        public void VirtualMove(Vector3 mousePosition, bool forceReset = false)
         {
-            // Debugger.Log("hi");
+            SetVirtualAlign();
             
-            if (_virtualCardIndex == -1) 
-                throw new InvalidOperationException("No virtual card exists");
-            
-            _pile[_virtualCardIndex] = card;
-            AdjustPosition(_virtualCardIndex);
-            _virtualCardIndex = -1;
+            float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + startingVirtualIndex);
+            int index = (int) Mathf.Clamp(curIndexf, 0, Count());
+
+            if (_virtualCardIndex != index || forceReset)
+            {
+                Card temp = _virtualPile[_virtualCardIndex];
+                _virtualPile[_virtualCardIndex] = _virtualPile[index];
+                _virtualPile[index] = temp;
+                
+                _virtualCardIndex = index;
+                Debugger.Log("Internal VirtualMove is Called at " + Time.time);
+                AdjustAllVirtualPositions();
+            }
+        }
+
+        public new void Add(Card card)
+        {
+            VirtualDestroy();
+            base.Add(card);
+        }
+        public new void AddRange(List<Card> cardList, bool shuffleAfter = false)
+        {
+            VirtualDestroy();
+            base.AddRange(cardList, shuffleAfter);
+        }
+        public new void Clear()
+        {
+            VirtualDestroy();
+            base.Clear();
+        }
+        public new void Insert(int index, Card card)
+        {
+            VirtualDestroy();
+            base.Insert(index, card);
+        }
+        public new bool Remove(Card card)
+        {
+            VirtualDestroy();
+            return base.Remove(card);
+        }
+        public new void RemoveAt(int index)
+        {
+            VirtualDestroy();
+            base.RemoveAt(index);
+        }
+        public new Card Draw()
+        {
+            VirtualDestroy();
+            return base.Draw();
+        }
+        
+        public new List<Card> DrawAll()
+        {
+            VirtualDestroy();
+            return base.DrawAll();
+        }
+        public new void Shuffle()
+        {
+            VirtualDestroy();
+            base.Shuffle();
         }
     }
 }

@@ -10,9 +10,7 @@ using Cards;
 namespace Managers
  {
      public class VfxManager : MonoBehaviour
-     { 
-         public GameObject cardCanvas;
-
+     {
          public static Dictionary<StrategyType, Color> strategyColors = new Dictionary<StrategyType, Color>(){
              {StrategyType.None, Color.white },
              {StrategyType.Detriment, new Color(0f, 0.3f, 0.2f)},
@@ -28,7 +26,7 @@ namespace Managers
             { AttributeType.Storm,    "Sprites/Icons/icon-snowflake" },
             { AttributeType.Thunder,  "Sprites/Icons/icon-lightning" },
             { AttributeType.Venom,    "Sprites/Icons/icon-skull"     },
-            { AttributeType.None,     "Sprites/Icons/icon-none"       },
+            { AttributeType.None,     "Sprites/Icons/icon-none"      },
         };
         
         public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
@@ -40,23 +38,18 @@ namespace Managers
             { StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
         };
 
+        public Card draggedCard;
+
          private void Awake()
          { 
-             cardCanvas = GameObject.Find("CardCanvas");
+             // cardCanvas = GameObject.Find("CardCanvas");
          }
-         
-         // Temporary Method
 
-         public void SetCardPosition(Card card, Vector3 pos)
-        {
-            card.transform.position = pos;
-        }
-
-        public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
-        {
+         public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
+         {
             float t = 0f;
             Vector3 init = card.transform.position;
-
+            
             while (t < time) 
             {
                 float i = t / time;
@@ -64,6 +57,6 @@ namespace Managers
                 t += Time.deltaTime;
                 yield return null;
             }
-        }
+         }
      }
  }

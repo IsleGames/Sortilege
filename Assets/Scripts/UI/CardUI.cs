@@ -36,20 +36,21 @@ public class CardUI : MonoBehaviour {
     {
         thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
 
-        if (!(thisPile.gameObject.name == "HandPile" || thisPile.gameObject.name == "PlayPile"))
+        if (thisPile.gameObject.name != "HandPile" && thisPile.gameObject.name != "PlayPile")
         {
             movable = false;
             return;
         }
+
+        Game.Ctx.VfxOperator.draggedCard = GetComponent<Card>();
         
         home = transform.position;
         cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
         isDragged = true;
         
         if (thisPile == Game.Ctx.CardOperator.pileHand)
         {
-            Game.Ctx.CardOperator.pileHand.ReplaceWithVirtualCard(GetComponent<Card>());
+            Game.Ctx.CardOperator.pileHand.VirtualInitialize();
         }
         
         // Debugger.Log(GetComponent<MetaData>().title + " MouseDown");
@@ -62,11 +63,13 @@ public class CardUI : MonoBehaviour {
         var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = home + cursorPositionWorld - cursorhome;
 
-        if (triggerHandArea)
-            Game.Ctx.CardOperator.pileHand.VirtualPositionChecker(transform.position);
-        else
-            Game.Ctx.CardOperator.pileHand.VirtualRemove();
-            
+        if (thisPile.gameObject.name == "PlayPile")
+        {
+            if (triggerHandArea && !Game.Ctx.CardOperator.pileHand.isVirtualOn)
+                Game.Ctx.CardOperator.pileHand.VirtualInitialize();
+            else if (!triggerHandArea && Game.Ctx.CardOperator.pileHand.isVirtualOn)
+                Game.Ctx.CardOperator.pileHand.VirtualDestroy(true);
+        }
     }
 
     private void OnMouseUp()
@@ -74,30 +77,23 @@ public class CardUI : MonoBehaviour {
         // Debugger.Log(triggerPlayArea + " " + triggerHandArea);
         Card card = GetComponent<Card>();
         
-        if (triggerPlayArea)
+        // thisPile == Game.Ctx.CardOperator.pileHand could also work
+        
+        if (thisPile.gameObject.name == "HandPile" && triggerPlayArea)
         {
-            if (thisPile == Game.Ctx.CardOperator.pileHand)
-                Game.Ctx.CardOperator.AddCardToQueue(card);
-            else
-                thisPile.AdjustAllPositions();
+            Game.Ctx.CardOperator.AddCardToQueue(card);
         }
-        else if (triggerHandArea)
+        else if (thisPile.gameObject.name == "PlayPile" && triggerHandArea)
         {
-            if (thisPile == Game.Ctx.CardOperator.pilePlay)
-                Game.Ctx.CardOperator.RemoveCardAndAfterFromQueue(card);
-            else if (thisPile == Game.Ctx.CardOperator.pileHand)
-                Game.Ctx.CardOperator.pileHand.ReplaceWithRealCard(card);
+            Game.Ctx.CardOperator.RemoveCardAndAfterFromQueue(card);
         }
         else
         {
-            if (thisPile == Game.Ctx.CardOperator.pileHand)
-                Game.Ctx.CardOperator.pileHand.Add(card);
-            else
-                thisPile.AdjustAllPositions();
+            thisPile.AdjustAllPositions();
         }
-        
-        Game.Ctx.CardOperator.pileHand.VirtualRemove();
 
+        Game.Ctx.CardOperator.pileHand.VirtualDestroy(true);
+        thisPile = null;
         isDragged = false;
     }
     
@@ -122,10 +118,6 @@ public class CardUI : MonoBehaviour {
         else if (other.gameObject.GetComponent<HandPile>())
         {
             triggerHandArea = false;
-            if (isDragged)
-            {
-                Game.Ctx.CardOperator.pileHand.VirtualRemove();
-            }
         }
     }
 

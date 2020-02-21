@@ -29,9 +29,10 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-        Ctx = this;
-
+        QualitySettings.vSyncCount = 1;
         UnityEngine.Random.InitState(42);
+        
+        Ctx = this;
 
         Player = transform.GetComponentInChildren<Player>();
         Enemy = transform.GetComponentInChildren<Enemy>();

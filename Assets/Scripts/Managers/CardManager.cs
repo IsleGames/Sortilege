@@ -96,7 +96,7 @@ namespace Managers
 			
 			pilePlay.Add(card);
 			// card.onAddToPlayPile.Invoke();
-			pileHand.VirtualRemove();
+			pileHand.Remove(card);
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)
@@ -107,17 +107,17 @@ namespace Managers
 				throw new InvalidOperationException("Card is not retractable");
 			}
 
-			int cardID = pilePlay.IndexOf(card);
-			if (cardID == -1)
+			int cardIndex = pilePlay.IndexOf(card);
+			if (cardIndex == -1)
 				throw new InvalidOperationException("Card not in Hand");
 			
-			pileHand.AddOnVirtual(card);
+			pileHand.Add(card);
 			// card.onDeleteFromPlayPile.Invoke();
 			pilePlay.Remove(card);
 			
 			List<Card> discardList = new List<Card>();
 			
-			for (int i = pilePlay.Count() - 1; i >= cardID; i--)
+			for (int i = pilePlay.Count() - 1; i >= cardIndex; i--)
 			{
 				discardList.Add(pilePlay.Get(i));
 				pilePlay.RemoveAt(i);
