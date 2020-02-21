@@ -25,6 +25,7 @@ namespace UI
             
             GameObject virtualObject = Instantiate(Game.Ctx.CardOperator.cardPrefab);
             virtualObject.name = "VirtualCard";
+            virtualObject.layer = 2;
             
             _virtualCard = virtualObject.GetComponent<Card>();
             _virtualCard.GetComponent<CardUI>().Hide();
@@ -125,7 +126,7 @@ namespace UI
             SetVirtualAlign();
             
             float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + startingVirtualIndex);
-            int index = (int) Mathf.Clamp(curIndexf, 0, Count());
+            int index = (int) Mathf.Clamp(curIndexf, 0, _virtualPile.Count - 1);
 
             if (_virtualCardIndex != index || forceReset)
             {
