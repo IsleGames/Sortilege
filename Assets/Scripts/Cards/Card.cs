@@ -17,9 +17,9 @@ namespace Cards
         [SerializeField]
         private CardData cardData;
         
-        public UnityEvent onDraw = new UnityEvent();
-        public UnityEvent onPlay = new UnityEvent();
-        public UnityEvent onDiscard = new UnityEvent();
+        // public UnityEvent onDraw = new UnityEvent();
+        // public UnityEvent onPlay = new UnityEvent();
+        // public UnityEvent onDiscard = new UnityEvent();
 
         public void LogInfo()
         {

@@ -331,7 +331,7 @@ GameObject:
   - component: {fileID: -7766759408608403537}
   - component: {fileID: 7340009696570777890}
   - component: {fileID: 3148182974849659667}
-  - component: {fileID: 4871746963783403978}
+  - component: {fileID: 7515948331846301131}
   - component: {fileID: 3739844958693504396}
   - component: {fileID: 3739844958693504399}
   - component: {fileID: 3739844958693504497}
@@ -435,7 +435,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afba3787d7e14c7fbb59c21e4f08c163, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4871746963783403978
+  visible: 1
+  moveSpeed: 0.1
+--- !u!114 &7515948331846301131
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -444,16 +446,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 3739844958693504499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9a6038e7d8a7bb4dbc91d989b96a537, type: 3}
+  m_Script: {fileID: 11500000, guid: a8470e08e90f49f48a9ac7b0642daef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movable: 1
-  enabled: 1
+  movable: 0
   triggerPlayArea: 0
   triggerHandArea: 0
-  isDragged: 0
   thisPile: {fileID: 0}
-  moveSpeed: 1
 --- !u!223 &3739844958693504396
 Canvas:
   m_ObjectHideFlags: 0

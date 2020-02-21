@@ -28,7 +28,7 @@ namespace UI
             virtualObject.layer = 2;
             
             _virtualCard = virtualObject.GetComponent<Card>();
-            _virtualCard.GetComponent<CardUI>().Hide();
+            _virtualCard.GetComponent<Render>().Hide();
             _virtualCardIndex = -1;
         }
 

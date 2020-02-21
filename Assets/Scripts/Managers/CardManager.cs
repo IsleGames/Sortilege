@@ -91,7 +91,7 @@ namespace Managers
 		
 		public void AddCardToQueue(Card card)
 		{
-			if (!pileHand.Contains(card) && card.GetComponent<CardUI>().thisPile != pileHand)
+			if (!pileHand.Contains(card))
 				throw new InvalidOperationException("Card not in Hand");
 			
 			pilePlay.Add(card);
@@ -141,7 +141,7 @@ namespace Managers
 						break;
 
 				Card card = pileDeck.Draw();
-                card.onDraw.Invoke();
+                // card.onDraw.Invoke();
                 drawList.Add(card);
 			}
 			pileHand.AddRange(drawList);
@@ -166,7 +166,7 @@ namespace Managers
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
 
-            card.onDiscard.Invoke();
+            // card.onDiscard.Invoke();
 			pileDiscard.Add(card);
 		}
 /*
