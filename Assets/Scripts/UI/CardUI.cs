@@ -16,20 +16,12 @@ public class CardUI : MonoBehaviour {
     public bool movable, enabled = true; // TODO: default to false, check in update() based on game state
     
     [SerializeField]
-    private bool triggerPlayArea, triggerHandArea, isDragged;
+    private bool triggerPlayArea, triggerHandArea, isDragged = false;
     public Pile thisPile;
     
     public float moveSpeed = 0.1f;
 
-    void Start()
-    {
-        GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
-        
-        isDragged = false;
-    }
-    
-    Vector3 home;
-    private Vector3 cursorhome;
+    private Vector3 cursorShift;
 
     void OnMouseDown()
     {
@@ -43,16 +35,19 @@ public class CardUI : MonoBehaviour {
         
         thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
 
-        if (thisPile.gameObject.name != "HandPile" && thisPile.gameObject.name != "PlayPile")
+        if (thisPile.gameObject.name == "HandPile" || thisPile.gameObject.name == "PlayPile")
+        {
+            movable = true;
+        }
+        else
         {
             movable = false;
             return;
         }
 
-        Game.Ctx.VfxOperator.draggedCard = GetComponent<Card>();
+        cursorShift = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
         
-        home = transform.position;
-        cursorhome = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Game.Ctx.VfxOperator.draggedCard = GetComponent<Card>();
         isDragged = true;
         
         if (thisPile == Game.Ctx.CardOperator.pileHand)
@@ -67,7 +62,7 @@ public class CardUI : MonoBehaviour {
         if (!movable) return;
         
         var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        transform.position = home + cursorPositionWorld - cursorhome;
+        transform.position = cursorPositionWorld + cursorShift;
 
         if (thisPile.gameObject.name == "PlayPile")
         {

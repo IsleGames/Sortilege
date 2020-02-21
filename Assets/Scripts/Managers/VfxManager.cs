@@ -19,33 +19,33 @@ namespace Managers
              {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
              {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
          };
-
-        public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
-        {
-            {AttributeType.None, "Sprites/Icons/icon-transparent"},
-            {AttributeType.Infernal, "Sprites/Icons/icon-fire"},
-            {AttributeType.Storm, "Sprites/Icons/icon-snowflake"},
-            {AttributeType.Thunder, "Sprites/Icons/icon-lightning"},
-            {AttributeType.Venom, "Sprites/Icons/icon-skull"}
-        };
         
-        public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
-        {
-            {StrategyType.None,         "Sprites/Icons/icon-transparent"},
-            {StrategyType.Detriment,    "Sprites/Icons/icon-none"},
-            {StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
-            {StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
-            {StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
-            {StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
-        };
-
-        public Card draggedCard;
+         public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
+         {
+             {AttributeType.None, "Sprites/Icons/icon-transparent"},
+             {AttributeType.Infernal, "Sprites/Icons/icon-fire"},
+             {AttributeType.Storm, "Sprites/Icons/icon-snowflake"},
+             {AttributeType.Thunder, "Sprites/Icons/icon-lightning"},
+             {AttributeType.Venom, "Sprites/Icons/icon-skull"}
+         };
+        
+         public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
+         {
+             {StrategyType.None,         "Sprites/Icons/icon-transparent"},
+             {StrategyType.Detriment,    "Sprites/Icons/icon-none"},
+             {StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
+             {StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
+             {StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
+             {StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
+         }; 
+         
+         public Card draggedCard;
 
          private void Awake()
          { 
-             // cardCanvas = GameObject.Find("CardCanvas");
+            GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
          }
-
+        
          public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
          {
             float t = 0f;
