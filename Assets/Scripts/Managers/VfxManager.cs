@@ -40,10 +40,18 @@ namespace Managers
          }; 
          
          public Card draggedCard;
+         [SerializeField] private int sortOrder = 0;
 
          private void Awake()
          { 
             GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+         }
+
+         public int GetSortOrder()
+         {
+             int ret = sortOrder;
+             sortOrder += 1;
+             return ret;
          }
         
          public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
