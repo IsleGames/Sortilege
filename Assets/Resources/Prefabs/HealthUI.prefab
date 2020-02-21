@@ -169,8 +169,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4225535027248695784}
-  - component: {fileID: 4225535027248695791}
   - component: {fileID: 4225535027248695790}
+  - component: {fileID: 4225535027248695791}
   m_Layer: 0
   m_Name: HealthUI
   m_TagString: Untagged
@@ -202,26 +202,6 @@ RectTransform:
   m_AnchoredPosition: {x: -152, y: -1}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4225535027248695791
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4225535027248695785}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67f5c16451cf57e4fad112b4fd4983a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  currentHealth: 100
-  rate: 1
-  isplayer: 0
-  healthSlider: {fileID: 4225535027354567464}
-  healthText: {fileID: 4225535027460823662}
-  title: {fileID: 0}
-  linkedObject: {fileID: 0}
 --- !u!114 &4225535027248695790
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -272,6 +252,28 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &4225535027248695791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4225535027248695785}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67f5c16451cf57e4fad112b4fd4983a9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  currentHealth: 100
+  rate: 1
+  isplayer: 0
+  healthSlider: {fileID: 4225535027354567464}
+  blockSlider: {fileID: 0}
+  healthText: {fileID: 4225535027460823662}
+  blockText: {fileID: 0}
+  title: {fileID: 0}
+  linkedObject: {fileID: 0}
 --- !u!1 &4225535027262364140
 GameObject:
   m_ObjectHideFlags: 0

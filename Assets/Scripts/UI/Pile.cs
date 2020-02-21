@@ -72,6 +72,8 @@ namespace UI
                 QueueCenter.x + TotalCardWidth * (index - StartingIndex),
                 QueueCenter.y,
                 QueueCenter.z);
+            
+            // thisTrans.GetComponent<Render>().PController somethingsomething
             thisTrans.position = newPos;
         }
 
