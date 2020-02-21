@@ -27,13 +27,15 @@ public class CardUI : MonoBehaviour {
         
         isDragged = false;
     }
-
-    // private Card card;
+    
     Vector3 home;
     private Vector3 cursorhome;
 
-    public void OnMouseDown()
+    void OnMouseDown()
     {
+        Debugger.Log(GetComponent<MetaData>().title + " MouseDown at " + Time.time + ", metadata name is " + GetComponent<MetaData>().title);
+
+
         thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
 
         if (thisPile.gameObject.name != "HandPile" && thisPile.gameObject.name != "PlayPile")
@@ -53,10 +55,9 @@ public class CardUI : MonoBehaviour {
             Game.Ctx.CardOperator.pileHand.VirtualInitialize();
         }
         
-        // Debugger.Log(GetComponent<MetaData>().title + " MouseDown");
     }
 
-    public void OnMouseDrag()
+    void OnMouseDrag()
     {
         if (!movable) return;
         
@@ -72,7 +73,7 @@ public class CardUI : MonoBehaviour {
         }
     }
 
-    private void OnMouseUp()
+    void OnMouseUp()
     {
         // Debugger.Log(triggerPlayArea + " " + triggerHandArea);
         Card card = GetComponent<Card>();

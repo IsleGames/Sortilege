@@ -31,7 +31,7 @@ namespace UI
             _virtualCardIndex = -1;
         }
 
-        public void Update()
+        private void Update()
         {
             if (isVirtualOn)
             {
@@ -39,7 +39,7 @@ namespace UI
             }
         }
         
-        protected void SetVirtualAlign()
+        private void SetVirtualAlign()
         {
             switch (align)
             {
@@ -54,7 +54,7 @@ namespace UI
                     break;
             }
         }
-        protected void AdjustVirtualPosition(int index, bool setAlign = false)
+        private void AdjustVirtualPosition(int index, bool setAlign = false)
         {
             if (setAlign) SetVirtualAlign();
 
@@ -67,12 +67,12 @@ namespace UI
                 QueueCenter.z);
             thisTrans.position = newPos;
 
-            if (thisTrans.gameObject.name == "Shockwave")
-            {
-                Debugger.Log("AdjustPosition(skwv) " + Time.time + " " + thisTrans.position + " " + newPos);
-            }
+            // if (thisTrans.gameObject.name == "Shockwave")
+            // {
+            //     Debugger.Log("AdjustPosition(skwv) " + Time.time + " " + thisTrans.position + " " + newPos);
+            // }
         }
-        public void AdjustAllVirtualPositions()
+        private void AdjustAllVirtualPositions()
         {
             SetVirtualAlign();
             for (var i = 0; i < _virtualPile.Count; i++)
@@ -81,17 +81,22 @@ namespace UI
             }
         }
 
-        
         public void VirtualInitialize()
         {
             isVirtualOn = true;
             _virtualPile = new List<Card>(_pile);
-            _virtualPile.Add(_virtualCard);
 
             if (Contains(Game.Ctx.VfxOperator.draggedCard))
-                _virtualPile.Remove(Game.Ctx.VfxOperator.draggedCard);
+            {
+                _virtualCardIndex = _virtualPile.IndexOf(Game.Ctx.VfxOperator.draggedCard);
+                _virtualPile[_virtualCardIndex] = _virtualCard;
+            }
+            else
+            {
+                _virtualPile.Add(_virtualCard); 
+                _virtualCardIndex = _virtualPile.Count - 1;
+            }
             
-            _virtualCardIndex = _virtualPile.Count - 1;
             
             VirtualMove(Game.Ctx.VfxOperator.draggedCard.transform.position, true);
         }
@@ -129,7 +134,6 @@ namespace UI
                 _virtualPile[index] = temp;
                 
                 _virtualCardIndex = index;
-                Debugger.Log("Internal VirtualMove is Called at " + Time.time);
                 AdjustAllVirtualPositions();
             }
         }

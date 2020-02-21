@@ -1121,7 +1121,8 @@ GameObject:
   m_Component:
   - component: {fileID: 483045277}
   - component: {fileID: 483045278}
-  m_Layer: 0
+  - component: {fileID: 483045279}
+  m_Layer: 2
   m_Name: DeckPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1164,6 +1165,18 @@ MonoBehaviour:
   scaleFactor: 0.8
   offsetMargin: -12
   align: 0
+--- !u!114 &483045279
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 483045276}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10f6b61b7d94e08b7927d87bff1b7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &510657637 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2618078678661299652, guid: 3c45e81aa3a7b4506a3c51da544429a2,
@@ -1491,7 +1504,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4fd99170aed44048bb6a1b7be6f330e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardCanvas: {fileID: 0}
+  draggedCard: {fileID: 0}
 --- !u!114 &1051549745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1575,7 +1588,8 @@ GameObject:
   - component: {fileID: 1201132063}
   - component: {fileID: 1201132065}
   - component: {fileID: 1201132064}
-  m_Layer: 0
+  - component: {fileID: 1201132066}
+  m_Layer: 2
   m_Name: HandPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1619,6 +1633,9 @@ MonoBehaviour:
   offsetMargin: 10
   align: 1
   _virtualCardIndex: 0
+  _virtualPile: []
+  isVirtualOn: 0
+  startingVirtualIndex: 0
 --- !u!50 &1201132064
 Rigidbody2D:
   serializedVersion: 4
@@ -1666,6 +1683,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 400, y: 115}
   m_EdgeRadius: 0
+--- !u!114 &1201132066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1201132061}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10f6b61b7d94e08b7927d87bff1b7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1207244657
 GameObject:
   m_ObjectHideFlags: 0
@@ -1675,7 +1704,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1207244658}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QueueCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1789,7 +1818,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1458641052}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QueueCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2094,7 +2123,8 @@ GameObject:
   - component: {fileID: 1613351429}
   - component: {fileID: 1613351431}
   - component: {fileID: 1613351430}
-  m_Layer: 0
+  - component: {fileID: 1613351432}
+  m_Layer: 2
   m_Name: PlayPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2234,6 +2264,18 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 320, y: 320}
   m_EdgeRadius: 0
+--- !u!114 &1613351432
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1613351426}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10f6b61b7d94e08b7927d87bff1b7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1708309167
 GameObject:
   m_ObjectHideFlags: 0
@@ -2243,7 +2285,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1708309168}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QueueCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2290,7 +2332,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1747601453}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: QueueCenter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2326,7 +2368,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1940389280}
   - component: {fileID: 1940389281}
-  m_Layer: 0
+  - component: {fileID: 1940389282}
+  m_Layer: 2
   m_Name: DiscardPile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2369,6 +2412,18 @@ MonoBehaviour:
   scaleFactor: 0.8
   offsetMargin: 2
   align: 2
+--- !u!114 &1940389282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1940389279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c10f6b61b7d94e08b7927d87bff1b7bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &1952432211 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4225535027248695784, guid: 11b2ee317c05cc4428a748375f867801,

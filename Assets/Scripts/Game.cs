@@ -31,6 +31,7 @@ public class Game : MonoBehaviour
     {
         QualitySettings.vSyncCount = 1;
         UnityEngine.Random.InitState(42);
+        Physics.queriesHitTriggers = true;
         
         Ctx = this;
 

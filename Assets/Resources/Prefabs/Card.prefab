@@ -449,8 +449,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movable: 1
-  enterPlayArea: 0
-  enterHandArea: 0
+  triggerPlayArea: 0
+  triggerHandArea: 0
+  isDragged: 0
+  thisPile: {fileID: 0}
   moveSpeed: 1
 --- !u!223 &3739844958693504396
 Canvas:
@@ -530,7 +532,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
