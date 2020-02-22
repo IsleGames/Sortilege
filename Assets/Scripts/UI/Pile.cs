@@ -23,8 +23,9 @@ namespace UI
         [SerializeField]
         protected List<Card> _pile;
 
-        public float scaleFactor = 1.8f;
+        public bool movable;
 
+        public float scaleFactor = 1.8f;
         public float offsetMargin = 10f;
 
         [SerializeField]

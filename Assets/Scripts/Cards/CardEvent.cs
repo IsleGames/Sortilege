@@ -25,7 +25,7 @@ namespace Cards
             
             thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
     
-            if (thisPile.gameObject.name == "HandPile" || thisPile.gameObject.name == "PlayPile")
+            if (thisPile.movable)
             {
                 movable = true;
             }
@@ -64,7 +64,6 @@ namespace Cards
     
         private void OnMouseUp()
         {
-            // Debugger.Log(triggerPlayArea + " " + triggerHandArea);
             Card card = GetComponent<Card>();
             
             // thisPile == Game.Ctx.CardOperator.pileHand could also work
@@ -79,7 +78,7 @@ namespace Cards
             }
             else
             {
-                thisPile.AdjustAllPositions();
+                if (thisPile.movable) thisPile.AdjustAllPositions();
             }
     
             Game.Ctx.CardOperator.pileHand.VirtualDestroy(true);

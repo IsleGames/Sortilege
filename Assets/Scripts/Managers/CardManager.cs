@@ -51,7 +51,7 @@ namespace Managers
 
 			foreach (CardData cardData in CardList)
 			{
-				GameObject newCardObj = Instantiate(cardPrefab);
+				GameObject newCardObj = Instantiate(cardPrefab, transform);
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);

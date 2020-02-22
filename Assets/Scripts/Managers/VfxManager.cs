@@ -22,21 +22,21 @@ namespace Managers
         
          public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
          {
-             {AttributeType.None, "Sprites/Icons/icon-transparent"},
-             {AttributeType.Infernal, "Sprites/Icons/icon-fire"},
-             {AttributeType.Storm, "Sprites/Icons/icon-snowflake"},
-             {AttributeType.Thunder, "Sprites/Icons/icon-lightning"},
-             {AttributeType.Venom, "Sprites/Icons/icon-skull"}
+             {AttributeType.None,     "Icons/icon-transparent"},
+             {AttributeType.Infernal, "Icons/icon-fire"},
+             {AttributeType.Storm,    "Icons/icon-snowflake"},
+             {AttributeType.Thunder,  "Icons/icon-lightning"},
+             {AttributeType.Venom,    "Icons/icon-skull"}
          };
         
          public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
          {
-             {StrategyType.None,         "Sprites/Icons/icon-transparent"},
-             {StrategyType.Detriment,    "Sprites/Icons/icon-none"},
-             {StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
-             {StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
-             {StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
-             {StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
+             {StrategyType.None,         "Icons/icon-transparent"},
+             {StrategyType.Detriment,    "Icons/icon-none"},
+             {StrategyType.Berserker,    "Icons/icon-sword"},
+             {StrategyType.Craftsman,    "Icons/icon-sword"},
+             {StrategyType.Knight,       "Icons/icon-arrow"},
+             {StrategyType.Sorcerer,     "Icons/icon-wand" },
          }; 
          
          public Card draggedCard;

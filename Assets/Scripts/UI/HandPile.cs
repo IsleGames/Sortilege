@@ -11,19 +11,19 @@ namespace UI
 {
     public class HandPile : Pile
     {
+        public bool isVirtualOn = false;
+        
         private Card _virtualCard;
-        [SerializeField]
         private int _virtualCardIndex;
 
-        [SerializeField] private List<Card> _virtualPile;
-        [SerializeField] public bool isVirtualOn = false;
-        [SerializeField] private float startingVirtualIndex;
+        private List<Card> _virtualPile;
+        private float _startingVirtualIndex;
         
         private new void Start()
         {
             base.Start();
             
-            GameObject virtualObject = Instantiate(Game.Ctx.CardOperator.cardPrefab);
+            GameObject virtualObject = Instantiate(Game.Ctx.CardOperator.cardPrefab, Game.Ctx.transform);
             virtualObject.name = "VirtualCard";
             virtualObject.layer = 2;
             
@@ -45,13 +45,13 @@ namespace UI
             switch (align)
             {
                 case PileAlignType.Left:
-                    startingVirtualIndex = 0;
+                    _startingVirtualIndex = 0;
                     break;
                 case PileAlignType.Middle:
-                    startingVirtualIndex = (float)(_virtualPile.Count - 1) / 2;
+                    _startingVirtualIndex = (float)(_virtualPile.Count - 1) / 2;
                     break;
                 case PileAlignType.Right:
-                    startingVirtualIndex = _virtualPile.Count - 1;
+                    _startingVirtualIndex = _virtualPile.Count - 1;
                     break;
             }
         }
@@ -63,7 +63,7 @@ namespace UI
             thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
             Vector3 newPos = new Vector3(
-                QueueCenter.x + TotalCardWidth * (index - startingVirtualIndex),
+                QueueCenter.x + TotalCardWidth * (index - _startingVirtualIndex),
                 QueueCenter.y,
                 QueueCenter.z);
             thisTrans.position = newPos;
@@ -125,7 +125,7 @@ namespace UI
         {
             SetVirtualAlign();
             
-            float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + startingVirtualIndex);
+            float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + _startingVirtualIndex);
             int index = (int) Mathf.Clamp(curIndexf, 0, _virtualPile.Count - 1);
 
             if (_virtualCardIndex != index || forceReset)
