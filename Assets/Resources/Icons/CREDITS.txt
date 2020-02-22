@@ -1,0 +1,23 @@
+Block(Shield): https://icons8.com/icons/set/shield
+Block next x attacks you receive
+
+Forge: https://icons8.com/icons/set/machine
+Add x random card to your hand at the start of your next turn
+
+Thorns: https://icons8.com/icons/set/thorns
+Deal x dmg back to enemies attacking you
+
+Plague: https://icons8.com/icons/set/skeleton
+For next x turn, deal 1 dmg to all enemies
+
+Flinched: https://www.vippng.com/preview/xoxwRT_bringing-horror-dark-scary-svg-png-icon-/#
+Misses next attack
+
+Voodoo: https://icons8.com/icons/set/potion
+If not damaged by enemy next turn, restore x health
+
+Breeze: https://icons8.com/icons/set/breeze
+Add x STORM card that does nothing to your hand at the start of your turn this game
+
+
+
