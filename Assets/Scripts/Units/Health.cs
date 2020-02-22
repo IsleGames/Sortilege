@@ -10,7 +10,8 @@ namespace Units
         // Make it SerializableField For now
         // Later it will read from an upper level
         [FormerlySerializedAs("maximumHealth")] public float maximumHitPoints = -1f;
-        public float block;
+
+        public float barrierHitPoints = 0;
 
         [FormerlySerializedAs("HitPoints")] public float hitPoints = -1f;
         
@@ -18,6 +19,14 @@ namespace Units
         {
             if (hitPoints < 0f)
                 hitPoints = maximumHitPoints;
+        }
+
+        public float GetMaximumDisplayHP()
+        {
+            if (barrierHitPoints + hitPoints > maximumHitPoints)
+                return barrierHitPoints + hitPoints;
+            else
+                return maximumHitPoints;
         }
 
         private float ValidityCheck(float expectedHitPoint)
@@ -32,25 +41,36 @@ namespace Units
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
-                
-            if (!ignoreBlock) 
-                hitPoints = ValidityCheck(hitPoints - Mathf.Max(amount - block, 0));
+
+            if (barrierHitPoints > 0)
+            {
+                if (amount < barrierHitPoints)
+                    barrierHitPoints -= amount;
+                else
+                {
+                    amount -= barrierHitPoints;
+                    barrierHitPoints = 0f;
+                    
+                    hitPoints = ValidityCheck(hitPoints - amount);
+                }
+            }
             else
-                hitPoints = ValidityCheck(hitPoints - Mathf.Max(amount, 0));
+            {
+                hitPoints = ValidityCheck(hitPoints - amount);
+            }
         }
-        
 
         public void Heal(float amount)
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
-                
+            
             hitPoints = ValidityCheck(hitPoints + amount);
         }
         
-        public void BlockAlter(float amount)
+        public void AddBarrier(float amount)
         {
-            block += amount;
+            barrierHitPoints += amount;
         }
         
         public bool IsDead()

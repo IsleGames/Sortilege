@@ -20,8 +20,7 @@ namespace Effects
 	{
 		Damage,
 		Heal,
-		IncBlock,
-		DecBlock,
+		Barrier,
 		DamageIgnoreBlock
 	}
 
@@ -75,11 +74,8 @@ namespace Effects
 				case EffectType.Heal:
 				  unit.GetComponent<Health>().Heal(totAmount);
 				  break;
-				case EffectType.IncBlock:
-				  unit.GetComponent<Health>().BlockAlter(totAmount);
-				  break;
-				case EffectType.DecBlock:
-				  unit.GetComponent<Health>().BlockAlter(-totAmount);
+				case EffectType.Barrier:
+				  unit.GetComponent<Health>().AddBarrier(totAmount);
 				  break;
 				case EffectType.DamageIgnoreBlock: 
 				  unit.GetComponent<Health>().Damage(totAmount, true);

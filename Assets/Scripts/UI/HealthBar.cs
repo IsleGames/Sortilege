@@ -1,4 +1,6 @@
 using System;
+using _Editor;
+using Cards;
 using Units;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -43,19 +45,34 @@ namespace UI
 
         private void UpdateStatus()
         {
-            float hpRatio = _pHealth.hitPoints / _pHealth.maximumHitPoints;
+            float totHitPoints = _pHealth.GetMaximumDisplayHP();
+            float hpRatio = _pHealth.hitPoints / totHitPoints;
+            
+            // Debugger.Log(_pHealth.hitPoints / totHitPoints);
+            
             AdjustBar(hpRatio, _redBar);
+
+            if (_pHealth.barrierHitPoints > 0f)
+            {
+                float barrierRatio = (_pHealth.hitPoints + _pHealth.barrierHitPoints) / totHitPoints;
+                AdjustBar(barrierRatio, _blueBar);
+            }
         }
 
         private void AdjustBar(float ratio, RectTransform bar)
         {
             Rect thisRect = GetComponent<RectTransform>().rect;
+            
             float newWidth = ratio * thisRect.width;
-            float xShift = -ratio * .5f * thisRect.width;
-            bar.GetComponent<SpriteRenderer>().size = new Vector2(
+            float xShift = (-1 + ratio) * thisRect.width * .5f;
+
+            var sp = bar.GetComponent<SpriteRenderer>();
+            sp.enabled = true;
+            sp.size = new Vector2(
                 newWidth,
                 thisRect.height * .98f
                 );
+            
             bar.position = new Vector3(xShift, 0f, 0f);
         }
     }
