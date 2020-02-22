@@ -1,6 +1,7 @@
 using System;
 using _Editor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Units
 {
@@ -8,21 +9,21 @@ namespace Units
     {
         // Make it SerializableField For now
         // Later it will read from an upper level
-        public float maximumHealth = -1f;
+        [FormerlySerializedAs("maximumHealth")] public float maximumHitPoints = -1f;
         public float block;
 
-        [NonSerialized]
-        public float HitPoints;
+        [FormerlySerializedAs("HitPoints")] public float hitPoints = -1f;
         
         public void Start()
         {
-            HitPoints = maximumHealth;
+            if (hitPoints < 0f)
+                hitPoints = maximumHitPoints;
         }
 
         private float ValidityCheck(float expectedHitPoint)
         {
             if (expectedHitPoint < 0) expectedHitPoint = 0;
-            if (expectedHitPoint > maximumHealth) expectedHitPoint = maximumHealth;
+            if (expectedHitPoint > maximumHitPoints) expectedHitPoint = maximumHitPoints;
             
             return expectedHitPoint;
         }
@@ -33,9 +34,9 @@ namespace Units
                 Debugger.Warning("Negative amount detected for Damage", this);
                 
             if (!ignoreBlock) 
-                HitPoints = ValidityCheck(HitPoints - Mathf.Max(amount - block, 0));
+                hitPoints = ValidityCheck(hitPoints - Mathf.Max(amount - block, 0));
             else
-                HitPoints = ValidityCheck(HitPoints - Mathf.Max(amount, 0));
+                hitPoints = ValidityCheck(hitPoints - Mathf.Max(amount, 0));
         }
         
 
@@ -44,7 +45,7 @@ namespace Units
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
                 
-            HitPoints = ValidityCheck(HitPoints + amount);
+            hitPoints = ValidityCheck(hitPoints + amount);
         }
         
         public void BlockAlter(float amount)
@@ -54,12 +55,12 @@ namespace Units
         
         public bool IsDead()
         {
-            return !Mathf.Approximately( maximumHealth, -1f) && Mathf.Approximately(HitPoints, 0f);
+            return !Mathf.Approximately( maximumHitPoints, -1f) && Mathf.Approximately(hitPoints, 0f);
         }
         
         public bool IsFullHealth()
         {
-            return !Mathf.Approximately( maximumHealth, -1f) && Mathf.Approximately(HitPoints, maximumHealth);
+            return !Mathf.Approximately( maximumHitPoints, -1f) && Mathf.Approximately(hitPoints, maximumHitPoints);
         }
     }
 }
