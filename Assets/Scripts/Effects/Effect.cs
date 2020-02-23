@@ -3,10 +3,12 @@ using System.Data;
 using Units;
 using UnityEngine;
 using Object = UnityEngine.Object;
+using Random = UnityEngine.Random;
 
 using _Editor;
+using Cards;
 
-// Task: Rewrite the file using Scriptable Objects
+// This should be called OnPlayEffect
 namespace Effects
 {
 	public enum UnitType : int
@@ -21,7 +23,10 @@ namespace Effects
 		Damage,
 		Heal,
 		Barrier,
-		DamageIgnoreBlock
+		DamageIgnoreBarrier,
+		DiscardDeceiver,
+		DamageOnDeceiverInDiscardPile,
+		DiscardAllWithPerCardDamage
 	}
 
 	[Serializable]
@@ -30,17 +35,18 @@ namespace Effects
 		public UnitType affectiveUnit;
 
 		public EffectType type;
-		public float amount;
+		public float amount, maxDeviation;
 
-		public int minStreak = 1;
-		public bool notAmplified = false;
-
+		public int minStreak;
+		public bool notAmplified;
+		
 		public Effect(
 			UnitType affectiveUnit,
 			EffectType type,
 			float amount,
 			int streakCount = 1,
-			bool notAmplified = false
+			bool notAmplified = false,
+			float maxDeviation = 0f
 		)
 		{
 			if (amount < 0f)
@@ -51,45 +57,70 @@ namespace Effects
 			this.amount = amount;
 			this.minStreak = streakCount;
 			this.notAmplified = notAmplified;
+			this.maxDeviation = maxDeviation;
 		}
 
 		public void Apply(Unit unit, float multiplier)
 		{
-			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
-				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
+			if (!unit.GetComponent(affectiveUnit.ToString("G")))
+				throw new InvalidOperationException("Effect unit type mismatch: Expected " + affectiveUnit);
 			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 
-			float totAmount;
-			if (notAmplified)
-				totAmount = amount;
+			float localAmount, totAmount;
+			int counter;
+
+			if (Mathf.Approximately(maxDeviation, 0f))
+				localAmount = amount;
 			else
-				totAmount = amount * multiplier;
+				localAmount = Mathf.Round(Random.Range(amount - maxDeviation, amount + maxDeviation));
+			
+			if (notAmplified)
+				totAmount = localAmount;
+			else
+				totAmount = localAmount * multiplier;
 			
 			switch (type)
 			{
 				case EffectType.Damage: 
-				  unit.GetComponent<Health>().Damage(totAmount);
-				  break;
+				    unit.GetComponent<Health>().Damage(totAmount);
+				    break;
 				case EffectType.Heal:
-				  unit.GetComponent<Health>().Heal(totAmount);
-				  break;
+				    unit.GetComponent<Health>().Heal(totAmount);
+				    break;
 				case EffectType.Barrier:
-				  unit.GetComponent<Health>().AddBarrier(totAmount);
-				  break;
-				case EffectType.DamageIgnoreBlock: 
-				  unit.GetComponent<Health>().Damage(totAmount, true);
-				  break;
+				    unit.GetComponent<Health>().AddBarrier(totAmount);
+				    break;
+				case EffectType.DamageIgnoreBarrier: 
+				    unit.GetComponent<Health>().Damage(totAmount, true);
+				    break;
+				case EffectType.DiscardDeceiver:
+					Game.Ctx.CardOperator.DiscardStrategyTypeCards(StrategyType.Deceiver);
+				    break;
+				case EffectType.DamageOnDeceiverInDiscardPile:
+					counter = Game.Ctx.CardOperator.pileDiscard.GetStrategyTypeCards(StrategyType.Deceiver).Count;
+					if (notAmplified)
+						totAmount = localAmount * counter;
+					else
+						totAmount = localAmount * counter * multiplier;
+					unit.GetComponent<Health>().Damage(totAmount);
+					break;
+				case EffectType.DiscardAllWithPerCardDamage:
+					counter = Game.Ctx.CardOperator.DiscardAllHandCards();
+					if (notAmplified)
+						totAmount = localAmount * counter;
+					else
+						totAmount = localAmount * counter * multiplier;
+					unit.GetComponent<Health>().Damage(totAmount);
+					break;
 			}
 		}
 
 		// Need change
-        public string Text()
+        public string Info()
         {
 	        return affectiveUnit + " " + type + " " + amount;
         }
 
-
-
-    }
+	}
 }

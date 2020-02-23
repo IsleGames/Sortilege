@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Editor;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+
+using _Editor;
 using Managers;
 using Units;
-using Random = System.Random;
 
 // ReSharper disable InconsistentNaming
 
@@ -16,10 +18,11 @@ public class Game : MonoBehaviour
     public CardManager CardOperator;
     public VfxManager VfxOperator;
 
-    public Player Player;
-    public Enemy Enemy;
+    [FormerlySerializedAs("Player")] public Player player;
+    [FormerlySerializedAs("Enemy")] public Enemy enemy;
 
     public int turnCount;
+    public Unit activeUnit;
 
     public delegate void RoutineMethod();
 
@@ -30,13 +33,13 @@ public class Game : MonoBehaviour
     private void Start()
     {
         QualitySettings.vSyncCount = 1;
-        UnityEngine.Random.InitState(42);
+        Random.InitState(42);
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
 
-        Player = transform.GetComponentInChildren<Player>();
-        Enemy = transform.GetComponentInChildren<Enemy>();
+        player = transform.GetComponentInChildren<Player>();
+        enemy = transform.GetComponentInChildren<Enemy>();
 
         turnCount = 0;
 
@@ -60,11 +63,13 @@ public class Game : MonoBehaviour
             turnCount += 1;
             
             Debugger.Log("player play");
-            RunningMethod = Player.StartTurn;
+            activeUnit = player;
+            RunningMethod = player.StartTurn;
             yield return null;
             
             Debugger.Log("enemy play");
-            RunningMethod = Enemy.StartTurn;
+            activeUnit = enemy;
+            RunningMethod = enemy.StartTurn;
             yield return null;
         }
     }
@@ -78,12 +83,12 @@ public class Game : MonoBehaviour
     
     public bool IsBattleEnded()
     {
-        return Player.GetComponent<Health>().IsDead() || Enemy.GetComponent<Health>().IsDead();
+        return player.GetComponent<Health>().IsDead() || enemy.GetComponent<Health>().IsDead();
     }
     
     public bool HasPlayerLost()
     {
-        return Player.GetComponent<Health>().IsDead();
+        return player.GetComponent<Health>().IsDead();
     }
 
     public void EndGame()

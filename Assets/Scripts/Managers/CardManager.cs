@@ -30,13 +30,18 @@ namespace Managers
         public PlayPile pilePlay;
 
         public GameObject cardPrefab;
+        public GameObject buffPrefab;
 
+		public int cardsDrawnFirstTurn = 5;
 		public int cardsDrawnPerTurn = -1;
 		public int maxCardCount = 5;
+
+		public bool isCurrentCardFlinched;
 		
 		public void Start()
 		{
             cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
             
 			pileDeck = GameObject.Find("DeckPile").GetComponent<Pile>();
 			pileHand = GameObject.Find("HandPile").GetComponent<HandPile>();
@@ -50,9 +55,11 @@ namespace Managers
 			} 
 
 			foreach (CardData cardData in CardList)
-            {
-                Card newCard = MakeCard(cardData);
-                //newCard.GetComponent<Render>().Initialize();
+			{
+				GameObject newCardObj = Instantiate(cardPrefab, transform);
+				Card newCard = newCardObj.GetComponent<Card>();
+				
+				newCard.Initialize(cardData);
 
                 pileDeck.Add(newCard);
             }
@@ -74,14 +81,17 @@ namespace Managers
 			
 			if (cardsDrawnPerTurn == -1)
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
-			
-			DrawCards(cardsDrawnPerTurn);
-			
-			// foreach (Card card in Game.Ctx.CardOperator.pileHand)
-			// {
-			// 	card.LogInfo();
-			// }
+
+			if (Game.Ctx.turnCount == 1)
+			{
+				DrawCards(cardsDrawnFirstTurn);
+			}
+			else
+			{
+				DrawCards(cardsDrawnPerTurn);
+			}
 		}
+		
 		public Pile GetCardPile(Card card)
 		{
 			if (pileHand.Contains(card))
@@ -92,7 +102,7 @@ namespace Managers
 				return pileDeck;
 			if (pileDiscard.Contains(card))
 				return pileDiscard;
-			throw new ArgumentOutOfRangeException("Card not found in any pile");
+			throw new InvalidOperationException("Card not found in any pile");
 		}
 		
 		public void AddCardToQueue(Card card)
@@ -140,7 +150,10 @@ namespace Managers
 				if (IsEmpty(pileDeck))
 					if (onEmptyShuffle)
 						if (IsEmpty(pileDiscard))
+						{
+							Debugger.Warning("Number of cards drawn is larger than total amount of cards");
 							break;
+						}
 						else
 							ShuffleOnDeckEmpty();
 					else
@@ -165,29 +178,30 @@ namespace Managers
 	        }
         }
 		
-		public void PopCard(Card card)
-		{
-			bool ret = pileHand.Remove(card);
-
-			if (!ret)
-				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
-
-            // card.onDiscard.Invoke();
-			pileDiscard.Add(card);
-		}
-/*
-        public void PopHand()
+        public int DiscardAllHandCards()
         {
-            foreach (Card card in pileHand)
-            {
-	            card.onDiscard.Invoke();
+	        List<Card> discardList = pileHand.DrawAll();
+	        int ret = discardList.Count;
+	        
+	        pileDiscard.AddRange(discardList);
+	        return ret;
+        }
+
+        public int DiscardStrategyTypeCards(StrategyType strategyType)
+        {
+	        List<Card> discardList = pileHand.GetStrategyTypeCards(strategyType);
+	        int ret = discardList.Count;
+
+	        foreach (Card card in discardList)
+	        {
+		        pileHand.Remove(card);
                 pileDiscard.Add(card);
             }
-            pileHand.RemoveAll((Card c)=>true);
 
+	        return ret;
         }
-*/
-		public bool IsEmpty(Pile pile)
+
+        public bool IsEmpty(Pile pile)
 		{
 			return pile.Count() == 0;
 		}

@@ -10,7 +10,7 @@ using UI;
 
 namespace Cards
 {
-    public class Render : MonoBehaviour
+    public class CardRender : MonoBehaviour
     {
         public bool visible = true;
         

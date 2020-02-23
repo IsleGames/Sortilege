@@ -16,12 +16,8 @@ namespace Cards
     {
         [SerializeField]
         private CardData cardData;
-        
-        // public UnityEvent onDraw = new UnityEvent();
-        // public UnityEvent onPlay = new UnityEvent();
-        // public UnityEvent onDiscard = new UnityEvent();
 
-        public void LogInfo()
+        public void Info()
         {
             Debugger.Log(cardData.title + ' ' + cardData.strategy + ' ' + cardData.attribute);
         }
@@ -41,14 +37,18 @@ namespace Cards
 
             GetComponent<Ability>().disableRetract = cardData.disableRetract;
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
+            GetComponent<Ability>().buffEffectList = new List<BuffEffect>(cardData.buffList);
         }
         
         public void Apply(Unit target, float streakCount)
         {
-            GetComponent<Ability>().Apply(target, streakCount);
+            // onAttack Event goes here
+            Game.Ctx.CardOperator.isCurrentCardFlinched = false;
+            Game.Ctx.player.onAttack.Invoke();
+            if (Game.Ctx.CardOperator.isCurrentCardFlinched) return;
                 
-            // Debugger.OneOnOneStat();
-            
+            GetComponent<Ability>().Apply(target, streakCount);
+
             if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }
     }

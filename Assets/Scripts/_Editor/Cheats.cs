@@ -42,7 +42,7 @@ namespace _Editor
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
-                Game.Ctx.Player.EndTurn();
+                Game.Ctx.player.EndTurn();
             }
         }
 
