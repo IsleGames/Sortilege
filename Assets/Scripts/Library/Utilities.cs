@@ -33,20 +33,20 @@ namespace Library
 				list[n] = value;  
 			}
 		}
-		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float time)
+		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float k)
         {
             // Todo: P-Controller
             
             Vector3 init = obj.transform.position;
-            float elapsed = 0;
-            while (elapsed < time)
+
+            float p = 0;
+            while (p < 1f - 1e-3)
             {
-                float t = elapsed / time;
+                p += (1 - p) * k;
                 
-                Vector3 current = pos * t + init * (1 - t);
+                Vector3 current = pos * k + init * (1 - k);
                 obj.transform.position = current;
                 
-                elapsed += Time.deltaTime;
                 yield return null;
             }
 
@@ -56,27 +56,22 @@ namespace Library
             yield return null;
         }
 		
-		public static IEnumerator MoveAndScaleTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float time)
+		public static IEnumerator MoveAndScaleTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float k)
         {
-            // Todo: P-Controller
-            
-            Vector3 initPos = obj.transform.position;
+	        Vector3 initPos = obj.transform.position;
             Vector3 initScale = obj.transform.localScale;
-            
-            // Debugger.Log(obj.name + " " + targetPos);
-            
-            float elapsed = 0;
-            while (elapsed < time)
+
+            float p = 0;
+            while (p < 1f - 1e-3)
             {
-                float t = elapsed / time;
+                p += (1 - p) * k;
                 
-                Vector3 curPos = targetPos * t + initPos * (1 - t);
+                Vector3 curPos = targetPos * p + initPos * (1 - p);
                 obj.transform.position = curPos;
                 
-                Vector3 curScale = targetScale * t + initScale * (1 - t);
+                Vector3 curScale = targetScale * p + initScale * (1 - p);
                 obj.transform.localScale = curScale;
                 
-                elapsed += Time.deltaTime;
                 yield return null;
             }
 

@@ -75,7 +75,7 @@ namespace UI
                 QueueCenter.z);
 
             Game.Ctx.AnimationOperator.RunAnimation(
-                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.5f)
+                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.1f)
                 );
             // thisTrans.localScale = newScale;
             // thisTrans.position = newPos;
