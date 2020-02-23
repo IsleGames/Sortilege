@@ -10,4 +10,8 @@ public class DDOL : MonoBehaviour
     {
         DontDestroyOnLoad(gameObject);
     }
+
+    private void Start()
+    {
+    }
 }

@@ -1,6 +1,7 @@
 using System;
 using _Editor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Units
 {
@@ -8,21 +9,30 @@ namespace Units
     {
         // Make it SerializableField For now
         // Later it will read from an upper level
-        public float maximumHealth = -1f;
-        public float block;
+        [FormerlySerializedAs("maximumHealth")] public float maximumHitPoints = -1f;
 
-        [NonSerialized]
-        public float HitPoints;
+        public float barrierHitPoints = 0;
+
+        [FormerlySerializedAs("HitPoints")] public float hitPoints = -1f;
         
         public void Start()
         {
-            HitPoints = maximumHealth;
+            if (hitPoints < 0f)
+                hitPoints = maximumHitPoints;
+        }
+
+        public float GetMaximumDisplayHP()
+        {
+            if (barrierHitPoints + hitPoints > maximumHitPoints)
+                return barrierHitPoints + hitPoints;
+            else
+                return maximumHitPoints;
         }
 
         private float ValidityCheck(float expectedHitPoint)
         {
             if (expectedHitPoint < 0) expectedHitPoint = 0;
-            if (expectedHitPoint > maximumHealth) expectedHitPoint = maximumHealth;
+            if (expectedHitPoint > maximumHitPoints) expectedHitPoint = maximumHitPoints;
             
             return expectedHitPoint;
         }
@@ -31,35 +41,46 @@ namespace Units
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
-                
-            if (!ignoreBlock) 
-                HitPoints = ValidityCheck(HitPoints - Mathf.Max(amount - block, 0));
+
+            if (barrierHitPoints > 0)
+            {
+                if (amount < barrierHitPoints)
+                    barrierHitPoints -= amount;
+                else
+                {
+                    amount -= barrierHitPoints;
+                    barrierHitPoints = 0f;
+                    
+                    hitPoints = ValidityCheck(hitPoints - amount);
+                }
+            }
             else
-                HitPoints = ValidityCheck(HitPoints - Mathf.Max(amount, 0));
+            {
+                hitPoints = ValidityCheck(hitPoints - amount);
+            }
         }
-        
 
         public void Heal(float amount)
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
-                
-            HitPoints = ValidityCheck(HitPoints + amount);
+            
+            hitPoints = ValidityCheck(hitPoints + amount);
         }
         
-        public void BlockAlter(float amount)
+        public void AddBarrier(float amount)
         {
-            block += amount;
+            barrierHitPoints += amount;
         }
         
         public bool IsDead()
         {
-            return !Mathf.Approximately( maximumHealth, -1f) && Mathf.Approximately(HitPoints, 0f);
+            return !Mathf.Approximately( maximumHitPoints, -1f) && Mathf.Approximately(hitPoints, 0f);
         }
         
         public bool IsFullHealth()
         {
-            return !Mathf.Approximately( maximumHealth, -1f) && Mathf.Approximately(HitPoints, maximumHealth);
+            return !Mathf.Approximately( maximumHitPoints, -1f) && Mathf.Approximately(hitPoints, maximumHitPoints);
         }
     }
 }

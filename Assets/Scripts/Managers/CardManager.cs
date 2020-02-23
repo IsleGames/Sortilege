@@ -11,7 +11,9 @@ using Cards;
 using UnityEngine;
 using Data;
 
+
 using _Editor;
+using UI;
 using Units;
 
 namespace Managers
@@ -23,154 +25,173 @@ namespace Managers
 		// private List<CardData> _cardDataArray;
 		
 		public List<CardData> CardList;
-        public List<Card> Deck, Hand, DiscardPile, PlayQueue;
+        public Pile pileDeck, pileDiscard;
+        public HandPile pileHand;
+        public PlayPile pilePlay;
 
-		private GameObject _cardPrefab;
+        public GameObject cardPrefab;
 
 		public int cardsDrawnPerTurn = -1;
+		public int maxCardCount = 5;
 		
 		public void Start()
 		{
-            _cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-			Deck = new List<Card>();
-			Hand = new List<Card>();
-			DiscardPile = new List<Card>();
-			PlayQueue = new List<Card>();
+            cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            
+			pileDeck = GameObject.Find("DeckPile").GetComponent<Pile>();
+			pileHand = GameObject.Find("HandPile").GetComponent<HandPile>();
+			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
+			pilePlay = GameObject.Find("PlayPile").GetComponent<PlayPile>();
+
+			if (CardList.Count > maxCardCount)
+			{
+				CardList.Shuffle();
+				CardList.RemoveRange(maxCardCount, CardList.Count - maxCardCount);
+			} 
 
 			foreach (CardData cardData in CardList)
 			{
-				GameObject newCardObj = Instantiate(_cardPrefab);
+				GameObject newCardObj = Instantiate(cardPrefab);
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);
                 //newCard.GetComponent<Render>().Initialize();
 
-				Deck.Add(newCard);
+				pileDeck.Add(newCard);
 			}
 		}
 
 		public void StartTurn()
 		{
-
-			if (PlayQueue.Count > 0)
+			if (pilePlay.Count() > 0)
 				throw new InvalidConstraintException("PlayQueue is not empty at the start of the turn");
 			
 			if (cardsDrawnPerTurn == -1)
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
 			
 			DrawCards(cardsDrawnPerTurn);
-
-			foreach (Card card in Game.Ctx.CardOperator.Hand)
-			{
-				card.LogInfo();
-			}
+			
+			// foreach (Card card in Game.Ctx.CardOperator.pileHand)
+			// {
+			// 	card.LogInfo();
+			// }
 		}
-
+		public Pile GetCardPile(Card card)
+		{
+			if (pileHand.Contains(card))
+				return pileHand;
+			if (pilePlay.Contains(card))
+				return pilePlay;
+			if (pileDeck.Contains(card))
+				return pileDeck;
+			if (pileDiscard.Contains(card))
+				return pileDiscard;
+			throw new ArgumentOutOfRangeException("Card not found in any pile");
+		}
+		
 		public void AddCardToQueue(Card card)
 		{
-			if (!Hand.Remove(card))
+			if (!pileHand.Contains(card))
 				throw new InvalidOperationException("Card not in Hand");
 			
-			PlayQueue.Add(card);
-            card.onPlay.Invoke();
-			Hand.Remove(card);
+			pilePlay.Add(card);
+			// card.onAddToPlayPile.Invoke();
+			pileHand.Remove(card);
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)
 		{
 			if (card.GetComponent<Ability>().disableRetract)
 			{
-
 				// This is a fail-safe error; Show it in the UI directly
 				throw new InvalidOperationException("Card is not retractable");
 			}
 
-			int cardID = PlayQueue.IndexOf(card);
-			
-			if (cardID == -1)
+			int cardIndex = pilePlay.IndexOf(card);
+			if (cardIndex == -1)
 				throw new InvalidOperationException("Card not in Hand");
 			
-			for (int i = PlayQueue.Count - 1; i >= cardID; i--)
+			pileHand.Add(card);
+			// card.onDeleteFromPlayPile.Invoke();
+			pilePlay.Remove(card);
+			
+			List<Card> discardList = new List<Card>();
+			
+			for (int i = pilePlay.Count() - 1; i >= cardIndex; i--)
 			{
-				Card thisCard = PlayQueue[i];
-				PlayQueue.RemoveAt(i);
-				Hand.Add(thisCard);
+				discardList.Add(pilePlay.Get(i));
+				pilePlay.RemoveAt(i);
 			}
-		}
 
+			pileHand.AddRange(discardList);
+		}
 
 		public void DrawCards(int number, bool onEmptyShuffle = true)
 		{
+			List<Card> drawList = new List<Card>();
 			for (int i = 0; i < number; i++)
 			{
-				if (IsEmpty(Deck))
+				if (IsEmpty(pileDeck))
 					if (onEmptyShuffle)
-						ShuffleOnDeckEmpty();
+						if (IsEmpty(pileDiscard))
+							break;
+						else
+							ShuffleOnDeckEmpty();
 					else
-						throw new InvalidOperationException("The drawn pile is empty");
+						break;
 
-				Card card = Deck.Draw();
-                card.onDraw.Invoke();
-				Hand.Add(card);
+				Card card = pileDeck.Draw();
+                // card.onDraw.Invoke();
+                drawList.Add(card);
 			}
+			pileHand.AddRange(drawList);
 		}
 
 		public void Apply(Unit target)
         {
-	        if (PlayQueue.Count > 0)
+	        if (pilePlay.Count() > 0)
 	        {
-		        // Only for one enemy
-		        PlayQueue[PlayQueue.Count - 1].Apply(target, PlayQueue.Count);
-	        
-				for (int i = PlayQueue.Count - 1; i >= 0; i--)
-				{
-					Card thisCard = PlayQueue[i];
-                    PlayQueue.RemoveAt(i);
-                    thisCard.onDiscard.Invoke();
-					DiscardPile.Add(thisCard);
-				}
+		        Card poweredCard = pilePlay.Get(pilePlay.Count() - 1);
+		        
+		        poweredCard.Apply(target, pilePlay.Count());
+		        List<Card> discardList = pilePlay.DrawAll();
+				pileDiscard.AddRange(discardList);
 	        }
         }
 		
 		public void PopCard(Card card)
 		{
-			bool ret = Hand.Remove(card);
+			bool ret = pileHand.Remove(card);
 
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
 
-            card.onDiscard.Invoke();
-			DiscardPile.Add(card);
+            // card.onDiscard.Invoke();
+			pileDiscard.Add(card);
 		}
-
+/*
         public void PopHand()
         {
-            foreach (Card card in Hand)
+            foreach (Card card in pileHand)
             {
-                
-                card.onDiscard.Invoke();
-                DiscardPile.Add(card);
+	            card.onDiscard.Invoke();
+                pileDiscard.Add(card);
             }
-            Hand.RemoveAll((Card c)=>true);
+            pileHand.RemoveAll((Card c)=>true);
 
         }
-
-		public bool IsEmpty(List<Card> pile)
+*/
+		public bool IsEmpty(Pile pile)
 		{
-			return pile.Count == 0;
+			return pile.Count() == 0;
 		}
 
 		public void ShuffleOnDeckEmpty() {
-			if (!IsEmpty(Deck))
+			if (!IsEmpty(pileDeck))
 				throw new InvalidOperationException("The deck is not empty");
 
-			Deck.AddRange(Hand);
-			Deck.AddRange(DiscardPile);
-
-			Hand.Clear();
-			DiscardPile.Clear();
-
-			Deck.Shuffle();
+			List<Card> retrieveList = pileDiscard.DrawAll();
+			pileDeck.AddRange(retrieveList, true);
 		}
 
 	}

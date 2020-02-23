@@ -48,7 +48,7 @@ namespace _Editor
 
         private void PlayCard(int index)
         {
-            Game.Ctx.CardOperator.AddCardToQueue(Game.Ctx.CardOperator.Hand[index]);
+            // Game.Ctx.CardOperator.AddCardToQueue(Game.Ctx.CardOperator.Hand[index]);
         }
 
     }

@@ -20,8 +20,7 @@ namespace Effects
 	{
 		Damage,
 		Heal,
-		IncBlock,
-		DecBlock,
+		Barrier,
 		DamageIgnoreBlock
 	}
 
@@ -58,7 +57,7 @@ namespace Effects
 		{
 			if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
-			if (Game.Ctx.CardOperator.PlayQueue.Count < minStreak)
+			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 
 			float totAmount;
@@ -75,11 +74,8 @@ namespace Effects
 				case EffectType.Heal:
 				  unit.GetComponent<Health>().Heal(totAmount);
 				  break;
-				case EffectType.IncBlock:
-				  unit.GetComponent<Health>().BlockAlter(totAmount);
-				  break;
-				case EffectType.DecBlock:
-				  unit.GetComponent<Health>().BlockAlter(-totAmount);
+				case EffectType.Barrier:
+				  unit.GetComponent<Health>().AddBarrier(totAmount);
 				  break;
 				case EffectType.DamageIgnoreBlock: 
 				  unit.GetComponent<Health>().Damage(totAmount, true);

@@ -44,6 +44,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Status
+    uniqueID: 1141647671
+    locked: 0
   - name: Card
     uniqueID: 3518110879
     locked: 0

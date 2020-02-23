@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Editor;
@@ -5,64 +6,91 @@ using UnityEngine;
 using TMPro;
 
 using Managers;
+using UI;
 
 namespace Cards
 {
     public class Render : MonoBehaviour
     {
-        private static int sortOrder;
-
+        public bool visible = true;
         
+        public float moveSpeed = 0.1f;
 
         public void Start()
         {
-            Initialize();
-        }
-
-        public void Initialize()
-        {
-            GameObject newCardImage = Instantiate(Game.Ctx.VfxOperator.cardImagePrefab, transform);
-            Card c = GetComponent<Card>();
-            CardUI cardui = newCardImage.GetComponent<CardUI>();
-
-            cardui.SetCard(c);
-
-            cardui.setCallbacks();
-          
-
-            var canvas = newCardImage.GetComponent<Canvas>();
-            canvas.sortingLayerName = "Card";
-            canvas.sortingOrder = sortOrder;
-            
-
             MetaData meta = GetComponent<MetaData>();
             
             // Set strategy color
-            var bordersprite = newCardImage.transform.Find("CardBorder").GetComponent<SpriteRenderer>();
-            bordersprite.color = VfxManager.strategyColors[meta.strategy];
-            bordersprite.sortingOrder = sortOrder;
+            var borderSprite = transform.Find("CardBorder").GetComponent<SpriteRenderer>();
+            borderSprite.color = VfxManager.strategyColors[meta.strategy];
 
-            var bgsprite = newCardImage.transform.Find("CardBackground").GetComponent<SpriteRenderer>();
-            bgsprite.sortingOrder = sortOrder;
+            var bgSprite = transform.Find("CardBackground").GetComponent<SpriteRenderer>();
 
             // Set attribute 
-            var attRenderer = newCardImage.transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
+            var attRenderer = transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
             attRenderer.sprite = Resources.Load<Sprite>(VfxManager.AttributeSpritePaths[meta.attribute]);
-            attRenderer.sortingOrder = sortOrder + 1;
+            
             // Set strategy
-            var strRenderer = newCardImage.transform.Find("StrategySprite").GetComponent<SpriteRenderer>();
+            var strRenderer = transform.Find("StrategySprite").GetComponent<SpriteRenderer>();
             strRenderer.sprite = Resources.Load<Sprite>(VfxManager.StrategySpritePaths[meta.strategy]);
-            strRenderer.sortingOrder = sortOrder + 1;
+
+            var sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            var canvas = GetComponent<Canvas>();
+            canvas.sortingLayerName = "Card";
+            canvas.sortingOrder = sortOrder;
+            bgSprite.sortingOrder = sortOrder;
+            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            borderSprite.sortingOrder = sortOrder;
+            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            attRenderer.sortingOrder = sortOrder;
+            strRenderer.sortingOrder = sortOrder;
 
             // Set name
-            newCardImage.transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
+            transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
             
             // Set rules text
-            newCardImage.transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
-            sortOrder += 2;
+            transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
+        }
 
-            cardui.Hide();
-            Game.Ctx.VfxOperator.MoveCardToRandomPosition(newCardImage.transform);
+        IEnumerator MoveCard(Vector3 dest, float delay = 0)
+        {
+            Vector3 init = new Vector3(transform.position.x, transform.position.y);
+            float t = 0f;
+            yield return new WaitForSeconds(delay);
+            while (t < moveSpeed) {
+                float i = t / moveSpeed;
+                transform.SetPositionAndRotation(i * dest + (1f - i) * init,
+                    transform.rotation);
+                t += Time.deltaTime;
+                yield return null;
+            }
+        }
+    
+        public void Hide()
+        {
+            visible = false;
+            TextMeshProUGUI[] tmPros = GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (var r in tmPros) {
+                r.enabled = false;
+            }
+            SpriteRenderer[] spRenderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var r in spRenderers) {
+                r.enabled = false;
+            }
+        }
+    
+        public void Show()
+        {
+            visible = true;
+            TextMeshProUGUI[] tmPros = GetComponentsInChildren<TextMeshProUGUI>();
+            foreach (var r in tmPros) {
+                r.enabled = true;
+            }
+            SpriteRenderer[] spRenderers = GetComponentsInChildren<SpriteRenderer>();
+            foreach (var r in spRenderers) {
+                r.enabled = true;
+            }
         }
     }
+    
 }

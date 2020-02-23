@@ -29,8 +29,8 @@ namespace _Editor
         
         public static void OneOnOneStat()
         {
-            Debug.Log("player hp: " + Game.Ctx.Player.GetComponent<Health>().HitPoints);
-            Debug.Log("enemy hp: " + Game.Ctx.Enemy.GetComponent<Health>().HitPoints);
+            Debug.Log("player hp: " + Game.Ctx.Player.GetComponent<Health>().hitPoints);
+            Debug.Log("enemy hp: " + Game.Ctx.Enemy.GetComponent<Health>().hitPoints);
         }
     }
 }

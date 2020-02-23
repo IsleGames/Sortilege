@@ -11,9 +11,6 @@ namespace Managers
  {
      public class VfxManager : MonoBehaviour
      {
-         public GameObject cardImagePrefab;
-        public GameObject cardCanvas;
-         
          public static Dictionary<StrategyType, Color> strategyColors = new Dictionary<StrategyType, Color>(){
              {StrategyType.None, Color.white },
              {StrategyType.Detriment, new Color(0f, 0.3f, 0.2f)},
@@ -22,47 +19,46 @@ namespace Managers
              {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
              {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
          };
-
-        public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
-        {
-            { AttributeType.Infernal, "Sprites/Icons/icon-fire"      },
-            { AttributeType.Storm,    "Sprites/Icons/icon-snowflake" },
-            { AttributeType.Thunder,  "Sprites/Icons/icon-lightning" },
-            { AttributeType.Venom,    "Sprites/Icons/icon-skull"     },
-            { AttributeType.None,     "Sprites/Icons/icon-none"       },
-        };
         
-        public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
-        {
-            { StrategyType.Detriment,    "Sprites/Icons/icon-none"},
-            { StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
-            { StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
-            { StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
-            { StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
-        };
+         public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
+         {
+             {AttributeType.None, "Sprites/Icons/icon-transparent"},
+             {AttributeType.Infernal, "Sprites/Icons/icon-fire"},
+             {AttributeType.Storm, "Sprites/Icons/icon-snowflake"},
+             {AttributeType.Thunder, "Sprites/Icons/icon-lightning"},
+             {AttributeType.Venom, "Sprites/Icons/icon-skull"}
+         };
+        
+         public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
+         {
+             {StrategyType.None,         "Sprites/Icons/icon-transparent"},
+             {StrategyType.Detriment,    "Sprites/Icons/icon-none"},
+             {StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
+             {StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
+             {StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
+             {StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
+         }; 
+         
+         public Card draggedCard;
+         [SerializeField] private int sortOrder = 0;
 
          private void Awake()
          { 
-             cardImagePrefab = Resources.Load("Prefabs/CardTemplate") as GameObject; 
-             cardCanvas = GameObject.Find("CardCanvas");
+            GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
          }
-         
-         // Temporary Method
-         public void MoveCardToRandomPosition(Transform trans)
+
+         public int GetSortOrder()
          {
-             trans.position = new Vector3(Random.Range(-500f, 500f), -190f, 0);
+             int ret = sortOrder;
+             sortOrder += 1;
+             return ret;
          }
-
-        public void SetCardPosition(Card card, Vector3 pos)
-        {
-            card.transform.position = pos;
-        }
-
-        public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
-        {
+        
+         public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
+         {
             float t = 0f;
             Vector3 init = card.transform.position;
-
+            
             while (t < time) 
             {
                 float i = t / time;
@@ -70,6 +66,6 @@ namespace Managers
                 t += Time.deltaTime;
                 yield return null;
             }
-        }
+         }
      }
  }
