@@ -17,9 +17,10 @@ public class Game : MonoBehaviour
 
     public CardManager CardOperator;
     public VfxManager VfxOperator;
+    public AnimationManager AnimationOperator;
 
-    [FormerlySerializedAs("Player")] public Player player;
-    [FormerlySerializedAs("Enemy")] public Enemy enemy;
+    public Player player;
+    public Enemy enemy;
 
     public int turnCount;
     public Unit activeUnit;
@@ -37,6 +38,10 @@ public class Game : MonoBehaviour
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
+
+        CardOperator = GetComponent<CardManager>();
+        VfxOperator = GetComponent<VfxManager>();
+        AnimationOperator = GetComponent<AnimationManager>();
 
         player = transform.GetComponentInChildren<Player>();
         enemy = transform.GetComponentInChildren<Enemy>();

@@ -1,6 +1,9 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Library
 {
@@ -29,8 +32,7 @@ namespace Library
 				list[k] = list[n];  
 				list[n] = value;  
 			}
-		}  
-
+		}
 		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float time)
         {
             // Todo: P-Controller
@@ -47,6 +49,9 @@ namespace Library
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            
             yield return null;
         }
 	}

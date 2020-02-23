@@ -75,7 +75,9 @@ namespace UI
                 QueueCenter.z);
             
             // thisTrans.GetComponent<Render>().PController somethingsomething
-            thisTrans.position = newPos;
+
+            Game.Ctx.AnimationOperator.RunAnimation(Utilities.MoveTo(thisTrans.gameObject, newPos, 0.5f), false);
+            // thisTrans.position = newPos;
         }
 
         public void AdjustAllPositions()
