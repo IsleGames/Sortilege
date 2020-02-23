@@ -40,6 +40,7 @@ namespace Managers
 		
 		public void Start()
 		{
+            CardList = FindObjectOfType<DeckList>().Deck;
             cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
             buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
             
@@ -48,11 +49,11 @@ namespace Managers
 			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
 			pilePlay = GameObject.Find("PlayPile").GetComponent<PlayPile>();
 
-			if (CardList.Count > maxCardCount)
+			/*if (CardList.Count > maxCardCount)
 			{
 				CardList.Shuffle();
 				CardList.RemoveRange(maxCardCount, CardList.Count - maxCardCount);
-			} 
+			} */
 
 			foreach (CardData cardData in CardList)
 			{
