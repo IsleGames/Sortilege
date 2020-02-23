@@ -16,14 +16,13 @@ public class BeginBattle : MonoBehaviour
     }
     
 
-    public void LoadUITestScene()
+    public void StartGame()
     {
         StartCoroutine(LoadScene(1));
     }
 
     private IEnumerator LoadScene(int idx)
     {
-        // 
         float t = 0;
         while(t < Duration)
         {
@@ -33,8 +32,6 @@ public class BeginBattle : MonoBehaviour
             yield return null;
         }
         SceneManager.LoadScene(idx);
-        
     }
-
-
+    
 }
