@@ -56,7 +56,8 @@ namespace UI
                     break;
             }
         }
-        private void AdjustVirtualPosition(int index)
+
+        private void AdjustVirtualPosition(int index, bool animated = true)
         {
             Transform thisTrans = _virtualPile[index].transform;
             Vector3 newScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
@@ -65,22 +66,27 @@ namespace UI
                 QueueCenter.x + TotalCardWidth * (index - _startingVirtualIndex),
                 QueueCenter.y,
                 QueueCenter.z);
+            if (animated) 
+            {
+                Game.Ctx.AnimationOperator.RunAnimation(
+                    Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.25f)
+                );
+            }
+            else
+            {
+                thisTrans.localScale = newScale;
+                thisTrans.position = newPos;
+            }
             
-            Game.Ctx.AnimationOperator.RunAnimation(
-                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.25f)
-            );
-            
-            // thisTrans.localScale = newScale;
-            // thisTrans.position = newPos;
         }
         
-        private void AdjustAllVirtualPositions()
+        private void AdjustAllVirtualPositions(bool animated = true)
         {
             // Debugger.Log("VirtualAdjustAll Called");
             SetVirtualAlign();
             for (var i = 0; i < _virtualPile.Count; i++)
             {
-                AdjustVirtualPosition(i);
+                AdjustVirtualPosition(i, animated);
             }
         }
 
@@ -151,7 +157,7 @@ namespace UI
 
         public new void Add(Card card)
         {
-            int insertIndex = VirtualDestroy();
+            int insertIndex = VirtualDestroy(false);
             base.Insert(insertIndex, card);
         }
         public new void AddRange(List<Card> cardList, bool shuffleAfter = false)
