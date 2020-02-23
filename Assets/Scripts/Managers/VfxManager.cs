@@ -18,7 +18,8 @@ namespace Managers
              {StrategyType.Berserker, new Color(0.9f, 0.35f, 0.2f) },
              {StrategyType.Craftsman, new Color(0.4f, 0.33f, 0.2f) },
              {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
-             {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
+             {StrategyType.Sorcerer,  new Color(0.529f, 0.808f, 0.922f)  },
+             {StrategyType.Deceiver,  new Color(0.6f, 0.4f, 0.9f)  }
          };
         
          public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
@@ -38,6 +39,7 @@ namespace Managers
              {StrategyType.Craftsman,    "Icons/icon-sword"},
              {StrategyType.Knight,       "Icons/icon-arrow"},
              {StrategyType.Sorcerer,     "Icons/icon-wand" },
+             {StrategyType.Deceiver,     "Icons/icon-wand" },
          };
          
          public static Dictionary<BuffType, string> BuffSpritePaths = new Dictionary<BuffType, string>()

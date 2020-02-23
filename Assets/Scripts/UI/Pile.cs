@@ -161,6 +161,7 @@ namespace UI
         {
             List<Card> ret = _pile;
             _pile = new List<Card>();
+            AdjustAllPositions();
             
             return ret;
         }

@@ -158,29 +158,30 @@ namespace Managers
 	        }
         }
 		
-		public void PopCard(Card card)
-		{
-			bool ret = pileHand.Remove(card);
+        public int DiscardAllHandCards()
+        {
+	        List<Card> discardList = pileHand.DrawAll();
+	        int ret = discardList.Count;
+	        
+	        pileDiscard.AddRange(discardList);
+	        return ret;
+        }
 
-			if (!ret)
-				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
+        public int DiscardStrategyTypeCards(StrategyType strategyType)
+        {
+	        List<Card> discardList = pileHand.GetStrategyTypeCards(strategyType);
+	        int ret = discardList.Count;
 
-			pileDiscard.Add(card);
-		}
+	        foreach (Card card in discardList)
+	        {
+		        pileHand.Remove(card);
+                pileDiscard.Add(card);
+            }
 
-        // public void DiscardStrategyTypeCards(StrategyType strategyType)
-        // {
-	       //  List<Card> 
-		      //   
-        //     foreach (Card card in pileHand)
-        //     {
-        //         pileDiscard.Add(card);
-        //     }
-        //     pileHand.Remove();
-        //
-        // }
+	        return ret;
+        }
 
-		public bool IsEmpty(Pile pile)
+        public bool IsEmpty(Pile pile)
 		{
 			return pile.Count() == 0;
 		}

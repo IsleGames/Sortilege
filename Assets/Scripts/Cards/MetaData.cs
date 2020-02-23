@@ -16,7 +16,8 @@ namespace Cards
         Berserker,
         Craftsman,
         Knight,
-        Sorcerer
+        Sorcerer,
+        Deceiver
     }
     
     public enum AttributeType : int

@@ -1,12 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Editor;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Random = UnityEngine.Random;
+
+using _Editor;
 using Managers;
 using Units;
-using UnityEngine.Serialization;
-using Random = System.Random;
 
 // ReSharper disable InconsistentNaming
 
@@ -32,7 +33,7 @@ public class Game : MonoBehaviour
     private void Start()
     {
         QualitySettings.vSyncCount = 1;
-        UnityEngine.Random.InitState(42);
+        Random.InitState(42);
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
