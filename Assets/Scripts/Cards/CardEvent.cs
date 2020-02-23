@@ -82,6 +82,8 @@ namespace Cards
             }
     
             Game.Ctx.CardOperator.pileHand.VirtualDestroy(true);
+            Game.Ctx.VfxOperator.draggedCard = null;
+            
             thisPile = null;
         }
         

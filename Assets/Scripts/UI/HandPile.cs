@@ -16,6 +16,7 @@ namespace UI
         private Card _virtualCard;
         private int _virtualCardIndex;
 
+        [SerializeField]
         private List<Card> _virtualPile;
         private float _startingVirtualIndex;
         
@@ -55,26 +56,27 @@ namespace UI
                     break;
             }
         }
-        private void AdjustVirtualPosition(int index, bool setAlign = false)
+        private void AdjustVirtualPosition(int index)
         {
-            if (setAlign) SetVirtualAlign();
-
             Transform thisTrans = _virtualPile[index].transform;
-            thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            Vector3 newScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
             Vector3 newPos = new Vector3(
                 QueueCenter.x + TotalCardWidth * (index - _startingVirtualIndex),
                 QueueCenter.y,
                 QueueCenter.z);
-            thisTrans.position = newPos;
-
-            // if (thisTrans.gameObject.name == "Shockwave")
-            // {
-            //     Debugger.Log("AdjustPosition(skwv) " + Time.time + " " + thisTrans.position + " " + newPos);
-            // }
+            
+            Game.Ctx.AnimationOperator.RunAnimation(
+                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.25f)
+            );
+            
+            // thisTrans.localScale = newScale;
+            // thisTrans.position = newPos;
         }
+        
         private void AdjustAllVirtualPositions()
         {
+            // Debugger.Log("VirtualAdjustAll Called");
             SetVirtualAlign();
             for (var i = 0; i < _virtualPile.Count; i++)
             {
@@ -94,41 +96,47 @@ namespace UI
             }
             else
             {
-                _virtualPile.Add(_virtualCard); 
-                _virtualCardIndex = _virtualPile.Count - 1;
+                _virtualCardIndex = GetVirtualIndex(Game.Ctx.VfxOperator.draggedCard.transform.position);
+                _virtualPile.Insert(_virtualCardIndex, _virtualCard);
             }
-            
             
             VirtualMove(Game.Ctx.VfxOperator.draggedCard.transform.position, true);
         }
 
-        public void VirtualDestroy(bool adjust = false)
+        public int VirtualDestroy(bool adjust = false)
         {
-            if (!isVirtualOn) return;
+            if (!isVirtualOn) return -1;
 
             if (Contains(Game.Ctx.VfxOperator.draggedCard))
             {
                 _pile.Remove(Game.Ctx.VfxOperator.draggedCard);
                 _pile.Insert(_virtualCardIndex, Game.Ctx.VfxOperator.draggedCard);
             }
+
+            int ret = _virtualCardIndex;
             
             _virtualPile = null;
             _virtualCardIndex = -1;
             isVirtualOn = false;
             
             if (adjust) AdjustAllPositions();
-            
-            // Debugger.Log("I am called");
+            return ret;
+        }
+
+        private int GetVirtualIndex(Vector3 mousePosition)
+        {
+            float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + _startingVirtualIndex);
+            int index = (int) Mathf.Clamp(curIndexf, 0, _virtualPile.Count - 1);
+            return index;
         }
         
         public void VirtualMove(Vector3 mousePosition, bool forceReset = false)
         {
             SetVirtualAlign();
             
-            float curIndexf = (int)Mathf.Round((mousePosition.x - QueueCenter.x) / TotalCardWidth + _startingVirtualIndex);
-            int index = (int) Mathf.Clamp(curIndexf, 0, _virtualPile.Count - 1);
+            int index = GetVirtualIndex(mousePosition);
 
-            if (_virtualCardIndex != index || forceReset)
+            if (_virtualCardIndex != index)
             {
                 Card temp = _virtualPile[_virtualCardIndex];
                 _virtualPile[_virtualCardIndex] = _virtualPile[index];
@@ -137,12 +145,14 @@ namespace UI
                 _virtualCardIndex = index;
                 AdjustAllVirtualPositions();
             }
+            if (forceReset)
+                AdjustAllVirtualPositions();
         }
 
         public new void Add(Card card)
         {
-            VirtualDestroy();
-            base.Add(card);
+            int insertIndex = VirtualDestroy();
+            base.Insert(insertIndex, card);
         }
         public new void AddRange(List<Card> cardList, bool shuffleAfter = false)
         {

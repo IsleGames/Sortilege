@@ -33,6 +33,7 @@ namespace Library
 				list[n] = value;  
 			}
 		}
+
 		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float k)
         {
             // Todo: P-Controller
@@ -62,7 +63,7 @@ namespace Library
             Vector3 initScale = obj.transform.localScale;
 
             float p = 0;
-            while (p < 1f - 1e-3)
+            while (p < 1f - 5e-3)
             {
                 p += (1 - p) * k;
                 
