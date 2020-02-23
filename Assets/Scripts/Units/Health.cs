@@ -40,7 +40,7 @@ namespace Units
             return expectedHitPoint;
         }
         
-        public void Damage(float amount)
+        public void Damage(float amount, bool ignoreBarrier = false)
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
@@ -51,7 +51,7 @@ namespace Units
             GetComponent<Unit>().onDamage.Invoke();
             amount = onGoingEffectAmount;
 
-            if (barrierHitPoints > 0f)
+            if (barrierHitPoints > 0f && !ignoreBarrier)
             {
                 if (amount < barrierHitPoints)
                     barrierHitPoints -= amount;

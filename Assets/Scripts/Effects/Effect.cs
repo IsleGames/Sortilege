@@ -23,6 +23,7 @@ namespace Effects
 		Damage,
 		Heal,
 		Barrier,
+		DamageIgnoreBarrier,
 		DiscardDeceiver,
 		DamageOnDeceiverInDiscardPile,
 		DiscardAllWithPerCardDamage
@@ -89,6 +90,9 @@ namespace Effects
 				    break;
 				case EffectType.Barrier:
 				    unit.GetComponent<Health>().AddBarrier(totAmount);
+				    break;
+				case EffectType.DamageIgnoreBarrier: 
+				    unit.GetComponent<Health>().Damage(totAmount, true);
 				    break;
 				case EffectType.DiscardDeceiver:
 					Game.Ctx.CardOperator.DiscardStrategyTypeCards(StrategyType.Deceiver);
