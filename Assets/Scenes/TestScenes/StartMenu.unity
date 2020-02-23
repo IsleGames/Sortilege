@@ -216,6 +216,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Duration: 1
+  SceneName: UITestScene
 --- !u!1 &639091168
 GameObject:
   m_ObjectHideFlags: 0
@@ -374,7 +375,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   path: StartingDeck
-  Deck: []
 --- !u!1 &1457528409
 GameObject:
   m_ObjectHideFlags: 0
@@ -614,7 +614,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 615993250}
-        m_MethodName: LoadUITestScene
+        m_MethodName: FadeAndLoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

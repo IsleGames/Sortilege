@@ -1217,6 +1217,7 @@ GameObject:
   - component: {fileID: 1051549745}
   - component: {fileID: 1051549744}
   - component: {fileID: 1051549742}
+  - component: {fileID: 1051549748}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -1284,7 +1285,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   draggedCard: {fileID: 0}
-  sortOrder: 0
 --- !u!114 &1051549745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1331,8 +1331,10 @@ MonoBehaviour:
   pilePlay: {fileID: 0}
   cardPrefab: {fileID: 0}
   buffPrefab: {fileID: 0}
+  cardsDrawnFirstTurn: 5
   cardsDrawnPerTurn: 2
   maxCardCount: 5
+  isCurrentCardFlinched: 0
 --- !u!223 &1051549747
 Canvas:
   m_ObjectHideFlags: 0
@@ -1354,6 +1356,20 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1051549748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051549741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbeee559589bf9d4584f1f95cb5a6846, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Duration: 1
+  SceneName: AddCard
 --- !u!1001 &1164532603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1361,6 +1377,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1051549743}
     m_Modifications:
+    - target: {fileID: 631532667604453807, guid: 63a2fa794ae01424cbd09e2e268f1984,
+        type: 3}
+      propertyPath: maximumHitPoints
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 727466649513305467, guid: 63a2fa794ae01424cbd09e2e268f1984,
         type: 3}
       propertyPath: m_textInfo.characterCount

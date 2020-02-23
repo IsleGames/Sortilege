@@ -21,7 +21,7 @@ public class PresentCards : MonoBehaviour
             var card = Instantiate(cardPrefab);
             card.GetComponent<Card>().Initialize(data);
             card.gameObject.AddComponent<Select>();
-            card.gameObject.GetComponent<CardEvent>().enabled = false;
+            Destroy(card.gameObject.GetComponent<CardEvent>());
             pile.Add(card.GetComponent<Card>());
         }
     }

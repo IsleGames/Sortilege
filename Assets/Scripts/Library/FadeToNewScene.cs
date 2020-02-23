@@ -1,14 +1,14 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 
-public class BeginBattle : MonoBehaviour
+public class FadeToNewScene : MonoBehaviour
 {
     //SpriteRenderer loadingBackground;
     public float Duration = 1f;
+    public string SceneName;
 
     // Start is called before the first frame update
     private void Start()
@@ -17,12 +17,12 @@ public class BeginBattle : MonoBehaviour
     }
     
 
-    public void LoadUITestScene()
+    public void FadeAndLoadScene()
     {
-        StartCoroutine(LoadScene(1));
+        StartCoroutine(LoadScene(SceneName));
     }
 
-    private IEnumerator LoadScene(int idx)
+    private IEnumerator LoadScene(string scene_name)
     {
         //
         var sprites = FindObjectsOfType<SpriteRenderer>();
@@ -42,7 +42,7 @@ public class BeginBattle : MonoBehaviour
             t += Time.deltaTime;
             yield return null;
         }
-        SceneManager.LoadScene(idx);
+        SceneManager.LoadScene(scene_name);
         
     }
 

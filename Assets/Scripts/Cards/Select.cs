@@ -1,21 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Data;
+using Cards;
 
 public class Select : MonoBehaviour
+
 {
-    // Start is called before the first frame update
+    public enum Direction { Up, Down };
+
+    protected CardData cardData;
+    private Direction direction = Direction.Up;
+    private Button continueButton;
+    public bool selected;
+
     private void Start()
     {
-        
+        continueButton = FindObjectOfType<Button>();
+        continueButton.onClick.AddListener(AddCard);
+        continueButton.onClick.AddListener(() => StartCoroutine(Abscond(direction)));
+        cardData = GetComponent<Card>().cardData;
     }
 
 
     private void OnMouseUpAsButton()
     {
-        DeckList deck = GameObject.Find("DeckList").GetComponent<DeckList>();
-        deck.Add(GetComponent<CardData>());
+        selected = true;
+        direction = Direction.Down;
+        continueButton.interactable = true;
+        
+    }
+
+    public void AddCard()
+    {
+        if (selected)
+        {
+            DeckList deck = GameObject.Find("DeckList").GetComponent<DeckList>();
+            deck.Add(cardData);
+        }
+    }
+
+    private IEnumerator Abscond(Direction direction)
+    {
+        float t = 0.5f;
+        float v = 0;
+        while (t < 1.5f)
+        {
+            t += Time.deltaTime;
+            v += 150 * t * t * t;
+            var position = transform.position;
+            if (direction == Direction.Down)
+            {
+                v *= -1;
+            }
+            position.y += v * Time.deltaTime;
+            transform.position = position;
+            yield return null;
+        }
     }
 
 }
