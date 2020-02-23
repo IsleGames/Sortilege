@@ -61,27 +61,5 @@ namespace Managers
             StartCoroutine(move);
 
         }
-        
-		public IEnumerator MoveTo(GameObject obj, Vector3 pos, float time)
-        {
-            // Todo: P-Controller
-            
-            Vector3 init = obj.transform.position;
-            float elapsed = 0;
-            while (elapsed < time)
-            {
-                float t = elapsed / time;
-                
-                var current = pos * t + init * (1 - t);
-                obj.transform.position = current;
-                
-                elapsed += Time.deltaTime;
-                yield return null;
-            }
-
-            Game.Ctx.IsBattleEnded();
-            
-            yield return null;
-        }
     }
 }

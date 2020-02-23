@@ -67,16 +67,17 @@ namespace UI
             if (setAlign) SetAlign();
 
             Transform thisTrans = _pile[index].transform;
-            thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            Vector3 newScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
             Vector3 newPos = new Vector3(
                 QueueCenter.x + TotalCardWidth * (index - StartingIndex),
                 QueueCenter.y,
                 QueueCenter.z);
-            
-            // thisTrans.GetComponent<Render>().PController somethingsomething
 
-            Game.Ctx.AnimationOperator.RunAnimation(Utilities.MoveTo(thisTrans.gameObject, newPos, 0.5f), false);
+            Game.Ctx.AnimationOperator.RunAnimation(
+                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.5f)
+                );
+            // thisTrans.localScale = newScale;
             // thisTrans.position = newPos;
         }
 

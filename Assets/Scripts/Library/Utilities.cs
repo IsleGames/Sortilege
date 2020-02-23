@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using _Editor;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -43,15 +43,47 @@ namespace Library
             {
                 float t = elapsed / time;
                 
-                var current = pos * t + init * (1 - t);
+                Vector3 current = pos * t + init * (1 - t);
                 obj.transform.position = current;
                 
                 elapsed += Time.deltaTime;
                 yield return null;
             }
 
-            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            obj.transform.position = pos;
             
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+        }
+		
+		public static IEnumerator MoveAndScaleTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float time)
+        {
+            // Todo: P-Controller
+            
+            Vector3 initPos = obj.transform.position;
+            Vector3 initScale = obj.transform.localScale;
+            
+            // Debugger.Log(obj.name + " " + targetPos);
+            
+            float elapsed = 0;
+            while (elapsed < time)
+            {
+                float t = elapsed / time;
+                
+                Vector3 curPos = targetPos * t + initPos * (1 - t);
+                obj.transform.position = curPos;
+                
+                Vector3 curScale = targetScale * t + initScale * (1 - t);
+                obj.transform.localScale = curScale;
+                
+                elapsed += Time.deltaTime;
+                yield return null;
+            }
+
+            obj.transform.position = targetPos;
+            obj.transform.localScale = targetScale;
+            
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;
         }
 	}
