@@ -30,7 +30,7 @@ public class DeckList : MonoBehaviour
     {
         var all_cards = Resources.LoadAll("Card", typeof(CardData));
         foreach (CardData card in all_cards){
-            cards[card.name] = card;
+            cards[card.title] = card;
         }
         
     }
