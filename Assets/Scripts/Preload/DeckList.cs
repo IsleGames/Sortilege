@@ -10,13 +10,18 @@ public class DeckList : MonoBehaviour
 {
 
     public string path;
-    public List<CardData> Deck;// { get; private set; }
-    public Dictionary<string, CardData> cards = new Dictionary<string, CardData>();
+    public List<CardData> Deck {get; private set; }
+    protected Dictionary<string, CardData> cards = new Dictionary<string, CardData>();
     // Start is called before the first frame update
     void Start()
     {
         LoadCards();
         Deck = LoadDeckList(path);
+    }
+
+    public void Add(CardData newCard)
+    {
+        Deck.Add(newCard);
     }
 
     

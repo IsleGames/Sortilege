@@ -34,14 +34,14 @@ namespace Cards
             var strRenderer = transform.Find("StrategySprite").GetComponent<SpriteRenderer>();
             strRenderer.sprite = Resources.Load<Sprite>(VfxManager.StrategySpritePaths[meta.strategy]);
 
-            var sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            var sortOrder = VfxManager.GetSortOrder();
             var canvas = GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
             bgSprite.sortingOrder = sortOrder;
-            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            sortOrder = VfxManager.GetSortOrder();
             borderSprite.sortingOrder = sortOrder;
-            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            sortOrder = VfxManager.GetSortOrder();
             attRenderer.sortingOrder = sortOrder;
             strRenderer.sortingOrder = sortOrder;
 
