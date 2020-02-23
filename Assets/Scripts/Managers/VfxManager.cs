@@ -26,7 +26,7 @@ namespace Managers
          {
              {AttributeType.None,     "Icons/icon-transparent"},
              {AttributeType.Infernal, "Icons/icon-fire"},
-             {AttributeType.Storm,    "Icons/icon-snowflake"},
+             {AttributeType.Storm,    "Icons/icons8-air-100"},
              {AttributeType.Thunder,  "Icons/icon-lightning"},
              {AttributeType.Venom,    "Icons/icon-skull"}
          };
@@ -50,7 +50,7 @@ namespace Managers
              {BuffType.Plague, "Icons/icons8-skull-64"},
              {BuffType.Flinch, "Icons/icon-fear"},
              {BuffType.Voodoo, "Icons/icons8-cauldron-64"},
-             {BuffType.Breeze, "Icons/icons8-cauldron-64"},
+             {BuffType.Breeze, "Icons/icons8-air-100"},
          }; 
          
          public Card draggedCard;
