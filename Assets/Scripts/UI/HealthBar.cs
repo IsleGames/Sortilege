@@ -1,6 +1,7 @@
 using System;
 using _Editor;
 using Cards;
+using Library;
 using TMPro;
 using Units;
 using UnityEngine;
@@ -60,39 +61,56 @@ namespace UI
                     if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
                 }
             }
+            
+            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
         }
 
         private void Update()
         {
-            UpdateStatus();
+            // UpdateStatus();
         }
 
-        private void UpdateStatus()
+        public void UpdateStatus(bool animated = true)
         {
             float totHitPoints = pHealth.GetMaximumDisplayHP();
             
             float hpRatio = pHealth.hitPoints / totHitPoints;
-            AdjustBar(hpRatio, _redBar);
+            AdjustBar(hpRatio, _redBar, animated);
             _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
 
             float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
-            AdjustBar(barrierRatio, _blueBar);
+            AdjustBar(barrierRatio, _blueBar, animated);
         }
 
-        private void AdjustBar(float ratio, RectTransform bar)
+        private void AdjustBar(float ratio, RectTransform bar, bool animated = true)
         {
             float newWidth = ratio * _thisRect.width;
             float xShift = (-1 + ratio) * _thisRect.width * .5f;
 
             var sp = bar.GetComponent<SpriteRenderer>();
             sp.enabled = true;
-            sp.size = new Vector2(
+            if (animated)
+            {
+                Vector2 targetSize = new Vector2(
                 newWidth,
                 _thisRect.height * .98f
                 );
             
-            bar.anchoredPosition = new Vector3(xShift, 0f, 0f);
-            // Debugger.Log(bar.position);
+                Vector2 targetAnchoredPosition = new Vector3(xShift, 0f, 0f);
+                
+                Game.Ctx.AnimationOperator.RunAnimation(
+                    Utilities.RectTransMoveAndScaleTo(bar, sp, targetSize, targetAnchoredPosition, 0.2f)
+                );
+            }
+            else
+            {
+                sp.size = new Vector2(
+                    newWidth,
+                    _thisRect.height * .98f
+                    );
+                
+                bar.anchoredPosition = new Vector3(xShift, 0f, 0f);
+            }
         }
     }
 }

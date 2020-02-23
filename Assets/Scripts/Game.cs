@@ -44,7 +44,9 @@ public class Game : MonoBehaviour
         AnimationOperator = GetComponent<AnimationManager>();
 
         player = transform.GetComponentInChildren<Player>();
+        player.Initialize();
         enemy = transform.GetComponentInChildren<Enemy>();
+        enemy.Initialize();
 
         turnCount = 0;
 

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Editor;
+using Units;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -33,7 +34,36 @@ namespace Library
 				list[n] = value;  
 			}
 		}
+		
+		public static IEnumerator RectTransMoveAndScaleTo(
+			RectTransform rectTrans, SpriteRenderer sp, Vector2 targetSize, Vector3 targetPos, float k)
+        {
+	        Vector2 initSize = sp.size;
+	        Vector3 initPos = rectTrans.anchoredPosition;
+	        
+	        Debugger.Log(initPos + " " + initSize);
 
+            float p = 0;
+            while (p < 1f - 5e-3)
+            {
+                p += (1 - p) * k;
+                
+                Vector2 curSize = targetSize * p + initSize * (1 - p);
+                sp.size = curSize;
+	                
+                Vector3 curPos = targetPos * p + initPos * (1 - p);
+                rectTrans.anchoredPosition = curPos;
+                
+                yield return null;
+            }
+            
+	        sp.size = targetSize;
+	        rectTrans.anchoredPosition = targetPos;
+	        
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+        }
+		
 		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float k)
         {
             // Todo: P-Controller
