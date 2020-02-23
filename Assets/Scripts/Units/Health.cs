@@ -51,7 +51,7 @@ namespace Units
             GetComponent<Unit>().onDamage.Invoke();
             amount = onGoingEffectAmount;
 
-            if (barrierHitPoints > 0)
+            if (barrierHitPoints > 0f)
             {
                 if (amount < barrierHitPoints)
                     barrierHitPoints -= amount;
@@ -59,13 +59,13 @@ namespace Units
                 {
                     amount -= barrierHitPoints;
                     barrierHitPoints = 0f;
-                    
-                    hitPoints = ValidityCheck(hitPoints - amount);
                 }
             }
-            else
+            
+            if (!Mathf.Approximately(amount, 0f))
             {
                 hitPoints = ValidityCheck(hitPoints - amount);
+                GetComponent<Unit>().beingDamagedSomewhere = true;
             }
         }
 

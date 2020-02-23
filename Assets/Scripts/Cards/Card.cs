@@ -42,10 +42,13 @@ namespace Cards
         
         public void Apply(Unit target, float streakCount)
         {
-            GetComponent<Ability>().Apply(target, streakCount);
+            // onAttack Event goes here
+            Game.Ctx.CardOperator.isCurrentCardFlinched = false;
+            Game.Ctx.player.onAttack.Invoke();
+            if (Game.Ctx.CardOperator.isCurrentCardFlinched) return;
                 
-            // Debugger.OneOnOneStat();
-            
+            GetComponent<Ability>().Apply(target, streakCount);
+
             if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }
     }

@@ -1324,7 +1324,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b708cc1b3679848c7a991a230b7fab52, type: 2}
   - {fileID: 11400000, guid: 64e3d4235111b4b6aaeaab6e152791b1, type: 2}
   - {fileID: 11400000, guid: 2f59065f1ae904e39b05f5776c4a73c7, type: 2}
-  - {fileID: 11400000, guid: 2f59065f1ae904e39b05f5776c4a73c7, type: 2}
+  - {fileID: 11400000, guid: 1f4d16c0b24e349f9aa7df09cec5ec15, type: 2}
   pileDeck: {fileID: 0}
   pileDiscard: {fileID: 0}
   pileHand: {fileID: 0}

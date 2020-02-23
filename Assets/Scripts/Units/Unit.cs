@@ -10,7 +10,12 @@ namespace Units
 
 	public abstract class Unit : MonoBehaviour
 	{
+		public bool beingDamagedSomewhere = false;
+		
+		public UnityEvent onTurnBegin = new UnityEvent();
+		public UnityEvent onAttack = new UnityEvent();
 		public UnityEvent onDamage = new UnityEvent();
+		public UnityEvent onTurnEnd = new UnityEvent();
 		
 		public abstract void StartTurn();
 		public abstract void EndTurn();

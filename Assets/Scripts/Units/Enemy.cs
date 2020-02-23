@@ -8,6 +8,8 @@ namespace Units
 	{
 		public override void StartTurn()
 		{
+			onTurnBegin.Invoke();
+			
 			Game.Ctx.player.GetComponent<Health>().Damage(6f);
 			if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
 			
@@ -16,6 +18,9 @@ namespace Units
 		
 		public override void EndTurn()
 		{
+			onTurnEnd.Invoke();
+			
+			beingDamagedSomewhere = false;
 			Game.Ctx.Continue();
 		}
 	}

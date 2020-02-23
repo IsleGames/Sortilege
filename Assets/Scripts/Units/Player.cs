@@ -12,9 +12,7 @@ namespace Units
 	public class Player : Unit
 	{
 		public int drawCount = 2;
-		
-		public UnityEvent onDraw = new UnityEvent();
-		
+
 		void Start()
 		{
 		}
@@ -22,15 +20,19 @@ namespace Units
 		public override void StartTurn()
 		{
 			Game.Ctx.CardOperator.StartTurn();
+			
+			onTurnBegin.Invoke();
 		}
 		
 		public override void EndTurn()
 		{
 			// Something something coroutine + ienum
-			
 			Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+			
+			onTurnEnd.Invoke();
 
-			if (Game.Ctx.RunningMethod == Game.Ctx.player.StartTurn)
+			beingDamagedSomewhere = false;
+			if (Game.Ctx.activeUnit == this)
 				Game.Ctx.Continue();
 			else
 				throw new InvalidOperationException("Ending player's turn in non-player round");

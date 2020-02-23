@@ -34,6 +34,8 @@ namespace Managers
 
 		public int cardsDrawnPerTurn = -1;
 		public int maxCardCount = 5;
+
+		public bool isCurrentCardFlinched;
 		
 		public void Start()
 		{
@@ -163,21 +165,21 @@ namespace Managers
 			if (!ret)
 				throw new InvalidOperationException("The popped card does not appear in the Hand pile");
 
-            // card.onDiscard.Invoke();
 			pileDiscard.Add(card);
 		}
-/*
-        public void PopHand()
-        {
-            foreach (Card card in pileHand)
-            {
-	            card.onDiscard.Invoke();
-                pileDiscard.Add(card);
-            }
-            pileHand.RemoveAll((Card c)=>true);
 
-        }
-*/
+        // public void DiscardStrategyTypeCards(StrategyType strategyType)
+        // {
+	       //  List<Card> 
+		      //   
+        //     foreach (Card card in pileHand)
+        //     {
+        //         pileDiscard.Add(card);
+        //     }
+        //     pileHand.Remove();
+        //
+        // }
+
 		public bool IsEmpty(Pile pile)
 		{
 			return pile.Count() == 0;

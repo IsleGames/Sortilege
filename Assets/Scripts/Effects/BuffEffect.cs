@@ -48,8 +48,8 @@ namespace Effects
 
 	    public void Apply(Unit unit, float multiplier)
 	    {
-		    if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
-				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
+		    if (!unit.GetComponent(affectiveUnit.ToString("G")))
+				throw new InvalidOperationException("Effect unit type mismatch: Expected " + affectiveUnit);
 			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 

@@ -22,24 +22,30 @@ namespace Buffs
 			{
 				// Bind them to individual functions
 				case BuffType.Block:
+					// Todo: Check if an instance of self already exists
 					GetComponentInParent<Unit>().onDamage.AddListener(Block);
 					break;
 				case BuffType.Forge:
+					GetComponentInParent<Unit>().onTurnBegin.AddListener(Forge);
 					break;
 				case BuffType.Thorns:
+					GetComponentInParent<Unit>().onDamage.AddListener(Thorns);
 					break;
 				case BuffType.Plague:
+					GetComponentInParent<Unit>().onTurnBegin.AddListener(Plague);
 					break;
 				case BuffType.Flinch:
+					GetComponentInParent<Unit>().onAttack.AddListener(Flinch);
 					break;
 				case BuffType.Voodoo:
+					GetComponentInParent<Unit>().onTurnBegin.AddListener(Voodoo);
 					break;
 				case BuffType.Breeze:
+					throw new NotImplementedException();
 					break;
 			}
 	    }
 	    
-	    // Todo: Check if an instance of self already exists
 
 	    // OnDamage Effect
 	    private void Block()
@@ -57,6 +63,58 @@ namespace Buffs
 	    // OnTurnBegin Effect
 	    private void Forge()
 	    {
+		    Game.Ctx.CardOperator.DrawCards((int)(amount + .5f));
+		    
+		    // You may go away without RemoveListener though
+		    GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Forge);
+		    GetComponentInParent<BuffManager>().Destroy(this);
+	    }
+	    
+	    // OnDamage Effect
+	    private void Thorns()
+	    {
+		    Game.Ctx.activeUnit.GetComponent<Health>().Damage(amount);
+		    
+		    GetComponentInParent<Unit>().onDamage.RemoveListener(Thorns);
+		    GetComponentInParent<BuffManager>().Destroy(this);
+	    }
+	    
+	    // OnTurnEnd Effect
+	    // Todo: Make Plague Support Damage in Multiple Turns
+	    private void Plague()
+	    {
+		    GetComponent<Health>().Damage(1);
+		    amount -= 1;
+
+		    if (Mathf.Approximately(amount, 0f))
+		    {
+				GetComponentInParent<Unit>().onTurnEnd.RemoveListener(Plague);
+				GetComponentInParent<BuffManager>().Destroy(this);
+		    }
+		    
+	    }
+	    
+	    // OnAttack Effect
+	    private void Flinch()
+	    {
+		    Game.Ctx.CardOperator.isCurrentCardFlinched = true;
+		    amount -= 1;
+
+		    if (Mathf.Approximately(amount, 0f))
+		    {
+				GetComponentInParent<Unit>().onAttack.RemoveListener(Flinch);
+				GetComponentInParent<BuffManager>().Destroy(this);
+		    }
+	    }
+	    
+	    // OnTurnBegin Effect
+	    private void Voodoo()
+	    {
+		    if (!GetComponent<Unit>().beingDamagedSomewhere)
+				GetComponent<Health>().Heal(amount);
+
+			GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
+			GetComponentInParent<BuffManager>().Destroy(this);
 	    }
     }
 }

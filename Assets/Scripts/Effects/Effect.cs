@@ -6,7 +6,7 @@ using Object = UnityEngine.Object;
 
 using _Editor;
 
-// This is actually called OnPLayEffect
+// This should be called OnPlayEffect
 namespace Effects
 {
 	public enum UnitType : int
@@ -31,8 +31,10 @@ namespace Effects
 		public EffectType type;
 		public float amount;
 
-		public int minStreak = 1;
-		public bool notAmplified = false;
+		public int minStreak;
+		public bool notAmplified;
+		
+		
 
 		public Effect(
 			UnitType affectiveUnit,
@@ -55,7 +57,7 @@ namespace Effects
 		public void Apply(Unit unit, float multiplier)
 		{
 			if (!unit.GetComponent(affectiveUnit.ToString("G")))
-				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
+				throw new InvalidOperationException("Effect unit type mismatch: Expected " + affectiveUnit);
 			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 

@@ -121,6 +121,17 @@ namespace UI
         {
             _pile.Clear();
         }
+        public List<Card> GetStrategyTypeCards(StrategyType strategyType)
+        {
+            List<Card> ret = new List<Card>();
+            foreach (Card card in _pile)
+                if (card.GetComponent<MetaData>().strategy == strategyType)
+                {
+                    ret.Add(card);
+                }
+
+            return ret;
+        }
         public void Insert(int index, Card card)
         {
             _pile.Insert(index, card);
