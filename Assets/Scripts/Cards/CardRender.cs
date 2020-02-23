@@ -10,7 +10,7 @@ using UI;
 
 namespace Cards
 {
-    public class Render : MonoBehaviour
+    public class CardRender : MonoBehaviour
     {
         public bool visible = true;
         
@@ -34,7 +34,8 @@ namespace Cards
             var strRenderer = transform.Find("StrategySprite").GetComponent<SpriteRenderer>();
             strRenderer.sprite = Resources.Load<Sprite>(VfxManager.StrategySpritePaths[meta.strategy]);
 
-            var sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            
             var canvas = GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;

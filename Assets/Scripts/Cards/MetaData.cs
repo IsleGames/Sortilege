@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Effects;
 using UnityEngine;
 
 namespace Cards
@@ -15,7 +16,8 @@ namespace Cards
         Berserker,
         Craftsman,
         Knight,
-        Sorcerer
+        Sorcerer,
+        Deceiver
     }
     
     public enum AttributeType : int
@@ -35,6 +37,8 @@ namespace Cards
         public StrategyType strategy = StrategyType.None;
         public AttributeType attribute = AttributeType.None;
 
+        public UnitType target = UnitType.Unknown;
+            
         public int level;
         public int maxLevel;
 

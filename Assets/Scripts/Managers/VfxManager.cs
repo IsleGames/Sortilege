@@ -6,6 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 using Cards;
+using Effects;
 
 namespace Managers
  {
@@ -17,26 +18,39 @@ namespace Managers
              {StrategyType.Berserker, new Color(0.9f, 0.35f, 0.2f) },
              {StrategyType.Craftsman, new Color(0.4f, 0.33f, 0.2f) },
              {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
-             {StrategyType.Sorcerer,  new Color(0.6f, 0.4f, 0.9f)  }
+             {StrategyType.Sorcerer,  new Color(0.529f, 0.808f, 0.922f)  },
+             {StrategyType.Deceiver,  new Color(0.6f, 0.4f, 0.9f)  }
          };
         
          public static Dictionary<AttributeType, string> AttributeSpritePaths = new Dictionary<AttributeType, string>()
          {
-             {AttributeType.None, "Sprites/Icons/icon-transparent"},
-             {AttributeType.Infernal, "Sprites/Icons/icon-fire"},
-             {AttributeType.Storm, "Sprites/Icons/icon-snowflake"},
-             {AttributeType.Thunder, "Sprites/Icons/icon-lightning"},
-             {AttributeType.Venom, "Sprites/Icons/icon-skull"}
+             {AttributeType.None,     "Icons/icon-transparent"},
+             {AttributeType.Infernal, "Icons/icon-fire"},
+             {AttributeType.Storm,    "Icons/icons8-air-100"},
+             {AttributeType.Thunder,  "Icons/icon-lightning"},
+             {AttributeType.Venom,    "Icons/icon-skull"}
          };
         
          public static Dictionary<StrategyType, string> StrategySpritePaths = new Dictionary<StrategyType, string>()
          {
-             {StrategyType.None,         "Sprites/Icons/icon-transparent"},
-             {StrategyType.Detriment,    "Sprites/Icons/icon-none"},
-             {StrategyType.Berserker,    "Sprites/Icons/icon-sword"},
-             {StrategyType.Craftsman,    "Sprites/Icons/icon-sword"},
-             {StrategyType.Knight,       "Sprites/Icons/icon-arrow"},
-             {StrategyType.Sorcerer,     "Sprites/Icons/icon-wand" },
+             {StrategyType.None,         "Icons/icon-transparent"},
+             {StrategyType.Detriment,    "Icons/icon-none"},
+             {StrategyType.Berserker,    "Icons/icon-sword"},
+             {StrategyType.Craftsman,    "Icons/icon-sword"},
+             {StrategyType.Knight,       "Icons/icon-arrow"},
+             {StrategyType.Sorcerer,     "Icons/icon-wand" },
+             {StrategyType.Deceiver,     "Icons/icon-wand" },
+         };
+         
+         public static Dictionary<BuffType, string> BuffSpritePaths = new Dictionary<BuffType, string>()
+         {
+             {BuffType.Block,  "Icons/icons8-shield-64"},
+             {BuffType.Forge,  "Icons/icons8-cauldron-64"},
+             {BuffType.Thorns, "Icons/icons8-crown-of-thorns-100"},
+             {BuffType.Plague, "Icons/icons8-skull-64"},
+             {BuffType.Flinch, "Icons/icon-fear"},
+             {BuffType.Voodoo, "Icons/icons8-cauldron-64"},
+             {BuffType.Breeze, "Icons/icons8-air-100"},
          }; 
          
          public Card draggedCard;

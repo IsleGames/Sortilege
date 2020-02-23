@@ -1,16 +1,18 @@
 using System;
+using UnityEngine;
+using UnityEngine.Events;
+using Object = UnityEngine.Object;
+
 using _Editor;
 using Cards;
 using Managers;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Units
 {
 	public class Player : Unit
 	{
 		public int drawCount = 2;
-		
+
 		void Start()
 		{
 		}
@@ -18,15 +20,19 @@ namespace Units
 		public override void StartTurn()
 		{
 			Game.Ctx.CardOperator.StartTurn();
+			
+			onTurnBegin.Invoke();
 		}
 		
 		public override void EndTurn()
 		{
 			// Something something coroutine + ienum
+			Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
 			
-			Game.Ctx.CardOperator.Apply(Game.Ctx.Enemy);
+			onTurnEnd.Invoke();
 
-			if (Game.Ctx.RunningMethod == Game.Ctx.Player.StartTurn)
+			beingDamagedSomewhere = false;
+			if (Game.Ctx.activeUnit == this)
 				Game.Ctx.Continue();
 			else
 				throw new InvalidOperationException("Ending player's turn in non-player round");

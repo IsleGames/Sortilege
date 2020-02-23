@@ -11,7 +11,7 @@ using Debug = System.Diagnostics.Debug;
 
 namespace UI
 {
-    public enum PileAlignType : int
+    public enum QueueAlignType : int
     {
         Left,
         Middle,
@@ -23,12 +23,13 @@ namespace UI
         [SerializeField]
         protected List<Card> _pile;
 
-        public float scaleFactor = 1.8f;
+        public bool movable;
 
+        public float scaleFactor = 1.8f;
         public float offsetMargin = 10f;
 
         [SerializeField]
-        protected PileAlignType align = PileAlignType.Left;
+        protected QueueAlignType align = QueueAlignType.Left;
         // public bool zoomOnMouseOver = false;
         
         protected Vector3 QueueCenter;
@@ -49,13 +50,13 @@ namespace UI
         {
             switch (align)
             {
-                case PileAlignType.Left:
+                case QueueAlignType.Left:
                     StartingIndex = 0;
                     break;
-                case PileAlignType.Middle:
+                case QueueAlignType.Middle:
                     StartingIndex = (float)(_pile.Count - 1) / 2;
                     break;
-                case PileAlignType.Right:
+                case QueueAlignType.Right:
                     StartingIndex = _pile.Count - 1;
                     break;
             }
@@ -120,6 +121,17 @@ namespace UI
         {
             _pile.Clear();
         }
+        public List<Card> GetStrategyTypeCards(StrategyType strategyType)
+        {
+            List<Card> ret = new List<Card>();
+            foreach (Card card in _pile)
+                if (card.GetComponent<MetaData>().strategy == strategyType)
+                {
+                    ret.Add(card);
+                }
+
+            return ret;
+        }
         public void Insert(int index, Card card)
         {
             _pile.Insert(index, card);
@@ -149,6 +161,7 @@ namespace UI
         {
             List<Card> ret = _pile;
             _pile = new List<Card>();
+            AdjustAllPositions();
             
             return ret;
         }

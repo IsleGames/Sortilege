@@ -68,7 +68,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -776856417
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: ed864848ae3424cf1952c8e3385e3386, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -305,7 +305,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -776856417
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 443b768d74140954bb8e5a9b50182e67, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -330,10 +330,9 @@ GameObject:
   - component: {fileID: 259864822333981725}
   - component: {fileID: -7766759408608403537}
   - component: {fileID: 7340009696570777890}
-  - component: {fileID: 3148182974849659667}
+  - component: {fileID: 5913512150263492462}
   - component: {fileID: 7515948331846301131}
   - component: {fileID: 3739844958693504396}
-  - component: {fileID: 3739844958693504399}
   - component: {fileID: 3739844958693504497}
   - component: {fileID: 4543782134600673554}
   - component: {fileID: 9106476663048869965}
@@ -382,15 +381,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardData: {fileID: 0}
-  onDraw:
-    m_PersistentCalls:
-      m_Calls: []
-  onPlay:
-    m_PersistentCalls:
-      m_Calls: []
-  onDiscard:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &-7766759408608403537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -423,7 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableRetract: 0
   effectList: []
---- !u!114 &3148182974849659667
+--- !u!114 &5913512150263492462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -472,30 +462,8 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
---- !u!114 &3739844958693504399
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3739844958693504499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
-  m_ReferencePixelsPerUnit: 100
-  m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
-  m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
-  m_PhysicalUnit: 3
-  m_FallbackScreenDPI: 96
-  m_DefaultSpriteDPI: 96
-  m_DynamicPixelsPerUnit: 1
 --- !u!222 &3739844958693504497
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -780,7 +748,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -776856417
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1be02e6c3166a9148b8f085048d512f4, type: 3}
   m_Color: {r: 0.8207547, g: 0.8207547, b: 0.8207547, a: 1}
@@ -866,7 +834,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -776856417
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 67839cc246ddec2429bd5af22b16912b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
