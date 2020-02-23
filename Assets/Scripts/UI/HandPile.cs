@@ -82,7 +82,6 @@ namespace UI
         
         private void AdjustAllVirtualPositions(bool animated = true)
         {
-            // Debugger.Log("VirtualAdjustAll Called");
             SetVirtualAlign();
             for (var i = 0; i < _virtualPile.Count; i++)
             {
@@ -103,7 +102,14 @@ namespace UI
             else
             {
                 _virtualCardIndex = GetVirtualIndex(Game.Ctx.VfxOperator.draggedCard.transform.position);
-                _virtualPile.Insert(_virtualCardIndex, _virtualCard);
+                // Debugger.Log(_virtualCardIndex);
+                if (_virtualCardIndex >= 0)
+                    _virtualPile.Insert(_virtualCardIndex, _virtualCard);
+                else
+                {
+                    _virtualCardIndex = 0;
+                    _virtualPile.Add(_virtualCard);
+                }
             }
             
             VirtualMove(Game.Ctx.VfxOperator.draggedCard.transform.position, true);
