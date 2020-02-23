@@ -32,6 +32,7 @@ namespace Managers
         public GameObject cardPrefab;
         public GameObject buffPrefab;
 
+		public int cardsDrawnFirstTurn = 5;
 		public int cardsDrawnPerTurn = -1;
 		public int maxCardCount = 5;
 
@@ -71,8 +72,15 @@ namespace Managers
 			
 			if (cardsDrawnPerTurn == -1)
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
-			
-			DrawCards(cardsDrawnPerTurn);
+
+			if (Game.Ctx.turnCount == 1)
+			{
+				DrawCards(cardsDrawnFirstTurn);
+			}
+			else
+			{
+				DrawCards(cardsDrawnPerTurn);
+			}
 		}
 		
 		public Pile GetCardPile(Card card)
@@ -133,7 +141,10 @@ namespace Managers
 				if (IsEmpty(pileDeck))
 					if (onEmptyShuffle)
 						if (IsEmpty(pileDiscard))
+						{
+							Debugger.Warning("Number of cards drawn is larger than total amount of cards");
 							break;
+						}
 						else
 							ShuffleOnDeckEmpty();
 					else
