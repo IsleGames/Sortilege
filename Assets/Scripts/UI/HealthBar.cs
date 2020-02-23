@@ -42,7 +42,7 @@ namespace UI
                 }
 
             _whiteBar.GetComponent<SpriteRenderer>().enabled = false;
-            _blueBar.GetComponent<SpriteRenderer>().enabled = false;
+            // _blueBar.GetComponent<SpriteRenderer>().enabled = false;
             
             var sp = _bgBar.GetComponent<SpriteRenderer>();
             _thisRect = GetComponent<RectTransform>().rect;
@@ -70,16 +70,13 @@ namespace UI
         private void UpdateStatus()
         {
             float totHitPoints = pHealth.GetMaximumDisplayHP();
+            
             float hpRatio = pHealth.hitPoints / totHitPoints;
-
             AdjustBar(hpRatio, _redBar);
             _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
 
-            if (pHealth.barrierHitPoints > 0f)
-            {
-                float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
-                AdjustBar(barrierRatio, _blueBar);
-            }
+            float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
+            AdjustBar(barrierRatio, _blueBar);
         }
 
         private void AdjustBar(float ratio, RectTransform bar)
