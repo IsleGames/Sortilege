@@ -19,5 +19,6 @@ namespace Data
         public bool disableRetract = false;
         
         public List<Effect> effectList;
+        public List<BuffEffect> buffList;
     }
 }

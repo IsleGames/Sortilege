@@ -26,7 +26,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321225091013055776}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -89.6008}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.32, y: 0.32, z: 1}
   m_Children: []
   m_Father: {fileID: 8479436548672712510}
@@ -34,7 +34,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 31.2}
   m_SizeDelta: {x: 350, y: 479}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!212 &698924669387467651
@@ -95,6 +95,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 321225091013055776}
   m_CullTransparentMesh: 0
+--- !u!1 &1763004691940593882
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6576027742985295805}
+  m_Layer: 0
+  m_Name: BuffQueuePositionHolder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6576027742985295805
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1763004691940593882}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8479436548672712510}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 90, y: -120}
+  m_SizeDelta: {x: 40, y: 40}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8497116602034066205
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +141,7 @@ GameObject:
   - component: {fileID: 8479436548672712510}
   - component: {fileID: 2519710142436281370}
   - component: {fileID: 631532667604453807}
+  - component: {fileID: 1414300344802737712}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -126,13 +162,14 @@ RectTransform:
   m_Children:
   - {fileID: 3878550154516115633}
   - {fileID: 1620698719616064438}
+  - {fileID: 6576027742985295805}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: 0}
-  m_SizeDelta: {x: 220, y: 240}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 220, y: 280}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2519710142436281370
 MonoBehaviour:
@@ -146,6 +183,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49146bb3d1edb4fd3b22144f2b927fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onDamage:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &631532667604453807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +200,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maximumHitPoints: 100
   barrierHitPoints: 0
+  onGoingEffectAmount: -1
   hitPoints: -1
+--- !u!114 &1414300344802737712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497116602034066205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6708d59cfd474973a8e8a1eec4813741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  BuffList: []
+  offsetMargin: 5
+  scaleFactor: 0.5
+  QueueCenter: {x: 0, y: 0, z: 0}
+  align: 2
+  StartingIndex: 0
+  TotalBuffWidth: 0
 --- !u!1001 &9027454070334575840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -231,7 +291,7 @@ PrefabInstance:
     - target: {fileID: 7726511491684699990, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -105
+      value: -75
       objectReference: {fileID: 0}
     - target: {fileID: 7726511491684699990, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}

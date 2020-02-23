@@ -11,7 +11,7 @@ using Debug = System.Diagnostics.Debug;
 
 namespace UI
 {
-    public enum PileAlignType : int
+    public enum QueueAlignType : int
     {
         Left,
         Middle,
@@ -29,7 +29,7 @@ namespace UI
         public float offsetMargin = 10f;
 
         [SerializeField]
-        protected PileAlignType align = PileAlignType.Left;
+        protected QueueAlignType align = QueueAlignType.Left;
         // public bool zoomOnMouseOver = false;
         
         protected Vector3 QueueCenter;
@@ -50,13 +50,13 @@ namespace UI
         {
             switch (align)
             {
-                case PileAlignType.Left:
+                case QueueAlignType.Left:
                     StartingIndex = 0;
                     break;
-                case PileAlignType.Middle:
+                case QueueAlignType.Middle:
                     StartingIndex = (float)(_pile.Count - 1) / 2;
                     break;
-                case PileAlignType.Right:
+                case QueueAlignType.Right:
                     StartingIndex = _pile.Count - 1;
                     break;
             }

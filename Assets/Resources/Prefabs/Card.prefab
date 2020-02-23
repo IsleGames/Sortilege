@@ -330,7 +330,7 @@ GameObject:
   - component: {fileID: 259864822333981725}
   - component: {fileID: -7766759408608403537}
   - component: {fileID: 7340009696570777890}
-  - component: {fileID: 3148182974849659667}
+  - component: {fileID: 5913512150263492462}
   - component: {fileID: 7515948331846301131}
   - component: {fileID: 3739844958693504396}
   - component: {fileID: 3739844958693504497}
@@ -413,7 +413,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   disableRetract: 0
   effectList: []
---- !u!114 &3148182974849659667
+--- !u!114 &5913512150263492462
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -462,7 +462,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!222 &3739844958693504497
 CanvasRenderer:

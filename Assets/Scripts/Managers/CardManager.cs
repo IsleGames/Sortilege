@@ -30,6 +30,7 @@ namespace Managers
         public PlayPile pilePlay;
 
         public GameObject cardPrefab;
+        public GameObject buffPrefab;
 
 		public int cardsDrawnPerTurn = -1;
 		public int maxCardCount = 5;
@@ -37,6 +38,7 @@ namespace Managers
 		public void Start()
 		{
             cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
             
 			pileDeck = GameObject.Find("DeckPile").GetComponent<Pile>();
 			pileHand = GameObject.Find("HandPile").GetComponent<HandPile>();
@@ -55,7 +57,6 @@ namespace Managers
 				Card newCard = newCardObj.GetComponent<Card>();
 				
 				newCard.Initialize(cardData);
-                //newCard.GetComponent<Render>().Initialize();
 
 				pileDeck.Add(newCard);
 			}
@@ -70,12 +71,8 @@ namespace Managers
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
 			
 			DrawCards(cardsDrawnPerTurn);
-			
-			// foreach (Card card in Game.Ctx.CardOperator.pileHand)
-			// {
-			// 	card.LogInfo();
-			// }
 		}
+		
 		public Pile GetCardPile(Card card)
 		{
 			if (pileHand.Contains(card))
@@ -86,7 +83,7 @@ namespace Managers
 				return pileDeck;
 			if (pileDiscard.Contains(card))
 				return pileDiscard;
-			throw new ArgumentOutOfRangeException("Card not found in any pile");
+			throw new InvalidOperationException("Card not found in any pile");
 		}
 		
 		public void AddCardToQueue(Card card)

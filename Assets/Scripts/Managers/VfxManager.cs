@@ -6,6 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 using Cards;
+using Effects;
 
 namespace Managers
  {
@@ -37,6 +38,17 @@ namespace Managers
              {StrategyType.Craftsman,    "Icons/icon-sword"},
              {StrategyType.Knight,       "Icons/icon-arrow"},
              {StrategyType.Sorcerer,     "Icons/icon-wand" },
+         };
+         
+         public static Dictionary<BuffType, string> BuffSpritePaths = new Dictionary<BuffType, string>()
+         {
+             {BuffType.Block,  "Icons/icons8-shield-64"},
+             {BuffType.Forge,  "Icons/icons8-cauldron-64"},
+             {BuffType.Thorns, "Icons/icons8-crown-of-thorns-100"},
+             {BuffType.Plague, "Icons/icons8-skull-64"},
+             {BuffType.Flinch, "Icons/icon-fear"},
+             {BuffType.Voodoo, "Icons/icons8-cauldron-64"},
+             {BuffType.Breeze, "Icons/icons8-cauldron-64"},
          }; 
          
          public Card draggedCard;

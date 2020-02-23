@@ -28,7 +28,7 @@ namespace UI
             virtualObject.layer = 2;
             
             _virtualCard = virtualObject.GetComponent<Card>();
-            _virtualCard.GetComponent<Render>().Hide();
+            _virtualCard.GetComponent<CardRender>().Hide();
             _virtualCardIndex = -1;
         }
 
@@ -44,13 +44,13 @@ namespace UI
         {
             switch (align)
             {
-                case PileAlignType.Left:
+                case QueueAlignType.Left:
                     _startingVirtualIndex = 0;
                     break;
-                case PileAlignType.Middle:
+                case QueueAlignType.Middle:
                     _startingVirtualIndex = (float)(_virtualPile.Count - 1) / 2;
                     break;
-                case PileAlignType.Right:
+                case QueueAlignType.Right:
                     _startingVirtualIndex = _virtualPile.Count - 1;
                     break;
             }

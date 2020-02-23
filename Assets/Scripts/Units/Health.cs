@@ -12,6 +12,9 @@ namespace Units
         [FormerlySerializedAs("maximumHealth")] public float maximumHitPoints = -1f;
 
         public float barrierHitPoints = 0;
+        
+        [SerializeField]
+        public float onGoingEffectAmount = -1;
 
         [FormerlySerializedAs("HitPoints")] public float hitPoints = -1f;
         
@@ -37,10 +40,16 @@ namespace Units
             return expectedHitPoint;
         }
         
-        public void Damage(float amount, bool ignoreBlock = false)
+        public void Damage(float amount)
         {
             if (amount < 0)
                 Debugger.Warning("Negative amount detected for Damage", this);
+
+            // Trigger onDamage Buffs
+            // Currently onDamage effect goes before the damage happens
+            onGoingEffectAmount = amount;
+            GetComponent<Unit>().onDamage.Invoke();
+            amount = onGoingEffectAmount;
 
             if (barrierHitPoints > 0)
             {

@@ -1,42 +1,36 @@
 using System;
 using System.Data;
-using Units;
+using Managers;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
-using _Editor;
+using Units;
 
-// This is actually called OnPLayEffect
 namespace Effects
 {
-	public enum UnitType : int
+	public enum BuffType : int
 	{
-		Unknown,
-		Player,
-		Enemy
+		Block,
+		Forge,
+		Thorns,
+		Plague,
+		Flinch,
+		Voodoo,
+		Breeze,
 	}
-
-	public enum EffectType : int
-	{
-		Damage,
-		Heal,
-		Barrier
-	}
-
+	
 	[Serializable]
-	public class Effect
-	{
+    public class BuffEffect
+    {
 		public UnitType affectiveUnit;
+		public BuffType type;
 
-		public EffectType type;
 		public float amount;
-
 		public int minStreak = 1;
 		public bool notAmplified = false;
-
-		public Effect(
+		
+	    public BuffEffect(
 			UnitType affectiveUnit,
-			EffectType type,
+			BuffType type,
 			float amount,
 			int streakCount = 1,
 			bool notAmplified = false
@@ -52,9 +46,9 @@ namespace Effects
 			this.notAmplified = notAmplified;
 		}
 
-		public void Apply(Unit unit, float multiplier)
-		{
-			if (!unit.GetComponent(affectiveUnit.ToString("G")))
+	    public void Apply(Unit unit, float multiplier)
+	    {
+		    if (!unit.GetComponent(this.affectiveUnit.ToString("G")))
 				throw new InvalidOperationException("Effect unit type mismatch: Expected " + this.affectiveUnit);
 			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
@@ -65,25 +59,7 @@ namespace Effects
 			else
 				totAmount = amount * multiplier;
 			
-			switch (type)
-			{
-				case EffectType.Damage: 
-				    unit.GetComponent<Health>().Damage(totAmount);
-				    break;
-				case EffectType.Heal:
-				    unit.GetComponent<Health>().Heal(totAmount);
-				    break;
-				case EffectType.Barrier:
-				    unit.GetComponent<Health>().AddBarrier(totAmount);
-				    break;
-			}
-		}
-
-		// Need change
-        public string Info()
-        {
-	        return affectiveUnit + " " + type + " " + amount;
-        }
-
-	}
+			unit.GetComponent<BuffManager>().Create(type, totAmount);
+	    }
+    }
 }

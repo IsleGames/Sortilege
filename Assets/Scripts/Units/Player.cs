@@ -1,15 +1,19 @@
 using System;
+using UnityEngine;
+using UnityEngine.Events;
+using Object = UnityEngine.Object;
+
 using _Editor;
 using Cards;
 using Managers;
-using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace Units
 {
 	public class Player : Unit
 	{
 		public int drawCount = 2;
+		
+		public UnityEvent onDraw = new UnityEvent();
 		
 		void Start()
 		{
@@ -24,9 +28,9 @@ namespace Units
 		{
 			// Something something coroutine + ienum
 			
-			Game.Ctx.CardOperator.Apply(Game.Ctx.Enemy);
+			Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
 
-			if (Game.Ctx.RunningMethod == Game.Ctx.Player.StartTurn)
+			if (Game.Ctx.RunningMethod == Game.Ctx.player.StartTurn)
 				Game.Ctx.Continue();
 			else
 				throw new InvalidOperationException("Ending player's turn in non-player round");
