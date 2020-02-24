@@ -814,7 +814,7 @@ MonoBehaviour:
   _pile: []
   movable: 0
   scaleFactor: 0.8
-  offsetMargin: -12
+  offsetMargin: -40
   align: 0
 --- !u!1 &511548466
 GameObject:
@@ -2077,5 +2077,5 @@ MonoBehaviour:
   _pile: []
   movable: 0
   scaleFactor: 0.8
-  offsetMargin: 2
+  offsetMargin: -40
   align: 2

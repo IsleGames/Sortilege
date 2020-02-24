@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Text.RegularExpressions;
 using _Editor;
 using Cards;
 using Library;
@@ -16,6 +18,9 @@ namespace UI
         private RectTransform _bgBar, _redBar, _blueBar, _whiteBar;
         private TextMeshProUGUI _barText;
         public Health pHealth;
+
+        [NonSerialized]
+        public float animationKFactor = 0.06f;
 
         private Rect _thisRect;
 
@@ -64,10 +69,29 @@ namespace UI
             
             GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
         }
-
-        private void Update()
+        
+		public static IEnumerator HitPointNumberPController(
+            TextMeshProUGUI tmp,
+            float initHitPoints,
+            float targetHitPoints,
+            float totalHitPoints,
+            float k)
         {
-            // UpdateStatus();
+            float p = 0;
+            while (p < 1f - 5e-3)
+            {
+                p += (1 - p) * k;
+                
+                float curHP = targetHitPoints * p + initHitPoints * (1 - p);
+                tmp.text = $"{Mathf.RoundToInt(curHP)} / {Mathf.RoundToInt(totalHitPoints)}";
+                
+                yield return null;
+            }
+            
+            tmp.text = $"{Mathf.RoundToInt(targetHitPoints)} / {Mathf.RoundToInt(totalHitPoints)}";
+	        
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
         }
 
         public void UpdateStatus(bool animated = true)
@@ -76,10 +100,22 @@ namespace UI
             
             float hpRatio = pHealth.hitPoints / totHitPoints;
             AdjustBar(hpRatio, _redBar, animated);
-            _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
+            // _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
 
             float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
             AdjustBar(barrierRatio, _blueBar, animated);
+            
+            float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
+
+            Game.Ctx.AnimationOperator.PushAnimation(
+                HitPointNumberPController(
+                    _barText,
+                    initHitPoints,
+                    pHealth.hitPoints + pHealth.barrierHitPoints,
+                    totHitPoints,
+                    animationKFactor
+                    )
+                );
         }
 
         private void AdjustBar(float ratio, RectTransform bar, bool animated = true)
@@ -99,7 +135,7 @@ namespace UI
                 Vector2 targetAnchoredPosition = new Vector3(xShift, 0f, 0f);
                 
                 Game.Ctx.AnimationOperator.PushAnimation(
-                    Utilities.RectTransMoveAndScaleTo(bar, sp, targetSize, targetAnchoredPosition, 0.2f)
+                    Utilities.RectTransMoveAndScaleTo(bar, sp, targetSize, targetAnchoredPosition, animationKFactor)
                 );
             }
             else
