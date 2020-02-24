@@ -631,7 +631,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 158.90002, y: -48}
+  m_AnchoredPosition: {x: -486, y: -152}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &390636272
@@ -1380,7 +1380,7 @@ PrefabInstance:
     - target: {fileID: 631532667604453807, guid: 63a2fa794ae01424cbd09e2e268f1984,
         type: 3}
       propertyPath: maximumHitPoints
-      value: 10
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 727466649513305467, guid: 63a2fa794ae01424cbd09e2e268f1984,
         type: 3}
@@ -1730,7 +1730,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -47.85002}
+  m_AnchoredPosition: {x: -158, y: -47.85002}
   m_SizeDelta: {x: 314.40002, y: 320}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1613351428
@@ -1834,7 +1834,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 158, y: 342.0039}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1845,7 +1845,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 320, y: 320}
+  m_Size: {x: 1200, y: 1004.0078}
   m_EdgeRadius: 0
 --- !u!1 &1708309167
 GameObject:
