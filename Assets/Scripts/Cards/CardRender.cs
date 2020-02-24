@@ -15,9 +15,11 @@ namespace Cards
     {
         public bool visible = true;
         
-        public float moveSpeed = 0.1f;
+        // public float moveSpeed = 0.1f;
 
         private SpriteRenderer borderSprite, bgSprite, attRenderer, strRenderer;
+
+        [SerializeField] private float onSelectZoomScale = 1.1f;
 
         public void Start()
         {
@@ -42,9 +44,20 @@ namespace Cards
             
             // Set rules text
             transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
-            
+
             SetOrder();
         }
+
+        public void OnSelectZoom()
+        {
+            Vector3 newLocalScale = transform.localScale * onSelectZoomScale;
+            transform.localScale = newLocalScale;
+        }
+
+        // public void OnExitShrink()
+        // {
+        //     
+        // }
 
         public void SetOrder()
         {

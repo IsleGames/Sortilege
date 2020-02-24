@@ -130,7 +130,7 @@ namespace UI
             _virtualCardIndex = -1;
             isVirtualOn = false;
             
-            if (adjust) AdjustAllPositions();
+            if (adjust) AdjustAllPositions(false, false);
             return ret;
         }
 

@@ -105,10 +105,10 @@ namespace UI
             // thisTrans.position = newPos;
         }
 
-        public void AdjustAllPositions(bool stopFlag = false)
+        public void AdjustAllPositions(bool stopFlag = false, bool setOrder = true)
         {
             SetAlign();
-            SetSortOrders();
+            if (setOrder) SetSortOrders();
             for (var i = 0; i < _pile.Count; i++)
                 if (!stopFlag)
                     AdjustPosition(i);

@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using _Editor;
+using Cards;
 using Units;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -41,7 +42,7 @@ namespace Library
 	        Vector2 initSize = sp.size;
 	        Vector3 initPos = rectTrans.anchoredPosition;
 	        
-	        Debugger.Log(initPos + " " + initSize);
+	        // Debugger.Log(initPos + " " + initSize); 
 
             float p = 0;
             while (p < 1f - 5e-3)
@@ -89,6 +90,9 @@ namespace Library
 		
 		public static IEnumerator MoveAndScaleTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float k)
         {
+	        CardEvent cardEvent = obj.GetComponent<CardEvent>();
+	        cardEvent.animationLock = true;
+	        
 	        Vector3 initPos = obj.transform.position;
             Vector3 initScale = obj.transform.localScale;
 
@@ -109,6 +113,7 @@ namespace Library
             obj.transform.position = targetPos;
             obj.transform.localScale = targetScale;
             
+	        cardEvent.animationLock = false;
             Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;
         }
