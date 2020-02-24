@@ -112,5 +112,13 @@ namespace Library
             Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;
         }
+		
+		public static IEnumerator WaitForSecs(float time)
+		{
+			yield return new WaitForSeconds(time);
+	
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+		}
 	}
 }

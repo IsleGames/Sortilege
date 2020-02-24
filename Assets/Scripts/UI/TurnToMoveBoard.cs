@@ -89,7 +89,6 @@ namespace UI
                 yield return null;
             }
             
-            // Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             Destroy(gameObject);
             

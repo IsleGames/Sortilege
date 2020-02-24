@@ -114,7 +114,8 @@ namespace UI
                     pHealth.hitPoints + pHealth.barrierHitPoints,
                     totHitPoints,
                     animationKFactor
-                    )
+                    ),
+                true
                 );
         }
 
