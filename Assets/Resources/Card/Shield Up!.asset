@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
   m_Name: Shield Up!
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
+  title: Shield Up!
+  strategy: 4
   attribute: 0
-  description: 
+  description: Gain 4 armor
   disableRetract: 0
-  effectList: []
+  effectList:
+  - affectiveUnit: 1
+    type: 2
+    amount: 4
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
   buffList: []

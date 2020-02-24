@@ -12,10 +12,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
   m_Name: Arcane Blast
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
+  title: Arcane Blast
+  strategy: 5
   attribute: 0
-  description: 
+  description: Deal 5 dmg. This card can at most deal 10 dmg.
   disableRetract: 0
-  effectList: []
+  effectList:
+  - affectiveUnit: 2
+    type: 0
+    amount: 5
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
+  - affectiveUnit: 2
+    type: 1
+    amount: 5
+    maxDeviation: 0
+    minStreak: 2
+    notAmplified: 0
+  - affectiveUnit: 2
+    type: 0
+    amount: 10
+    maxDeviation: 0
+    minStreak: 2
+    notAmplified: 1
   buffList: []

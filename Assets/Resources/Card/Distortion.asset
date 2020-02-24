@@ -12,10 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
   m_Name: Distortion
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
+  title: Distortion
+  strategy: 6
   attribute: 0
-  description: 
+  description: Deal 1 dmg for each Deceiver card in your discard pile.
   disableRetract: 0
-  effectList: []
+  effectList:
+  - affectiveUnit: 2
+    type: 5
+    amount: 1
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
   buffList: []
