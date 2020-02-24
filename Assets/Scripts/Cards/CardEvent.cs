@@ -8,7 +8,7 @@ namespace Cards
 {
     public class CardEvent : MonoBehaviour
     {
-        public bool movable; // TODO: default to false, check in update() based on game state
+        public bool availability; // TODO: default to false, check in update() based on game state
         
         // Temporal Solution
         public bool animationLock;
@@ -21,13 +21,15 @@ namespace Cards
         [SerializeField] private bool isDragged;
         public Pile thisPile;
         
-        [SerializeField]
+        // [SerializeField]
         private Vector3 _cursorShift;
 
         private void Start()
         {
             isDragged = false;
             animationLock = false;
+
+            availability = true;
             
             _coll = GetComponent<Collider2D>();
         }
@@ -36,7 +38,7 @@ namespace Cards
         {
             if (isDragged)
             {
-                if (!movable) return;
+                if (!availability) return;
             
                 var cursorPositionWorld = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 transform.position = cursorPositionWorld + _cursorShift;
@@ -53,6 +55,7 @@ namespace Cards
     
         private void OnMouseUp()
         {
+            if (!availability) return;
             if (!isDragged && !Game.Ctx.VfxOperator.draggedCard && !animationLock)
             {
                 // Debugger.Log(GetComponent<MetaData>().title + " MouseDown at " + Time.time + ", metadata name is " + GetComponent<MetaData>().title);
@@ -64,16 +67,8 @@ namespace Cards
                 }
                 
                 thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
-        
-                if (thisPile.movable)
-                {
-                    movable = true;
-                }
-                else
-                {
-                    movable = false;
-                    return;
-                }
+
+                if (!thisPile.movable) return;
         
                 _cursorShift = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 _cursorShift = new Vector3(0f, 0f, _cursorShift.z);

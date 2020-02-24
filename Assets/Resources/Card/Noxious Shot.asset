@@ -18,15 +18,9 @@ MonoBehaviour:
   description: Deal 2 dmg, if this kills the enemy, restore 1 health
   disableRetract: 0
   effectList:
-  - affectiveUnit: 0
+  - affectiveUnit: 2
     type: 0
-    amount: 0
-    maxDeviation: 0
-    minStreak: 0
-    notAmplified: 0
-  - affectiveUnit: 0
-    type: 0
-    amount: 0
+    amount: 1
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0

@@ -62,8 +62,26 @@ namespace UI
             }
         }
 
+        public void SetAllAvailabilities(bool availability)
+        {
+            foreach (Card card in _pile)
+            {
+                card.SetAvailability(availability);
+            }
+        }
+        
+        public void CheckAllAvailabilities()
+        {
+            foreach (Card card in _pile)
+            {
+                card.CheckChainedAvailability();
+            }
+        }
+
         public void SetSortOrders()
         {
+            if (_pile.Count == 0) return;
+            
             int st, ed, inc;
             if (align != QueueAlignType.Right)
             {
@@ -73,8 +91,8 @@ namespace UI
             }
             else
             {
-                ed = 0;
-                st = _pile.Count;
+                ed = -1;
+                st = _pile.Count - 1;
                 inc = -1;
             }
 

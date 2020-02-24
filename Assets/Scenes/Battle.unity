@@ -967,7 +967,7 @@ Canvas:
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -997,6 +997,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1051549743}
     m_Modifications:
+    - target: {fileID: 1834128699689154893, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: maximumHitPoints
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 5154927439535868010, guid: 928a7f197647a426ca39ef9f15455555,
         type: 3}
       propertyPath: m_Name
@@ -1254,6 +1259,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5da7ad14418a7493fb5aeb93bb0d9ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onTopChange:
+    m_PersistentCalls:
+      m_Calls: []
+  _disableOnTopChangeCalling: 0
   CardList:
   - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
   - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
@@ -1329,6 +1338,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1051549743}
     m_Modifications:
+    - target: {fileID: 631532667604453807, guid: 63a2fa794ae01424cbd09e2e268f1984,
+        type: 3}
+      propertyPath: maximumHitPoints
+      value: 40
+      objectReference: {fileID: 0}
     - target: {fileID: 727466649513305467, guid: 63a2fa794ae01424cbd09e2e268f1984,
         type: 3}
       propertyPath: m_textInfo.characterCount

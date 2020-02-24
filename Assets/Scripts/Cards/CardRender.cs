@@ -54,10 +54,17 @@ namespace Cards
             transform.localScale = newLocalScale;
         }
 
-        // public void OnExitShrink()
-        // {
-        //     
-        // }
+        public void SetAvailability(bool availability)
+        {
+            if (availability)
+            {
+                bgSprite.color = Game.Ctx.VfxOperator.isAvailableColor;
+            }
+            else
+            {
+                bgSprite.color = Game.Ctx.VfxOperator.notAvailableColor;
+            }
+        }
 
         public void SetOrder()
         {

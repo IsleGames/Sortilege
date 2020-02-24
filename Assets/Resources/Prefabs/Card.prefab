@@ -428,7 +428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   visible: 1
-  moveSpeed: 0.1
+  onSelectZoomScale: 1.1
 --- !u!114 &7515948331846301131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -441,9 +441,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8470e08e90f49f48a9ac7b0642daef8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movable: 0
+  availability: 0
+  animationLock: 0
   triggerPlayArea: 0
   triggerHandArea: 0
+  isDragged: 0
   thisPile: {fileID: 0}
 --- !u!223 &3739844958693504396
 Canvas:

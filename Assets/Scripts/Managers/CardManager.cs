@@ -15,6 +15,7 @@ using Data;
 using _Editor;
 using UI;
 using Units;
+using UnityEngine.Events;
 
 namespace Managers
 {
@@ -24,7 +25,11 @@ namespace Managers
 		// [SerializeField]
 		// private List<CardData> _cardDataArray;
 		
-		public List<CardData> CardList;
+        public UnityEvent onTopChange = new UnityEvent();
+
+        [SerializeField] public bool _disableOnTopChangeCalling = false;
+
+        public List<CardData> CardList;
         public Pile pileDeck, pileDiscard;
         public HandPile pileHand;
         public PlayPile pilePlay;
@@ -63,7 +68,17 @@ namespace Managers
 
                 pileDeck.Add(newCard, false);
             }
+			
+			onTopChange.AddListener(EvaluateAvailability);
         }
+
+		public void EvaluateAvailability()
+		{
+			pilePlay.SetAllAvailabilities(true);
+			pileHand.CheckAllAvailabilities();
+			pileDeck.SetAllAvailabilities(true);
+			pileDiscard.SetAllAvailabilities(true);
+		}
 
         public Card MakeCard(CardData cardData)
         {
@@ -112,8 +127,9 @@ namespace Managers
 				throw new InvalidOperationException("Card not in Hand");
 			
 			pilePlay.Add(card);
-			// card.onAddToPlayPile.Invoke();
 			pileHand.Remove(card);
+			
+			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)
@@ -141,6 +157,8 @@ namespace Managers
 			}
 
 			pileHand.AddRange(discardList);
+			
+			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 		}
 
 		public void DrawCards(int number, bool onEmptyShuffle = true)
@@ -176,6 +194,8 @@ namespace Managers
 		        
 		        List<Card> discardList = pilePlay.DrawAll();
 				pileDiscard.AddRange(discardList, false, true);
+				
+				if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 	        }
         }
 		
