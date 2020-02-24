@@ -78,6 +78,20 @@ namespace Managers
              board.StartAnimation();
          }
 
+         public void SetAllSortOrders()
+         {
+             ResetSortOrder();
+             Game.Ctx.CardOperator.pileDiscard.SetSortOrders();
+             Game.Ctx.CardOperator.pileDeck.SetSortOrders();
+             Game.Ctx.CardOperator.pileHand.SetSortOrders();
+             Game.Ctx.CardOperator.pilePlay.SetSortOrders();
+         }
+
+         public void ResetSortOrder()
+         {
+             sortOrder = 0;
+         }
+
          public int GetSortOrder()
          {
              int ret = sortOrder;

@@ -65,6 +65,8 @@ public class Game : MonoBehaviour
         // Wait a frame so every Awake and Start method is called
         yield return new WaitForEndOfFrame();
         
+        CardOperator.pileDeck.AdjustAllPositions();
+        
         Continue();
     }
     

@@ -61,7 +61,7 @@ namespace Managers
 				
 				newCard.Initialize(cardData);
 
-                pileDeck.Add(newCard);
+                pileDeck.Add(newCard, false);
             }
         }
 
@@ -82,9 +82,9 @@ namespace Managers
 			if (cardsDrawnPerTurn == -1)
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
 
+			Game.Ctx.VfxOperator.SetAllSortOrders();
 			if (Game.Ctx.turnCount == 1)
 			{
-				// Debugger.Log("first turn");
 				DrawCards(cardsDrawnFirstTurn);
 			}
 			else
@@ -92,8 +92,8 @@ namespace Managers
 				DrawCards(cardsDrawnPerTurn);
 			}
 		}
-		
-		public Pile GetCardPile(Card card)
+
+        public Pile GetCardPile(Card card)
 		{
 			if (pileHand.Contains(card))
 				return pileHand;

@@ -62,6 +62,30 @@ namespace UI
             }
         }
 
+        public void SetSortOrders()
+        {
+            int st, ed, inc;
+            if (align != QueueAlignType.Right)
+            {
+                st = 0;
+                ed = _pile.Count;
+                inc = 1;
+            }
+            else
+            {
+                ed = 0;
+                st = _pile.Count;
+                inc = -1;
+            }
+
+            // Debugger.Log(gameObject.name + $" setting orders with {st} {ed} and {inc}...");
+            for (int i = st; i != ed; i += inc)
+            {
+                // Debugger.Log("i: " + i);
+                _pile[i].GetComponent<CardRender>().SetOrder();
+            }
+        }
+
         protected void AdjustPosition(int index, bool stopFlag = false)
         {
             Transform thisTrans = _pile[index].transform;
@@ -84,6 +108,7 @@ namespace UI
         public void AdjustAllPositions(bool stopFlag = false)
         {
             SetAlign();
+            SetSortOrders();
             for (var i = 0; i < _pile.Count; i++)
                 if (!stopFlag)
                     AdjustPosition(i);
@@ -111,10 +136,10 @@ namespace UI
             return _pile.IndexOf(card);
         }
         
-        public void Add(Card card)
+        public void Add(Card card, bool adjust = true)
         {
             _pile.Add(card);
-            AdjustAllPositions();
+            if (adjust) AdjustAllPositions();
         }
 
         public void AddRange(List<Card> cardList, bool shuffleAfter = false, bool stopFlag = false)

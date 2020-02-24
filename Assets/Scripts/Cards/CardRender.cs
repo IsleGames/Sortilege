@@ -43,10 +43,10 @@ namespace Cards
             // Set rules text
             transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
             
-            MoveToFront();
+            SetOrder();
         }
 
-        public void MoveToFront()
+        public void SetOrder()
         {
             int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             var canvas = GetComponent<Canvas>();

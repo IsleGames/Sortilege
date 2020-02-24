@@ -10,29 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Voodoo
+  m_Name: Plague
   m_EditorClassIdentifier: 
-  title: Voodoo
-  strategy: 0
-  attribute: 0
-  description: Deal 2 damage to yourself and gain 2-4 amount of shield
+  title: Plague
+  strategy: 5
+  attribute: 3
+  description: For next 1 turn, deal one damage to all enemy at the start of their
+    turn
   disableRetract: 0
-  effectList:
-  - affectiveUnit: 1
-    type: 0
-    amount: 2
-    maxDeviation: 0
-    minStreak: 0
-    notAmplified: 0
-  - affectiveUnit: 1
-    type: 2
-    amount: 3
-    maxDeviation: 1
-    minStreak: 0
-    notAmplified: 0
+  effectList: []
   buffList:
-  - affectiveUnit: 0
-    type: 5
-    amount: 4
+  - affectiveUnit: 2
+    type: 3
+    amount: 1
     minStreak: 0
     notAmplified: 0
