@@ -116,13 +116,14 @@ namespace UI
             _pile.Add(card);
             AdjustAllPositions();
         }
-        public void AddRange(List<Card> cardList, bool shuffleAfter = false)
+
+        public void AddRange(List<Card> cardList, bool shuffleAfter = false, bool stopFlag = false)
         {
             _pile.AddRange(cardList);
             if (shuffleAfter)
-                Shuffle();
+                Shuffle(stopFlag);
             else
-                AdjustAllPositions();
+                AdjustAllPositions(stopFlag);
         }
         public void Clear()
         {
@@ -172,10 +173,11 @@ namespace UI
             
             return ret;
         }
-        public void Shuffle()
+
+        public void Shuffle(bool stopFlag = false)
         {
             _pile.Shuffle();
-            AdjustAllPositions();
+            AdjustAllPositions(stopFlag);
         }
     }
 }

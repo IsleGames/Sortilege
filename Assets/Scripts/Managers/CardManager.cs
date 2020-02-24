@@ -172,10 +172,10 @@ namespace Managers
 	        if (pilePlay.Count() > 0)
 	        {
 		        Card poweredCard = pilePlay.Get(pilePlay.Count() - 1);
-		        
 		        poweredCard.Apply(target, pilePlay.Count());
+		        
 		        List<Card> discardList = pilePlay.DrawAll();
-				pileDiscard.AddRange(discardList);
+				pileDiscard.AddRange(discardList, false, true);
 	        }
         }
 		
