@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
+using System.Text.RegularExpressions;
 using _Editor;
 using Cards;
+using Library;
 using TMPro;
 using Units;
 using UnityEngine;
@@ -15,6 +18,9 @@ namespace UI
         private RectTransform _bgBar, _redBar, _blueBar, _whiteBar;
         private TextMeshProUGUI _barText;
         public Health pHealth;
+
+        [NonSerialized]
+        public float animationKFactor = 0.06f;
 
         private Rect _thisRect;
 
@@ -42,7 +48,7 @@ namespace UI
                 }
 
             _whiteBar.GetComponent<SpriteRenderer>().enabled = false;
-            _blueBar.GetComponent<SpriteRenderer>().enabled = false;
+            // _blueBar.GetComponent<SpriteRenderer>().enabled = false;
             
             var sp = _bgBar.GetComponent<SpriteRenderer>();
             _thisRect = GetComponent<RectTransform>().rect;
@@ -60,42 +66,87 @@ namespace UI
                     if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
                 }
             }
+            
+            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
         }
-
-        private void Update()
+        
+		public static IEnumerator HitPointNumberPController(
+            TextMeshProUGUI tmp,
+            float initHitPoints,
+            float targetHitPoints,
+            float totalHitPoints,
+            float k)
         {
-            UpdateStatus();
+            float p = 0;
+            while (p < 1f - 5e-3)
+            {
+                p += (1 - p) * k;
+                
+                float curHP = targetHitPoints * p + initHitPoints * (1 - p);
+                tmp.text = $"{Mathf.RoundToInt(curHP)} / {Mathf.RoundToInt(totalHitPoints)}";
+                
+                yield return null;
+            }
+            
+            tmp.text = $"{Mathf.RoundToInt(targetHitPoints)} / {Mathf.RoundToInt(totalHitPoints)}";
+	        
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
         }
 
-        private void UpdateStatus()
+        public void UpdateStatus(bool animated = true)
         {
             float totHitPoints = pHealth.GetMaximumDisplayHP();
+            
             float hpRatio = pHealth.hitPoints / totHitPoints;
+            AdjustBar(hpRatio, _redBar, animated);
+            // _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
 
-            AdjustBar(hpRatio, _redBar);
-            _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
+            float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
+            AdjustBar(barrierRatio, _blueBar, animated);
+            
+            float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
 
-            if (pHealth.barrierHitPoints > 0f)
-            {
-                float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
-                AdjustBar(barrierRatio, _blueBar);
-            }
+            Game.Ctx.AnimationOperator.PushAnimation(
+                HitPointNumberPController(
+                    _barText,
+                    initHitPoints,
+                    pHealth.hitPoints + pHealth.barrierHitPoints,
+                    totHitPoints,
+                    animationKFactor
+                    )
+                );
         }
 
-        private void AdjustBar(float ratio, RectTransform bar)
+        private void AdjustBar(float ratio, RectTransform bar, bool animated = true)
         {
             float newWidth = ratio * _thisRect.width;
             float xShift = (-1 + ratio) * _thisRect.width * .5f;
 
             var sp = bar.GetComponent<SpriteRenderer>();
             sp.enabled = true;
-            sp.size = new Vector2(
+            if (animated)
+            {
+                Vector2 targetSize = new Vector2(
                 newWidth,
                 _thisRect.height * .98f
                 );
             
-            bar.anchoredPosition = new Vector3(xShift, 0f, 0f);
-            // Debugger.Log(bar.position);
+                Vector2 targetAnchoredPosition = new Vector3(xShift, 0f, 0f);
+                
+                Game.Ctx.AnimationOperator.PushAnimation(
+                    Utilities.RectTransMoveAndScaleTo(bar, sp, targetSize, targetAnchoredPosition, animationKFactor)
+                );
+            }
+            else
+            {
+                sp.size = new Vector2(
+                    newWidth,
+                    _thisRect.height * .98f
+                    );
+                
+                bar.anchoredPosition = new Vector3(xShift, 0f, 0f);
+            }
         }
     }
 }

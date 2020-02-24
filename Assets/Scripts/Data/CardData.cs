@@ -8,7 +8,7 @@ using Effects;
 namespace Data
 {
     [UnityEngine.CreateAssetMenu(fileName = "New CardData", menuName = "Card Data", order = 51)]
-    public class CardData : UnityEngine.ScriptableObject
+    public class CardData : ScriptableObject
     {
         public string title;
 

@@ -1,5 +1,6 @@
 using System;
 using _Editor;
+using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -22,6 +23,11 @@ namespace Units
         {
             if (hitPoints < 0f)
                 hitPoints = maximumHitPoints;
+        }
+
+        public void Initialize()
+        {
+            GetComponentInChildren<HealthBar>().UpdateStatus(false);
         }
 
         public float GetMaximumDisplayHP()
@@ -67,6 +73,8 @@ namespace Units
                 hitPoints = ValidityCheck(hitPoints - amount);
                 GetComponent<Unit>().beingDamagedSomewhere = true;
             }
+            
+            GetComponent<Unit>().onHealthChange.Invoke();
         }
 
         public void Heal(float amount)
@@ -75,11 +83,13 @@ namespace Units
                 Debugger.Warning("Negative amount detected for Damage", this);
             
             hitPoints = ValidityCheck(hitPoints + amount);
+            GetComponent<Unit>().onHealthChange.Invoke();
         }
         
         public void AddBarrier(float amount)
         {
             barrierHitPoints += amount;
+            GetComponent<Unit>().onHealthChange.Invoke();
         }
         
         public bool IsDead()

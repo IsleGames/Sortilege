@@ -61,11 +61,20 @@ namespace Managers
 				
 				newCard.Initialize(cardData);
 
-				pileDeck.Add(newCard);
-			}
-		}
+                pileDeck.Add(newCard);
+            }
+        }
 
-		public void StartTurn()
+        public Card MakeCard(CardData cardData)
+        {
+            GameObject newCardObj = Instantiate(cardPrefab);
+            Card newCard = newCardObj.GetComponent<Card>();
+
+            newCard.Initialize(cardData);
+            return newCard;
+        }
+
+        public void StartTurn()
 		{
 			if (pilePlay.Count() > 0)
 				throw new InvalidConstraintException("PlayQueue is not empty at the start of the turn");
@@ -75,6 +84,7 @@ namespace Managers
 
 			if (Game.Ctx.turnCount == 1)
 			{
+				// Debugger.Log("first turn");
 				DrawCards(cardsDrawnFirstTurn);
 			}
 			else

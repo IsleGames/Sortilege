@@ -62,29 +62,36 @@ namespace UI
             }
         }
 
-        protected void AdjustPosition(int index, bool setAlign = false)
+        protected void AdjustPosition(int index, bool stopFlag = false)
         {
-            if (setAlign) SetAlign();
-
             Transform thisTrans = _pile[index].transform;
-            thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            Vector3 newScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
             Vector3 newPos = new Vector3(
                 QueueCenter.x + TotalCardWidth * (index - StartingIndex),
                 QueueCenter.y,
                 QueueCenter.z);
+
+            Game.Ctx.AnimationOperator.PushAnimation(
+                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.15f),
+                stopFlag
+            );
             
-            // thisTrans.GetComponent<Render>().PController somethingsomething
-            thisTrans.position = newPos;
+            // thisTrans.localScale = newScale;
+            // thisTrans.position = newPos;
         }
 
-        public void AdjustAllPositions()
+        public void AdjustAllPositions(bool stopFlag = false)
         {
             SetAlign();
             for (var i = 0; i < _pile.Count; i++)
-            {
-                AdjustPosition(i);
-            }
+                if (!stopFlag)
+                    AdjustPosition(i);
+                else
+                    if (i < _pile.Count - 1)
+                        AdjustPosition(i);
+                    else
+                        AdjustPosition(i, true);
         }
 
         public int Count()

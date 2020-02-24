@@ -36,8 +36,8 @@ namespace Cards
             }
     
             _cursorShift = transform.position - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            
             Game.Ctx.VfxOperator.draggedCard = GetComponent<Card>();
+            GetComponent<CardRender>().MoveToFront();
             
             if (thisPile == Game.Ctx.CardOperator.pileHand)
             {
@@ -82,6 +82,8 @@ namespace Cards
             }
     
             Game.Ctx.CardOperator.pileHand.VirtualDestroy(true);
+            Game.Ctx.VfxOperator.draggedCard = null;
+            
             thisPile = null;
         }
         
