@@ -132,7 +132,6 @@ GameObject:
   - component: {fileID: 65344326}
   - component: {fileID: 65344325}
   - component: {fileID: 65344324}
-  - component: {fileID: 65344323}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -140,23 +139,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &65344323
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65344322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
 --- !u!114 &65344324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -257,7 +239,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1054182844}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -272,11 +254,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1054182844}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1f926df4677e3634eb1769a11fa9a176, type: 3}
+  m_Script: {fileID: 11500000, guid: bd58d38a98274556a0b1587400db6f6a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  path: StartingDeck
-  Deck: []
 --- !u!1 &1779032295
 GameObject:
   m_ObjectHideFlags: 0

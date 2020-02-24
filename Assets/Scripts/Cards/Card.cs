@@ -13,9 +13,10 @@ using _Editor;
 namespace Cards
 {
     public class Card : MonoBehaviour
-    {
+    { 
+        
         [SerializeField]
-        private CardData cardData;
+        public CardData cardData { get; private set; }
 
         public void Info()
         {

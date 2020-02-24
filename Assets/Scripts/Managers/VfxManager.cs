@@ -60,7 +60,7 @@ namespace Managers
          public Color notAvailableColor = new Color(0.5f, 0.5f, 0.5f);
          
          public Card draggedCard;
-         [SerializeField] private int sortOrder = 0;
+         [SerializeField] private static int sortOrder = 0;
 
          public GameObject turnToMoveBoardPrefab;
          
