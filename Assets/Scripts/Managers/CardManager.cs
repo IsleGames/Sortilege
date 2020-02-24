@@ -84,6 +84,7 @@ namespace Managers
 
 			if (Game.Ctx.turnCount == 1)
 			{
+				// Debugger.Log("first turn");
 				DrawCards(cardsDrawnFirstTurn);
 			}
 			else

@@ -8,12 +8,15 @@ using Random = UnityEngine.Random;
 using _Editor;
 using Managers;
 using Units;
+using Object = UnityEngine.Object;
 
 // ReSharper disable InconsistentNaming
 
 public class Game : MonoBehaviour
 {
     public static Game Ctx;
+
+    public GameObject UICanvas;
 
     public CardManager CardOperator;
     public VfxManager VfxOperator;
@@ -38,6 +41,8 @@ public class Game : MonoBehaviour
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
+
+        UICanvas = GameObject.Find("UICanvas");
 
         CardOperator = GetComponent<CardManager>();
         VfxOperator = GetComponent<VfxManager>();
@@ -70,11 +75,15 @@ public class Game : MonoBehaviour
             turnCount += 1;
             
             Debugger.Log("player play");
+            VfxOperator.ShowTurnText("Player Turn");
+            
             activeUnit = player;
             RunningMethod = player.StartTurn;
             yield return null;
             
             Debugger.Log("enemy play");
+            VfxOperator.ShowTurnText("Enemy Turn");
+            
             activeUnit = enemy;
             RunningMethod = enemy.StartTurn;
             yield return null;
@@ -105,6 +114,7 @@ public class Game : MonoBehaviour
             if (!HasPlayerLost())
             {
                 Debugger.Log("player wins");
+                VfxOperator.ShowTurnText("Battle Complete");
                 
 // #if UNITY_EDITOR
 //                 UnityEditor.EditorApplication.isPlaying = false;
@@ -116,6 +126,7 @@ public class Game : MonoBehaviour
             else
             {
                 Debugger.Log("player lost");
+                VfxOperator.ShowTurnText("Battle Lost");
             }
         }
     }

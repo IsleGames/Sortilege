@@ -102,7 +102,6 @@ namespace UI
             else
             {
                 _virtualCardIndex = GetVirtualIndex(Game.Ctx.VfxOperator.draggedCard.transform.position);
-                // Debugger.Log(_virtualCardIndex);
                 if (_virtualCardIndex >= 0)
                     _virtualPile.Insert(_virtualCardIndex, _virtualCard);
                 else

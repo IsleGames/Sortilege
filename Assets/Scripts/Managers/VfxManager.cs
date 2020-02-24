@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 using Cards;
 using Effects;
+using UI;
 
 namespace Managers
  {
@@ -56,9 +57,25 @@ namespace Managers
          public Card draggedCard;
          [SerializeField] private int sortOrder = 0;
 
+         public GameObject turnToMoveBoardPrefab;
+         
          private void Awake()
          { 
-            GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+             GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+         }
+
+         public void Start()
+         {
+             turnToMoveBoardPrefab = (GameObject)Resources.Load("Prefabs/TurnToMoveBoard");
+         }
+
+         public void ShowTurnText(string text)
+         {
+             GameObject newTurnBoardObj = Instantiate(turnToMoveBoardPrefab, Game.Ctx.UICanvas.transform);
+             TurnToMoveBoard board = newTurnBoardObj.GetComponent<TurnToMoveBoard>();
+
+             board.SetText(text);
+             board.StartAnimation();
          }
 
          public int GetSortOrder()
