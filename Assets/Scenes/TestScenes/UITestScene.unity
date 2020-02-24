@@ -1325,14 +1325,18 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 64e3d4235111b4b6aaeaab6e152791b1, type: 2}
   - {fileID: 11400000, guid: 2f59065f1ae904e39b05f5776c4a73c7, type: 2}
   - {fileID: 11400000, guid: 1f4d16c0b24e349f9aa7df09cec5ec15, type: 2}
+  - {fileID: 11400000, guid: 33692c6e0112040849af8a8dc591c2c4, type: 2}
+  - {fileID: 11400000, guid: 33692c6e0112040849af8a8dc591c2c4, type: 2}
   pileDeck: {fileID: 0}
   pileDiscard: {fileID: 0}
   pileHand: {fileID: 0}
   pilePlay: {fileID: 0}
   cardPrefab: {fileID: 0}
   buffPrefab: {fileID: 0}
+  cardsDrawnFirstTurn: 5
   cardsDrawnPerTurn: 2
   maxCardCount: 5
+  isCurrentCardFlinched: 0
 --- !u!223 &1051549747
 Canvas:
   m_ObjectHideFlags: 0
