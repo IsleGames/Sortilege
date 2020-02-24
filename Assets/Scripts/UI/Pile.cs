@@ -62,7 +62,7 @@ namespace UI
             }
         }
 
-        protected void AdjustPosition(int index, bool instant = true)
+        protected void AdjustPosition(int index, bool stopFlag = false)
         {
             Transform thisTrans = _pile[index].transform;
             Vector3 newScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
@@ -72,26 +72,26 @@ namespace UI
                 QueueCenter.y,
                 QueueCenter.z);
 
-            Game.Ctx.AnimationOperator.RunAnimation(
+            Game.Ctx.AnimationOperator.PushAnimation(
                 Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.15f),
-                instant
+                stopFlag
             );
             
             // thisTrans.localScale = newScale;
             // thisTrans.position = newPos;
         }
 
-        public void AdjustAllPositions(bool instant = true)
+        public void AdjustAllPositions(bool stopFlag = false)
         {
             SetAlign();
             for (var i = 0; i < _pile.Count; i++)
-                if (instant)
+                if (!stopFlag)
                     AdjustPosition(i);
                 else
-                    if (i > 0)
+                    if (i < _pile.Count - 1)
                         AdjustPosition(i);
                     else
-                        AdjustPosition(i, false);
+                        AdjustPosition(i, true);
         }
 
         public int Count()

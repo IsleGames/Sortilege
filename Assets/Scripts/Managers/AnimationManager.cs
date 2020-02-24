@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using _Editor;
 using UnityEngine;
 using UnityEngine.Events;
+using Debug = System.Diagnostics.Debug;
 
 namespace Managers
 {
@@ -11,29 +12,49 @@ namespace Managers
     {
 		public UnityEvent onAnimationEnd = new UnityEvent();
 
-        public List<(IEnumerator, bool)> EventQueue;
+        public List<IEnumerator> EventQueue;
+        public List<bool> StopQueue;
 
-        public int runningAnimationCount = 0;
+        [SerializeField]
+        private int runningAnimationCount = 0;
+        [SerializeField]
+        private bool stoppingTillDone = false;
+
+        private void Awake()
+        {
+            EventQueue = new List<IEnumerator>();
+            StopQueue = new List<bool>();
+        }
 
         private void Start()
         {
-            EventQueue = new List<(IEnumerator, bool)>();
-            
             onAnimationEnd.AddListener(OnIEnumRunningEnd);
         }
 
-        public void RunAnimation(IEnumerator move, bool instant = true)
+        public void PushAnimation(IEnumerator move, bool stopTillDone = false)
         {
-            if (runningAnimationCount == 0 || runningAnimationCount != 0 && instant)
+            // Debugger.Log(EventQueue);
+            EventQueue.Add(move);
+            StopQueue.Add(stopTillDone);
+            
+            TryRunEverything();
+        }
+        
+        private void TryRunEverything() 
+        {
+            if (stoppingTillDone) return;
+            RunEverything();
+        }
+
+        private void RunEverything()
+        {
+            if (EventQueue.Count == 0) return;
+            
+            stoppingTillDone = PopNextEvent();
+            while (EventQueue.Count > 0 && !stoppingTillDone)
             {
-                runningAnimationCount += 1;
-                StartCoroutine(move);
-            }
-            else
-            {
-                Debugger.Log((move, instant));
-                EventQueue.Add((move, instant));
-            }
+                stoppingTillDone = PopNextEvent();
+            } 
         }
 
         private void OnIEnumRunningEnd()
@@ -41,25 +62,29 @@ namespace Managers
             if (runningAnimationCount > 0)
             {
                 runningAnimationCount -= 1;
-                if (runningAnimationCount == 0 && EventQueue.Count > 0)
+                if (runningAnimationCount == 0)
                 {
-                    RunNextEvent();
-                    while (EventQueue.Count > 0 && EventQueue[0].Item2)
-                        RunNextEvent();
+                    stoppingTillDone = false;
+                    RunEverything();
                 }
             }
             else
                 throw new InvalidOperationException("OnIEnumRunningEnd called when remaining Event is empty");
         }
 
-        private void RunNextEvent()
+        private bool PopNextEvent()
         {
             runningAnimationCount += 1;
             
-            IEnumerator move = EventQueue[0].Item1;
+            IEnumerator move = EventQueue[0];
+            bool ret = StopQueue[0];
+            
             EventQueue.RemoveAt(0);
+            StopQueue.RemoveAt(0);
+            
             StartCoroutine(move);
 
+            return ret;
         }
     }
 }

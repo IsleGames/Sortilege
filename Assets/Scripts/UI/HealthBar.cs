@@ -98,7 +98,7 @@ namespace UI
             
                 Vector2 targetAnchoredPosition = new Vector3(xShift, 0f, 0f);
                 
-                Game.Ctx.AnimationOperator.RunAnimation(
+                Game.Ctx.AnimationOperator.PushAnimation(
                     Utilities.RectTransMoveAndScaleTo(bar, sp, targetSize, targetAnchoredPosition, 0.2f)
                 );
             }

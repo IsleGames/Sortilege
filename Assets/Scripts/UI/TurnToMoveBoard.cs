@@ -15,24 +15,37 @@ namespace UI
         private Image boardImage;
         
         public float fadeTime = .5f;
-        public float holdTime = 1.2f;
+        public float holdTime = 1f;
 
         private void Awake()
         {
             boardTMPText = transform.Find("BoardTMPText").GetComponent<TextMeshProUGUI>();
-            Debugger.Log("start " + boardTMPText);
+            // Debugger.Log("start " + boardTMPText);
             boardImage = transform.Find("BoardImage").GetComponent<Image>();
+            
+            SetAlpha(0f);
         }
 
         public void SetText(string text)
         {
-            Debugger.Log("settext" + boardTMPText.text);
+            // Debugger.Log("settext" + boardTMPText.text);
             boardTMPText.text = text;
         }
 
         public void StartAnimation()
         {
-            Game.Ctx.AnimationOperator.RunAnimation(FadeInOut(), true);
+            Game.Ctx.AnimationOperator.PushAnimation(FadeInOut(), true);
+        }
+
+        private void SetAlpha(float a)
+        {
+            Color newColor = boardImage.color;
+            newColor.a = a;
+            boardImage.color = newColor;
+            
+            newColor = boardTMPText.color;
+            newColor.a = a;
+            boardTMPText.color = newColor;
         }
 
         private IEnumerator FadeInOut()
@@ -47,14 +60,7 @@ namespace UI
                 p = totalTime / fadeTime;
                 if (p >= 1f) p = 1f;
 
-                Color newColor = boardImage.color;
-                newColor.a = p;
-                boardImage.color = newColor;
-                
-                newColor = boardTMPText.color;
-            // Debugger.Log(newColor);
-                newColor.a = p;
-                boardTMPText.color = newColor;
+                SetAlpha(p);
 
                 yield return null;
             }
@@ -78,19 +84,14 @@ namespace UI
                 p = totalTime / fadeTime;
                 if (p >= 1f) p = 1f;
 
-                Color newColor = boardImage.color;
-                newColor.a = 1f - p;
-                boardImage.color = newColor;
-                
-                newColor = boardTMPText.color;
-                newColor.a = 1f - p;
-                boardTMPText.color = newColor;
+                SetAlpha(1f - p);
 
                 yield return null;
             }
             
             // Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            Destroy(gameObject);
             
             yield return null;
         }
