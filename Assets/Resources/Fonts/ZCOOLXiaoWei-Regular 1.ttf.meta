@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 3c836ff925a96644992fe1cec7356094
+guid: 7d6f38bc534709b4586b747150929518
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,7 +11,8 @@ TrueTypeFontImporter:
   fontName: ZCOOL XiaoWei
   fontNames:
   - ZCOOL XiaoWei
-  fallbackFontReferences: []
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 3c836ff925a96644992fe1cec7356094, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

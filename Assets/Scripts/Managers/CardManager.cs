@@ -40,7 +40,11 @@ namespace Managers
 		
 		public void Start()
 		{
-            CardList = FindObjectOfType<DeckList>().Deck;
+            var existingDeck = FindObjectOfType<DeckList>();
+            if (existingDeck != null)
+            {
+                CardList = existingDeck.Deck;
+            }
             cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
             buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
             
