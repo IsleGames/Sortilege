@@ -15,12 +15,12 @@ MonoBehaviour:
   title: Electric Shield
   strategy: 3
   attribute: 1
-  description: Block next 2 attacks (Minstreak not 4!)
+  description: 'Combo(4): Block next 2 attacks you receive'
   disableRetract: 0
   effectList: []
   buffList:
   - affectiveUnit: 1
     type: 0
     amount: 2
-    minStreak: 0
-    notAmplified: 0
+    minStreak: 4
+    notAmplified: 1

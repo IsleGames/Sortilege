@@ -17,5 +17,22 @@ MonoBehaviour:
   attribute: 0
   description: 
   disableRetract: 0
-  effectList: []
-  buffList: []
+  effectList:
+  - affectiveUnit: 1
+    type: 0
+    amount: 2
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
+  - affectiveUnit: 1
+    type: 2
+    amount: 3
+    maxDeviation: 1
+    minStreak: 0
+    notAmplified: 0
+  buffList:
+  - affectiveUnit: 0
+    type: 5
+    amount: 4
+    minStreak: 0
+    notAmplified: 0

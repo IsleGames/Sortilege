@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Rapacity
+  m_Name: Flare Blitz
   m_EditorClassIdentifier: 
-  title: Rapacity
-  strategy: 0
+  title: Flare Blitz
+  strategy: 2
   attribute: 2
-  description: Deal 2 dmg to yourself and draw 2 card
+  description: 'Deal 2 dmg to yourself and 6 dmg to an enemy. Combo(3): Gain 4 armor'
   disableRetract: 0
   effectList:
   - affectiveUnit: 1
@@ -23,10 +23,17 @@ MonoBehaviour:
     amount: 2
     maxDeviation: 0
     minStreak: 0
-    notAmplified: 1
-  buffList:
-  - affectiveUnit: 1
-    type: 1
-    amount: 2
+    notAmplified: 0
+  - affectiveUnit: 2
+    type: 0
+    amount: 6
+    maxDeviation: 0
     minStreak: 0
+    notAmplified: 0
+  - affectiveUnit: 1
+    type: 2
+    amount: 4
+    maxDeviation: 0
+    minStreak: 3
     notAmplified: 1
+  buffList: []
