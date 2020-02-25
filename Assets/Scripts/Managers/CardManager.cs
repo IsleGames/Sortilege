@@ -15,6 +15,7 @@ using Data;
 using _Editor;
 using UI;
 using Units;
+using UnityEngine.Events;
 
 namespace Managers
 {
@@ -24,7 +25,11 @@ namespace Managers
 		// [SerializeField]
 		// private List<CardData> _cardDataArray;
 		
-		public List<CardData> CardList;
+        public UnityEvent onTopChange = new UnityEvent();
+
+        [SerializeField] public bool _disableOnTopChangeCalling = false;
+
+        public List<CardData> CardList;
         public Pile pileDeck, pileDiscard;
         public HandPile pileHand;
         public PlayPile pilePlay;
@@ -40,6 +45,8 @@ namespace Managers
 		
 		public void Start()
 		{
+            // CardList = FindObjectOfType<DeckList>().Deck;
+            
             cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
             buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
             
@@ -48,11 +55,11 @@ namespace Managers
 			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
 			pilePlay = GameObject.Find("PlayPile").GetComponent<PlayPile>();
 
-			if (CardList.Count > maxCardCount)
+			/*if (CardList.Count > maxCardCount)
 			{
 				CardList.Shuffle();
 				CardList.RemoveRange(maxCardCount, CardList.Count - maxCardCount);
-			} 
+			} */
 
 			foreach (CardData cardData in CardList)
 			{
@@ -61,9 +68,19 @@ namespace Managers
 				
 				newCard.Initialize(cardData);
 
-                pileDeck.Add(newCard);
+                pileDeck.Add(newCard, false);
             }
+			
+			onTopChange.AddListener(EvaluateAvailability);
         }
+
+		public void EvaluateAvailability()
+		{
+			pilePlay.SetAllAvailabilities(true);
+			pileHand.CheckAllAvailabilities();
+			pileDeck.SetAllAvailabilities(true);
+			pileDiscard.SetAllAvailabilities(true);
+		}
 
         public Card MakeCard(CardData cardData)
         {
@@ -82,6 +99,7 @@ namespace Managers
 			if (cardsDrawnPerTurn == -1)
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
 
+			Game.Ctx.VfxOperator.SetAllSortOrders();
 			if (Game.Ctx.turnCount == 1)
 			{
 				DrawCards(cardsDrawnFirstTurn);
@@ -91,8 +109,8 @@ namespace Managers
 				DrawCards(cardsDrawnPerTurn);
 			}
 		}
-		
-		public Pile GetCardPile(Card card)
+
+        public Pile GetCardPile(Card card)
 		{
 			if (pileHand.Contains(card))
 				return pileHand;
@@ -111,8 +129,9 @@ namespace Managers
 				throw new InvalidOperationException("Card not in Hand");
 			
 			pilePlay.Add(card);
-			// card.onAddToPlayPile.Invoke();
 			pileHand.Remove(card);
+			
+			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)
@@ -140,6 +159,8 @@ namespace Managers
 			}
 
 			pileHand.AddRange(discardList);
+			
+			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 		}
 
 		public void DrawCards(int number, bool onEmptyShuffle = true)
@@ -171,10 +192,12 @@ namespace Managers
 	        if (pilePlay.Count() > 0)
 	        {
 		        Card poweredCard = pilePlay.Get(pilePlay.Count() - 1);
-		        
 		        poweredCard.Apply(target, pilePlay.Count());
+		        
 		        List<Card> discardList = pilePlay.DrawAll();
-				pileDiscard.AddRange(discardList);
+				pileDiscard.AddRange(discardList, false, true);
+				
+				if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 	        }
         }
 		

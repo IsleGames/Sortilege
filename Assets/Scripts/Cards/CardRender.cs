@@ -7,6 +7,7 @@ using TMPro;
 
 using Managers;
 using UI;
+using UnityEditor.U2D;
 
 namespace Cards
 {
@@ -14,28 +15,60 @@ namespace Cards
     {
         public bool visible = true;
         
-        public float moveSpeed = 0.1f;
+        // public float moveSpeed = 0.1f;
+
+        private SpriteRenderer borderSprite, bgSprite, attRenderer, strRenderer;
+
+        [SerializeField] private float onSelectZoomScale = 1.1f;
 
         public void Start()
         {
             MetaData meta = GetComponent<MetaData>();
             
+            borderSprite = transform.Find("CardBorder").GetComponent<SpriteRenderer>();
+            bgSprite = transform.Find("CardBackground").GetComponent<SpriteRenderer>();
+            attRenderer = transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
+            strRenderer = transform.Find("StrategySprite").GetComponent<SpriteRenderer>();
+            
             // Set strategy color
-            var borderSprite = transform.Find("CardBorder").GetComponent<SpriteRenderer>();
             borderSprite.color = VfxManager.strategyColors[meta.strategy];
 
-            var bgSprite = transform.Find("CardBackground").GetComponent<SpriteRenderer>();
-
             // Set attribute 
-            var attRenderer = transform.Find("AttributeSprite").GetComponent<SpriteRenderer>();
             attRenderer.sprite = Resources.Load<Sprite>(VfxManager.AttributeSpritePaths[meta.attribute]);
             
             // Set strategy
-            var strRenderer = transform.Find("StrategySprite").GetComponent<SpriteRenderer>();
             strRenderer.sprite = Resources.Load<Sprite>(VfxManager.StrategySpritePaths[meta.strategy]);
 
-            int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            // Set name
+            transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
             
+            // Set rules text
+            transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
+
+            SetOrder();
+        }
+
+        public void OnSelectZoom()
+        {
+            Vector3 newLocalScale = transform.localScale * onSelectZoomScale;
+            transform.localScale = newLocalScale;
+        }
+
+        public void SetAvailability(bool availability)
+        {
+            if (availability)
+            {
+                bgSprite.color = Game.Ctx.VfxOperator.isAvailableColor;
+            }
+            else
+            {
+                bgSprite.color = Game.Ctx.VfxOperator.notAvailableColor;
+            }
+        }
+
+        public void SetOrder()
+        {
+            int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             var canvas = GetComponent<Canvas>();
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
@@ -45,14 +78,8 @@ namespace Cards
             sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             attRenderer.sortingOrder = sortOrder;
             strRenderer.sortingOrder = sortOrder;
-
-            // Set name
-            transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
-            
-            // Set rules text
-            transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
         }
-
+/*
         IEnumerator MoveCard(Vector3 dest, float delay = 0)
         {
             Vector3 init = new Vector3(transform.position.x, transform.position.y);
@@ -66,7 +93,7 @@ namespace Cards
                 yield return null;
             }
         }
-    
+  */  
         public void Hide()
         {
             visible = false;

@@ -18,7 +18,7 @@ public class BeginBattle : MonoBehaviour
 
     public void StartGame()
     {
-        StartCoroutine(LoadScene(1));
+        StartCoroutine(LoadScene(2));
     }
 
     private IEnumerator LoadScene(int idx)

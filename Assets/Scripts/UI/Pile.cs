@@ -62,29 +62,79 @@ namespace UI
             }
         }
 
-        protected void AdjustPosition(int index, bool setAlign = false)
+        public void SetAllAvailabilities(bool availability)
         {
-            if (setAlign) SetAlign();
+            foreach (Card card in _pile)
+            {
+                card.SetAvailability(availability);
+            }
+        }
+        
+        public void CheckAllAvailabilities()
+        {
+            foreach (Card card in _pile)
+            {
+                card.CheckChainedAvailability();
+            }
+        }
 
+        public void SetSortOrders()
+        {
+            if (_pile.Count == 0) return;
+            
+            int st, ed, inc;
+            if (align != QueueAlignType.Right)
+            {
+                st = 0;
+                ed = _pile.Count;
+                inc = 1;
+            }
+            else
+            {
+                ed = -1;
+                st = _pile.Count - 1;
+                inc = -1;
+            }
+
+            // Debugger.Log(gameObject.name + $" setting orders with {st} {ed} and {inc}...");
+            for (int i = st; i != ed; i += inc)
+            {
+                // Debugger.Log("i: " + i);
+                _pile[i].GetComponent<CardRender>().SetOrder();
+            }
+        }
+
+        protected void AdjustPosition(int index, bool stopFlag = false)
+        {
             Transform thisTrans = _pile[index].transform;
-            thisTrans.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            Vector3 newScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
 
             Vector3 newPos = new Vector3(
                 QueueCenter.x + TotalCardWidth * (index - StartingIndex),
                 QueueCenter.y,
                 QueueCenter.z);
+
+            Game.Ctx.AnimationOperator.PushAnimation(
+                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.15f),
+                stopFlag
+            );
             
-            // thisTrans.GetComponent<Render>().PController somethingsomething
-            thisTrans.position = newPos;
+            // thisTrans.localScale = newScale;
+            // thisTrans.position = newPos;
         }
 
-        public void AdjustAllPositions()
+        public void AdjustAllPositions(bool stopFlag = false, bool setOrder = true)
         {
             SetAlign();
+            if (setOrder) SetSortOrders();
             for (var i = 0; i < _pile.Count; i++)
-            {
-                AdjustPosition(i);
-            }
+                if (!stopFlag)
+                    AdjustPosition(i);
+                else
+                    if (i < _pile.Count - 1)
+                        AdjustPosition(i);
+                    else
+                        AdjustPosition(i, true);
         }
 
         public int Count()
@@ -104,18 +154,19 @@ namespace UI
             return _pile.IndexOf(card);
         }
         
-        public void Add(Card card)
+        public void Add(Card card, bool adjust = true)
         {
             _pile.Add(card);
-            AdjustAllPositions();
+            if (adjust) AdjustAllPositions();
         }
-        public void AddRange(List<Card> cardList, bool shuffleAfter = false)
+
+        public void AddRange(List<Card> cardList, bool shuffleAfter = false, bool stopFlag = false)
         {
             _pile.AddRange(cardList);
             if (shuffleAfter)
-                Shuffle();
+                Shuffle(stopFlag);
             else
-                AdjustAllPositions();
+                AdjustAllPositions(stopFlag);
         }
         public void Clear()
         {
@@ -165,10 +216,11 @@ namespace UI
             
             return ret;
         }
-        public void Shuffle()
+
+        public void Shuffle(bool stopFlag = false)
         {
             _pile.Shuffle();
-            AdjustAllPositions();
+            AdjustAllPositions(stopFlag);
         }
     }
 }

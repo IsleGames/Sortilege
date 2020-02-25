@@ -13,9 +13,9 @@ namespace _Editor
         {
             if (EnableDebugOutput)
                 if (source == null)
-                    Debug.Log(obj.ToString());
+                    Debug.Log(Time.time + " " + obj);
                 else
-                    Debug.Log(obj.ToString(), source);
+                    Debug.Log(Time.time + " " + obj, source);
         }
         
         public static void Warning<T>(T obj, Object source = null)

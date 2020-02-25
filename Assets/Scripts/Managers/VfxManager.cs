@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 using Cards;
 using Effects;
+using UI;
 
 namespace Managers
  {
@@ -39,7 +40,7 @@ namespace Managers
              {StrategyType.Craftsman,    "Icons/icon-sword"},
              {StrategyType.Knight,       "Icons/icon-arrow"},
              {StrategyType.Sorcerer,     "Icons/icon-wand" },
-             {StrategyType.Deceiver,     "Icons/icon-wand" },
+             {StrategyType.Deceiver,     "Icons/icon-wand" }
          };
          
          public static Dictionary<BuffType, string> BuffSpritePaths = new Dictionary<BuffType, string>()
@@ -51,14 +52,49 @@ namespace Managers
              {BuffType.Flinch, "Icons/icon-fear"},
              {BuffType.Voodoo, "Icons/icons8-cauldron-64"},
              {BuffType.Breeze, "Icons/icons8-air-100"},
-         }; 
+         };
+         
+         [NonSerialized]
+         public Color isAvailableColor = new Color(0.8196f, 0.8196f, 0.8196f);
+         [NonSerialized]
+         public Color notAvailableColor = new Color(0.5f, 0.5f, 0.5f);
          
          public Card draggedCard;
-         [SerializeField] private int sortOrder = 0;
+         [SerializeField] private static int sortOrder = 0;
 
+         public GameObject turnToMoveBoardPrefab;
+         
          private void Awake()
          { 
-            GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+             GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+         }
+
+         public void Start()
+         {
+             turnToMoveBoardPrefab = (GameObject)Resources.Load("Prefabs/TurnToMoveBoard");
+         }
+
+         public void ShowTurnText(string text)
+         {
+             GameObject newTurnBoardObj = Instantiate(turnToMoveBoardPrefab, Game.Ctx.UICanvas.transform);
+             TurnToMoveBoard board = newTurnBoardObj.GetComponent<TurnToMoveBoard>();
+
+             board.SetText(text);
+             board.StartAnimation();
+         }
+
+         public void SetAllSortOrders()
+         {
+             ResetSortOrder();
+             Game.Ctx.CardOperator.pileDiscard.SetSortOrders();
+             Game.Ctx.CardOperator.pileDeck.SetSortOrders();
+             Game.Ctx.CardOperator.pileHand.SetSortOrders();
+             Game.Ctx.CardOperator.pilePlay.SetSortOrders();
+         }
+
+         public void ResetSortOrder()
+         {
+             sortOrder = 0;
          }
 
          public int GetSortOrder()

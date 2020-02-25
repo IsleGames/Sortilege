@@ -21,5 +21,12 @@ MonoBehaviour:
   - affectiveUnit: 1
     type: 2
     amount: 3
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
+  buffList:
+  - affectiveUnit: 0
+    type: 0
+    amount: 0
     minStreak: 0
     notAmplified: 0
