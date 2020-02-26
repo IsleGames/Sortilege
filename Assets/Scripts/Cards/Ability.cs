@@ -45,7 +45,7 @@ namespace Cards
                             buffEffect.Apply(target, streakCount);
                             break;
                         default:
-                            throw new NullReferenceException("Unknown Unit Type");
+                            throw new NullReferenceException($"Unknown Unit Type {buffEffect.affectiveUnit}");
                     }
         }
 

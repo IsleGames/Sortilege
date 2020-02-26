@@ -290,11 +290,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 829517837}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbeee559589bf9d4584f1f95cb5a6846, type: 3}
+  m_Script: {fileID: 11500000, guid: 08427bf05a60d4ddcaec7a33fdb6cc31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Duration: 1
-  SceneName: UITestScene
+  SceneName: Battle
 --- !u!1 &901532384
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,7 +456,7 @@ GameObject:
   - component: {fileID: 1228499361}
   - component: {fileID: 1228499365}
   - component: {fileID: 1228499363}
-  - component: {fileID: 1228499366}
+  - component: {fileID: 1228499364}
   m_Layer: 5
   m_Name: DeckUI copy
   m_TagString: Untagged
@@ -503,12 +503,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 7dcb5a8288f5141f78bc8c5a6aac943b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b987eb6dfb31d4e758d58ca5b4f785fd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 0.5803922}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1920, y: 480}
+  m_Size: {x: 48, y: 48}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -522,8 +522,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1228499360}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -49, z: 0}
-  m_LocalScale: {x: 0.37800002, y: 0.512, z: 1}
+  m_LocalPosition: {x: 0, y: -33, z: 0}
+  m_LocalScale: {x: 11.469912, y: 4.591642, z: 1}
   m_Children:
   - {fileID: 517947203}
   m_Father: {fileID: 0}
@@ -544,10 +544,10 @@ BoxCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
+    border: {x: 9, y: 9, z: 9, w: 9}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1920, y: 480}
-    newSize: {x: 1920, y: 480}
+    oldSize: {x: 48, y: 48}
+    newSize: {x: 48, y: 48}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -555,6 +555,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1920, y: 480}
   m_EdgeRadius: 0
+--- !u!114 &1228499364
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1228499360}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 05a83cfdbb7d1be45a1a5e5835950b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  NumPresenting: 3
+  cardData: []
+  cards: []
 --- !u!114 &1228499365
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -572,19 +587,6 @@ MonoBehaviour:
   scaleFactor: 1.8
   offsetMargin: 50
   align: 1
---- !u!114 &1228499366
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1228499360}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 05a83cfdbb7d1be45a1a5e5835950b42, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NumPresenting: 3
 --- !u!1 &1407521294
 GameObject:
   m_ObjectHideFlags: 0
@@ -640,7 +642,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'New Card!
+  m_text: '
 
     Choose One:'
   m_isRightToLeft: 0
@@ -712,10 +714,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: -14.50293, z: 0, w: -14.502991}
   m_textInfo:
     textComponent: {fileID: 1407521296}
-    characterCount: 21
+    characterCount: 12
     spriteCount: 0
-    spaceCount: 3
-    wordCount: 4
+    spaceCount: 2
+    wordCount: 3
     linkCount: 0
     lineCount: 2
     pageCount: 1
@@ -911,6 +913,10 @@ GameObject:
   - component: {fileID: 1874916580}
   - component: {fileID: 1874916579}
   - component: {fileID: 1874916578}
+  - component: {fileID: 1874916585}
+  - component: {fileID: 1874916584}
+  - component: {fileID: 1874916583}
+  - component: {fileID: 1874916582}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -999,6 +1005,86 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1874916582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874916577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4fd99170aed44048bb6a1b7be6f330e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  draggedCard: {fileID: 0}
+  turnToMoveBoardPrefab: {fileID: 0}
+--- !u!114 &1874916583
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874916577}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5da7ad14418a7493fb5aeb93bb0d9ae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onTopChange:
+    m_PersistentCalls:
+      m_Calls: []
+  _disableOnTopChangeCalling: 0
+  CardList: []
+  pileDeck: {fileID: 0}
+  pileDiscard: {fileID: 0}
+  pileHand: {fileID: 0}
+  pilePlay: {fileID: 0}
+  cardPrefab: {fileID: 0}
+  buffPrefab: {fileID: 0}
+  cardsDrawnFirstTurn: 5
+  cardsDrawnPerTurn: -1
+  maxCardCount: 5
+  isCurrentCardFlinched: 0
+--- !u!114 &1874916584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874916577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2941e1951164f2a84a535fe2030c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  StopQueue: 
+  runningAnimationCount: 0
+  stoppingTillDone: 0
+--- !u!114 &1874916585
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874916577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b000899b42aa4c8e8a728d2026d4a38b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UICanvas: {fileID: 1874916577}
+  CardOperator: {fileID: 1874916583}
+  VfxOperator: {fileID: 1874916582}
+  AnimationOperator: {fileID: 1874916584}
+  player: {fileID: 0}
+  enemy: {fileID: 0}
+  InBattle: 0
+  turnCount: 0
+  activeUnit: {fileID: 0}
 --- !u!1 &2144878420
 GameObject:
   m_ObjectHideFlags: 0

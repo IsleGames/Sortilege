@@ -1,6 +1,7 @@
 using UnityEngine.Events;
 
 using _Editor;
+using Library;
 
 namespace Units
 {
@@ -19,6 +20,8 @@ namespace Units
 		public override void EndTurn()
 		{
 			onTurnEnd.Invoke();
+			
+            Game.Ctx.AnimationOperator.PushAnimation(Utilities.WaitForSecs(0.8f), true);
 			
 			beingDamagedSomewhere = false;
 			Game.Ctx.Continue();

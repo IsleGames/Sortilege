@@ -40,6 +40,23 @@ namespace Cards
             GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
             GetComponent<Ability>().buffEffectList = new List<BuffEffect>(cardData.buffList);
         }
+
+        public void SetAvailability(bool availability)
+        {
+            // if (gameObject.name == "Arcane Punch")
+            // {
+            //     Debugger.Log(gameObject.name + " set to " + availability);
+            // }
+            GetComponent<CardRender>().SetAvailability(availability);
+            GetComponent<CardEvent>().availability = availability;
+        } 
+        
+        
+        public void CheckChainedAvailability()
+        {
+            Card compCard = Game.Ctx.CardOperator.pilePlay.GetCurrentTopCard();
+            SetAvailability(!compCard || compCard && GetComponent<MetaData>().HasSharedProperty(compCard));
+        } 
         
         public void Apply(Unit target, float streakCount)
         {

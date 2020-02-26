@@ -212,7 +212,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 615993247}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbeee559589bf9d4584f1f95cb5a6846, type: 3}
+  m_Script: {fileID: 11500000, guid: 08427bf05a60d4ddcaec7a33fdb6cc31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Duration: 1
@@ -615,7 +615,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 615993250}
-        m_MethodName: FadeAndLoadScene
+        m_MethodName: LoadScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

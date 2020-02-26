@@ -17,19 +17,22 @@ public class FadeToNewScene : MonoBehaviour
     }
     
 
-    public void FadeAndLoadScene()
+    public void LoadScene()
     {
-        StartCoroutine(LoadScene(SceneName));
+        StartCoroutine(LoadSceneCoroutine());
     }
 
-    private IEnumerator LoadScene(string scene_name)
+
+    public IEnumerator LoadSceneCoroutine()
     {
         //
-        var sprites = FindObjectsOfType<SpriteRenderer>();
-        var  images = FindObjectsOfType<Image>();
+        var scene_name = SceneName;
         float t = 0;
         while(t < Duration)
         {
+            var sprites = FindObjectsOfType<SpriteRenderer>();
+            var images = FindObjectsOfType<Image>();
+
             var pct = 1-t / Duration;
             foreach (var sprite in sprites)
             {

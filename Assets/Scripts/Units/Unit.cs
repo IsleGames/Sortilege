@@ -17,6 +17,12 @@ namespace Units
 		public UnityEvent onDamage = new UnityEvent();
 		public UnityEvent onTurnEnd = new UnityEvent();
 		
+		public UnityEvent onHealthChange = new UnityEvent();
+		public virtual void Initialize()
+		{
+			GetComponent<Health>().Initialize();
+		}
+				
 		public abstract void StartTurn();
 		public abstract void EndTurn();
 	}

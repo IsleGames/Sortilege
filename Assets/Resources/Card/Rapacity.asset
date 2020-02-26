@@ -15,12 +15,13 @@ MonoBehaviour:
   title: Rapacity
   strategy: 0
   attribute: 2
-  description: Deal 2 damage to yourself and draw 2 card
+  description: Deal 2 dmg to yourself and draw 2 card
   disableRetract: 0
   effectList:
   - affectiveUnit: 1
     type: 0
     amount: 2
+    maxDeviation: 0
     minStreak: 0
     notAmplified: 1
   buffList:
