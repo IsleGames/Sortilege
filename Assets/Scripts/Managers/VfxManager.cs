@@ -17,8 +17,8 @@ namespace Managers
              {StrategyType.None, Color.white },
              {StrategyType.Detriment, new Color(0f, 0.3f, 0.2f)},
              {StrategyType.Berserker, new Color(0.9f, 0.35f, 0.2f) },
-             {StrategyType.Craftsman, new Color(0.4f, 0.33f, 0.2f) },
-             {StrategyType.Knight,    new Color(0.65f, 0.73f, 0.80f)},
+             {StrategyType.Craftsman, new Color(0.4f, 0.1f, 0.6f) },
+             {StrategyType.Knight,    new Color(0.25f, 0.73f, 0.4f)},
              {StrategyType.Sorcerer,  new Color(0.529f, 0.808f, 0.922f)  },
              {StrategyType.Deceiver,  new Color(0.6f, 0.4f, 0.9f)  }
          };
