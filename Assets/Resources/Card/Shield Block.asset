@@ -25,7 +25,7 @@ MonoBehaviour:
     minStreak: 0
     notAmplified: 0
   buffList:
-  - affectiveUnit: 0
+  - affectiveUnit: 1
     type: 1
     amount: 1
     minStreak: 0

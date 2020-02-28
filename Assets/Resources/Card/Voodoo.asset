@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Voodoo
   m_EditorClassIdentifier: 
   title: Voodoo
-  strategy: 0
-  attribute: 0
+  strategy: 6
+  attribute: 3
   description: Deal 2 damage to yourself and gain 2-4 amount of shield
   disableRetract: 0
   effectList:
@@ -31,7 +31,7 @@ MonoBehaviour:
     minStreak: 0
     notAmplified: 0
   buffList:
-  - affectiveUnit: 0
+  - affectiveUnit: 1
     type: 5
     amount: 4
     minStreak: 0
