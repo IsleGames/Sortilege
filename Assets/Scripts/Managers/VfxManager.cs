@@ -27,7 +27,7 @@ namespace Managers
          {
              {AttributeType.None,     "Icons/icon-transparent"},
              {AttributeType.Infernal, "Icons/icon-fire"},
-             {AttributeType.Storm,    "Icons/icons8-air-100"},
+             {AttributeType.Storm,    "Icons/icon-snowflake"},
              {AttributeType.Thunder,  "Icons/icon-lightning"},
              {AttributeType.Venom,    "Icons/icon-skull"}
          };
@@ -36,17 +36,17 @@ namespace Managers
          {
              {StrategyType.None,         "Icons/icon-transparent"},
              {StrategyType.Detriment,    "Icons/icon-none"},
-             {StrategyType.Berserker,    "Icons/icon-sword"},
-             {StrategyType.Craftsman,    "Icons/icon-sword"},
-             {StrategyType.Knight,       "Icons/icon-arrow"},
+             {StrategyType.Berserker,    "Icons/icon-axe"},
+             {StrategyType.Craftsman,    "Icons/hammer"},
+             {StrategyType.Knight,       "Icons/icon-sword"},
              {StrategyType.Sorcerer,     "Icons/icon-wand" },
-             {StrategyType.Deceiver,     "Icons/icon-wand" }
+             {StrategyType.Deceiver,     "Icons/anonymous" }
          };
          
          public static Dictionary<BuffType, string> BuffSpritePaths = new Dictionary<BuffType, string>()
          {
              {BuffType.Block,  "Icons/icons8-shield-64"},
-             {BuffType.Forge,  "Icons/icons8-cauldron-64"},
+             {BuffType.Forge,  "Icons/anvil"},
              {BuffType.Thorns, "Icons/icons8-crown-of-thorns-100"},
              {BuffType.Plague, "Icons/icons8-skull-64"},
              {BuffType.Flinch, "Icons/icon-fear"},
