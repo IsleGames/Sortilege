@@ -28,7 +28,7 @@ namespace Units
 		{
 			onTurnEnd.Invoke();
 			
-            Game.Ctx.AnimationOperator.PushAnimation(Utilities.WaitForSecs(0.8f), true);
+            Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(0.8f), true);
 			
 			if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
 			

@@ -1,16 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Editor;
 using UnityEngine;
 using UnityEngine.Events;
-using Debug = System.Diagnostics.Debug;
+
+using _Editor;
 
 namespace Managers
 {
     public class AnimationManager : MonoBehaviour
     {
 		public UnityEvent onAnimationEnd = new UnityEvent();
+        
+        // All IEnumerators should call
+        //
+        //     Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+        //
+        // before the last yield return null;
 
         public List<IEnumerator> EventQueue;
         public List<bool> StopQueue;
@@ -31,9 +37,8 @@ namespace Managers
             onAnimationEnd.AddListener(OnIEnumRunningEnd);
         }
 
-        public void PushAnimation(IEnumerator move, bool stopTillDone = false)
+        public void PushAction(IEnumerator move, bool stopTillDone = false)
         {
-            // Debugger.Log(EventQueue);
             EventQueue.Add(move);
             StopQueue.Add(stopTillDone);
             

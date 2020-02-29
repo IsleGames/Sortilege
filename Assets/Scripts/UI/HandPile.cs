@@ -68,7 +68,7 @@ namespace UI
                 QueueCenter.z);
             if (animated) 
             {
-                Game.Ctx.AnimationOperator.PushAnimation(
+                Game.Ctx.AnimationOperator.PushAction(
                     Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.25f)
                 );
             }

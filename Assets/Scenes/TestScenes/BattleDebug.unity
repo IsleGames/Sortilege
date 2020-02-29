@@ -1266,6 +1266,8 @@ MonoBehaviour:
   CardList:
   - {fileID: 11400000, guid: 2e783bb8c95c944759359456cd2e8690, type: 2}
   - {fileID: 11400000, guid: 0340079d1f2bf4cfbbbbb81793f07fbe, type: 2}
+  - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
+  - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
   pileDeck: {fileID: 0}
   pileDiscard: {fileID: 0}
   pileHand: {fileID: 0}
@@ -1276,7 +1278,6 @@ MonoBehaviour:
   cardsDrawnPerTurn: 2
   maxCardCount: 18
   randomDraw: 1
-  isCurrentCardFlinched: 0
 --- !u!223 &1051549747
 Canvas:
   m_ObjectHideFlags: 0

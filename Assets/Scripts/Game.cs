@@ -98,8 +98,19 @@ public class Game : MonoBehaviour
     public void Continue()
     {
         if (IsBattleEnded()) return;
+        
+        // Push StartNextTurn into the queue to make it run after all animations
+        // And pause the system-level calculation till everything before is done
+        AnimationOperator.PushAction(StartNextTurn());
+    }
+
+    private IEnumerator StartNextTurn()
+    {
         BattleSeq.MoveNext();
+        
+        AnimationOperator.onAnimationEnd.Invoke();
         RunningMethod();
+        yield return null;
     }
     
     public bool IsBattleEnded()

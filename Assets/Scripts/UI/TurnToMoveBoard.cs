@@ -34,7 +34,7 @@ namespace UI
 
         public void StartAnimation()
         {
-            Game.Ctx.AnimationOperator.PushAnimation(FadeInOut(), true);
+            Game.Ctx.AnimationOperator.PushAction(FadeInOut(), true);
         }
 
         private void SetAlpha(float a)
