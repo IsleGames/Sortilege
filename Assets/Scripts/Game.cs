@@ -34,6 +34,8 @@ public class Game : MonoBehaviour
         
     public IEnumerator BattleSeq;
 
+    public bool tutorial;
+
     private void Start()
     {
         QualitySettings.vSyncCount = 1;
@@ -48,9 +50,9 @@ public class Game : MonoBehaviour
         VfxOperator = GetComponent<VfxManager>();
         AnimationOperator = GetComponent<AnimationManager>();
 
-        player = transform.GetComponentInChildren<Player>();
+        player = !tutorial? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
         player.Initialize();
-        enemy = transform.GetComponentInChildren<Enemy>();
+        enemy = tutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
         enemy.Initialize();
 
         turnCount = 0;
