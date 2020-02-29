@@ -112,7 +112,7 @@ namespace Buffs
 	    private void Voodoo()
 	    {
 		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
-				GetComponent<Health>().Heal(amount);
+				GetComponentInParent<Health>().Heal(amount);
 
 			GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
 			GetComponentInParent<BuffManager>().Destroy(this);
