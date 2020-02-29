@@ -17,7 +17,13 @@ MonoBehaviour:
   attribute: 0
   description: Discard all your Deceiver cards in hand. Enemy can't move this turn.
   disableRetract: 0
-  effectList: []
+  effectList:
+  - affectiveUnit: 1
+    type: 4
+    amount: 1
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
   buffList:
   - affectiveUnit: 2
     type: 4
