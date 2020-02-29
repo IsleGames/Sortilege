@@ -111,8 +111,6 @@ namespace Buffs
 	    // OnTurnBegin Effect
 	    private void Voodoo()
 	    {
-		    Debugger.Log(GetComponentInParent<Unit>().beingDamagedSomewhere + " " + amount);
-		    
 		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
 				GetComponentInParent<Health>().Heal(amount);
 

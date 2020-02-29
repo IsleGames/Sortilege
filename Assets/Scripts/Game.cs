@@ -124,9 +124,7 @@ public class Game : MonoBehaviour
         RunningMethod();
         yield return null;
     }
-    
-    
-    
+
     public bool IsBattleEnded()
     {
         return player.GetComponent<Health>().IsDead() || enemy.GetComponent<Health>().IsDead();

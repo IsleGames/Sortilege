@@ -103,6 +103,11 @@ namespace Managers
 			DrawCards(Game.Ctx.turnCount == 1 ? cardsDrawnFirstTurn : cardsDrawnPerTurn, true, randomDraw);
 		}
 
+        public void EndTurn()
+        {
+	        Game.Ctx.VfxOperator.SetAllSortOrders();
+        }
+        
         public Pile GetCardPile(Card card)
 		{
 			if (pileHand.Contains(card))
@@ -116,6 +121,7 @@ namespace Managers
 			throw new InvalidOperationException("Card not found in any pile");
 		}
 		
+
 		public void AddCardToQueue(Card card)
 		{
 			if (!pileHand.Contains(card))
