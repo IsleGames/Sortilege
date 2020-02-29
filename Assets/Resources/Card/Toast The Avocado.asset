@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Deal 5 dmg to avocado
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 5
     maxDeviation: 0

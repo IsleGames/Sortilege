@@ -19,14 +19,14 @@ MonoBehaviour:
     Deal 3 dmg'
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 3
     maxDeviation: 0
     minStreak: 5
     notAmplified: 1
   buffList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 3
     amount: 1
     minStreak: 0

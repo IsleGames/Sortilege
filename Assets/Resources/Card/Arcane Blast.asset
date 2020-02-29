@@ -18,19 +18,19 @@ MonoBehaviour:
   description: Deal 5 dmg. This card can at most deal 10 dmg.
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 5
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 1
     amount: 5
     maxDeviation: 0
     minStreak: 2
     notAmplified: 0
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 10
     maxDeviation: 0
