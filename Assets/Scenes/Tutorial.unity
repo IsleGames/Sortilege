@@ -1303,7 +1303,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e3fb7734a99e4d74a1d7ecd452c9590, type: 2}
   - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
   - {fileID: 11400000, guid: 8181d1809446d402ea00c83b30e6b3ef, type: 2}
-  - {fileID: 11400000, guid: 74b9cf3a7b5914966806113a063094a3, type: 2}
+  - {fileID: 11400000, guid: 9ab0a9baeebc24de194b1bdec5089221, type: 2}
   - {fileID: 11400000, guid: f4352423ec3394b30a1fa1bfc8e57ddf, type: 2}
   - {fileID: 11400000, guid: f4352423ec3394b30a1fa1bfc8e57ddf, type: 2}
   - {fileID: 11400000, guid: f4352423ec3394b30a1fa1bfc8e57ddf, type: 2}
@@ -1412,7 +1412,7 @@ PrefabInstance:
     - target: {fileID: 631532667604453807, guid: 63a2fa794ae01424cbd09e2e268f1984,
         type: 3}
       propertyPath: maximumHitPoints
-      value: 60
+      value: 500
       objectReference: {fileID: 0}
     - target: {fileID: 698924669387467651, guid: 63a2fa794ae01424cbd09e2e268f1984,
         type: 3}
