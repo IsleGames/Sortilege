@@ -50,6 +50,9 @@ namespace UI
 
         private IEnumerator FadeInOut()
         {
+            // Debugger.Log("FadeInOut working");
+            // Debugger.Log("stoppingTillDone: " + Game.Ctx.AnimationOperator.stoppingTillDone);
+            
             yield return null;
 
             float p = 0f;

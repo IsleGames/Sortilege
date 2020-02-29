@@ -24,7 +24,7 @@ namespace Managers
         [SerializeField]
         private int runningAnimationCount = 0;
         [SerializeField]
-        private bool stoppingTillDone = false;
+        public bool stoppingTillDone = false;
 
         private void Awake()
         {
@@ -39,6 +39,8 @@ namespace Managers
 
         public void PushAction(IEnumerator move, bool stopTillDone = false)
         {
+            // Debugger.Log("Now adding to queue: " + move + "");
+            
             EventQueue.Add(move);
             StopQueue.Add(stopTillDone);
             
@@ -47,12 +49,19 @@ namespace Managers
         
         private void TryRunEverything() 
         {
+            // Debugger.Log("Try Run with stoppingTillDone as " + stoppingTillDone);
+            
             if (stoppingTillDone) return;
+            
+            // Debugger.Log("Forced Running in try run");
+            
             RunEverything();
         }
 
         private void RunEverything()
         {
+            // Debugger.Log("Forced Running");
+            
             if (EventQueue.Count == 0) return;
             
             stoppingTillDone = PopNextEvent();
@@ -64,12 +73,19 @@ namespace Managers
 
         private void OnIEnumRunningEnd()
         {
+            
             if (runningAnimationCount > 0)
             {
+                // Debugger.Log("OnIEnumRunningEnd activated with remaining count " + runningAnimationCount  + " - 1");
+                
                 runningAnimationCount -= 1;
+
                 if (runningAnimationCount == 0)
                 {
                     stoppingTillDone = false;
+                    
+                    // Debugger.Log("Forced Running on event ends");
+            
                     RunEverything();
                 }
             }
@@ -79,10 +95,12 @@ namespace Managers
 
         private bool PopNextEvent()
         {
-            runningAnimationCount += 1;
-            
             IEnumerator move = EventQueue[0];
             bool ret = StopQueue[0];
+            
+            // Debugger.Log("Now running: " + move + " with remaining count " + runningAnimationCount + " + 1");
+            
+            runningAnimationCount += 1;
             
             EventQueue.RemoveAt(0);
             StopQueue.RemoveAt(0);

@@ -20,13 +20,23 @@ namespace Units
 
 		public override void StartTurn()
 		{
-			Game.Ctx.CardOperator.StartTurn();
+			if (Game.Ctx.activeUnit != this)
+			{
+				return;
+			}
 			
 			onTurnBegin.Invoke();
+			
+			Game.Ctx.CardOperator.StartTurn();
 		}
 		
 		public override void EndTurn()
 		{
+			if (Game.Ctx.activeUnit != this)
+			{
+				return;
+			}
+			
 			// onAttack Event goes here
             isUnitFlinched = false;
             onAttack.Invoke();

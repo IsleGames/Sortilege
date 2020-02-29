@@ -9,7 +9,22 @@ namespace Units
 	{
 		public override void StartTurn()
 		{
+			if (Game.Ctx.activeUnit != this)
+			{
+				return;
+			}
+			
 			onTurnBegin.Invoke();
+
+			EndTurn();
+		}
+		
+		public override void EndTurn()
+		{
+			if (Game.Ctx.activeUnit != this)
+			{
+				return;
+			}
 			
 			// onAttack Event goes here
             isUnitFlinched = false;
@@ -20,12 +35,7 @@ namespace Units
             {
 	            // Some effect
             }
-			
-			EndTurn();
-		}
-		
-		public override void EndTurn()
-		{
+            
 			onTurnEnd.Invoke();
 			
             Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(0.8f), true);
