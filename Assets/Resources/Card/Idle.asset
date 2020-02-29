@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
   m_Name: Idle
   m_EditorClassIdentifier: 
-  title: 
-  strategy: 0
+  title: Idle
+  strategy: 1
   attribute: 0
-  description: 
+  description: There's no more cards in your bag...
   disableRetract: 0
   effectList: []
   buffList: []
