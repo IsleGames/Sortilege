@@ -60,7 +60,10 @@ namespace Units
             if (barrierHitPoints > 0f && !ignoreBarrier)
             {
                 if (amount < barrierHitPoints)
+                {
                     barrierHitPoints -= amount;
+                    amount = 0f;
+                }
                 else
                 {
                     amount -= barrierHitPoints;

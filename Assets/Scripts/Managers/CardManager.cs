@@ -41,6 +41,8 @@ namespace Managers
 		public int cardsDrawnPerTurn = -1;
 		public int maxCardCount = 5;
 
+		public bool randomDraw = true;
+
 		public bool isCurrentCardFlinched;
 		
 		public void Start()
@@ -100,14 +102,7 @@ namespace Managers
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
 
 			Game.Ctx.VfxOperator.SetAllSortOrders();
-			if (Game.Ctx.turnCount == 1)
-			{
-				DrawCards(cardsDrawnFirstTurn);
-			}
-			else
-			{
-				DrawCards(cardsDrawnPerTurn);
-			}
+			DrawCards(Game.Ctx.turnCount == 1 ? cardsDrawnFirstTurn : cardsDrawnPerTurn, true, randomDraw);
 		}
 
         public Pile GetCardPile(Card card)
@@ -163,7 +158,7 @@ namespace Managers
 			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
 		}
 
-		public void DrawCards(int number, bool onEmptyShuffle = true)
+		public void DrawCards(int number, bool onEmptyShuffle = true, bool random = true)
 		{
 			List<Card> drawList = new List<Card>();
 			for (int i = 0; i < number; i++)
@@ -179,8 +174,8 @@ namespace Managers
 							ShuffleOnDeckEmpty();
 					else
 						break;
-
-				Card card = pileDeck.Draw();
+				
+				Card card = random? pileDeck.Draw() : pileDeck.DrawNoShuffle();
                 // card.onDraw.Invoke();
                 drawList.Add(card);
 			}

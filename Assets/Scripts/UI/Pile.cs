@@ -207,6 +207,13 @@ namespace UI
             AdjustAllPositions();
             return drawnCard;
         }
+
+        public Card DrawNoShuffle()
+        {
+            Card drawnCard = _pile.DrawNoShuffle();
+            AdjustAllPositions();
+            return drawnCard;
+        }
         
         public List<Card> DrawAll()
         {

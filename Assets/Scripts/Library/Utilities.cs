@@ -19,7 +19,14 @@ namespace Library
 			list.RemoveAt(k);
 
 			return ret;
-		}  
+		}
+
+		public static T DrawNoShuffle<T>(this IList<T> list)
+		{
+			T ret = list[0];
+			list.RemoveAt(0);
+			return ret;
+		}
 
 		// Source: https://stackoverflow.com/questions/273313/randomize-a-listt
 		public static void Shuffle<T>(this IList<T> list)  
