@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 
 using _Editor;
 using Managers;
+using TMPro;
 using Units;
 using Object = UnityEngine.Object;
 
@@ -131,6 +132,10 @@ public class Game : MonoBehaviour
             {
                 Debugger.Log("player lost");
                 VfxOperator.ShowTurnText("Battle Lost");
+                if (tutorial)
+                {
+                    transform.GetComponentInChildren<TextMeshPro>().text = "oops.. You died.. Let's do it again.";
+                }
             }
         }
     }
