@@ -98,7 +98,7 @@ namespace Buffs
 	    // OnAttack Effect
 	    private void Flinch()
 	    {
-		    Game.Ctx.CardOperator.isCurrentCardFlinched = true;
+		    GetComponentInParent<Unit>().isUnitFlinched = true;
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))

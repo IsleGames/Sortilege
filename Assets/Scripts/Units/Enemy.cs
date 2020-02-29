@@ -11,8 +11,15 @@ namespace Units
 		{
 			onTurnBegin.Invoke();
 			
-			Game.Ctx.player.GetComponent<Health>().Damage(6f);
-			if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
+			// onAttack Event goes here
+            isUnitFlinched = false;
+            onAttack.Invoke();
+            if (!isUnitFlinched) 
+				Game.Ctx.player.GetComponent<Health>().Damage(6f);
+            else
+            {
+	            // Some effect
+            }
 			
 			EndTurn();
 		}
@@ -22,6 +29,8 @@ namespace Units
 			onTurnEnd.Invoke();
 			
             Game.Ctx.AnimationOperator.PushAnimation(Utilities.WaitForSecs(0.8f), true);
+			
+			if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
 			
 			beingDamagedSomewhere = false;
 			Game.Ctx.Continue();

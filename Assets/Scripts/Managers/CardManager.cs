@@ -43,8 +43,6 @@ namespace Managers
 
 		public bool randomDraw = true;
 
-		public bool isCurrentCardFlinched;
-		
 		public void Start()
 		{
             // CardList = FindObjectOfType<DeckList>().Deck;

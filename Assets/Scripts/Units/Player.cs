@@ -27,8 +27,15 @@ namespace Units
 		
 		public override void EndTurn()
 		{
-			// Something something coroutine + ienum
-			Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+			// onAttack Event goes here
+            isUnitFlinched = false;
+            onAttack.Invoke();
+            if (!isUnitFlinched) 
+				Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+            else
+            {
+	            // Some effect
+            }
 			
 			onTurnEnd.Invoke();
 
