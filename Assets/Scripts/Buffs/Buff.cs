@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using _Editor;
 using Effects;
 using Managers;
 using Units;
@@ -110,7 +111,7 @@ namespace Buffs
 	    // OnTurnBegin Effect
 	    private void Voodoo()
 	    {
-		    if (!GetComponent<Unit>().beingDamagedSomewhere)
+		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
 				GetComponent<Health>().Heal(amount);
 
 			GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
