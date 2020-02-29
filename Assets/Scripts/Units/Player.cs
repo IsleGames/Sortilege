@@ -13,7 +13,7 @@ namespace Units
 	{
 		public int drawCount = 2;
 
-		void Start()
+		protected void Start()
 		{
 		}
 		
