@@ -1,4 +1,11 @@
-﻿using System.Collections.Generic;
+﻿// Dynamic descriptions for list of effects
+// The intent is for cards to use the text 
+// in CardData.description unless they're on top
+// of the queue, when they use one of these.
+// This is a liiiittle bit of a cop-out to avoid 
+// caring about the context an effect appears in
+
+using System.Collections.Generic;
 using Effects;
 using Cards;
 
@@ -8,6 +15,7 @@ public class EffectDescription
 {
     public class Stats
     {
+        // Healing represented by negative damage
         public float Damage;
         public float Armor;
         public Stats(float a, float b)
@@ -15,26 +23,28 @@ public class EffectDescription
           Armor = b;
         }
     }
-    // Healing represented by negative damage
     public Stats EnemyStats;
     public Stats SelfStats;
     public bool NotAmplified = false;
     public bool DiscardDecievers = false;
 
+    public EffectDescription()
+    {
+        Initialize();
+    }
+
+    //Aggregate all the effects that appear on a single card
     public void Update(List<Effect> EffectList, List<Card> queue, List<Card> discardPile, int cardsInHand)
     {
-        EnemyStats = new Stats(0, 0);
-        SelfStats = new Stats(0, 0);
-        NotAmplified = false;
-        DiscardDecievers = false;
+        Initialize();
 
         foreach (var effect in EffectList)
         {
-            if (queue.Count  < effect.minStreak)
+            if (queue.Count < effect.minStreak)
             {
                 continue;
             }
-            
+
             if (effect.affectiveUnit == UnitType.Enemy)
             {
                 GetStats(EnemyStats, discardPile, cardsInHand, effect);
@@ -50,6 +60,15 @@ public class EffectDescription
         }
     }
 
+    private void Initialize()
+    {
+        EnemyStats = new Stats(0, 0);
+        SelfStats = new Stats(0, 0);
+        NotAmplified = false;
+        DiscardDecievers = false;
+    }
+
+    // Figure out how much damage / healing / armor an effect is going to affect
     private static void GetStats(Stats statBlock, List<Card> discardPile, int cardsInHand, Effect effect)
     {
         switch (effect.type)
@@ -82,6 +101,7 @@ public class EffectDescription
         }
     }
 
+    // Generate reasonable text 
     public override string ToString()
     {
         string EnemyDamageStr = $"{EnemyStats.Damage} damage to an enemy";
@@ -154,7 +174,7 @@ public class BuffDescription
         { BuffType.Breeze, 0 },
     };
 
-
+    // Generate reasonable text
     public override string ToString()
     {
         string BlockStr = 
@@ -176,6 +196,7 @@ public class BuffDescription
 
     public void Update(List<BuffEffect> EffectList, List<Card> queue)
     {
+        // Reset all the counts to 0
         for (int type = 0; type < 7 /* update for more buffeffects*/; type++)
         {
             BuffCounts[(BuffType)type] = 0;
