@@ -1,31 +1,93 @@
-﻿// Describes damage, healing, armor, Deciever cost --
+﻿using System.Collections.Generic;
+using Effects;
+using Cards;
+
+// Describes damage, healing, armor, Deciever cost --
 // everything that happens in Effects.Effect
 public class EffectDescription
 {
+    public class Stats
+    {
+        public float Damage;
+        public float Armor;
+    }
     // Healing represented by negative damage
-    public float EnemyDamage;
-    public float SelfDamage;
-    public float EnemyArmor;
-    public float SelfArmor;
-    public bool Amplified;
+    public Stats EnemyStats;
+    public Stats SelfStats;
+    public bool NotAmplified = false;
     public bool DiscardDecievers;
+
+    public void Update(List<Effect> EffectList, List<Card> queue, List<Card> discardPile, int cardsInHand)
+    {
+        foreach (var effect in EffectList)
+        {
+            if (queue.Count > effect.minStreak)
+            {
+                if (effect.affectiveUnit == UnitType.Enemy)
+                {
+                    GetStats(EnemyStats, discardPile, cardsInHand, effect);
+                }
+
+                else
+                {
+                    GetStats(SelfStats, discardPile, cardsInHand, effect);
+                }
+                    
+            
+                NotAmplified = NotAmplified || (effect.notAmplified);
+                DiscardDecievers = (effect.type == EffectType.DiscardDeceiver);
+            }
+        }
+    }
+
+    private static void GetStats(Stats statBlock, List<Card> discardPile, int cardsInHand, Effect effect)
+    {
+        switch (effect.type)
+        {
+            case EffectType.Barrier:
+                statBlock.Armor += effect.amount;
+                break;
+            case EffectType.Damage:
+            case EffectType.DamageIgnoreBarrier:
+                statBlock.Damage += effect.amount;
+                break;
+            case EffectType.Heal:
+                statBlock.Damage -= effect.amount;
+                break;
+            case EffectType.DamageOnDeceiverInDiscardPile:
+                foreach (var discarded in discardPile)
+                {
+                    if (discarded.GetComponent<MetaData>().strategy == StrategyType.Deceiver)
+                    {
+                        statBlock.Damage += effect.amount;
+                    }
+                }
+                break;
+            case EffectType.DiscardAllWithPerCardDamage:
+                statBlock.Damage += effect.amount * cardsInHand;
+                break;
+            default:
+                // Unimplemented
+                break;
+        }
+    }
 
     public override string ToString()
     {
-        string EnemyDamageStr = $"{EnemyDamage} damage to an enemy";
-        string SelfDamageStr = $"{SelfDamage} damage to yourself";
-        string SelfHealStr = $"{-SelfDamage} health";
-        string EnemyHealStr = $"{-EnemyDamage} health";
-        string SelfArmorStr = SelfArmor > 0 ? "Gain " : "Lose" + $"{SelfArmor} armor";
-        string EnemyArmorStr = "Enemy " + (EnemyArmor > 0 ? "gains " : "loses" + $"{EnemyArmor} armor");
+        string EnemyDamageStr = $"{EnemyStats.Damage} damage to an enemy";
+        string SelfDamageStr = $"{SelfStats.Damage} damage to yourself";
+        string SelfHealStr = $"{-SelfStats.Damage} health";
+        string EnemyHealStr = $"{-EnemyStats.Damage} health";
+        string SelfArmorStr = SelfStats.Armor > 0 ? "Gain " : "Lose" + $"{SelfStats.Armor} armor";
+        string EnemyArmorStr = "Enemy " + (EnemyStats.Armor > 0 ? "gains " : "loses" + $"{EnemyStats.Armor} armor");
         string UnamplifiedStr = "(Unamplified)";
         string DiscardDecieverStr = "Discard all Deciever cards.";
         string desc = "";
 
-        if (SelfDamage > 0)
+        if (SelfStats.Damage > 0)
         {
             desc += "Deal " + SelfDamageStr;
-            if (EnemyDamage > 0)
+            if (EnemyStats.Damage > 0)
             {
                 desc += " and " + EnemyDamageStr;
             }
@@ -33,35 +95,35 @@ public class EffectDescription
         }
         else
         {
-            if (EnemyDamage > 0)
+            if (EnemyStats.Damage > 0)
             {
                 desc += "Deal" + EnemyDamageStr + ".";
             }
         }
-        if (SelfDamage < 0)
+        if (SelfStats.Damage < 0)
         {
             desc += "Gain " + SelfHealStr;
-            if (EnemyDamage < 0)
+            if (EnemyStats.Damage < 0)
             {
                 desc += "and enemy gains" + EnemyHealStr + ".";
             }
         }
         else
         {
-            if (EnemyDamage < 0)
+            if (EnemyStats.Damage< 0)
             {
                 desc += "Enemy gains " + EnemyHealStr + ".";
             }
         }
-        if (SelfArmor != 0)
+        if (SelfStats.Armor != 0)
         {
             desc += SelfArmorStr + ".";
         }
-        if (EnemyArmor != 0)
+        if (EnemyStats.Armor != 0)
         {
             desc += EnemyArmorStr + ".";
         }
-        desc += Amplified ? "" : UnamplifiedStr;
+        desc += NotAmplified ? UnamplifiedStr : "";
         desc += DiscardDecievers ? DiscardDecieverStr : "";
         return desc;
     }
