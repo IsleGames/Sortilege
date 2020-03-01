@@ -1,5 +1,6 @@
-﻿// Describes damage, healing, and armor
-public class DamageDescription
+﻿// Describes damage, healing, armor, Deciever cost --
+// everything that happens in Effects.Effect
+public class EffectDescription
 {
     // Healing represented by negative damage
     public float EnemyDamage;
@@ -7,6 +8,7 @@ public class DamageDescription
     public float EnemyArmor;
     public float SelfArmor;
     public bool Amplified;
+    public bool DiscardDecievers;
 
     public override string ToString()
     {
@@ -16,7 +18,8 @@ public class DamageDescription
         string EnemyHealStr = $"{-EnemyDamage} health";
         string SelfArmorStr = SelfArmor > 0 ? "Gain " : "Lose" + $"{SelfArmor} armor";
         string EnemyArmorStr = "Enemy " + (EnemyArmor > 0 ? "gains " : "loses" + $"{EnemyArmor} armor");
-        string amplifiedStr = Amplified ? "" : "(Unamplified)";
+        string UnamplifiedStr = "(Unamplified)";
+        string DiscardDecieverStr = "Discard all Deciever cards.";
         string desc = "";
 
         if (SelfDamage > 0)
@@ -58,7 +61,8 @@ public class DamageDescription
         {
             desc += EnemyArmorStr + ".";
         }
-        desc += amplifiedStr;
+        desc += Amplified ? "" : UnamplifiedStr;
+        desc += DiscardDecievers ? DiscardDecieverStr : "";
         return desc;
     }
 }
