@@ -11,26 +11,55 @@ namespace Units
 {
 	public class Player : Unit
 	{
-		public int drawCount = 2;
+		public bool waitingForAction;
 
 		protected void Start()
 		{
+			waitingForAction = false;
 		}
 		
 
 		public override void StartTurn()
 		{
-			Game.Ctx.CardOperator.StartTurn();
+			if (Game.Ctx.activeUnit != this)
+			{
+				return;
+			}
 			
 			onTurnBegin.Invoke();
+			Game.Ctx.CardOperator.StartTurn();
+
+			waitingForAction = true;
+		}
+
+		
+		public void TryEndTurn()
+		{
+			if (waitingForAction)
+				EndTurn();
+			else
+			{
+				Debugger.Log("Nope, you can't end your turn now");
+				return;
+			}
 		}
 		
 		public override void EndTurn()
 		{
-			// Something something coroutine + ienum
-			Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+			waitingForAction = false;
+			
+			// onAttack Event goes here
+            isUnitFlinched = false;
+            onAttack.Invoke();
+            if (!isUnitFlinched) 
+				Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+            else
+            {
+	            // Some effect
+            }
 			
 			onTurnEnd.Invoke();
+			Game.Ctx.CardOperator.EndTurn();
 
 			beingDamagedSomewhere = false;
 			if (Game.Ctx.activeUnit == this)

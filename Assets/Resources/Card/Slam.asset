@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Deal 6 damage, does not amplify
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 6
     maxDeviation: 0

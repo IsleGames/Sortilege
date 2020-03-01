@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Deal 1 dmg for each Deceiver card in your discard pile.
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 5
     amount: 1
     maxDeviation: 0

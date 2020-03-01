@@ -107,7 +107,7 @@ namespace UI
             
             float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
 
-            Game.Ctx.AnimationOperator.PushAnimation(
+            Game.Ctx.AnimationOperator.PushAction(
                 HitPointNumberPController(
                     _barText,
                     initHitPoints,
@@ -135,7 +135,7 @@ namespace UI
             
                 Vector2 targetAnchoredPosition = new Vector3(xShift, 0f, 0f);
                 
-                Game.Ctx.AnimationOperator.PushAnimation(
+                Game.Ctx.AnimationOperator.PushAction(
                     Utilities.RectTransMoveAndScaleTo(bar, sp, targetSize, targetAnchoredPosition, animationKFactor)
                 );
             }

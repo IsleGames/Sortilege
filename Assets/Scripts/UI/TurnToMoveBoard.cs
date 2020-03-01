@@ -34,7 +34,7 @@ namespace UI
 
         public void StartAnimation()
         {
-            Game.Ctx.AnimationOperator.PushAnimation(FadeInOut(), true);
+            Game.Ctx.AnimationOperator.PushAction(FadeInOut(), true);
         }
 
         private void SetAlpha(float a)
@@ -50,6 +50,9 @@ namespace UI
 
         private IEnumerator FadeInOut()
         {
+            // Debugger.Log("FadeInOut working");
+            // Debugger.Log("stoppingTillDone: " + Game.Ctx.AnimationOperator.stoppingTillDone);
+            
             yield return null;
 
             float p = 0f;

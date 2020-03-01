@@ -13,7 +13,6 @@ namespace Effects
 {
 	public enum UnitType : int
 	{
-		Unknown,
 		Player,
 		Enemy
 	}

@@ -1,5 +1,6 @@
 using System;
 using System.Data;
+using _Editor;
 using Effects;
 using Managers;
 using Units;
@@ -97,7 +98,7 @@ namespace Buffs
 	    // OnAttack Effect
 	    private void Flinch()
 	    {
-		    Game.Ctx.CardOperator.isCurrentCardFlinched = true;
+		    GetComponentInParent<Unit>().isUnitFlinched = true;
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
@@ -110,8 +111,8 @@ namespace Buffs
 	    // OnTurnBegin Effect
 	    private void Voodoo()
 	    {
-		    if (!GetComponent<Unit>().beingDamagedSomewhere)
-				GetComponent<Health>().Heal(amount);
+		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
+				GetComponentInParent<Health>().Heal(amount);
 
 			GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
 			GetComponentInParent<BuffManager>().Destroy(this);

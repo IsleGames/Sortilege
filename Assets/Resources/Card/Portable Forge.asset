@@ -19,14 +19,14 @@ MonoBehaviour:
     next turn.
   disableRetract: 0
   effectList:
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 2
     amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
   buffList:
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 1
     amount: 1
     minStreak: 0

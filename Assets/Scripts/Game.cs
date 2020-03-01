@@ -35,7 +35,7 @@ public class Game : MonoBehaviour
         
     public IEnumerator BattleSeq;
 
-    public bool tutorial;
+    public bool isTutorial;
 
     private void Start()
     {
@@ -51,9 +51,9 @@ public class Game : MonoBehaviour
         VfxOperator = GetComponent<VfxManager>();
         AnimationOperator = GetComponent<AnimationManager>();
 
-        player = !tutorial? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
+        player = !isTutorial? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
         player.Initialize();
-        enemy = tutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
+        enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
         enemy.Initialize();
 
         turnCount = 0;
@@ -79,14 +79,14 @@ public class Game : MonoBehaviour
         {
             turnCount += 1;
             
-            Debugger.Log("player play");
+            Debugger.Warning("player play");
             VfxOperator.ShowTurnText("Player Turn");
             
             activeUnit = player;
             RunningMethod = player.StartTurn;
             yield return null;
             
-            Debugger.Log("enemy play");
+            Debugger.Warning("enemy play");
             VfxOperator.ShowTurnText("Enemy Turn");
             
             activeUnit = enemy;
@@ -98,10 +98,33 @@ public class Game : MonoBehaviour
     public void Continue()
     {
         if (IsBattleEnded()) return;
-        BattleSeq.MoveNext();
-        RunningMethod();
+        
+        // Push StartNextTurn into the queue to make it run after all animations
+        // And pause the system-level calculation till everything before is done
+        AnimationOperator.PushAction(StartNextTurn());
     }
-    
+
+    private IEnumerator StartNextTurn()
+    {
+        // Wait a frame so everything remains in the queue is popped out
+        yield return new WaitForEndOfFrame();
+        
+        AnimationOperator.onAnimationEnd.Invoke();
+        
+        BattleSeq.MoveNext();
+
+        AnimationOperator.PushAction(ActivateNextTurn());
+        yield return null;
+    }
+
+    private IEnumerator ActivateNextTurn()
+    {
+        AnimationOperator.onAnimationEnd.Invoke();
+        
+        RunningMethod();
+        yield return null;
+    }
+
     public bool IsBattleEnded()
     {
         return player.GetComponent<Health>().IsDead() || enemy.GetComponent<Health>().IsDead();
@@ -132,7 +155,7 @@ public class Game : MonoBehaviour
             {
                 Debugger.Log("player lost");
                 VfxOperator.ShowTurnText("Battle Lost");
-                if (tutorial)
+                if (isTutorial)
                 {
                     transform.GetComponentInChildren<TextMeshPro>().text = "oops.. You died.. Let's do it again.";
                 }

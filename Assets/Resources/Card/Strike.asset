@@ -18,8 +18,10 @@ MonoBehaviour:
   description: Deal 3 Damage
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 3
+    maxDeviation: 0
     minStreak: 0
     notAmplified: 0
+  buffList: []

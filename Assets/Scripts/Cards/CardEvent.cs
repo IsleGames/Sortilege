@@ -55,6 +55,7 @@ namespace Cards
     
         private void OnMouseUp()
         {
+            if (!Game.Ctx.player.waitingForAction) return;
             if (!availability) return;
             if (!isDragged && !Game.Ctx.VfxOperator.draggedCard && !animationLock)
             {

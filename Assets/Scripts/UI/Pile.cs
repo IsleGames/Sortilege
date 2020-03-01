@@ -114,7 +114,7 @@ namespace UI
                 QueueCenter.y,
                 QueueCenter.z);
 
-            Game.Ctx.AnimationOperator.PushAnimation(
+            Game.Ctx.AnimationOperator.PushAction(
                 Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.15f),
                 stopFlag
             );

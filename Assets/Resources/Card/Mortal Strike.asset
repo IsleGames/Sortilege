@@ -19,15 +19,16 @@ MonoBehaviour:
     shield
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 3
     amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  buffList:
   - affectiveUnit: 1
-    type: 0
-    amount: 1
+    type: 3
+    amount: 2
+    maxDeviation: 0
     minStreak: 0
     notAmplified: 0
+  buffList: []
