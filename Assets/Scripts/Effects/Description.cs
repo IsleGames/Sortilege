@@ -10,33 +10,43 @@ public class EffectDescription
     {
         public float Damage;
         public float Armor;
+        public Stats(float a, float b)
+        { Damage = a;
+          Armor = b;
+        }
     }
     // Healing represented by negative damage
     public Stats EnemyStats;
     public Stats SelfStats;
     public bool NotAmplified = false;
-    public bool DiscardDecievers;
+    public bool DiscardDecievers = false;
 
     public void Update(List<Effect> EffectList, List<Card> queue, List<Card> discardPile, int cardsInHand)
     {
+        EnemyStats = new Stats(0, 0);
+        SelfStats = new Stats(0, 0);
+        NotAmplified = false;
+        DiscardDecievers = false;
+
         foreach (var effect in EffectList)
         {
-            if (queue.Count > effect.minStreak)
+            if (queue.Count  < effect.minStreak)
             {
-                if (effect.affectiveUnit == UnitType.Enemy)
-                {
-                    GetStats(EnemyStats, discardPile, cardsInHand, effect);
-                }
-
-                else
-                {
-                    GetStats(SelfStats, discardPile, cardsInHand, effect);
-                }
-                    
-            
-                NotAmplified = NotAmplified || (effect.notAmplified);
-                DiscardDecievers = (effect.type == EffectType.DiscardDeceiver);
+                continue;
             }
+            
+            if (effect.affectiveUnit == UnitType.Enemy)
+            {
+                GetStats(EnemyStats, discardPile, cardsInHand, effect);
+            }
+
+            else
+            {
+                GetStats(SelfStats, discardPile, cardsInHand, effect);
+            }
+
+            NotAmplified = NotAmplified || (effect.notAmplified);
+            DiscardDecievers = DiscardDecievers || (effect.type == EffectType.DiscardDeceiver);
         }
     }
 
@@ -132,29 +142,51 @@ public class EffectDescription
 // Describes everything in BuffEffect.cs
 public class BuffDescription
 {
-    public int Block;
-    public int Forge;
-    public int Thorns;
-    public int Plague;
-    public int Flinch;
-    public int Voodoo;
-    public int Breeze;
+
+    Dictionary<BuffType, int> BuffCounts = new Dictionary<BuffType, int>()
+    {
+        { BuffType.Block, 0 },
+        { BuffType.Forge, 0 },
+        { BuffType.Thorns, 0 },
+        { BuffType.Plague, 0 },
+        { BuffType.Flinch, 0 },
+        { BuffType.Voodoo, 0 },
+        { BuffType.Breeze, 0 },
+    };
+
 
     public override string ToString()
     {
-        string BlockStr = $"Enemy skips their next {Block + Flinch} attacks";
-        string ForgeStr = $"Draw {Forge} more cards next turn";
-        string ThornsStr = $"Deal {Thorns} damage back when hit";
-        string PlagueStr = $"Deal 1 damage to each enemy for the next {Plague} turns";
+        string BlockStr = 
+            $"Enemy skips their next {BuffCounts[BuffType.Block] + BuffCounts[BuffType.Flinch]} attacks";
+        string ForgeStr = $"Draw {BuffCounts[BuffType.Forge]} more cards next turn";
+        string ThornsStr = $"Deal {BuffCounts[BuffType.Thorns]} damage back when hit";
+        string PlagueStr = $"Deal 1 damage to each enemy for the next {BuffCounts[BuffType.Plague]} turns";
         //string FlinchStr: see BlockStr
-        string VoodooStr = $"If you don't lose health this turn, gain {Voodoo} health";
+        string VoodooStr = $"If you don't lose health this turn, gain {BuffCounts[BuffType.Voodoo]} health";
         // Breeze is still unimplemented
         string desc = "";
-        if (Block > 0 || Flinch > 0) desc += BlockStr + ".";
-        if (Forge > 0) desc += ForgeStr + ".";
-        if (Thorns > 0) desc += ThornsStr + ".";
-        if (Plague > 0) desc += PlagueStr + ".";
-        if (Voodoo > 0) desc += VoodooStr + ".";
+        if (BuffCounts[BuffType.Block] > 0 || BuffCounts[BuffType.Flinch] > 0) desc += BlockStr + ".";
+        if (BuffCounts[BuffType.Forge] > 0) desc += ForgeStr + ".";
+        if (BuffCounts[BuffType.Thorns] > 0) desc += ThornsStr + ".";
+        if (BuffCounts[BuffType.Plague] > 0) desc += PlagueStr + ".";
+        if (BuffCounts[BuffType.Voodoo] > 0) desc += VoodooStr + ".";
         return desc;
+    }
+
+    public void Update(List<BuffEffect> EffectList, List<Card> queue)
+    {
+        for (int type = 0; type < 7 /* update for more buffeffects*/; type++)
+        {
+            BuffCounts[(BuffType)type] = 0;
+        }
+
+        foreach (var effect in EffectList)
+        {
+            if (queue.Count >= effect.minStreak)
+            {
+                BuffCounts[effect.type] += (int) effect.amount;
+            }
+        }
     }
 }
