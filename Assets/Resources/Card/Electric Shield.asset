@@ -19,7 +19,7 @@ MonoBehaviour:
   disableRetract: 0
   effectList: []
   buffList:
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 0
     amount: 2
     minStreak: 4
