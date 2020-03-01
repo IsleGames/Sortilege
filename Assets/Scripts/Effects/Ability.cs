@@ -7,11 +7,12 @@ using Effects;
 
 using _Editor;
 
-namespace Cards
+namespace Effects
 {
-    public class Ability: MonoBehaviour
+    [Serializable]
+    public class Ability
     {
-        public bool disableRetract;
+        // public bool disableRetract;
         
         public List<Effect> effectList;
         public List<BuffEffect> buffEffectList;

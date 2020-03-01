@@ -39,7 +39,7 @@ namespace Managers
 
         public void PushAction(IEnumerator move, bool stopTillDone = false)
         {
-            Debugger.Log("Now adding to queue: " + move + "");
+            // Debugger.Log("Now adding to queue: " + move + "");
             
             EventQueue.Add(move);
             StopQueue.Add(stopTillDone);
@@ -49,7 +49,7 @@ namespace Managers
         
         private void TryRunEverything() 
         {
-            Debugger.Log("Try Run with stoppingTillDone as " + stoppingTillDone);
+            // Debugger.Log("Try Run with stoppingTillDone as " + stoppingTillDone);
             
             if (stoppingTillDone) return;
             
@@ -76,7 +76,7 @@ namespace Managers
             
             if (runningAnimationCount > 0)
             {
-                Debugger.Log("OnIEnumRunningEnd activated with remaining count " + runningAnimationCount  + " - 1");
+                // Debugger.Log("OnIEnumRunningEnd activated with remaining count " + runningAnimationCount  + " - 1");
                 
                 runningAnimationCount -= 1;
 
@@ -98,7 +98,7 @@ namespace Managers
             IEnumerator move = EventQueue[0];
             bool ret = StopQueue[0];
             
-            Debugger.Log("Now running: " + move + " with remaining count " + runningAnimationCount + " + 1");
+            // Debugger.Log("Now running: " + move + " with remaining count " + runningAnimationCount + " + 1");
             
             runningAnimationCount += 1;
             

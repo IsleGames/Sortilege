@@ -329,7 +329,6 @@ GameObject:
   - component: {fileID: 3739844958693504397}
   - component: {fileID: 259864822333981725}
   - component: {fileID: -7766759408608403537}
-  - component: {fileID: 7340009696570777890}
   - component: {fileID: 5913512150263492462}
   - component: {fileID: 7515948331846301131}
   - component: {fileID: 3739844958693504396}
@@ -380,7 +379,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a16b79d39de424a8039be3d9671d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
 --- !u!114 &-7766759408608403537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -398,23 +396,11 @@ MonoBehaviour:
   strategy: 0
   attribute: 0
   target: 0
+  ability:
+    effectList: []
+    buffEffectList: []
   level: 0
   maxLevel: 0
---- !u!114 &7340009696570777890
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3739844958693504499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c3f7e1b14224ac98198c88f7abc458e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  disableRetract: 0
-  effectList: []
-  buffEffectList: []
 --- !u!114 &5913512150263492462
 MonoBehaviour:
   m_ObjectHideFlags: 0

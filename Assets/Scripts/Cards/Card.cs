@@ -34,9 +34,10 @@ namespace Cards
             
             GetComponent<MetaData>().description = cardData.description;
 
-            GetComponent<Ability>().disableRetract = cardData.disableRetract;
-            GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
-            GetComponent<Ability>().buffEffectList = new List<BuffEffect>(cardData.buffList);
+            // GetComponent<Ability>().disableRetract = cardData.disableRetract;
+            
+            GetComponent<MetaData>().ability.effectList = new List<Effect>(cardData.effectList);
+            GetComponent<MetaData>().ability.buffEffectList = new List<BuffEffect>(cardData.buffList);
         }
 
         public void SetAvailability(bool availability)
@@ -54,7 +55,7 @@ namespace Cards
         
         public void Apply(Unit target, float streakCount)
         {
-            GetComponent<Ability>().Apply(target, streakCount);
+            GetComponent<MetaData>().ability.Apply(target, streakCount);
 
             if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }

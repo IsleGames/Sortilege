@@ -9,6 +9,7 @@ using _Editor;
 using Managers;
 using TMPro;
 using Units;
+using Units.Enemies;
 using Object = UnityEngine.Object;
 
 // ReSharper disable InconsistentNaming
@@ -21,17 +22,18 @@ public class Game : MonoBehaviour
 
     public CardManager CardOperator;
     public VfxManager VfxOperator;
+    public EnemyManager EnemyOperator;
     public AnimationManager AnimationOperator;
 
     public Player player;
-    public Enemy enemy;
+    // public Enemy enemy;
 
     public int turnCount;
     public Unit activeUnit;
 
-    public delegate void RoutineMethod();
+    public delegate void DelegateMethod();
 
-    public RoutineMethod RunningMethod;
+    public DelegateMethod RunningMethod;
         
     public IEnumerator BattleSeq;
 
@@ -49,10 +51,12 @@ public class Game : MonoBehaviour
 
         CardOperator = GetComponent<CardManager>();
         VfxOperator = GetComponent<VfxManager>();
+        EnemyOperator = GetComponent<EnemyManager>();
         AnimationOperator = GetComponent<AnimationManager>();
 
-        player = !isTutorial? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
+        player = !isTutorial ? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
         player.Initialize();
+        
         enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
         enemy.Initialize();
 

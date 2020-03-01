@@ -27,7 +27,7 @@ namespace Managers
 		
         public UnityEvent onTopChange = new UnityEvent();
 
-        [SerializeField] public bool _disableOnTopChangeCalling = false;
+        [SerializeField] public bool _disableMetaTypeFiltering = false;
 
         public List<CardData> CardList;
         public Pile pileDeck, pileDiscard;
@@ -129,16 +129,16 @@ namespace Managers
 			pilePlay.Add(card);
 			pileHand.Remove(card);
 			
-			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
+			if (!_disableMetaTypeFiltering) onTopChange.Invoke();
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)
 		{
-			if (card.GetComponent<Ability>().disableRetract)
-			{
-				// This is a fail-safe error; Show it in the UI directly
-				throw new InvalidOperationException("Card is not retractable");
-			}
+			// if (card.GetComponent<Ability>().disableRetract)
+			// {
+			// 	// This is a fail-safe error; Show it in the UI directly
+			// 	throw new InvalidOperationException("Card is not retractable");
+			// }
 
 			int cardIndex = pilePlay.IndexOf(card);
 			if (cardIndex == -1)
@@ -158,7 +158,7 @@ namespace Managers
 
 			pileHand.AddRange(discardList);
 			
-			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
+			if (!_disableMetaTypeFiltering) onTopChange.Invoke();
 		}
 
 		public void DrawCards(int number, bool onEmptyShuffle = true, bool random = true)
@@ -195,7 +195,7 @@ namespace Managers
 		        List<Card> discardList = pilePlay.DrawAll();
 				pileDiscard.AddRange(discardList, false, true);
 				
-				if (!_disableOnTopChangeCalling) onTopChange.Invoke();
+				if (!_disableMetaTypeFiltering) onTopChange.Invoke();
 	        }
         }
 		
