@@ -66,8 +66,7 @@ namespace Cards
             {
                 RaycastHit2D hit = hitArray[i];
                 
-                // Debugger.Log(hit.transform.gameObject.name);
-                hit.collider.GetComponent<CardEvent>().RayCast2DTrigger();
+                if (hit.collider.GetComponent<Card>()) hit.collider.GetComponent<CardEvent>().RayCast2DTrigger();
             }
         }
         

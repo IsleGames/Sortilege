@@ -100,7 +100,6 @@ namespace UI
             float hpRatio = pHealth.hitPoints / totHitPoints;
             float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
             
-            
             AdjustBar(hpRatio, _redBar, animated);
             AdjustBar(barrierRatio, _blueBar, animated);
 
