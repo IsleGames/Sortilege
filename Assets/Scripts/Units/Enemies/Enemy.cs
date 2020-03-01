@@ -30,6 +30,8 @@ namespace Units.Enemies
             
             title = enemyData.title;
             description = enemyData.description;
+
+            GetComponent<Health>().maximumHitPoints = enemyData.maximumHealth;
             GetComponent<EnemyRender>().imgSprite = enemyData.displayImage;
 
             foreach (EnemyAbilityData moveData in enemyData.abilityList)
@@ -74,10 +76,14 @@ namespace Units.Enemies
 			// Randomize a skill
             // Todo: add enemyActionType
 
-            // Streak Count is used as turnCount here
-            int choice = Random.Range(0, abilityList.Count);
+            int choice = 0;
+            for (int i = 0; i < 40; i++)
+            {
+	            choice = Random.Range(0, abilityList.Count);
+	            if (abilityList[choice].activateTurnCount <= Game.Ctx.turnCount) break;
+            }
 
-            abilityList[choice].Apply(Game.Ctx.player, Game.Ctx.turnCount);
+            abilityList[choice].ApplyAsEnemy(this);
 		}
 		
 		public override void EndTurn()

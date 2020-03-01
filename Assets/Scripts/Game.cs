@@ -57,8 +57,8 @@ public class Game : MonoBehaviour
         player = !isTutorial ? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
         player.Initialize();
         
-        enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
-        enemy.Initialize();
+        // enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
+        // EnemyOperator.Initialize();
 
         turnCount = 0;
 
@@ -87,15 +87,22 @@ public class Game : MonoBehaviour
             VfxOperator.ShowTurnText("Player Turn");
             
             activeUnit = player;
-            RunningMethod = player.StartTurn;
+            RunningMethod = activeUnit.StartTurn;
             yield return null;
             
             Debugger.Warning("enemy play");
             VfxOperator.ShowTurnText("Enemy Turn");
             
-            activeUnit = enemy;
-            RunningMethod = enemy.StartTurn;
-            yield return null;
+            EnemyOperator.InitEnemy();
+            activeUnit = EnemyOperator.GetNextEnemy();
+
+            while (activeUnit != null)
+            {
+                RunningMethod = activeUnit.StartTurn;
+                yield return null;
+                
+                activeUnit = EnemyOperator.GetNextEnemy();
+            }
         }
     }
     
@@ -131,7 +138,7 @@ public class Game : MonoBehaviour
 
     public bool IsBattleEnded()
     {
-        return player.GetComponent<Health>().IsDead() || enemy.GetComponent<Health>().IsDead();
+        return player.GetComponent<Health>().IsDead() || EnemyOperator.IsAllEnemyDead();
     }
     
     public bool HasPlayerLost()

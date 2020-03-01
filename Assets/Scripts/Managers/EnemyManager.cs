@@ -33,10 +33,34 @@ namespace Managers
 
                 EnemyList.Add(newEnemy);
             }
+
+            curEnemy = null;
+        }
+
+        public bool IsAllEnemyDead()
+        {
+            bool ret = true;
+            
+            foreach (Enemy enemy in EnemyList)
+                if (!enemy.GetComponent<Health>().IsDead())
+                {
+                    ret = false;
+                    break;
+                }
+
+            return ret;
         }
 
         private IEnumerator NextEnemy()
         {
+            foreach (Enemy enemy in EnemyList)
+                if (!enemy.GetComponent<Health>().IsDead())
+                {
+                    curEnemy = enemy;
+                    yield return null;
+                }
+
+            curEnemy = null;
             yield return null;
         }
 
@@ -50,6 +74,5 @@ namespace Managers
             AttackSeq.MoveNext();
             return curEnemy;
         }
-
     }
 }

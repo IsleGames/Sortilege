@@ -44,6 +44,7 @@ namespace Effects
 			EffectType type,
 			float amount,
 			int streakCount = 1,
+			int turnCountEnemy = 1,
 			bool notAmplified = false,
 			float maxDeviation = 0f
 		)

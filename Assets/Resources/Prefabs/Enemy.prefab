@@ -140,6 +140,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8479436548672712510}
   - component: {fileID: 2519710142436281370}
+  - component: {fileID: 6241190050766400283}
   - component: {fileID: 631532667604453807}
   - component: {fileID: 1414300344802737712}
   m_Layer: 0
@@ -183,9 +184,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 49146bb3d1edb4fd3b22144f2b927fef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beingDamagedSomewhere: 0
+  isUnitFlinched: 0
+  onTurnBegin:
+    m_PersistentCalls:
+      m_Calls: []
+  onAttack:
+    m_PersistentCalls:
+      m_Calls: []
   onDamage:
     m_PersistentCalls:
       m_Calls: []
+  onTurnEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  onHealthChange:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyData: {fileID: 0}
+  title: 
+  description: 
+  abilityList: []
+--- !u!114 &6241190050766400283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497116602034066205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee0bcb8e988c4739ab5c3a37704b246f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imgSprite: {fileID: 0}
 --- !u!114 &631532667604453807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,12 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BuffList: []
-  offsetMargin: 5
-  scaleFactor: 0.5
-  QueueCenter: {x: 0, y: 0, z: 0}
   align: 2
-  StartingIndex: 0
-  TotalBuffWidth: 0
 --- !u!1001 &9027454070334575840
 PrefabInstance:
   m_ObjectHideFlags: 0

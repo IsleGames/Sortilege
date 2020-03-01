@@ -835,6 +835,7 @@ GameObject:
   - component: {fileID: 1051549742}
   - component: {fileID: 1051549746}
   - component: {fileID: 1051549744}
+  - component: {fileID: 1051549749}
   - component: {fileID: 1051549748}
   m_Layer: 0
   m_Name: Game
@@ -858,9 +859,9 @@ MonoBehaviour:
   UICanvas: {fileID: 0}
   CardOperator: {fileID: 0}
   VfxOperator: {fileID: 0}
+  EnemyOperator: {fileID: 0}
   AnimationOperator: {fileID: 0}
   player: {fileID: 0}
-  enemy: {fileID: 0}
   turnCount: 0
   activeUnit: {fileID: 0}
   isTutorial: 0
@@ -944,7 +945,7 @@ MonoBehaviour:
   onTopChange:
     m_PersistentCalls:
       m_Calls: []
-  _disableOnTopChangeCalling: 0
+  _disableMetaTypeFiltering: 0
   CardList:
   - {fileID: 11400000, guid: 74b9cf3a7b5914966806113a063094a3, type: 2}
   - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
@@ -999,6 +1000,23 @@ MonoBehaviour:
   StopQueue: 
   runningAnimationCount: 0
   stoppingTillDone: 0
+--- !u!114 &1051549749
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051549741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fec22cd26e4a411f828d773634ac5e25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyList: []
+  EnemyInitData:
+  - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
+  curEnemy: {fileID: 0}
+  enemyPrefab: {fileID: 0}
 --- !u!1001 &1164532603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1145,6 +1163,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 8497116602034066205, guid: 63a2fa794ae01424cbd09e2e268f1984,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 63a2fa794ae01424cbd09e2e268f1984, type: 3}

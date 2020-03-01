@@ -19,14 +19,10 @@ namespace Units
 
         [FormerlySerializedAs("HitPoints")] public float hitPoints = -1f;
         
-        public void Start()
-        {
-            if (hitPoints < 0f)
-                hitPoints = maximumHitPoints;
-        }
-
         public void Initialize()
         {
+            hitPoints = maximumHitPoints;
+            
             GetComponentInChildren<HealthBar>().UpdateStatus(false);
         }
 

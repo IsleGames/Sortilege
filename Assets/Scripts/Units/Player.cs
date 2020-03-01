@@ -52,7 +52,7 @@ namespace Units
             isUnitFlinched = false;
             onAttack.Invoke();
             if (!isUnitFlinched) 
-				Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+				Game.Ctx.CardOperator.Apply(Game.Ctx.EnemyOperator.EnemyList[0]);
             else
             {
 	            // Some effect

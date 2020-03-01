@@ -24,8 +24,15 @@ namespace UI
 
         private Rect _thisRect;
 
-        private void Start()
+        private void Awake()
         {
+            pHealth = GetComponentInParent<Health>();
+            if (!pHealth)
+            {
+                pHealth = GetComponent<Health>();
+                if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
+            }
+            
             foreach (Transform tr in GetComponentsInChildren<Transform>())
                 switch (tr.name)
                 {
@@ -46,7 +53,7 @@ namespace UI
                         // Debugger.Log(tr.gameObject + "'s GUI is " + _barText);
                         break;
                 }
-
+            
             _whiteBar.GetComponent<SpriteRenderer>().enabled = false;
             // _blueBar.GetComponent<SpriteRenderer>().enabled = false;
             
@@ -56,17 +63,11 @@ namespace UI
                 _thisRect.width,
                 _thisRect.height
                 );
-            
-            if (!pHealth)
-            {
-                pHealth = GetComponentInParent<Health>();
-                if (!pHealth)
-                {
-                    pHealth = GetComponent<Health>();
-                    if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
-                }
-            }
-            
+        }
+
+        private void Start()
+        {
+
             GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
         }
         
