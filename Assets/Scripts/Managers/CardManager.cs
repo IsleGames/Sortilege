@@ -120,8 +120,7 @@ namespace Managers
 				return pileDiscard;
 			throw new InvalidOperationException("Card not found in any pile");
 		}
-		
-
+        
 		public void AddCardToQueue(Card card)
 		{
 			if (!pileHand.Contains(card))
