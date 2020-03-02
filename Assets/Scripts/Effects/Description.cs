@@ -8,6 +8,7 @@
 using System.Collections.Generic;
 using Effects;
 using Cards;
+using UnityEngine;
 
 // Describes damage, healing, armor, Deciever cost --
 // everything that happens in Effects.Effect
@@ -28,8 +29,10 @@ public class EffectDescription
             Armor *= n;
         }
     }
-    public Stats EnemyStats;
-    public Stats SelfStats;
+    public Stats EnemyStatsLowBound;
+    public Stats EnemyStatsHighBound;
+    public Stats SelfStatsLowBound;
+    public Stats SelfStatsHighBound;
     public bool NotAmplified = false;
     public bool DiscardDecievers = false;
 
@@ -52,12 +55,12 @@ public class EffectDescription
 
             if (effect.affectiveUnit == UnitType.Enemy)
             {
-                GetStats(EnemyStats, currentStreak, DeceiversInDiscard, cardsInHand, effect);
+                GetStats(effect, EnemyStatsLowBound, EnemyStatsHighBound, currentStreak);
             }
 
             else
             {
-                GetStats(SelfStats, currentStreak, DeceiversInDiscard, cardsInHand, effect);
+                GetStats(effect, SelfStatsLowBound, SelfStatsHighBound, currentStreak);
             }
 
            
@@ -68,36 +71,34 @@ public class EffectDescription
 
     private void Initialize()
     {
-        EnemyStats = new Stats(0, 0);
-        SelfStats = new Stats(0, 0);
+        EnemyStatsLowBound = new Stats(0, 0);
+        EnemyStatsHighBound = new Stats(0, 0);
+        SelfStatsLowBound = new Stats(0, 0);
+        SelfStatsHighBound = new Stats(0, 0);
         NotAmplified = false;
         DiscardDecievers = false;
     }
 
     // Figure out how much damage / healing / armor an effect is going to affect
-    private static void GetStats(Stats statBlock, int currentStreak, int DeceiversInDiscard, int cardsInHand, Effect effect)
+    private static void GetStats(Effect effect, Stats lowBound, Stats highBound, int currentStreak)
     {
-        int factor = effect.notAmplified ? 1 : currentStreak;
-        float amount = effect.amount * factor;
+        (float low, float high) = effect.EffectRange(currentStreak);
         switch (effect.type)
         {
             case EffectType.Barrier:
-                statBlock.Armor += amount;
+                lowBound.Armor += low;
+                highBound.Armor += high;
                 break;
             case EffectType.Damage:
-                statBlock.Damage += amount;
-                break;
             case EffectType.DamageIgnoreBarrier:
-                statBlock.Damage += amount;
+            case EffectType.DamageOnDeceiverInDiscardPile:
+            case EffectType.DiscardAllWithPerCardDamage:
+                lowBound.Damage += low;
+                highBound.Damage += high;
                 break;
             case EffectType.Heal:
-                statBlock.Damage -= amount;
-                break;
-            case EffectType.DamageOnDeceiverInDiscardPile:
-                statBlock.Damage += (amount * DeceiversInDiscard);
-                break;
-            case EffectType.DiscardAllWithPerCardDamage:
-                statBlock.Damage += amount * cardsInHand;
+                lowBound.Damage -= high;
+                highBound.Damage -= low;
                 break;
             default:
                 // Unimplemented
@@ -106,23 +107,37 @@ public class EffectDescription
         
     }
 
+    string DescribeRange(float low, float high)
+    {
+        if (Mathf.Approximately(low, high))
+        {
+            return $"{ low}";
+        }
+        else
+        {
+            return $"{low} - {high}";
+        }
+    }
+
     // Generate reasonable text 
     public override string ToString()
     {
-        string EnemyDamageStr = $"{EnemyStats.Damage} dmg to an enemy";
-        string SelfDamageStr = $"{SelfStats.Damage} dmg to you";
-        string SelfHealStr = $"{-SelfStats.Damage} health";
-        string EnemyHealStr = $"{-EnemyStats.Damage} health";
-        string SelfArmorStr = (SelfStats.Armor > 0 ? "Gain " : "Lose") + $"{SelfStats.Armor} armor";
-        string EnemyArmorStr = "Enemy " + (EnemyStats.Armor > 0 ? "gains " : "loses" + $"{EnemyStats.Armor} armor");
-        string UnamplifiedStr = " (Unamplified)";
+        string EnemyDamageStr = $"{DescribeRange(EnemyStatsLowBound.Damage, EnemyStatsHighBound.Damage)} dmg to an enemy";
+        string SelfDamageStr = $"{DescribeRange(SelfStatsLowBound.Damage, SelfStatsHighBound.Damage)}dmg to you";
+        string SelfHealStr = $"{DescribeRange(-SelfStatsLowBound.Damage, -SelfStatsHighBound.Damage)} health";
+        string EnemyHealStr = $"{DescribeRange(-EnemyStatsLowBound.Damage, - EnemyStatsHighBound.Damage)} health";
+        string SelfArmorStr = (SelfStatsLowBound.Armor > 0 ? "Gain " : "Lose") + 
+            $"{DescribeRange(SelfStatsLowBound.Armor, SelfStatsHighBound.Armor)} armor";
+        string EnemyArmorStr = "Enemy " + 
+            (EnemyStatsLowBound.Armor > 0 ? "gains " : "loses" +
+            $"{DescribeRange(EnemyStatsLowBound.Armor, EnemyStatsHighBound.Armor)} armor");
         string DiscardDecieverStr = "Discard all Deciever cards.";
         string desc = "";
 
-        if (SelfStats.Damage > 0)
+        if (SelfStatsLowBound.Damage > 0)
         {
             desc += "Deal " + SelfDamageStr;
-            if (EnemyStats.Damage > 0)
+            if (EnemyStatsLowBound.Damage > 0)
             {
                 desc += " and " + EnemyDamageStr;
             }
@@ -130,31 +145,31 @@ public class EffectDescription
         }
         else
         {
-            if (EnemyStats.Damage > 0)
+            if (EnemyStatsLowBound.Damage > 0)
             {
                 desc += "Deal " + EnemyDamageStr + ".";
             }
         }
-        if (SelfStats.Damage < 0)
+        if (SelfStatsHighBound.Damage < 0)
         {
             desc += "Gain " + SelfHealStr;
-            if (EnemyStats.Damage < 0)
+            if (EnemyStatsHighBound.Damage < 0)
             {
                 desc += "and enemy gains" + EnemyHealStr + ".";
             }
         }
         else
         {
-            if (EnemyStats.Damage< 0)
+            if (EnemyStatsHighBound.Damage< 0)
             {
                 desc += "Enemy gains " + EnemyHealStr + ".";
             }
         }
-        if (SelfStats.Armor != 0)
+        if (SelfStatsHighBound.Armor != 0)
         {
             desc += SelfArmorStr + ".";
         }
-        if (EnemyStats.Armor != 0)
+        if (EnemyStatsHighBound.Armor != 0)
         {
             desc += EnemyArmorStr + ".";
         }
