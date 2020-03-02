@@ -53,7 +53,7 @@ namespace Units.Enemies
 			{
 				return;
 			}
-			
+
 			onTurnBegin.Invoke();
 			
 			// onAttack Event goes here

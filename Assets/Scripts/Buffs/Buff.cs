@@ -90,7 +90,7 @@ namespace Buffs
 	    // OnDamage Effect
 	    private IEnumerator Thorns()
 	    {
-		    yield return new WaitForEndOfFrame();
+		    // yield return new WaitForEndOfFrame();
 		    
 		    Game.Ctx.activeUnit.GetComponent<Health>().Damage(amount);
 		    

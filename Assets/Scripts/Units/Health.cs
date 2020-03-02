@@ -1,5 +1,6 @@
 using System;
 using _Editor;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -74,6 +75,12 @@ namespace Units
             }
             
             GetComponent<Unit>().onHealthChange.Invoke();
+            
+            if (!Mathf.Approximately(hitPoints, 0f))
+            {
+                GetComponent<Unit>().onDead.Invoke();
+                GetComponent<BuffManager>().DestroyAll();
+            }
         }
 
         public void Heal(float amount)
