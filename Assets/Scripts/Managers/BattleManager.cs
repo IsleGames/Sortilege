@@ -5,6 +5,7 @@ using TMPro;
 using UnityEngine;
 
 using Units;
+using UnityEngine.SceneManagement;
 
 namespace Managers
 {
@@ -118,7 +119,7 @@ namespace Managers
             {
                 if (!HasPlayerLost())
                 {
-                    Debugger.Log("player wins");
+                    // Debugger.Log("player wins");
                     Game.Ctx.VfxOperator.ShowTurnText("Battle Complete");
                     
     // #if UNITY_EDITOR
@@ -126,11 +127,16 @@ namespace Managers
     // #else
     //                 Application.Quit();
     // #endif
+                if (Game.Ctx.UserOperator)
+                {
+                    SceneManager.LoadScene("Scenes/AddCard");
+                }
+    
     
                 }
                 else
                 {
-                    Debugger.Log("player lost");
+                    // Debugger.Log("player lost");
                     Game.Ctx.VfxOperator.ShowTurnText("Battle Lost");
                     if (Game.Ctx.isTutorial)
                     {

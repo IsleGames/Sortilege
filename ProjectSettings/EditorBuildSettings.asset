@@ -5,13 +5,16 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/_preload.unity
     guid: f34f6d12ed03cd147b413fea32cea48e
-  - enabled: 0
-    path: Assets/Scenes/TestScenes/StartMenu.unity
-    guid: 57ba05bcbd23d411c9c9a16180e6c4bf
+  - enabled: 1
+    path: Assets/Scenes/StartMenu.unity
+    guid: ad5e4236a7d154b80a2addad67cbeed7
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: 2030b7a5433a8434ea422e3fef6c63c2
+  - enabled: 1
+    path: Assets/Scenes/AddCard.unity
+    guid: 3b631e4ce9795417890fefa05f4af92a
   m_configObjects: {}

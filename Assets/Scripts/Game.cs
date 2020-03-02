@@ -35,6 +35,8 @@ public class Game : MonoBehaviour
     public BattleManager BattleOperator;
     public AfterBattleRewardManager AfterBattleRewardOperator;
 
+    public UserManager UserOperator;
+
     public SceneType sceneType;
     
     public bool isTutorial;
@@ -64,6 +66,9 @@ public class Game : MonoBehaviour
 
         BattleOperator = GetComponent<BattleManager>();
         AfterBattleRewardOperator = GetComponent<AfterBattleRewardManager>();
+        
+        // Global Links
+        UserOperator = FindObjectOfType<UserManager>();
 
         switch (sceneType)
         {
@@ -75,5 +80,4 @@ public class Game : MonoBehaviour
                 break;
         }
     }
-
 }

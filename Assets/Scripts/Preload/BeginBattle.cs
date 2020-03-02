@@ -33,5 +33,4 @@ public class BeginBattle : MonoBehaviour
         }
         SceneManager.LoadScene(idx);
     }
-    
 }

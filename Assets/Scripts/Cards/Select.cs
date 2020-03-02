@@ -10,7 +10,6 @@ public class Select : MonoBehaviour
 {
     public enum Direction { Up, Down };
 
-    protected CardData cardData;
     private Direction direction = Direction.Up;
     private Button continueButton;
     public bool selected;
@@ -20,7 +19,6 @@ public class Select : MonoBehaviour
         continueButton = FindObjectOfType<Button>();
         continueButton.onClick.AddListener(AddCard);
         continueButton.onClick.AddListener(() => StartCoroutine(Abscond(direction)));
-        cardData = GetComponent<Card>().cardData;
     }
 
 
@@ -29,15 +27,13 @@ public class Select : MonoBehaviour
         selected = true;
         direction = Direction.Down;
         continueButton.interactable = true;
-        
     }
 
     public void AddCard()
     {
         if (selected)
         {
-            DeckList deck = GameObject.Find("DeckList").GetComponent<DeckList>();
-            deck.Add(cardData);
+            Game.Ctx.UserOperator.Add(GetComponent<Card>().cardData);
         }
     }
 
