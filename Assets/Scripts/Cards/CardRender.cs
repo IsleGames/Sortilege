@@ -7,6 +7,7 @@ using TMPro;
 
 using Managers;
 using UI;
+using UnityEngine.Rendering;
 
 namespace Cards
 {
@@ -69,14 +70,23 @@ namespace Cards
         {
             int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             var canvas = GetComponent<Canvas>();
+            var sg = GetComponent<SortingGroup>();
+            
+            
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
-            bgSprite.sortingOrder = sortOrder;
+
+            sg.sortingLayerName = "Card";
+            sg.sortingOrder = sortOrder;
+            
+            
+            
+            // bgSprite.sortingOrder = sortOrder;
             sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             borderSprite.sortingOrder = sortOrder;
-            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
-            attRenderer.sortingOrder = sortOrder;
-            strRenderer.sortingOrder = sortOrder;
+            // sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            // attRenderer.sortingOrder = sortOrder;
+            // strRenderer.sortingOrder = sortOrder;
         }
 /*
         IEnumerator MoveCard(Vector3 dest, float delay = 0)
