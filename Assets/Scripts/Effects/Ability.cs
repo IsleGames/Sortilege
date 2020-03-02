@@ -45,16 +45,17 @@ namespace Effects
                             effect.Apply(target, multiplier);
                             break;
                         case UnitType.NearbyEnemy:
-                            if (Game.Ctx.EnemyOperator.EnemyList.Count == 1)
-                                ;
-                            else if (thisIndex == 0)
-                                effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + 1], multiplier);
-                            else if (thisIndex == Game.Ctx.EnemyOperator.EnemyList.Count - 1)
-                                effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex - 1], multiplier);
-                            else
-                            {
-                                int indexDelta = Random.Range(0, 1) * 2 - 1;
-                                effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + indexDelta], multiplier);
+                            if (Game.Ctx.EnemyOperator.EnemyList.Count > 1)
+                            { 
+                                if (thisIndex == 0)
+                                    effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + 1], multiplier);
+                                else if (thisIndex == Game.Ctx.EnemyOperator.EnemyList.Count - 1)
+                                    effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex - 1], multiplier);
+                                else
+                                {
+                                    int indexDelta = Random.Range(0, 1) * 2 - 1;
+                                    effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + indexDelta], multiplier);
+                                }
                             }
                             break;
                         case UnitType.AllEnemy:
@@ -81,16 +82,17 @@ namespace Effects
                             buffEffect.Apply(target, multiplier);
                             break;
                         case UnitType.NearbyEnemy:
-                            if (Game.Ctx.EnemyOperator.EnemyList.Count == 1)
-                                ;
-                            else if (thisIndex == 0)
-                                buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + 1], multiplier);
-                            else if (thisIndex == Game.Ctx.EnemyOperator.EnemyList.Count - 1)
-                                buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex - 1], multiplier);
-                            else
+                            if (Game.Ctx.EnemyOperator.EnemyList.Count > 1)
                             {
-                                int indexDelta = Random.Range(0, 1) * 2 - 1;
-                                buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + indexDelta], multiplier);
+                                if (thisIndex == 0)
+                                    buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + 1], multiplier);
+                                else if (thisIndex == Game.Ctx.EnemyOperator.EnemyList.Count - 1)
+                                    buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex - 1], multiplier);
+                                else
+                                {
+                                    int indexDelta = Random.Range(0, 1) * 2 - 1;
+                                    buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + indexDelta], multiplier);
+                                }
                             }
                             break;
                         case UnitType.AllEnemy:

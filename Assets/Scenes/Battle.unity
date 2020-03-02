@@ -1047,10 +1047,11 @@ MonoBehaviour:
   EnemyOperator: {fileID: 0}
   AnimationOperator: {fileID: 0}
   player: {fileID: 0}
+  isTutorial: 0
+  fixRandomSeed: 0
   turnCount: 0
   activeUnit: {fileID: 0}
   inSelectEnemyMode: 0
-  isTutorial: 0
 --- !u!224 &1051549743
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1258,7 +1259,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: -72, y: 170}
-  m_SizeDelta: {x: 400, y: 115}
+  m_SizeDelta: {x: 800, y: 115}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1201132063
 MonoBehaviour:

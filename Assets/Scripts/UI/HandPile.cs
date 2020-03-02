@@ -162,12 +162,12 @@ namespace UI
                 AdjustAllVirtualPositions();
         }
 
-        public new void Add(Card card)
+        public void Add(Card card)
         {
             int insertIndex = VirtualDestroy(false);
             base.Insert(insertIndex, card);
         }
-        public new void AddRange(List<Card> cardList, bool shuffleAfter = false)
+        public void AddRange(List<Card> cardList, bool shuffleAfter = false)
         {
             VirtualDestroy();
             base.AddRange(cardList, shuffleAfter);
@@ -203,7 +203,7 @@ namespace UI
             VirtualDestroy();
             return base.DrawAll();
         }
-        public new void Shuffle()
+        public void Shuffle()
         {
             VirtualDestroy();
             base.Shuffle();

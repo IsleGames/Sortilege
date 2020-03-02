@@ -91,14 +91,14 @@ public class Game : MonoBehaviour
         {
             turnCount += 1;
             
-            Debugger.Warning("player play");
+            // Debugger.Warning("player play");
             VfxOperator.ShowTurnText("Player Turn");
             
             activeUnit = player;
             RunningMethod = activeUnit.StartTurn;
             yield return null;
             
-            Debugger.Warning("enemy play");
+            // Debugger.Warning("enemy play");
             VfxOperator.ShowTurnText("Enemy Turn");
             
             EnemyOperator.InitEnemy();
