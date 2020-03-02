@@ -22,6 +22,11 @@ public class EffectDescription
         { Damage = a;
           Armor = b;
         }
+        public void Multiply(float n)
+        {
+            Damage *= n;
+            Armor *= n;
+        }
     }
     public Stats EnemyStats;
     public Stats SelfStats;
@@ -58,6 +63,11 @@ public class EffectDescription
             NotAmplified = NotAmplified || (effect.notAmplified);
             DiscardDecievers = DiscardDecievers || (effect.type == EffectType.DiscardDeceiver);
         }
+        if (!NotAmplified)
+        {
+            EnemyStats.Multiply(currentStreak);
+            SelfStats.Multiply(currentStreak);
+        }
     }
 
     private void Initialize()
@@ -77,6 +87,8 @@ public class EffectDescription
                 statBlock.Armor += effect.amount;
                 break;
             case EffectType.Damage:
+                statBlock.Damage += effect.amount;
+                break;
             case EffectType.DamageIgnoreBarrier:
                 statBlock.Damage += effect.amount;
                 break;
@@ -93,6 +105,7 @@ public class EffectDescription
                 // Unimplemented
                 break;
         }
+        
     }
 
     // Generate reasonable text 
@@ -173,8 +186,8 @@ public class BuffDescription
     {
         string BlockStr = 
             $"Enemy skips their next {BuffCounts[BuffType.Block] + BuffCounts[BuffType.Flinch]} attacks";
-        string ForgeStr = $"Draw {BuffCounts[BuffType.Forge]} more cards next turn";
-        string ThornsStr = $"Deal {BuffCounts[BuffType.Thorns]} damage back when hit";
+        string ForgeStr = $"Draw {BuffCounts[BuffType.Forge]} extra cards";
+        string ThornsStr = $"Deal {BuffCounts[BuffType.Thorns]} damage when hit";
         string PlagueStr = $"Deal 1 damage to each enemy for the next {BuffCounts[BuffType.Plague]} turns";
         //string FlinchStr: see BlockStr
         string VoodooStr = $"If you don't lose health this turn, gain {BuffCounts[BuffType.Voodoo]} health";
@@ -200,7 +213,7 @@ public class BuffDescription
         {
             if (streak >= effect.minStreak)
             {
-                BuffCounts[effect.type] += (int) effect.amount;
+                BuffCounts[effect.type] += (int)(effect.amount * streak);
             }
         }
     }
