@@ -6,6 +6,8 @@ using Units;
 using Effects;
 
 using _Editor;
+using Units.Enemies;
+using Random = UnityEngine.Random;
 
 namespace Effects
 {
@@ -16,71 +18,94 @@ namespace Effects
         
         public List<Effect> effectList;
         public List<BuffEffect> buffEffectList;
-        
-        public void ApplyAsEnemy(Unit self)
-        {
-            // Effects
-            foreach (Effect effect in effectList)
-                switch (effect.affectiveUnit)
-                {
-                    case UnitType.Player:
-                        effect.Apply(Game.Ctx.player, 1);
-                        break;
-                    case UnitType.Enemy:
-                        effect.Apply(self, 1);
-                        break;
-                    default:
-                        throw new NullReferenceException("Unknown Unit Type");
-                }
-            
-            // Buff Effects
-            foreach (BuffEffect buffEffect in buffEffectList)
-                switch (buffEffect.affectiveUnit)
-                {
-                    case UnitType.Player:
-                        buffEffect.Apply(Game.Ctx.player, 1);
-                        break;
-                    case UnitType.Enemy:
-                        buffEffect.Apply(self, 1);
-                        break;
-                    default:
-                        throw new NullReferenceException("Unknown Unit Type");
-                }
-        }
 
         public void ApplyAsCard(Unit target, float streakCount)
         {
+            Apply(target, streakCount);
+        }
+
+        public void ApplyAsEnemy(Unit self)
+        {
+            Apply(self, 1);
+        }
+
+        private void Apply(Unit target, float multiplier)
+        {
+            int thisIndex = Game.Ctx.EnemyOperator.EnemyList.IndexOf((Enemy)target);
+            
             // Effects
             foreach (Effect effect in effectList)
-                if (streakCount >= effect.minStreak)
+                if (multiplier >= effect.minStreak)
                     switch (effect.affectiveUnit)
                     {
                         case UnitType.Player:
-                            effect.Apply(Game.Ctx.player, streakCount);
+                            effect.Apply(Game.Ctx.player, multiplier);
                             break;
-                        case UnitType.Enemy:
-                            effect.Apply(target, streakCount);
+                        case UnitType.SingleEnemy:
+                            effect.Apply(target, multiplier);
                             break;
-                        default:
-                            throw new NullReferenceException("Unknown Unit Type");
+                        case UnitType.NearbyEnemy:
+                            if (Game.Ctx.EnemyOperator.EnemyList.Count == 1)
+                                ;
+                            else if (thisIndex == 0)
+                                effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + 1], multiplier);
+                            else if (thisIndex == Game.Ctx.EnemyOperator.EnemyList.Count - 1)
+                                effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex - 1], multiplier);
+                            else
+                            {
+                                int indexDelta = Random.Range(0, 1) * 2 - 1;
+                                effect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + indexDelta], multiplier);
+                            }
+                            break;
+                        case UnitType.AllEnemy:
+                            foreach (var enemy in Game.Ctx.EnemyOperator.EnemyList)
+                            {
+                                effect.Apply(enemy, multiplier);
+                            }
+                            break;
+                        case UnitType.RandomEnemy:
+                            int randIndex = Random.Range(0, Game.Ctx.EnemyOperator.EnemyList.Count);
+                            effect.Apply(Game.Ctx.EnemyOperator.EnemyList[randIndex], multiplier);
+                            break;
                     }
             
             // Buff Effects
             foreach (BuffEffect buffEffect in buffEffectList)
-                if (streakCount >= buffEffect.minStreak)
+                if (multiplier >= buffEffect.minStreak)
                     switch (buffEffect.affectiveUnit)
                     {
                         case UnitType.Player:
-                            buffEffect.Apply(Game.Ctx.player, streakCount);
+                            buffEffect.Apply(Game.Ctx.player, multiplier);
                             break;
-                        case UnitType.Enemy:
-                            buffEffect.Apply(target, streakCount);
+                        case UnitType.SingleEnemy:
+                            buffEffect.Apply(target, multiplier);
                             break;
-                        default:
-                            throw new NullReferenceException("Unknown Unit Type");
+                        case UnitType.NearbyEnemy:
+                            if (Game.Ctx.EnemyOperator.EnemyList.Count == 1)
+                                ;
+                            else if (thisIndex == 0)
+                                buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + 1], multiplier);
+                            else if (thisIndex == Game.Ctx.EnemyOperator.EnemyList.Count - 1)
+                                buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex - 1], multiplier);
+                            else
+                            {
+                                int indexDelta = Random.Range(0, 1) * 2 - 1;
+                                buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[thisIndex + indexDelta], multiplier);
+                            }
+                            break;
+                        case UnitType.AllEnemy:
+                            foreach (var enemy in Game.Ctx.EnemyOperator.EnemyList)
+                            {
+                                buffEffect.Apply(enemy, multiplier);
+                            }
+                            break;
+                        case UnitType.RandomEnemy:
+                            int randIndex = Random.Range(0, Game.Ctx.EnemyOperator.EnemyList.Count);
+                            buffEffect.Apply(Game.Ctx.EnemyOperator.EnemyList[randIndex], multiplier);
+                            break;
                     }
         }
-
+        
         public string Info()
         {
             var text = "";

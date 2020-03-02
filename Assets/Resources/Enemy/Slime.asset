@@ -10,8 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4493199f579a41a08660d1ed44f5286e, type: 3}
-  m_Name: New EnemyData
+  m_Name: Slime
   m_EditorClassIdentifier: 
-  title: 
-  description: 
-  abilityList: []
+  title: Slime
+  description: Weak as it may seems...
+  displayImage: {fileID: 21300000, guid: b57d88a32b3d2b14a8cf3b17992086df, type: 3}
+  maximumHealth: 6
+  initialBuffList: []
+  abilityList:
+  - title: Attack
+    description: 
+    effectList:
+    - affectiveUnit: 0
+      type: 0
+      amount: 2
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []

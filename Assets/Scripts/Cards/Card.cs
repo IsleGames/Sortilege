@@ -56,8 +56,6 @@ namespace Cards
         public void Apply(Unit target, float streakCount)
         {
             GetComponent<MetaData>().ability.ApplyAsCard(target, streakCount);
-
-            if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
         }
     }
 }

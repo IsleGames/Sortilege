@@ -43,17 +43,18 @@ namespace Managers
 
 		public bool randomDraw = true;
 
+		private void Awake()
+		{
+			cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
+		}
+
 		public void Start()
 		{
-            // CardList = FindObjectOfType<DeckList>().Deck;
-            
-            cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-            buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
-            
-			pileDeck = GameObject.Find("DeckPile").GetComponent<Pile>();
-			pileHand = GameObject.Find("HandPile").GetComponent<HandPile>();
-			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
-			pilePlay = GameObject.Find("PlayPile").GetComponent<PlayPile>();
+            pileDeck = transform.Find("DeckPile").GetComponent<Pile>();
+			pileHand = transform.Find("HandPile").GetComponent<HandPile>();
+			pileDiscard = transform.Find("DiscardPile").GetComponent<Pile>();
+			pilePlay = transform.Find("PlayPile").GetComponent<PlayPile>();
 
 			/*if (CardList.Count > maxCardCount)
 			{

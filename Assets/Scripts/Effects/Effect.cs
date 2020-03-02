@@ -14,7 +14,10 @@ namespace Effects
 	public enum UnitType : int
 	{
 		Player,
-		Enemy
+		SingleEnemy,
+		NearbyEnemy,
+		AllEnemy,
+		RandomEnemy
 	}
 
 	public enum EffectType : int
@@ -62,8 +65,8 @@ namespace Effects
 
 		public void Apply(Unit unit, float multiplier)
 		{
-			if (!unit.GetComponent(affectiveUnit.ToString("G")))
-				throw new InvalidOperationException("Effect unit type mismatch: Expected " + affectiveUnit);
+			// if (!unit.GetComponent(affectiveUnit.ToString("G")))
+			// 	throw new InvalidOperationException("Effect unit type mismatch: Expected " + affectiveUnit);
 			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 

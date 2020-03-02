@@ -96,10 +96,8 @@ namespace Units.Enemies
 			onTurnEnd.Invoke();
 			
             Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(0.8f), true);
-			
-			if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
-			
-			beingDamagedSomewhere = false;
+
+            beingDamagedSomewhere = false;
 			Game.Ctx.Continue();
 		}
 	}

@@ -24,7 +24,9 @@ namespace UI
         {
             base.Start();
             
-            GameObject virtualObject = Instantiate(Game.Ctx.CardOperator.cardPrefab, Game.Ctx.transform);
+			GameObject cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            GameObject virtualObject = Instantiate(cardPrefab, Game.Ctx.transform);
+            
             virtualObject.name = "VirtualCard";
             virtualObject.layer = 2;
             

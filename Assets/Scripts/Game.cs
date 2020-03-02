@@ -40,13 +40,17 @@ public class Game : MonoBehaviour
 
     public bool isTutorial;
 
-    private void Start()
+    private void Awake()
     {
         QualitySettings.vSyncCount = 1;
         Random.InitState(42);
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
+    }
+
+    private void Start()
+    {
 
         UICanvas = GameObject.Find("UICanvas");
 
@@ -55,7 +59,7 @@ public class Game : MonoBehaviour
         EnemyOperator = GetComponent<EnemyManager>();
         AnimationOperator = GetComponent<AnimationManager>();
 
-        player = !isTutorial ? transform.GetComponentInChildren<Player>() : transform.GetComponentInChildren<TutorialPlayer>();
+        player = transform.GetComponentInChildren<Player>();
         player.Initialize();
         
         // enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
@@ -110,7 +114,11 @@ public class Game : MonoBehaviour
     
     public void Continue()
     {
-        if (IsBattleEnded()) return;
+        if (IsBattleEnded())
+        {
+            EndGame();
+            return;
+        }
         
         // Push StartNextTurn into the queue to make it run after all animations
         // And pause the system-level calculation till everything before is done
