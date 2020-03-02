@@ -52,22 +52,18 @@ public class EffectDescription
 
             if (effect.affectiveUnit == UnitType.Enemy)
             {
-                GetStats(EnemyStats, DeceiversInDiscard, cardsInHand, effect);
+                GetStats(EnemyStats, currentStreak, DeceiversInDiscard, cardsInHand, effect);
             }
 
             else
             {
-                GetStats(SelfStats, DeceiversInDiscard, cardsInHand, effect);
+                GetStats(SelfStats, currentStreak, DeceiversInDiscard, cardsInHand, effect);
             }
 
-            NotAmplified = NotAmplified || (effect.notAmplified);
+           
             DiscardDecievers = DiscardDecievers || (effect.type == EffectType.DiscardDeceiver);
         }
-        if (!NotAmplified)
-        {
-            EnemyStats.Multiply(currentStreak);
-            SelfStats.Multiply(currentStreak);
-        }
+        
     }
 
     private void Initialize()
@@ -79,27 +75,29 @@ public class EffectDescription
     }
 
     // Figure out how much damage / healing / armor an effect is going to affect
-    private static void GetStats(Stats statBlock, int DeceiversInDiscard, int cardsInHand, Effect effect)
+    private static void GetStats(Stats statBlock, int currentStreak, int DeceiversInDiscard, int cardsInHand, Effect effect)
     {
+        int factor = effect.notAmplified ? 1 : currentStreak;
+        float amount = effect.amount * factor;
         switch (effect.type)
         {
             case EffectType.Barrier:
-                statBlock.Armor += effect.amount;
+                statBlock.Armor += amount;
                 break;
             case EffectType.Damage:
-                statBlock.Damage += effect.amount;
+                statBlock.Damage += amount;
                 break;
             case EffectType.DamageIgnoreBarrier:
-                statBlock.Damage += effect.amount;
+                statBlock.Damage += amount;
                 break;
             case EffectType.Heal:
-                statBlock.Damage -= effect.amount;
+                statBlock.Damage -= amount;
                 break;
             case EffectType.DamageOnDeceiverInDiscardPile:
-                statBlock.Damage += (effect.amount * DeceiversInDiscard);
+                statBlock.Damage += (amount * DeceiversInDiscard);
                 break;
             case EffectType.DiscardAllWithPerCardDamage:
-                statBlock.Damage += effect.amount * cardsInHand;
+                statBlock.Damage += amount * cardsInHand;
                 break;
             default:
                 // Unimplemented
@@ -160,8 +158,7 @@ public class EffectDescription
         {
             desc += EnemyArmorStr + ".";
         }
-        desc += NotAmplified ? UnamplifiedStr : "";
-        desc += DiscardDecievers ? DiscardDecieverStr : "";
+        
         return desc;
     }
 }

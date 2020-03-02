@@ -21,7 +21,7 @@ namespace Cards
         private SpriteRenderer borderSprite, bgSprite, attRenderer, strRenderer;
         private TextMeshProUGUI cardText;
 
-        [SerializeField] private float onSelectZoomScale = 1.1f;
+        private float onSelectZoomScale = 1.7f;
 
         public void Start()
         {
@@ -54,7 +54,7 @@ namespace Cards
         
         public void OnSelectZoom()
         {
-            Vector3 newLocalScale = transform.localScale * onSelectZoomScale;
+            Vector3 newLocalScale = transform.localScale *  onSelectZoomScale;
             transform.localScale = newLocalScale;
         }
 
