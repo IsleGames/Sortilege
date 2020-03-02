@@ -72,7 +72,7 @@ namespace Cards
         
         public void RayCast2DTrigger()
         {
-            if (!Game.Ctx.player.waitingForAction) return;
+            if (!Game.Ctx.BattleOperator.player.waitingForAction) return;
             if (!availability) return;
             if (!isDragged && !Game.Ctx.VfxOperator.draggedCard && !animationLock)
             {

@@ -92,7 +92,7 @@ namespace Buffs
 	    {
 		    // yield return new WaitForEndOfFrame();
 		    
-		    Game.Ctx.activeUnit.GetComponent<Health>().Damage(amount);
+		    Game.Ctx.BattleOperator.activeUnit.GetComponent<Health>().Damage(amount);
 		    
 		    // GetComponentInParent<Unit>().onDamage.RemoveListener(Thorns);
             Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);

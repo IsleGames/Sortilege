@@ -17,7 +17,7 @@ namespace Units.Enemies
 
         public void OnMouseEnter()
         {
-            if (Game.Ctx.inSelectEnemyMode)
+            if (Game.Ctx.BattleOperator.inSelectEnemyMode)
             {
                 OnSelectZoom(onSelectZoomScale);
             }
@@ -25,7 +25,7 @@ namespace Units.Enemies
 
         public void OnMouseExit()
         {
-            if (Game.Ctx.inSelectEnemyMode)
+            if (Game.Ctx.BattleOperator.inSelectEnemyMode)
             {
                 OnSelectZoom(1f);
             }
@@ -33,11 +33,11 @@ namespace Units.Enemies
 
         public void OnMouseDown()
         {
-            if (Game.Ctx.inSelectEnemyMode)
+            if (Game.Ctx.BattleOperator.inSelectEnemyMode)
             {
 				Game.Ctx.transform.GetComponentInChildren<CommandButton>().SetStatus(false);
                     
-                Game.Ctx.player.EndTurn(GetComponentInParent<Enemy>());
+                Game.Ctx.BattleOperator.player.EndTurn(GetComponentInParent<Enemy>());
             }
         }
         

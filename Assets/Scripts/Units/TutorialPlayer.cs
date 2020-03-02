@@ -19,10 +19,10 @@ namespace Units
 		{
 			base.StartTurn();
 			
-			if (Game.Ctx.turnCount == 4)
+			if (Game.Ctx.BattleOperator.turnCount == 4)
 				Game.Ctx.CardOperator.DrawCards(2, true, false);
 			
-			switch (Game.Ctx.turnCount)
+			switch (Game.Ctx.BattleOperator.turnCount)
 			{
 				case 0:
 					break;

@@ -17,9 +17,9 @@ namespace UI
 
         public void Click()
         {
-	        if (Game.Ctx.player.waitingForAction)
+	        if (Game.Ctx.BattleOperator.player.waitingForAction)
 			{
-				SetStatus(!Game.Ctx.inSelectEnemyMode);
+				SetStatus(!Game.Ctx.BattleOperator.inSelectEnemyMode);
 			}
 			else
 			{
@@ -31,7 +31,7 @@ namespace UI
         {
 	        if (setToAttack)
 			{
-				Game.Ctx.inSelectEnemyMode = true;
+				Game.Ctx.BattleOperator.inSelectEnemyMode = true;
 				
 				Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.48f, true);
 				_titleTMP.text = "Cancel";
@@ -39,7 +39,7 @@ namespace UI
 			}
 			else
 			{
-				Game.Ctx.inSelectEnemyMode = false;
+				Game.Ctx.BattleOperator.inSelectEnemyMode = false;
 				
 				Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.0f, false);
 				_titleTMP.text = "Attack!";
