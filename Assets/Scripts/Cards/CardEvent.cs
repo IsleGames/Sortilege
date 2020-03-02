@@ -52,8 +52,25 @@ namespace Cards
                 }
             }
         }
-    
+
         private void OnMouseUp()
+        {
+            Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            
+            RaycastHit2D[] hitArray = new RaycastHit2D[10];
+
+            int hitCount = Physics2D.RaycastNonAlloc(new Vector2(p.x, p.y), Vector3.forward, hitArray);
+
+            // Debugger.Log("hitCount: " + hitCount);
+            for (int i = 0; i < hitCount; i++)
+            {
+                RaycastHit2D hit = hitArray[i];
+                
+                if (hit.collider.GetComponent<Card>()) hit.collider.GetComponent<CardEvent>().RayCast2DTrigger();
+            }
+        }
+        
+        public void RayCast2DTrigger()
         {
             if (!Game.Ctx.player.waitingForAction) return;
             if (!availability) return;

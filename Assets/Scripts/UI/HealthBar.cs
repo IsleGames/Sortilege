@@ -97,26 +97,28 @@ namespace UI
         public void UpdateStatus(bool animated = true)
         {
             float totHitPoints = pHealth.GetMaximumDisplayHP();
-            
             float hpRatio = pHealth.hitPoints / totHitPoints;
-            AdjustBar(hpRatio, _redBar, animated);
-            // _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
-
             float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
-            AdjustBar(barrierRatio, _blueBar, animated);
             
-            float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
+            AdjustBar(hpRatio, _redBar, animated);
+            AdjustBar(barrierRatio, _blueBar, animated);
 
-            Game.Ctx.AnimationOperator.PushAction(
-                HitPointNumberPController(
-                    _barText,
-                    initHitPoints,
-                    pHealth.hitPoints + pHealth.barrierHitPoints,
-                    totHitPoints,
-                    animationKFactor
-                    ),
-                true
-                );
+            if (animated)
+            {
+                float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
+                Game.Ctx.AnimationOperator.PushAction(
+                    HitPointNumberPController(
+                        _barText,
+                        initHitPoints,
+                        pHealth.hitPoints + pHealth.barrierHitPoints,
+                        totHitPoints,
+                        animationKFactor
+                        ),
+                    true
+                    );
+            }
+            else
+                _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
         }
 
         private void AdjustBar(float ratio, RectTransform bar, bool animated = true)

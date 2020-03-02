@@ -43,10 +43,6 @@ namespace Cards
 
         public void SetAvailability(bool availability)
         {
-            // if (gameObject.name == "Arcane Punch")
-            // {
-            //     Debugger.Log(gameObject.name + " set to " + availability);
-            // }
             GetComponent<CardRender>().SetAvailability(availability);
             GetComponent<CardEvent>().availability = availability;
         } 
