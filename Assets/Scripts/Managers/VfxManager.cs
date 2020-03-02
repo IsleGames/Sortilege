@@ -8,6 +8,7 @@ using Object = UnityEngine.Object;
 using Cards;
 using Effects;
 using UI;
+using Units.Enemies;
 
 namespace Managers
  {

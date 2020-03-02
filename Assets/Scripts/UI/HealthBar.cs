@@ -57,18 +57,23 @@ namespace UI
             _whiteBar.GetComponent<SpriteRenderer>().enabled = false;
             // _blueBar.GetComponent<SpriteRenderer>().enabled = false;
             
+            SetRectSize(false);
+        }
+
+        private void Start()
+        {
+            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
+        }
+
+        public void SetRectSize(bool update = true)
+        {
             var sp = _bgBar.GetComponent<SpriteRenderer>();
             _thisRect = GetComponent<RectTransform>().rect;
             sp.size = new Vector2(
                 _thisRect.width,
                 _thisRect.height
                 );
-        }
-
-        private void Start()
-        {
-
-            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
+            if (update) GetComponentInChildren<HealthBar>().UpdateStatus(false);
         }
         
 		public static IEnumerator HitPointNumberPController(

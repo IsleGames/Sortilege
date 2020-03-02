@@ -73,7 +73,7 @@ public class Game : MonoBehaviour
         yield return new WaitForEndOfFrame();
         
         CardOperator.pileDeck.AdjustAllPositions();
-        
+
         Continue();
     }
     
