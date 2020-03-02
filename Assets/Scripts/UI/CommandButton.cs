@@ -43,7 +43,7 @@ namespace UI
 				
 				Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.0f, false);
 				_titleTMP.text = "Attack!";
-				_descTMP.text = "Choose you target";
+				_descTMP.text = "Choose your target";
 			}
         }
     }

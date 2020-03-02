@@ -27,9 +27,12 @@ public class Game : MonoBehaviour
 
     public Player player;
 
+    public bool isTutorial;
+    public bool fixRandomSeed;
+    
     public int turnCount;
     public Unit activeUnit;
-
+    
     public bool inSelectEnemyMode;
 
     public delegate void DelegateMethod();
@@ -38,12 +41,10 @@ public class Game : MonoBehaviour
         
     public IEnumerator BattleSeq;
 
-    public bool isTutorial;
 
     private void Awake()
     {
         QualitySettings.vSyncCount = 1;
-        Random.InitState(42);
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
@@ -51,7 +52,8 @@ public class Game : MonoBehaviour
 
     private void Start()
     {
-
+        if (fixRandomSeed) Random.InitState(42);
+        
         UICanvas = GameObject.Find("UICanvas");
 
         CardOperator = GetComponent<CardManager>();

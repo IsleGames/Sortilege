@@ -65,8 +65,6 @@ namespace Buffs
 	    // OnDamage Effect
 	    private IEnumerator Block()
 	    {
-		    yield return new WaitForEndOfFrame();
-		    
 		    GetComponentInParent<Health>().onGoingEffectAmount = 0;
 		    amount -= 1;
 
@@ -81,8 +79,6 @@ namespace Buffs
 	    // OnTurnBegin Effect
 	    private IEnumerator Forge()
 	    {
-		    yield return new WaitForEndOfFrame();
-		    
 		    Game.Ctx.CardOperator.DrawCards((int)(amount + .5f));
 		    
 		    // You may go away without RemoveListener though
@@ -104,12 +100,9 @@ namespace Buffs
 	    }
 	    
 	    // OnTurnEnd Effect
-	    // Todo: Make Plague Support Damage in Multiple Turns
 	    private IEnumerator Plague()
 	    {
-		    yield return new WaitForEndOfFrame();
-		    
-		    GetComponent<Health>().Damage(1);
+		    GetComponentInParent<Health>().Damage(1);
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
@@ -124,8 +117,6 @@ namespace Buffs
 	    // OnAttack Effect
 	    private IEnumerator Flinch()
 	    {
-		    yield return new WaitForEndOfFrame();
-		    
 		    GetComponentInParent<Unit>().isUnitFlinched = true;
 		    amount -= 1;
 
@@ -140,8 +131,6 @@ namespace Buffs
 	    // OnTurnBegin Effect
 	    private IEnumerator Voodoo()
 	    {
-		    yield return new WaitForEndOfFrame();
-		    
 		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
 				GetComponentInParent<Health>().Heal(amount);
 
