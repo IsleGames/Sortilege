@@ -32,19 +32,7 @@ namespace Units
 			waitingForAction = true;
 		}
 
-		
-		public void TryEndTurn()
-		{
-			if (waitingForAction)
-				EndTurn();
-			else
-			{
-				Debugger.Log("Nope, you can't end your turn now");
-				return;
-			}
-		}
-		
-		public override void EndTurn()
+		public void EndTurn(Unit target)
 		{
 			waitingForAction = false;
 			
@@ -52,7 +40,7 @@ namespace Units
             isUnitFlinched = false;
             onAttack.Invoke();
             if (!isUnitFlinched) 
-				Game.Ctx.CardOperator.Apply(Game.Ctx.enemy);
+				Game.Ctx.CardOperator.Apply(target);
             else
             {
 	            // Some effect

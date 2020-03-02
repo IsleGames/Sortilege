@@ -57,7 +57,7 @@ namespace Cards
         {
             Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             
-            RaycastHit2D[] hitArray = new RaycastHit2D[10];
+            RaycastHit2D[] hitArray = new RaycastHit2D[20];
 
             int hitCount = Physics2D.RaycastNonAlloc(new Vector2(p.x, p.y), Vector3.forward, hitArray);
 

@@ -16,7 +16,7 @@ namespace UI
     public class HealthBar : MonoBehaviour
     {
         private RectTransform _bgBar, _redBar, _blueBar, _whiteBar;
-        private TextMeshProUGUI _barText;
+        private TextMeshPro _barText;
         public Health pHealth;
 
         [NonSerialized]
@@ -24,8 +24,15 @@ namespace UI
 
         private Rect _thisRect;
 
-        private void Start()
+        private void Awake()
         {
+            pHealth = GetComponentInParent<Health>();
+            if (!pHealth)
+            {
+                pHealth = GetComponent<Health>();
+                if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
+            }
+            
             foreach (Transform tr in GetComponentsInChildren<Transform>())
                 switch (tr.name)
                 {
@@ -42,36 +49,35 @@ namespace UI
                         _whiteBar = tr.GetComponent<RectTransform>();
                         break;
                     case "BarTMPText":
-                        _barText = tr.GetComponent<TextMeshProUGUI>();
+                        _barText = tr.GetComponent<TextMeshPro>();
                         // Debugger.Log(tr.gameObject + "'s GUI is " + _barText);
                         break;
                 }
-
+            
             _whiteBar.GetComponent<SpriteRenderer>().enabled = false;
             // _blueBar.GetComponent<SpriteRenderer>().enabled = false;
             
+            SetRectSize(false);
+        }
+
+        private void Start()
+        {
+            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
+        }
+
+        public void SetRectSize(bool update = true)
+        {
             var sp = _bgBar.GetComponent<SpriteRenderer>();
             _thisRect = GetComponent<RectTransform>().rect;
             sp.size = new Vector2(
                 _thisRect.width,
                 _thisRect.height
                 );
-            
-            if (!pHealth)
-            {
-                pHealth = GetComponentInParent<Health>();
-                if (!pHealth)
-                {
-                    pHealth = GetComponent<Health>();
-                    if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
-                }
-            }
-            
-            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
+            if (update) GetComponentInChildren<HealthBar>().UpdateStatus(false);
         }
         
 		public static IEnumerator HitPointNumberPController(
-            TextMeshProUGUI tmp,
+            TextMeshPro tmp,
             float initHitPoints,
             float targetHitPoints,
             float totalHitPoints,

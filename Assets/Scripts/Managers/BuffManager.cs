@@ -106,5 +106,14 @@ namespace Managers
             Object.Destroy(buff.gameObject);
             AdjustAllPositions();
         }
+        
+        public void DestroyAll()
+        {
+            foreach (Buff buff in BuffList)
+            {
+                Object.Destroy(buff.gameObject);
+            }
+            BuffList.Clear();
+        }
     }
 }
