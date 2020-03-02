@@ -1136,10 +1136,10 @@ MonoBehaviour:
       m_Calls: []
   _disableMetaTypeFiltering: 0
   CardList:
-  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
-  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
-  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
-  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
   pileDeck: {fileID: 0}
   pileDiscard: {fileID: 0}
   pileHand: {fileID: 0}
@@ -1204,8 +1204,8 @@ MonoBehaviour:
   EnemyList: []
   EnemyInitData:
   - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
-  - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
-  - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
+  - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
+  - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
   curEnemy: {fileID: 0}
   enemyPrefab: {fileID: 0}
 --- !u!1 &1201132061
