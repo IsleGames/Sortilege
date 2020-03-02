@@ -86,7 +86,7 @@ namespace Units.Enemies
             abilityList[choice].ApplyAsEnemy(this);
 		}
 		
-		public override void EndTurn()
+		public void EndTurn()
 		{
 			if (Game.Ctx.activeUnit != this)
 			{

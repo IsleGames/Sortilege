@@ -15,6 +15,8 @@ namespace Data
         public StrategyType strategy;
         public AttributeType attribute;
         public string description;
+
+        public bool isSelfTarget = false;
         
         // public bool disableRetract = false;
         

@@ -25,6 +25,6 @@ namespace Units
 		}
 				
 		public abstract void StartTurn();
-		public abstract void EndTurn();
+		// public abstract void EndTurn();
 	}
 }

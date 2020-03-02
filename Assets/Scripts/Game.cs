@@ -26,10 +26,11 @@ public class Game : MonoBehaviour
     public AnimationManager AnimationOperator;
 
     public Player player;
-    // public Enemy enemy;
 
     public int turnCount;
     public Unit activeUnit;
+
+    public bool inSelectEnemyMode;
 
     public delegate void DelegateMethod();
 
@@ -61,6 +62,7 @@ public class Game : MonoBehaviour
         // EnemyOperator.Initialize();
 
         turnCount = 0;
+        inSelectEnemyMode = false;
 
         BattleSeq = NextStep();
 

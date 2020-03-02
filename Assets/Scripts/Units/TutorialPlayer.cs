@@ -74,11 +74,11 @@ namespace Units
 			}
 		}
 
-		public override void EndTurn()
+		public new void EndTurn(Unit target)
 		{
 			_instructionTMP.text = "";
 			
-			base.EndTurn();
+			base.EndTurn(target);
 		}
 	}
 }
