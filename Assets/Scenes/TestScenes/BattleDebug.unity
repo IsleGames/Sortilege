@@ -1136,10 +1136,10 @@ MonoBehaviour:
       m_Calls: []
   _disableMetaTypeFiltering: 0
   CardList:
-  - {fileID: 11400000, guid: 7e3fb7734a99e4d74a1d7ecd452c9590, type: 2}
-  - {fileID: 11400000, guid: 7e3fb7734a99e4d74a1d7ecd452c9590, type: 2}
-  - {fileID: 11400000, guid: b4947921c035346ba895e157fe24cae4, type: 2}
-  - {fileID: 11400000, guid: b4947921c035346ba895e157fe24cae4, type: 2}
+  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
+  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
+  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
+  - {fileID: 11400000, guid: 30594fcf36ea24628b759757e0b85423, type: 2}
   pileDeck: {fileID: 0}
   pileDiscard: {fileID: 0}
   pileHand: {fileID: 0}

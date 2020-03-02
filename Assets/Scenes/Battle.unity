@@ -712,7 +712,7 @@ PrefabInstance:
     - target: {fileID: 1834128699689154893, guid: 928a7f197647a426ca39ef9f15455555,
         type: 3}
       propertyPath: maximumHitPoints
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 5154927439535868010, guid: 928a7f197647a426ca39ef9f15455555,
         type: 3}
@@ -1218,8 +1218,8 @@ MonoBehaviour:
   EnemyList: []
   EnemyInitData:
   - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
-  - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
-  - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
+  - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
+  - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
   curEnemy: {fileID: 0}
   enemyPrefab: {fileID: 0}
 --- !u!1 &1201132061
