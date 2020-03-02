@@ -34,25 +34,25 @@ public class EffectDescription
     }
 
     //Aggregate all the effects that appear on a single card
-    public void Update(List<Effect> EffectList, List<Card> queue, List<Card> discardPile, int cardsInHand)
+    public void Update(List<Effect> EffectList, int currentStreak, int DeceiversInDiscard, int cardsInHand)
     {
         Initialize();
 
         foreach (var effect in EffectList)
         {
-            if (queue.Count < effect.minStreak)
+            if (currentStreak < effect.minStreak)
             {
                 continue;
             }
 
             if (effect.affectiveUnit == UnitType.Enemy)
             {
-                GetStats(EnemyStats, discardPile, cardsInHand, effect);
+                GetStats(EnemyStats, DeceiversInDiscard, cardsInHand, effect);
             }
 
             else
             {
-                GetStats(SelfStats, discardPile, cardsInHand, effect);
+                GetStats(SelfStats, DeceiversInDiscard, cardsInHand, effect);
             }
 
             NotAmplified = NotAmplified || (effect.notAmplified);
@@ -69,7 +69,7 @@ public class EffectDescription
     }
 
     // Figure out how much damage / healing / armor an effect is going to affect
-    private static void GetStats(Stats statBlock, List<Card> discardPile, int cardsInHand, Effect effect)
+    private static void GetStats(Stats statBlock, int DeceiversInDiscard, int cardsInHand, Effect effect)
     {
         switch (effect.type)
         {
@@ -84,13 +84,7 @@ public class EffectDescription
                 statBlock.Damage -= effect.amount;
                 break;
             case EffectType.DamageOnDeceiverInDiscardPile:
-                foreach (var discarded in discardPile)
-                {
-                    if (discarded.GetComponent<MetaData>().strategy == StrategyType.Deceiver)
-                    {
-                        statBlock.Damage += effect.amount;
-                    }
-                }
+                statBlock.Damage += (effect.amount * DeceiversInDiscard);
                 break;
             case EffectType.DiscardAllWithPerCardDamage:
                 statBlock.Damage += effect.amount * cardsInHand;
@@ -104,13 +98,13 @@ public class EffectDescription
     // Generate reasonable text 
     public override string ToString()
     {
-        string EnemyDamageStr = $"{EnemyStats.Damage} damage to an enemy";
-        string SelfDamageStr = $"{SelfStats.Damage} damage to yourself";
+        string EnemyDamageStr = $"{EnemyStats.Damage} dmg to an enemy";
+        string SelfDamageStr = $"{SelfStats.Damage} dmg to you";
         string SelfHealStr = $"{-SelfStats.Damage} health";
         string EnemyHealStr = $"{-EnemyStats.Damage} health";
-        string SelfArmorStr = SelfStats.Armor > 0 ? "Gain " : "Lose" + $"{SelfStats.Armor} armor";
+        string SelfArmorStr = (SelfStats.Armor > 0 ? "Gain " : "Lose") + $"{SelfStats.Armor} armor";
         string EnemyArmorStr = "Enemy " + (EnemyStats.Armor > 0 ? "gains " : "loses" + $"{EnemyStats.Armor} armor");
-        string UnamplifiedStr = "(Unamplified)";
+        string UnamplifiedStr = " (Unamplified)";
         string DiscardDecieverStr = "Discard all Deciever cards.";
         string desc = "";
 
@@ -127,7 +121,7 @@ public class EffectDescription
         {
             if (EnemyStats.Damage > 0)
             {
-                desc += "Deal" + EnemyDamageStr + ".";
+                desc += "Deal " + EnemyDamageStr + ".";
             }
         }
         if (SelfStats.Damage < 0)
@@ -194,7 +188,7 @@ public class BuffDescription
         return desc;
     }
 
-    public void Update(List<BuffEffect> EffectList, List<Card> queue)
+    public void Update(List<BuffEffect> EffectList, float streak)
     {
         // Reset all the counts to 0
         for (int type = 0; type < 7 /* update for more buffeffects*/; type++)
@@ -204,7 +198,7 @@ public class BuffDescription
 
         foreach (var effect in EffectList)
         {
-            if (queue.Count >= effect.minStreak)
+            if (streak >= effect.minStreak)
             {
                 BuffCounts[effect.type] += (int) effect.amount;
             }

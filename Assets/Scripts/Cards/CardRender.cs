@@ -8,6 +8,7 @@ using TMPro;
 using Managers;
 using UI;
 using UnityEditor.U2D;
+using Effects;
 
 namespace Cards
 {
@@ -18,6 +19,7 @@ namespace Cards
         // public float moveSpeed = 0.1f;
 
         private SpriteRenderer borderSprite, bgSprite, attRenderer, strRenderer;
+        private TextMeshProUGUI cardText;
 
         [SerializeField] private float onSelectZoomScale = 1.1f;
 
@@ -41,13 +43,15 @@ namespace Cards
 
             // Set name
             transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
-            
+
             // Set rules text
-            transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
+            cardText = transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+            cardText.text = GetComponent<MetaData>().description;
 
             SetOrder();
         }
 
+        
         public void OnSelectZoom()
         {
             Vector3 newLocalScale = transform.localScale * onSelectZoomScale;
@@ -66,6 +70,11 @@ namespace Cards
             }
         }
 
+        public void LateUpdate()
+        {
+            cardText.text = Text();
+        }
+
         public void SetOrder()
         {
             int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
@@ -79,21 +88,7 @@ namespace Cards
             attRenderer.sortingOrder = sortOrder;
             strRenderer.sortingOrder = sortOrder;
         }
-/*
-        IEnumerator MoveCard(Vector3 dest, float delay = 0)
-        {
-            Vector3 init = new Vector3(transform.position.x, transform.position.y);
-            float t = 0f;
-            yield return new WaitForSeconds(delay);
-            while (t < moveSpeed) {
-                float i = t / moveSpeed;
-                transform.SetPositionAndRotation(i * dest + (1f - i) * init,
-                    transform.rotation);
-                t += Time.deltaTime;
-                yield return null;
-            }
-        }
-  */  
+
         public void Hide()
         {
             visible = false;
@@ -118,6 +113,21 @@ namespace Cards
             foreach (var r in spRenderers) {
                 r.enabled = true;
             }
+        }
+
+        private string Text()
+        {
+            var playPile = Game.Ctx.CardOperator.pilePlay;
+            if (playPile.Count() > 0 && GetComponent<Card>() == 
+                playPile.Get(playPile.Count() - 1))
+            {
+                return GetComponent<Ability>().Description();
+            }
+            else
+            {
+                return GetComponent<MetaData>().description;
+            }
+
         }
     }
     

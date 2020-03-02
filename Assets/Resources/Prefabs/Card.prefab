@@ -380,7 +380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c7a16b79d39de424a8039be3d9671d68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardData: {fileID: 0}
 --- !u!114 &-7766759408608403537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -615,12 +614,12 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 8
+  m_fontSize: 12
   m_fontSizeBase: 24
   m_fontWeight: 400
   m_enableAutoSizing: 1
   m_fontSizeMin: 6
-  m_fontSizeMax: 8
+  m_fontSizeMax: 14
   m_fontStyle: 0
   m_textAlignment: 258
   m_characterSpacing: 0

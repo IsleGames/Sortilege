@@ -36,6 +36,9 @@ namespace Effects
 		public EffectType type;
 		public float amount, maxDeviation;
 
+        
+        public float TotAmount { get; private set; }
+
 		public int minStreak;
 		public bool notAmplified;
 		

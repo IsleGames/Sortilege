@@ -15,6 +15,22 @@ namespace Cards
         
         public List<Effect> effectList;
         public List<BuffEffect> buffEffectList;
+        EffectDescription effectDescription = new EffectDescription();
+        BuffDescription buffDescription = new BuffDescription();
+
+
+        private void Update()
+        {
+            
+            effectDescription.Update(effectList,
+                Game.Ctx.CardOperator.pilePlay.Count(),
+                Game.Ctx.CardOperator.pileDiscard
+                    .GetStrategyTypeCards(StrategyType.Deceiver).Count,
+                Game.Ctx.CardOperator.pileHand.Count());
+
+            buffDescription.Update(buffEffectList,
+                Game.Ctx.CardOperator.pilePlay.Count());
+        }
 
         public void Apply(Unit target, float streakCount)
         {
@@ -60,6 +76,12 @@ namespace Cards
                 }
             }
             return text;
+        }
+
+        public string Description()
+        {
+            return effectDescription.ToString() + "\n\n"
+                + buffDescription.ToString();
         }
     }
 }

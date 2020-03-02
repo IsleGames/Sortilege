@@ -23,8 +23,8 @@ MonoBehaviour:
     amount: 2
     maxDeviation: 0
     minStreak: 0
-    notAmplified: 0
-  - affectiveUnit: 0
+    notAmplified: 1
+  - affectiveUnit: 1
     type: 0
     amount: 6
     maxDeviation: 0
