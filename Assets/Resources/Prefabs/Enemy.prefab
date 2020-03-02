@@ -167,7 +167,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6576027742985295805}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: BuffQueuePositionHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,7 +206,9 @@ GameObject:
   - component: {fileID: 6241190050766400283}
   - component: {fileID: 631532667604453807}
   - component: {fileID: 1414300344802737712}
-  m_Layer: 9
+  - component: {fileID: 4511077534675484709}
+  - component: {fileID: 2533583547614788284}
+  m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -311,6 +313,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BuffList: []
   align: 2
+--- !u!210 &4511077534675484709
+SortingGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497116602034066205}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!223 &2533583547614788284
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497116602034066205}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 1
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_AdditionalShaderChannelsFlag: 25
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
 --- !u!1001 &9027454070334575840
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -321,17 +355,17 @@ PrefabInstance:
     - target: {fileID: 462730180875508159, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 477481844604617448, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7410449963594402961, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7726511491684699990, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
@@ -446,17 +480,22 @@ PrefabInstance:
     - target: {fileID: 7726511491684699991, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8284825318558075432, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8601750725608698267, guid: f9f997c5b64774deb8a495f327c50825,
+        type: 3}
+      propertyPath: m_RaycastTarget
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8900289465465069482, guid: f9f997c5b64774deb8a495f327c50825,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f9f997c5b64774deb8a495f327c50825, type: 3}

@@ -14,7 +14,7 @@ TagManager:
   - 
   - 
   - Background
-  - 
+  - Raycaster
   - 
   - 
   - 
@@ -49,4 +49,10 @@ TagManager:
     locked: 0
   - name: Card
     uniqueID: 3518110879
+    locked: 0
+  - name: DarkenMask
+    uniqueID: 428610697
+    locked: 0
+  - name: HighlightedObjects
+    uniqueID: 1857504271
     locked: 0
