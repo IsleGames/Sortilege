@@ -68,7 +68,7 @@ namespace Cards
 
         public void SetOrder()
         {
-            SortOrderManager soM = GetComponentInParent<SortOrderManager>();
+            SortOrderManager soM = Game.Ctx.SortOrderOperator;
             
             int sortOrder = soM.GetSortOrder();
             

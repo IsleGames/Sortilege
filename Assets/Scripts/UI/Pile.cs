@@ -39,8 +39,6 @@ namespace UI
         
         protected virtual void Start()
         {
-			_pile = new List<Card>();
-
             QueueCenter = transform.Find("QueueCenter").transform.position;
             StartingIndex = 0;
             TotalCardWidth = Constant.cardWidth * scaleFactor + offsetMargin;
@@ -115,7 +113,7 @@ namespace UI
                 QueueCenter.z);
 
             Game.Ctx.AnimationOperator.PushAction(
-                Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.15f),
+                Utilities.MoveAndScaleCardTo(thisTrans.gameObject, newPos, newScale, 0.15f),
                 stopFlag
             );
             
@@ -156,6 +154,8 @@ namespace UI
         
         public void Add(Card card, bool adjust = true)
         {
+            Debugger.Log(card.gameObject.name);
+            
             _pile.Add(card);
             if (adjust) AdjustAllPositions();
         }

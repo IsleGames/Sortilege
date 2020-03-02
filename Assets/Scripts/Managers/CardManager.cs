@@ -61,6 +61,8 @@ namespace Managers
 				CardList.Shuffle();
 				CardList.RemoveRange(maxCardCount, CardList.Count - maxCardCount);
 			} */
+			
+			pileDeck.Clear();
 
 			foreach (CardData cardData in CardList)
 			{

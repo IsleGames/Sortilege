@@ -14,6 +14,12 @@ using Object = UnityEngine.Object;
 
 // ReSharper disable InconsistentNaming
 
+public enum SceneType : int
+{
+	Battle,
+    AfterBattleReward
+}
+
 public class Game : MonoBehaviour
 {
     public static Game Ctx;
@@ -24,8 +30,13 @@ public class Game : MonoBehaviour
     public VfxManager VfxOperator;
     public EnemyManager EnemyOperator;
     public AnimationManager AnimationOperator;
+    public SortOrderManager SortOrderOperator;
+    
     public BattleManager BattleOperator;
+    public AfterBattleRewardManager AfterBattleRewardOperator;
 
+    public SceneType sceneType;
+    
     public bool isTutorial;
     public bool fixRandomSeed;
 
@@ -49,10 +60,20 @@ public class Game : MonoBehaviour
         VfxOperator = GetComponent<VfxManager>();
         EnemyOperator = GetComponent<EnemyManager>();
         AnimationOperator = GetComponent<AnimationManager>();
+        SortOrderOperator = GetComponent<SortOrderManager>();
 
         BattleOperator = GetComponent<BattleManager>();
+        AfterBattleRewardOperator = GetComponent<AfterBattleRewardManager>();
 
-        StartCoroutine(BattleOperator.ContinueAfterLoadScene());
+        switch (sceneType)
+        {
+            case SceneType.Battle:
+                StartCoroutine(BattleOperator.ContinueAfterLoadScene());
+                break;
+            case SceneType.AfterBattleReward:
+                StartCoroutine(AfterBattleRewardOperator.ContinueAfterLoadScene());
+                break;
+        }
     }
 
 }

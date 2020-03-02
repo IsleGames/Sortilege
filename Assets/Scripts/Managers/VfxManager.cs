@@ -67,13 +67,9 @@ namespace Managers
          public GameObject turnToMoveBoardPrefab;
          public Image DarkenMask;
 
-         public SortOrderManager SortOrderOperator;
-         
          private void Awake()
          { 
              GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
-             
-             SortOrderOperator = GetComponent<SortOrderManager>();
          }
 
          public void Start()
@@ -94,7 +90,7 @@ namespace Managers
 
          public void SetAllSortOrders()
          {
-             SortOrderOperator.ResetSortOrder();
+             Game.Ctx.SortOrderOperator.ResetSortOrder();
              Game.Ctx.CardOperator.pileDiscard.SetSortOrders();
              Game.Ctx.CardOperator.pileDeck.SetSortOrders();
              Game.Ctx.CardOperator.pileHand.SetSortOrders();

@@ -560,7 +560,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pile: []
   movable: 0
-  scaleFactor: 1.8
+  scaleFactor: 1.2
   offsetMargin: 50
   align: 1
 --- !u!223 &1228499366
@@ -910,8 +910,9 @@ GameObject:
   - component: {fileID: 1874916578}
   - component: {fileID: 1874916582}
   - component: {fileID: 1874916583}
+  - component: {fileID: 1874916584}
   m_Layer: 5
-  m_Name: Main
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -926,14 +927,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 1874916577}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Script: {fileID: 11500000, guid: b000899b42aa4c8e8a728d2026d4a38b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_IgnoreReversedGraphics: 1
-  m_BlockingObjects: 0
-  m_BlockingMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
+  UICanvas: {fileID: 0}
+  CardOperator: {fileID: 0}
+  VfxOperator: {fileID: 0}
+  EnemyOperator: {fileID: 0}
+  AnimationOperator: {fileID: 0}
+  SortOrderOperator: {fileID: 0}
+  BattleOperator: {fileID: 0}
+  AfterBattleRewardOperator: {fileID: 0}
+  sceneType: 1
+  isTutorial: 0
+  fixRandomSeed: 0
 --- !u!114 &1874916579
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1025,6 +1032,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   NumPresenting: 3
+  pile: {fileID: 0}
+--- !u!114 &1874916584
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874916577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2941e1951164f2a84a535fe2030c513, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onAnimationEnd:
+    m_PersistentCalls:
+      m_Calls: []
+  StopQueue: 
+  runningAnimationCount: 0
+  stoppingTillDone: 0
 --- !u!1 &2144878420
 GameObject:
   m_ObjectHideFlags: 0

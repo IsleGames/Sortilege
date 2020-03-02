@@ -71,7 +71,7 @@ namespace UI
             if (animated) 
             {
                 Game.Ctx.AnimationOperator.PushAction(
-                    Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.25f)
+                    Utilities.MoveAndScaleCardTo(thisTrans.gameObject, newPos, newScale, 0.25f)
                 );
             }
             else

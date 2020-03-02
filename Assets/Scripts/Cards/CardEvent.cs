@@ -12,9 +12,7 @@ namespace Cards
         
         // Temporal Solution
         public bool animationLock;
-    
-        private Collider2D _coll;
-        
+
         [SerializeField]
         private bool triggerPlayArea, triggerHandArea;
 
@@ -30,8 +28,6 @@ namespace Cards
             animationLock = false;
 
             availability = true;
-            
-            _coll = GetComponent<Collider2D>();
         }
 
         private void Update()
