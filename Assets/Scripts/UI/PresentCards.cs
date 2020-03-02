@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
 using Data;
 using Library;
@@ -8,34 +9,35 @@ using UI;
 
 public class PresentCards : MonoBehaviour
 {
-
     public int NumPresenting = 3;
+
     // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
         GameObject cardPrefab = Resources.Load("Prefabs/Card") as GameObject;
-        var pile = GetComponent<Pile>();
+
+        var pile = transform.Find("AddPile").GetComponent<Pile>();
+        
         var cardData = SelectCards();
+        
         foreach (var data in cardData)
         {
-            var card = Instantiate(cardPrefab);
+            var card = Instantiate(cardPrefab, transform);
+            
             card.GetComponent<Card>().Initialize(data);
             card.gameObject.AddComponent<Select>();
             Destroy(card.gameObject.GetComponent<CardEvent>());
-            pile.Add(card.GetComponent<Card>());
+            
+            pile.Add(card.GetComponent<Card>(), false);
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        pile.AdjustAllPositions();
     }
 
     private List<CardData> SelectCards()
     {
         List<CardData> cards = new List<CardData>();
         CardData[] all_cards = Resources.LoadAll<CardData>("Card");
+        
         cards.AddRange(all_cards);
         cards.Shuffle();
         if (cards.Count > NumPresenting)
@@ -43,7 +45,6 @@ public class PresentCards : MonoBehaviour
             cards.RemoveRange(NumPresenting, cards.Count - NumPresenting);
         }
         return cards;
-        
     }
 
 }

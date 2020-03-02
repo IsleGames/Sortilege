@@ -63,14 +63,17 @@ namespace Managers
          public Color notAvailableColor = new Color(0.5f, 0.5f, 0.5f);
          
          public Card draggedCard;
-         private static int sortOrder = 0;
 
          public GameObject turnToMoveBoardPrefab;
          public Image DarkenMask;
+
+         public SortOrderManager SortOrderOperator;
          
          private void Awake()
          { 
              GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
+             
+             SortOrderOperator = GetComponent<SortOrderManager>();
          }
 
          public void Start()
@@ -91,23 +94,11 @@ namespace Managers
 
          public void SetAllSortOrders()
          {
-             ResetSortOrder();
+             SortOrderOperator.ResetSortOrder();
              Game.Ctx.CardOperator.pileDiscard.SetSortOrders();
              Game.Ctx.CardOperator.pileDeck.SetSortOrders();
              Game.Ctx.CardOperator.pileHand.SetSortOrders();
              Game.Ctx.CardOperator.pilePlay.SetSortOrders();
-         }
-
-         public void ResetSortOrder()
-         {
-             sortOrder = 0;
-         }
-
-         public int GetSortOrder()
-         {
-             int ret = sortOrder;
-             sortOrder += 1;
-             return ret;
          }
 
          public void SetAllBrightnessInAimMode(float alpha, bool isEnemyAtFront)

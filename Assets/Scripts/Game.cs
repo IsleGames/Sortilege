@@ -33,6 +33,7 @@ public class Game : MonoBehaviour
     public int turnCount;
     public Unit activeUnit;
     
+    [NonSerialized]
     public bool inSelectEnemyMode;
 
     public delegate void DelegateMethod();
@@ -63,9 +64,6 @@ public class Game : MonoBehaviour
 
         player = transform.GetComponentInChildren<Player>();
         player.Initialize();
-        
-        // enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
-        // EnemyOperator.Initialize();
 
         turnCount = 0;
         inSelectEnemyMode = false;
