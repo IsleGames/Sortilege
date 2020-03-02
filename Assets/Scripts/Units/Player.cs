@@ -6,7 +6,6 @@ using Object = UnityEngine.Object;
 using _Editor;
 using Cards;
 using Managers;
-using UnityEditor.UI;
 
 namespace Units
 {

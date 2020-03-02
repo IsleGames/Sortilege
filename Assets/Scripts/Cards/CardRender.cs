@@ -7,7 +7,6 @@ using TMPro;
 
 using Managers;
 using UI;
-using UnityEditor.U2D;
 
 namespace Cards
 {
