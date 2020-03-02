@@ -726,10 +726,20 @@ PrefabInstance:
       propertyPath: maximumHitPoints
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 4379099166622399838, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 5154927439535868010, guid: 928a7f197647a426ca39ef9f15455555,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 5612454695551753188, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6470403185315201235, guid: 928a7f197647a426ca39ef9f15455555,
         type: 3}
@@ -835,6 +845,31 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Pivot.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698077294950560799, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698077294950560799, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698077294950560799, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698077294950560799, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6698077294950560799, guid: 928a7f197647a426ca39ef9f15455555,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7004236243251435727, guid: 928a7f197647a426ca39ef9f15455555,
         type: 3}
@@ -1714,6 +1749,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: Click
+      objectReference: {fileID: 0}
+    - target: {fileID: 2697620739727636781, guid: a134273064ba040899e0229b68b78f7f,
+        type: 3}
+      propertyPath: m_OverrideSorting
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2697620739727636790, guid: a134273064ba040899e0229b68b78f7f,
         type: 3}

@@ -113,22 +113,23 @@ namespace Managers
          public void SetAllBrightnessInAimMode(float alpha, bool isEnemyAtFront)
          {
              SetMaskBrightness(alpha);
+             string layerName = "";
+             if (isEnemyAtFront)
+                 layerName = "HighlightedObjects";
+             else
+                 layerName = "Default";
+
              foreach (Enemy enemy in Game.Ctx.EnemyOperator.EnemyList)
              {
                  var sg = enemy.GetComponent<SortingGroup>();
                  var cv = enemy.GetComponent<Canvas>();
-                 if (isEnemyAtFront)
-                 {
-                     sg.sortingLayerName = "HighlightedObjects";
-                     cv.sortingLayerName = "HighlightedObjects";
-                 }
-                 else
-                 {
-                     sg.sortingLayerName = "Default";
-                     cv.sortingLayerName = "Default";
-                 }
+                 
+                 sg.sortingLayerName = layerName;
+                 cv.sortingLayerName = layerName;
              }
 
+             var bt = Game.Ctx.transform.GetComponentInChildren<CommandButton>().GetComponent<Canvas>();
+             bt.sortingLayerName = layerName;
          }
          
          public void SetMaskBrightness(float alpha)

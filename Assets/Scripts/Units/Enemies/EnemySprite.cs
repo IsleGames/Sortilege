@@ -1,5 +1,6 @@
 using System;
 using _Editor;
+using UI;
 using UnityEngine;
 
 namespace Units.Enemies
@@ -34,7 +35,8 @@ namespace Units.Enemies
         {
             if (Game.Ctx.inSelectEnemyMode)
             {
-                Game.Ctx.inSelectEnemyMode = false;
+				Game.Ctx.transform.GetComponentInChildren<CommandButton>().SetStatus(false);
+                    
                 Game.Ctx.player.EndTurn(GetComponentInParent<Enemy>());
             }
         }

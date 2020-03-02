@@ -16,7 +16,7 @@ namespace UI
     public class HealthBar : MonoBehaviour
     {
         private RectTransform _bgBar, _redBar, _blueBar, _whiteBar;
-        private TextMeshProUGUI _barText;
+        private TextMeshPro _barText;
         public Health pHealth;
 
         [NonSerialized]
@@ -49,7 +49,7 @@ namespace UI
                         _whiteBar = tr.GetComponent<RectTransform>();
                         break;
                     case "BarTMPText":
-                        _barText = tr.GetComponent<TextMeshProUGUI>();
+                        _barText = tr.GetComponent<TextMeshPro>();
                         // Debugger.Log(tr.gameObject + "'s GUI is " + _barText);
                         break;
                 }
@@ -77,7 +77,7 @@ namespace UI
         }
         
 		public static IEnumerator HitPointNumberPController(
-            TextMeshProUGUI tmp,
+            TextMeshPro tmp,
             float initHitPoints,
             float targetHitPoints,
             float totalHitPoints,

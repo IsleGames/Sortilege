@@ -19,26 +19,31 @@ namespace UI
         {
 	        if (Game.Ctx.player.waitingForAction)
 			{
-				if (!Game.Ctx.inSelectEnemyMode)
-				{
-					Game.Ctx.inSelectEnemyMode = true;
-					
-					Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.48f, true);
-					_titleTMP.text = "Cancel";
-					_descTMP.text = "Back to card arrangement";
-				}
-				else
-				{
-					Game.Ctx.inSelectEnemyMode = false;
-					
-					Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.0f, false);
-					_titleTMP.text = "Attack!";
-					_descTMP.text = "Choose you target";
-				}
+				SetStatus(!Game.Ctx.inSelectEnemyMode);
 			}
 			else
 			{
 				Debugger.Log("Nope, you can't end your turn now");
+			}
+        }
+
+        public void SetStatus(bool setToAttack)
+        {
+	        if (setToAttack)
+			{
+				Game.Ctx.inSelectEnemyMode = true;
+				
+				Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.48f, true);
+				_titleTMP.text = "Cancel";
+				_descTMP.text = "Back to card arrangement";
+			}
+			else
+			{
+				Game.Ctx.inSelectEnemyMode = false;
+				
+				Game.Ctx.VfxOperator.SetAllBrightnessInAimMode(0.0f, false);
+				_titleTMP.text = "Attack!";
+				_descTMP.text = "Choose you target";
 			}
         }
     }
