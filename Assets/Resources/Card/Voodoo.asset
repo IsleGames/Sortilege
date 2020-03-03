@@ -13,18 +13,19 @@ MonoBehaviour:
   m_Name: Voodoo
   m_EditorClassIdentifier: 
   title: Voodoo
-  strategy: 0
-  attribute: 0
-  description: Deal 2 damage to yourself and gain 2-4 amount of shield
+  strategy: 6
+  attribute: 3
+  description: Deal 2 damage to yourself and gain 2-4 amount of shield. If you are
+    not damaged by enemy this turn, restore 4 health
   disableRetract: 0
   effectList:
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 0
     amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 2
     amount: 3
     maxDeviation: 1

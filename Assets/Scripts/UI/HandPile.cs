@@ -24,7 +24,9 @@ namespace UI
         {
             base.Start();
             
-            GameObject virtualObject = Instantiate(Game.Ctx.CardOperator.cardPrefab, Game.Ctx.transform);
+			GameObject cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            GameObject virtualObject = Instantiate(cardPrefab, Game.Ctx.transform);
+            
             virtualObject.name = "VirtualCard";
             virtualObject.layer = 2;
             
@@ -68,7 +70,7 @@ namespace UI
                 QueueCenter.z);
             if (animated) 
             {
-                Game.Ctx.AnimationOperator.PushAnimation(
+                Game.Ctx.AnimationOperator.PushAction(
                     Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.25f)
                 );
             }
@@ -160,12 +162,12 @@ namespace UI
                 AdjustAllVirtualPositions();
         }
 
-        public new void Add(Card card)
+        public void Add(Card card)
         {
             int insertIndex = VirtualDestroy(false);
             base.Insert(insertIndex, card);
         }
-        public new void AddRange(List<Card> cardList, bool shuffleAfter = false)
+        public void AddRange(List<Card> cardList, bool shuffleAfter = false)
         {
             VirtualDestroy();
             base.AddRange(cardList, shuffleAfter);
@@ -201,7 +203,7 @@ namespace UI
             VirtualDestroy();
             return base.DrawAll();
         }
-        public new void Shuffle()
+        public void Shuffle()
         {
             VirtualDestroy();
             base.Shuffle();

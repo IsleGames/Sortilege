@@ -16,21 +16,21 @@ MonoBehaviour:
   strategy: 2
   attribute: 2
   description: 'Deal 2 dmg to yourself and 6 dmg to an enemy. Combo(3): Gain 4 armor'
-  disableRetract: 0
+  isSelfTarget: 0
   effectList:
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 0
     amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 6
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 2
     amount: 4
     maxDeviation: 0

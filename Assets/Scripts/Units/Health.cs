@@ -1,5 +1,6 @@
 using System;
 using _Editor;
+using Managers;
 using UI;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,14 +20,10 @@ namespace Units
 
         [FormerlySerializedAs("HitPoints")] public float hitPoints = -1f;
         
-        public void Start()
-        {
-            if (hitPoints < 0f)
-                hitPoints = maximumHitPoints;
-        }
-
         public void Initialize()
         {
+            hitPoints = maximumHitPoints;
+            
             GetComponentInChildren<HealthBar>().UpdateStatus(false);
         }
 
@@ -60,7 +57,10 @@ namespace Units
             if (barrierHitPoints > 0f && !ignoreBarrier)
             {
                 if (amount < barrierHitPoints)
+                {
                     barrierHitPoints -= amount;
+                    amount = 0f;
+                }
                 else
                 {
                     amount -= barrierHitPoints;
@@ -75,6 +75,12 @@ namespace Units
             }
             
             GetComponent<Unit>().onHealthChange.Invoke();
+            
+            if (!Mathf.Approximately(hitPoints, 0f))
+            {
+                GetComponent<Unit>().onDead.Invoke();
+                GetComponent<BuffManager>().DestroyAll();
+            }
         }
 
         public void Heal(float amount)

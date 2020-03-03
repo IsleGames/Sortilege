@@ -7,7 +7,9 @@ using Random = UnityEngine.Random;
 
 using _Editor;
 using Managers;
+using TMPro;
 using Units;
+using Units.Enemies;
 using Object = UnityEngine.Object;
 
 // ReSharper disable InconsistentNaming
@@ -20,40 +22,53 @@ public class Game : MonoBehaviour
 
     public CardManager CardOperator;
     public VfxManager VfxOperator;
+    public EnemyManager EnemyOperator;
     public AnimationManager AnimationOperator;
 
     public Player player;
-    public Enemy enemy;
 
+    public bool isTutorial;
+    public bool fixRandomSeed;
+    
     public int turnCount;
     public Unit activeUnit;
+    
+    public bool inSelectEnemyMode;
 
-    public delegate void RoutineMethod();
+    public delegate void DelegateMethod();
 
-    public RoutineMethod RunningMethod;
+    public DelegateMethod RunningMethod;
         
     public IEnumerator BattleSeq;
 
-    private void Start()
+
+    private void Awake()
     {
         QualitySettings.vSyncCount = 1;
-        Random.InitState(42);
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
+    }
 
+    private void Start()
+    {
+        if (fixRandomSeed) Random.InitState(42);
+        
         UICanvas = GameObject.Find("UICanvas");
 
         CardOperator = GetComponent<CardManager>();
         VfxOperator = GetComponent<VfxManager>();
+        EnemyOperator = GetComponent<EnemyManager>();
         AnimationOperator = GetComponent<AnimationManager>();
 
         player = transform.GetComponentInChildren<Player>();
         player.Initialize();
-        enemy = transform.GetComponentInChildren<Enemy>();
-        enemy.Initialize();
+        
+        // enemy = isTutorial ? transform.GetComponentInChildren<Avocado>() : transform.GetComponentInChildren<Enemy>();
+        // EnemyOperator.Initialize();
 
         turnCount = 0;
+        inSelectEnemyMode = false;
 
         BattleSeq = NextStep();
 
@@ -66,7 +81,7 @@ public class Game : MonoBehaviour
         yield return new WaitForEndOfFrame();
         
         CardOperator.pileDeck.AdjustAllPositions();
-        
+
         Continue();
     }
     
@@ -76,32 +91,66 @@ public class Game : MonoBehaviour
         {
             turnCount += 1;
             
-            Debugger.Log("player play");
+            // Debugger.Warning("player play");
             VfxOperator.ShowTurnText("Player Turn");
             
             activeUnit = player;
-            RunningMethod = player.StartTurn;
+            RunningMethod = activeUnit.StartTurn;
             yield return null;
             
-            Debugger.Log("enemy play");
+            // Debugger.Warning("enemy play");
             VfxOperator.ShowTurnText("Enemy Turn");
             
-            activeUnit = enemy;
-            RunningMethod = enemy.StartTurn;
-            yield return null;
+            EnemyOperator.InitEnemy();
+            activeUnit = EnemyOperator.GetNextEnemy();
+
+            while (activeUnit != null)
+            {
+                RunningMethod = activeUnit.StartTurn;
+                yield return null;
+                
+                activeUnit = EnemyOperator.GetNextEnemy();
+            }
         }
     }
     
     public void Continue()
     {
-        if (IsBattleEnded()) return;
-        BattleSeq.MoveNext();
-        RunningMethod();
+        if (IsBattleEnded())
+        {
+            EndGame();
+            return;
+        }
+        
+        // Push StartNextTurn into the queue to make it run after all animations
+        // And pause the system-level calculation till everything before is done
+        AnimationOperator.PushAction(StartNextTurn());
     }
-    
+
+    private IEnumerator StartNextTurn()
+    {
+        // Wait a frame so everything remains in the queue is popped out
+        yield return new WaitForEndOfFrame();
+        
+        AnimationOperator.onAnimationEnd.Invoke();
+        
+        BattleSeq.MoveNext();
+
+        AnimationOperator.PushAction(ActivateNextTurn());
+        yield return null;
+    }
+
+    private IEnumerator ActivateNextTurn()
+    {
+        AnimationOperator.onAnimationEnd.Invoke();
+        
+        RunningMethod();
+        yield return null;
+    }
+
     public bool IsBattleEnded()
     {
-        return player.GetComponent<Health>().IsDead() || enemy.GetComponent<Health>().IsDead();
+        return player.GetComponent<Health>().IsDead() || EnemyOperator.IsAllEnemyDead();
     }
     
     public bool HasPlayerLost()
@@ -129,6 +178,10 @@ public class Game : MonoBehaviour
             {
                 Debugger.Log("player lost");
                 VfxOperator.ShowTurnText("Battle Lost");
+                if (isTutorial)
+                {
+                    transform.GetComponentInChildren<TextMeshPro>().text = "oops.. You died.. Let's do it again.";
+                }
             }
         }
     }

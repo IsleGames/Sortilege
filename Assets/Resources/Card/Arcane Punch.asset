@@ -16,15 +16,15 @@ MonoBehaviour:
   strategy: 5
   attribute: 0
   description: Deal 2 dmg and gain 1 armor
-  disableRetract: 0
+  isSelfTarget: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
     amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 2
     amount: 1
     maxDeviation: 0

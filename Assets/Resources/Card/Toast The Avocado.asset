@@ -10,24 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Venom
+  m_Name: Toast The Avocado
   m_EditorClassIdentifier: 
-  title: Plague
-  strategy: 5
-  attribute: 3
-  description: 'For next 1 turn, deal one dmg at the end of your turn. Combo(3):
-    Deal 3 dmg'
+  title: Toast the Avocado
+  strategy: 0
+  attribute: 2
+  description: Deal 5 dmg to avocado
   disableRetract: 0
   effectList:
-  - affectiveUnit: 2
+  - affectiveUnit: 1
     type: 0
-    amount: 3
+    amount: 5
     maxDeviation: 0
-    minStreak: 5
-    notAmplified: 1
-  buffList:
-  - affectiveUnit: 2
-    type: 3
-    amount: 1
     minStreak: 0
     notAmplified: 0
+  buffList: []

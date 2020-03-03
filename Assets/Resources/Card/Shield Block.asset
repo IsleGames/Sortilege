@@ -18,7 +18,7 @@ MonoBehaviour:
   description: Gain 2 armor and draw 1 card
   disableRetract: 0
   effectList:
-  - affectiveUnit: 1
+  - affectiveUnit: 0
     type: 2
     amount: 2
     maxDeviation: 0

@@ -114,7 +114,7 @@ namespace UI
                 QueueCenter.y,
                 QueueCenter.z);
 
-            Game.Ctx.AnimationOperator.PushAnimation(
+            Game.Ctx.AnimationOperator.PushAction(
                 Utilities.MoveAndScaleTo(thisTrans.gameObject, newPos, newScale, 0.15f),
                 stopFlag
             );
@@ -204,6 +204,13 @@ namespace UI
         public Card Draw()
         {
             Card drawnCard = _pile.Draw();
+            AdjustAllPositions();
+            return drawnCard;
+        }
+
+        public Card DrawNoShuffle()
+        {
+            Card drawnCard = _pile.DrawNoShuffle();
             AdjustAllPositions();
             return drawnCard;
         }
