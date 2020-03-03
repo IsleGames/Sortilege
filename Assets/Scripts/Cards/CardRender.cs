@@ -71,7 +71,7 @@ namespace Cards
             }
         }
 
-        public void LateUpdate()
+        private void Update()
         {
             var ability = GetComponent<MetaData>().ability;
             effectDescription.Update(ability.effectList,
@@ -82,7 +82,10 @@ namespace Cards
 
             buffDescription.Update(ability.buffEffectList,
                 Game.Ctx.CardOperator.pilePlay.Count());
+        }
 
+        private void LateUpdate()
+        {
             cardText.text = Text();
         }
 
