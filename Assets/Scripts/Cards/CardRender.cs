@@ -135,15 +135,22 @@ namespace Cards
             }
         }
 
+        public string Hint()
+        {
+            return effectDescription.ToString() + "\n" +
+                     buffDescription.ToString();
+        }
+
+
         private string Text()
         {
             var playPile = Game.Ctx.CardOperator.pilePlay;
-            if (playPile.Count() > 0 && GetComponent<Card>() == 
+            if (playPile.Count() > 0 && GetComponent<Card>() ==
                 playPile.Get(playPile.Count() - 1))
             {
-                return effectDescription.ToString() + "\n" +
-                     buffDescription.ToString();
+                return Hint();
             }
+
             else
             {
                 return GetComponent<MetaData>().description;
