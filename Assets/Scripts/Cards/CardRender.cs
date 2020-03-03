@@ -141,7 +141,8 @@ namespace Cards
             if (playPile.Count() > 0 && GetComponent<Card>() == 
                 playPile.Get(playPile.Count() - 1))
             {
-                return GetComponent<Ability>().Description();
+                return effectDescription.ToString() + "\n" +
+                     buffDescription.ToString();
             }
             else
             {

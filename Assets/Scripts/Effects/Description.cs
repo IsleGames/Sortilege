@@ -53,14 +53,14 @@ public class EffectDescription
                 continue;
             }
 
-            if (effect.affectiveUnit == UnitType.Enemy)
+            if (effect.affectiveUnit == UnitType.Player)
             {
-                GetStats(effect, EnemyStatsLowBound, EnemyStatsHighBound, currentStreak);
+                GetStats(effect, SelfStatsLowBound, SelfStatsHighBound, currentStreak); 
             }
 
             else
             {
-                GetStats(effect, SelfStatsLowBound, SelfStatsHighBound, currentStreak);
+                GetStats(effect, EnemyStatsLowBound, EnemyStatsHighBound, currentStreak);
             }
 
            
@@ -123,7 +123,7 @@ public class EffectDescription
     public override string ToString()
     {
         string EnemyDamageStr = $"{DescribeRange(EnemyStatsLowBound.Damage, EnemyStatsHighBound.Damage)} dmg to an enemy";
-        string SelfDamageStr = $"{DescribeRange(SelfStatsLowBound.Damage, SelfStatsHighBound.Damage)}dmg to you";
+        string SelfDamageStr = $"{DescribeRange(SelfStatsLowBound.Damage, SelfStatsHighBound.Damage)} dmg to you";
         string SelfHealStr = $"{DescribeRange(-SelfStatsLowBound.Damage, -SelfStatsHighBound.Damage)} health";
         string EnemyHealStr = $"{DescribeRange(-EnemyStatsLowBound.Damage, - EnemyStatsHighBound.Damage)} health";
         string SelfArmorStr = (SelfStatsLowBound.Armor > 0 ? "Gain " : "Lose") + 
@@ -141,13 +141,13 @@ public class EffectDescription
             {
                 desc += " and " + EnemyDamageStr;
             }
-            desc += ".";
+            desc += ". ";
         }
         else
         {
             if (EnemyStatsLowBound.Damage > 0)
             {
-                desc += "Deal " + EnemyDamageStr + ".";
+                desc += "Deal " + EnemyDamageStr + ". ";
             }
         }
         if (SelfStatsHighBound.Damage < 0)
@@ -155,23 +155,23 @@ public class EffectDescription
             desc += "Gain " + SelfHealStr;
             if (EnemyStatsHighBound.Damage < 0)
             {
-                desc += "and enemy gains" + EnemyHealStr + ".";
+                desc += "and enemy gains" + EnemyHealStr + ". ";
             }
         }
         else
         {
             if (EnemyStatsHighBound.Damage< 0)
             {
-                desc += "Enemy gains " + EnemyHealStr + ".";
+                desc += "Enemy gains " + EnemyHealStr + ". ";
             }
         }
         if (SelfStatsHighBound.Armor != 0)
         {
-            desc += SelfArmorStr + ".";
+            desc += SelfArmorStr + ". ";
         }
         if (EnemyStatsHighBound.Armor != 0)
         {
-            desc += EnemyArmorStr + ".";
+            desc += EnemyArmorStr + ". ";
         }
         
         return desc;
@@ -199,17 +199,17 @@ public class BuffDescription
         string BlockStr = 
             $"Enemy skips their next {BuffCounts[BuffType.Block] + BuffCounts[BuffType.Flinch]} attacks";
         string ForgeStr = $"Draw {BuffCounts[BuffType.Forge]} extra cards";
-        string ThornsStr = $"Deal {BuffCounts[BuffType.Thorns]} damage when hit";
+        string ThornsStr = $"Deal {BuffCounts[BuffType.Thorns]} damage when next hit";
         string PlagueStr = $"Deal 1 damage to each enemy for the next {BuffCounts[BuffType.Plague]} turns";
         //string FlinchStr: see BlockStr
         string VoodooStr = $"If you don't lose health this turn, gain {BuffCounts[BuffType.Voodoo]} health";
         // Breeze is still unimplemented
         string desc = "";
-        if (BuffCounts[BuffType.Block] > 0 || BuffCounts[BuffType.Flinch] > 0) desc += BlockStr + ".";
-        if (BuffCounts[BuffType.Forge] > 0) desc += ForgeStr + ".";
-        if (BuffCounts[BuffType.Thorns] > 0) desc += ThornsStr + ".";
-        if (BuffCounts[BuffType.Plague] > 0) desc += PlagueStr + ".";
-        if (BuffCounts[BuffType.Voodoo] > 0) desc += VoodooStr + ".";
+        if (BuffCounts[BuffType.Block] > 0 || BuffCounts[BuffType.Flinch] > 0) desc += BlockStr + ". ";
+        if (BuffCounts[BuffType.Forge] > 0) desc += ForgeStr + ". ";
+        if (BuffCounts[BuffType.Thorns] > 0) desc += ThornsStr + ". ";
+        if (BuffCounts[BuffType.Plague] > 0) desc += PlagueStr + ". ";
+        if (BuffCounts[BuffType.Voodoo] > 0) desc += VoodooStr + ". ";
         return desc;
     }
 
