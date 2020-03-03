@@ -138,7 +138,17 @@ namespace Cards
             }
         }
 
-        public string Hint()
+        public string EffectPreview()
+        {
+            return effectDescription.ToString();
+        }
+
+        public string BuffPreview()
+        {
+            return buffDescription.ToString();
+        }
+
+        public string Preview()
         {
             return effectDescription.ToString() + "\n" +
                      buffDescription.ToString();
