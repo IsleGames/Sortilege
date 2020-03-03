@@ -13,7 +13,7 @@ TagManager:
   - UI
   - 
   - 
-  - Background
+  - 
   - 
   - 
   - 
@@ -44,9 +44,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Status
-    uniqueID: 1141647671
-    locked: 0
   - name: Card
     uniqueID: 3518110879
+    locked: 0
+  - name: Mask
+    uniqueID: 600477731
+    locked: 0
+  - name: HighlightedObjects
+    uniqueID: 2909931313
     locked: 0

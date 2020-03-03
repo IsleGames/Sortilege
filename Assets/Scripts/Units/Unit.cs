@@ -17,6 +17,7 @@ namespace Units
 		public UnityEvent onAttack = new UnityEvent();
 		public UnityEvent onDamage = new UnityEvent();
 		public UnityEvent onTurnEnd = new UnityEvent();
+		public UnityEvent onDead = new UnityEvent();
 		
 		public UnityEvent onHealthChange = new UnityEvent();
 		public virtual void Initialize()
@@ -25,6 +26,6 @@ namespace Units
 		}
 				
 		public abstract void StartTurn();
-		public abstract void EndTurn();
+		// public abstract void EndTurn();
 	}
 }

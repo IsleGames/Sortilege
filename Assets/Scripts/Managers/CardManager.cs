@@ -27,7 +27,7 @@ namespace Managers
 		
         public UnityEvent onTopChange = new UnityEvent();
 
-        [SerializeField] public bool _disableOnTopChangeCalling = false;
+        [SerializeField] public bool _disableMetaTypeFiltering = false;
 
         public List<CardData> CardList;
         public Pile pileDeck, pileDiscard;
@@ -43,17 +43,18 @@ namespace Managers
 
 		public bool randomDraw = true;
 
+		private void Awake()
+		{
+			cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
+            buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
+		}
+
 		public void Start()
 		{
-            // CardList = FindObjectOfType<DeckList>().Deck;
-            
-            cardPrefab = (GameObject)Resources.Load("Prefabs/Card");
-            buffPrefab = (GameObject)Resources.Load("Prefabs/Buff");
-            
-			pileDeck = GameObject.Find("DeckPile").GetComponent<Pile>();
-			pileHand = GameObject.Find("HandPile").GetComponent<HandPile>();
-			pileDiscard = GameObject.Find("DiscardPile").GetComponent<Pile>();
-			pilePlay = GameObject.Find("PlayPile").GetComponent<PlayPile>();
+            pileDeck = transform.Find("DeckPile").GetComponent<Pile>();
+			pileHand = transform.Find("HandPile").GetComponent<HandPile>();
+			pileDiscard = transform.Find("DiscardPile").GetComponent<Pile>();
+			pilePlay = transform.Find("PlayPile").GetComponent<PlayPile>();
 
 			/*if (CardList.Count > maxCardCount)
 			{
@@ -120,7 +121,7 @@ namespace Managers
 				return pileDiscard;
 			throw new InvalidOperationException("Card not found in any pile");
 		}
-		       
+        
 		public void AddCardToQueue(Card card)
 		{
 			if (!pileHand.Contains(card))
@@ -129,16 +130,16 @@ namespace Managers
 			pilePlay.Add(card);
 			pileHand.Remove(card);
 			
-			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
+			if (!_disableMetaTypeFiltering) onTopChange.Invoke();
 		}
 
 		public void RemoveCardAndAfterFromQueue(Card card)
 		{
-			if (card.GetComponent<Ability>().disableRetract)
-			{
-				// This is a fail-safe error; Show it in the UI directly
-				throw new InvalidOperationException("Card is not retractable");
-			}
+			// if (card.GetComponent<Ability>().disableRetract)
+			// {
+			// 	// This is a fail-safe error; Show it in the UI directly
+			// 	throw new InvalidOperationException("Card is not retractable");
+			// }
 
 			int cardIndex = pilePlay.IndexOf(card);
 			if (cardIndex == -1)
@@ -158,7 +159,7 @@ namespace Managers
 
 			pileHand.AddRange(discardList);
 			
-			if (!_disableOnTopChangeCalling) onTopChange.Invoke();
+			if (!_disableMetaTypeFiltering) onTopChange.Invoke();
 		}
 
 		public void DrawCards(int number, bool onEmptyShuffle = true, bool random = true)
@@ -195,7 +196,7 @@ namespace Managers
 		        List<Card> discardList = pilePlay.DrawAll();
 				pileDiscard.AddRange(discardList, false, true);
 				
-				if (!_disableOnTopChangeCalling) onTopChange.Invoke();
+				if (!_disableMetaTypeFiltering) onTopChange.Invoke();
 	        }
         }
 		

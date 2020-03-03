@@ -14,8 +14,8 @@ namespace _Editor
 {
     public class Cheats : MonoBehaviour
     {
-        private Object _cardPrefab;
-
+        // private Object _cardPrefab;
+/*
         private void Start()
         {
             _cardPrefab = Resources.Load("Prefabs/Card");
@@ -42,7 +42,7 @@ namespace _Editor
             }
             else if (Input.GetKeyUp(KeyCode.E))
             {
-                Game.Ctx.player.EndTurn();
+                // Game.Ctx.player.EndTurn();
             }
         }
 
@@ -50,7 +50,7 @@ namespace _Editor
         {
             // Game.Ctx.CardOperator.AddCardToQueue(Game.Ctx.CardOperator.Hand[index]);
         }
-
+*/
     }
 }
 

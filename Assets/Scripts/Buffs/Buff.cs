@@ -1,7 +1,9 @@
 using System;
+using System.Collections;
 using System.Data;
 using _Editor;
 using Effects;
+using Library;
 using Managers;
 using Units;
 using UnityEngine;
@@ -24,22 +26,34 @@ namespace Buffs
 				// Bind them to individual functions
 				case BuffType.Block:
 					// Todo: Check if an instance of self already exists
-					GetComponentInParent<Unit>().onDamage.AddListener(Block);
+					GetComponentInParent<Unit>().onDamage.AddListener(
+						delegate { StartCoroutine(Block()); }
+						);
 					break;
 				case BuffType.Forge:
-					GetComponentInParent<Unit>().onTurnBegin.AddListener(Forge);
+					GetComponentInParent<Unit>().onTurnBegin.AddListener(
+						delegate { StartCoroutine(Forge()); }
+						);
 					break;
 				case BuffType.Thorns:
-					GetComponentInParent<Unit>().onDamage.AddListener(Thorns);
+					GetComponentInParent<Unit>().onDamage.AddListener(
+						delegate { StartCoroutine(Thorns()); }
+						);
 					break;
 				case BuffType.Plague:
-					GetComponentInParent<Unit>().onTurnBegin.AddListener(Plague);
+					GetComponentInParent<Unit>().onTurnBegin.AddListener(
+						delegate { StartCoroutine(Plague()); }
+						);
 					break;
 				case BuffType.Flinch:
-					GetComponentInParent<Unit>().onAttack.AddListener(Flinch);
+					GetComponentInParent<Unit>().onAttack.AddListener(
+						delegate { StartCoroutine(Flinch()); }
+						);
 					break;
 				case BuffType.Voodoo:
-					GetComponentInParent<Unit>().onTurnBegin.AddListener(Voodoo);
+					GetComponentInParent<Unit>().onTurnBegin.AddListener(
+						delegate { StartCoroutine(Voodoo()); }
+						);
 					break;
 				case BuffType.Breeze:
 					throw new NotImplementedException();
@@ -49,73 +63,90 @@ namespace Buffs
 	    
 
 	    // OnDamage Effect
-	    private void Block()
+	    private IEnumerator Block()
 	    {
 		    GetComponentInParent<Health>().onGoingEffectAmount = 0;
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
 		    {
-			    GetComponentInParent<Unit>().onDamage.RemoveListener(Block);
-			    GetComponentInParent<BuffManager>().Destroy(this);
+			    // GetComponentInParent<Unit>().onDamage.RemoveListener(Block);
+				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }
+		    yield return null;
 	    }
 	    
 	    // OnTurnBegin Effect
-	    private void Forge()
+	    private IEnumerator Forge()
 	    {
 		    Game.Ctx.CardOperator.DrawCards((int)(amount + .5f));
 		    
 		    // You may go away without RemoveListener though
-		    GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Forge);
-		    GetComponentInParent<BuffManager>().Destroy(this);
+		    // GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Forge);
+            Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
+		    yield return null;
 	    }
 	    
 	    // OnDamage Effect
-	    private void Thorns()
+	    private IEnumerator Thorns()
 	    {
+		    // yield return new WaitForEndOfFrame();
+		    
 		    Game.Ctx.activeUnit.GetComponent<Health>().Damage(amount);
 		    
-		    GetComponentInParent<Unit>().onDamage.RemoveListener(Thorns);
-		    GetComponentInParent<BuffManager>().Destroy(this);
+		    // GetComponentInParent<Unit>().onDamage.RemoveListener(Thorns);
+            Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
+		    yield return null;
 	    }
 	    
 	    // OnTurnEnd Effect
-	    // Todo: Make Plague Support Damage in Multiple Turns
-	    private void Plague()
+	    private IEnumerator Plague()
 	    {
-		    GetComponent<Health>().Damage(1);
+		    GetComponentInParent<Health>().Damage(1);
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
 		    {
-				GetComponentInParent<Unit>().onTurnEnd.RemoveListener(Plague);
-				GetComponentInParent<BuffManager>().Destroy(this);
+				// GetComponentInParent<Unit>().onTurnEnd.RemoveListener(Plague);
+				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }
+		    yield return null;
 		    
 	    }
 	    
 	    // OnAttack Effect
-	    private void Flinch()
+	    private IEnumerator Flinch()
 	    {
 		    GetComponentInParent<Unit>().isUnitFlinched = true;
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
 		    {
-				GetComponentInParent<Unit>().onAttack.RemoveListener(Flinch);
-				GetComponentInParent<BuffManager>().Destroy(this);
+				// GetComponentInParent<Unit>().onAttack.RemoveListener(Flinch);
+				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }
+		    yield return null;
 	    }
 	    
 	    // OnTurnBegin Effect
-	    private void Voodoo()
+	    private IEnumerator Voodoo()
 	    {
 		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
 				GetComponentInParent<Health>().Heal(amount);
 
-			GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
-			GetComponentInParent<BuffManager>().Destroy(this);
+			// GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
+			
+            Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
+
+            yield return null;
+	    }
+
+	    private IEnumerator DestroyAfterAnimation()
+	    {
+		    Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+		    
+		    GetComponentInParent<BuffManager>().Destroy(this);
+		    yield return null;
 	    }
     }
 }

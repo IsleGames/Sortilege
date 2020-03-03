@@ -6,9 +6,7 @@ using UnityEngine;
 using TMPro;
 
 using Managers;
-using UI;
-using UnityEditor.U2D;
-using Effects;
+using UnityEngine.Rendering;
 
 namespace Cards
 {
@@ -20,6 +18,8 @@ namespace Cards
 
         private SpriteRenderer borderSprite, bgSprite, attRenderer, strRenderer;
         private TextMeshProUGUI cardText;
+        EffectDescription effectDescription = new EffectDescription();
+        BuffDescription buffDescription = new BuffDescription();
 
         private float onSelectZoomScale = 1.7f;
 
@@ -50,8 +50,9 @@ namespace Cards
 
             SetOrder();
         }
-
         
+
+
         public void OnSelectZoom()
         {
             Vector3 newLocalScale = transform.localScale *  onSelectZoomScale;
@@ -72,6 +73,16 @@ namespace Cards
 
         public void LateUpdate()
         {
+            var ability = GetComponent<MetaData>().ability;
+            effectDescription.Update(ability.effectList,
+                Game.Ctx.CardOperator.pilePlay.Count(),
+                Game.Ctx.CardOperator.pileDiscard
+                    .GetStrategyTypeCards(StrategyType.Deceiver).Count,
+                Game.Ctx.CardOperator.pileHand.Count());
+
+            buffDescription.Update(ability.buffEffectList,
+                Game.Ctx.CardOperator.pilePlay.Count());
+
             cardText.text = Text();
         }
 
@@ -79,14 +90,23 @@ namespace Cards
         {
             int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             var canvas = GetComponent<Canvas>();
+            var sg = GetComponent<SortingGroup>();
+            
+            
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
-            bgSprite.sortingOrder = sortOrder;
+
+            sg.sortingLayerName = "Card";
+            sg.sortingOrder = sortOrder;
+            
+            
+            
+            // bgSprite.sortingOrder = sortOrder;
             sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             borderSprite.sortingOrder = sortOrder;
-            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
-            attRenderer.sortingOrder = sortOrder;
-            strRenderer.sortingOrder = sortOrder;
+            // sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            // attRenderer.sortingOrder = sortOrder;
+            // strRenderer.sortingOrder = sortOrder;
         }
 
         public void Hide()

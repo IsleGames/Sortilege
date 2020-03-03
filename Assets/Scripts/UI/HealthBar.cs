@@ -16,7 +16,7 @@ namespace UI
     public class HealthBar : MonoBehaviour
     {
         private RectTransform _bgBar, _redBar, _blueBar, _whiteBar;
-        private TextMeshProUGUI _barText;
+        private TextMeshPro _barText;
         public Health pHealth;
 
         [NonSerialized]
@@ -24,8 +24,15 @@ namespace UI
 
         private Rect _thisRect;
 
-        private void Start()
+        private void Awake()
         {
+            pHealth = GetComponentInParent<Health>();
+            if (!pHealth)
+            {
+                pHealth = GetComponent<Health>();
+                if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
+            }
+            
             foreach (Transform tr in GetComponentsInChildren<Transform>())
                 switch (tr.name)
                 {
@@ -42,36 +49,35 @@ namespace UI
                         _whiteBar = tr.GetComponent<RectTransform>();
                         break;
                     case "BarTMPText":
-                        _barText = tr.GetComponent<TextMeshProUGUI>();
+                        _barText = tr.GetComponent<TextMeshPro>();
                         // Debugger.Log(tr.gameObject + "'s GUI is " + _barText);
                         break;
                 }
-
+            
             _whiteBar.GetComponent<SpriteRenderer>().enabled = false;
             // _blueBar.GetComponent<SpriteRenderer>().enabled = false;
             
+            SetRectSize(false);
+        }
+
+        private void Start()
+        {
+            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
+        }
+
+        public void SetRectSize(bool update = true)
+        {
             var sp = _bgBar.GetComponent<SpriteRenderer>();
             _thisRect = GetComponent<RectTransform>().rect;
             sp.size = new Vector2(
                 _thisRect.width,
                 _thisRect.height
                 );
-            
-            if (!pHealth)
-            {
-                pHealth = GetComponentInParent<Health>();
-                if (!pHealth)
-                {
-                    pHealth = GetComponent<Health>();
-                    if (!pHealth) throw new EntryPointNotFoundException("Health Component Not found");
-                }
-            }
-            
-            GetComponentInParent<Unit>().onHealthChange.AddListener(delegate { UpdateStatus(); });
+            if (update) GetComponentInChildren<HealthBar>().UpdateStatus(false);
         }
         
 		public static IEnumerator HitPointNumberPController(
-            TextMeshProUGUI tmp,
+            TextMeshPro tmp,
             float initHitPoints,
             float targetHitPoints,
             float totalHitPoints,
@@ -97,26 +103,28 @@ namespace UI
         public void UpdateStatus(bool animated = true)
         {
             float totHitPoints = pHealth.GetMaximumDisplayHP();
-            
             float hpRatio = pHealth.hitPoints / totHitPoints;
-            AdjustBar(hpRatio, _redBar, animated);
-            // _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
-
             float barrierRatio = (pHealth.hitPoints + pHealth.barrierHitPoints) / totHitPoints;
-            AdjustBar(barrierRatio, _blueBar, animated);
             
-            float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
+            AdjustBar(hpRatio, _redBar, animated);
+            AdjustBar(barrierRatio, _blueBar, animated);
 
-            Game.Ctx.AnimationOperator.PushAction(
-                HitPointNumberPController(
-                    _barText,
-                    initHitPoints,
-                    pHealth.hitPoints + pHealth.barrierHitPoints,
-                    totHitPoints,
-                    animationKFactor
-                    ),
-                true
-                );
+            if (animated)
+            {
+                float initHitPoints = Int32.Parse(Regex.Match(_barText.text, @"^\d+").ToString());
+                Game.Ctx.AnimationOperator.PushAction(
+                    HitPointNumberPController(
+                        _barText,
+                        initHitPoints,
+                        pHealth.hitPoints + pHealth.barrierHitPoints,
+                        totHitPoints,
+                        animationKFactor
+                        ),
+                    true
+                    );
+            }
+            else
+                _barText.text = $"{(int)pHealth.hitPoints + pHealth.barrierHitPoints} / {(int)totHitPoints}";
         }
 
         private void AdjustBar(float ratio, RectTransform bar, bool animated = true)

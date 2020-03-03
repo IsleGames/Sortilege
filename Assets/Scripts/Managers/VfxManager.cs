@@ -8,6 +8,9 @@ using Object = UnityEngine.Object;
 using Cards;
 using Effects;
 using UI;
+using Units.Enemies;
+using UnityEngine.Rendering;
+using UnityEngine.UI;
 
 namespace Managers
  {
@@ -60,9 +63,10 @@ namespace Managers
          public Color notAvailableColor = new Color(0.5f, 0.5f, 0.5f);
          
          public Card draggedCard;
-         [SerializeField] private static int sortOrder = 0;
+         private static int sortOrder = 0;
 
          public GameObject turnToMoveBoardPrefab;
+         public Image DarkenMask;
          
          private void Awake()
          { 
@@ -72,6 +76,8 @@ namespace Managers
          public void Start()
          {
              turnToMoveBoardPrefab = (GameObject)Resources.Load("Prefabs/TurnToMoveBoard");
+
+             DarkenMask = transform.Find("RaycasterScreen").GetComponent<Image>();
          }
 
          public void ShowTurnText(string text)
@@ -103,19 +109,34 @@ namespace Managers
              sortOrder += 1;
              return ret;
          }
-        
-         public IEnumerator MoveCardTo(Card card, Vector3 pos, float time)
+
+         public void SetAllBrightnessInAimMode(float alpha, bool isEnemyAtFront)
          {
-            float t = 0f;
-            Vector3 init = card.transform.position;
-            
-            while (t < time) 
-            {
-                float i = t / time;
-                card.transform.position = i * pos + (1f - i) * init;
-                t += Time.deltaTime;
-                yield return null;
-            }
+             SetMaskBrightness(alpha);
+             string layerName = "";
+             if (isEnemyAtFront)
+                 layerName = "HighlightedObjects";
+             else
+                 layerName = "Default";
+
+             foreach (Enemy enemy in Game.Ctx.EnemyOperator.EnemyList)
+             {
+                 var sg = enemy.GetComponent<SortingGroup>();
+                 var cv = enemy.GetComponent<Canvas>();
+                 
+                 sg.sortingLayerName = layerName;
+                 cv.sortingLayerName = layerName;
+             }
+
+             var bt = Game.Ctx.transform.GetComponentInChildren<CommandButton>().GetComponent<Canvas>();
+             bt.sortingLayerName = layerName;
+         }
+         
+         public void SetMaskBrightness(float alpha)
+         {
+             Color newColor = DarkenMask.color;
+             newColor.a = alpha;
+             DarkenMask.color = newColor;
          }
      }
  }
