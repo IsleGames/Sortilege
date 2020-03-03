@@ -126,11 +126,8 @@ public class EffectDescription
         string SelfDamageStr = $"{DescribeRange(SelfStatsLowBound.Damage, SelfStatsHighBound.Damage)} dmg to you";
         string SelfHealStr = $"{DescribeRange(-SelfStatsLowBound.Damage, -SelfStatsHighBound.Damage)} health";
         string EnemyHealStr = $"{DescribeRange(-EnemyStatsLowBound.Damage, - EnemyStatsHighBound.Damage)} health";
-        string SelfArmorStr = (SelfStatsLowBound.Armor > 0 ? "Gain " : "Lose") + 
-            $"{DescribeRange(SelfStatsLowBound.Armor, SelfStatsHighBound.Armor)} armor";
-        string EnemyArmorStr = "Enemy " + 
-            (EnemyStatsLowBound.Armor > 0 ? "gains " : "loses" +
-            $"{DescribeRange(EnemyStatsLowBound.Armor, EnemyStatsHighBound.Armor)} armor");
+        string SelfArmorStr = $"{(SelfStatsLowBound.Armor > 0 ? "Gain " : "Lose ")}{DescribeRange(SelfStatsLowBound.Armor, SelfStatsHighBound.Armor)} armor";
+        string EnemyArmorStr = $"Enemy {(EnemyStatsLowBound.Armor > 0 ? "gains" : "loses")} {DescribeRange(EnemyStatsLowBound.Armor, EnemyStatsHighBound.Armor)} armor";
         string DiscardDecieverStr = "Discard all Deciever cards.";
         string desc = "";
 
@@ -147,7 +144,7 @@ public class EffectDescription
         {
             if (EnemyStatsLowBound.Damage > 0)
             {
-                desc += "Deal " + EnemyDamageStr + ". ";
+                desc += $"Deal {EnemyDamageStr}. ";
             }
         }
         if (SelfStatsHighBound.Damage < 0)
@@ -155,14 +152,14 @@ public class EffectDescription
             desc += "Gain " + SelfHealStr;
             if (EnemyStatsHighBound.Damage < 0)
             {
-                desc += "and enemy gains" + EnemyHealStr + ". ";
+                desc += $"and enemy gains {EnemyHealStr}. ";
             }
         }
         else
         {
             if (EnemyStatsHighBound.Damage< 0)
             {
-                desc += "Enemy gains " + EnemyHealStr + ". ";
+                desc += $"Enemy gains {EnemyHealStr}. ";
             }
         }
         if (SelfStatsHighBound.Armor != 0)
