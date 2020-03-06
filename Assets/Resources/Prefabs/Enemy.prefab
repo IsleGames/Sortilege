@@ -208,8 +208,8 @@ GameObject:
   - component: {fileID: 1414300344802737712}
   - component: {fileID: 4511077534675484709}
   - component: {fileID: 2533583547614788284}
-  - component: {fileID: 1116837986078615051}
   - component: {fileID: 1862815391820723619}
+  - component: {fileID: 3206310597982546045}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -350,19 +350,6 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
---- !u!114 &1116837986078615051
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8497116602034066205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08427bf05a60d4ddcaec7a33fdb6cc31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Duration: 10
 --- !u!114 &1862815391820723619
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +363,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 1
+--- !u!114 &3206310597982546045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8497116602034066205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 08427bf05a60d4ddcaec7a33fdb6cc31, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Duration: 10
 --- !u!1001 &9027454070334575840
 PrefabInstance:
   m_ObjectHideFlags: 0

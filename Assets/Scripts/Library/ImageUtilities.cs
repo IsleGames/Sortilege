@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace Library
 {
@@ -46,6 +47,24 @@ namespace Library
         public Color GetColor()
         {
             return image.color;
+        }
+    }
+
+    public class TMPUI_C: IColorable
+    {
+        public TMPro.TextMeshProUGUI text;
+        public TMPUI_C(TextMeshProUGUI t)
+        {
+            text = t;
+        }
+
+        public void SetColor(Color c)
+        {
+            text.faceColor = c;
+        }
+        public Color GetColor()
+        {
+            return text.faceColor;
         }
     }
 
