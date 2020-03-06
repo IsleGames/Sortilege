@@ -3,6 +3,7 @@ using Data;
 using Effects;
 using Library;
 using Random = UnityEngine.Random;
+using UnityEngine;
 
 namespace Units.Enemies
 {
@@ -33,6 +34,8 @@ namespace Units.Enemies
 
             GetComponent<Health>().maximumHitPoints = enemyData.maximumHealth;
             GetComponent<EnemyRender>().imgSprite = enemyData.displayImage;
+            onDead.AddListener(() => GetComponent<FadeOut>().BlockingFade());
+            onDead.AddListener(() => Debug.Log("Died"));
 
             foreach (EnemyAbilityData moveData in enemyData.abilityList)
             {
@@ -94,6 +97,7 @@ namespace Units.Enemies
 			}
 
 			onTurnEnd.Invoke();
+
 			
             Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(0.8f), true);
 

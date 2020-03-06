@@ -197,7 +197,7 @@ namespace Managers
 				pileDiscard.AddRange(discardList, false, true);
 				
 				if (!_disableMetaTypeFiltering) onTopChange.Invoke();
-	        }
+            }
         }
 		
         public int DiscardAllHandCards()

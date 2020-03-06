@@ -9,7 +9,10 @@ public class AttackMotion : MonoBehaviour
     public enum Direction { Left, Right };
 
     public Direction direction = Direction.Left;
-    public float Distance, Speed, PauseStart, PauseEnd;
+    float Distance = 100f;
+    float Speed = 0.5f;
+    float PauseStart = 0.5f;
+    float PauseEnd = 0.5f;
 
     void Start()
     {
@@ -22,6 +25,7 @@ public class AttackMotion : MonoBehaviour
     public IEnumerator Move()
     {
         yield return StartCoroutine(MoveAnimation());
+
     }
 
     private IEnumerator MoveAnimation()

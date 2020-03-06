@@ -23,6 +23,7 @@ namespace Units
 		public virtual void Initialize()
 		{
 			GetComponent<Health>().Initialize();
+
 		}
 				
 		public abstract void StartTurn();

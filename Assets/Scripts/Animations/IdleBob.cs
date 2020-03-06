@@ -38,7 +38,6 @@ public class IdleBob : MonoBehaviour
             {
                 var delta = Amplitude * Mathf.Cos(2 * Mathf.PI / Period * t);
                 t += Time.fixedDeltaTime;
-                Debug.Log(delta);
                 var position = transform.position;
                 position.y += delta;
                 transform.position = position;
