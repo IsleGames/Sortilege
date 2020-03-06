@@ -84,7 +84,7 @@ namespace Library
             {
                 p += (1 - p) * k;
                 
-                Vector3 current = pos * k + init * (1 - k);
+                Vector3 current = pos * p + init * (1 - p);
                 obj.transform.position = current;
                 
                 yield return null;

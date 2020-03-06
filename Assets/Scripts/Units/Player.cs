@@ -35,17 +35,19 @@ namespace Units
 		public void EndTurn(Unit target)
 		{
 			waitingForAction = false;
-			
-			// onAttack Event goes here
-            isUnitFlinched = false;
-            onAttack.Invoke();
-            if (!isUnitFlinched) 
-				Game.Ctx.CardOperator.Apply(target);
+
+            // onAttack Event goes here
+            if (!isUnitFlinched)
+            {
+                onAttack.Invoke();
+                Game.Ctx.CardOperator.Apply(target);
+            }
             else
             {
-	            // Some effect
+                // Some effect
             }
-			
+			isUnitFlinched = false;
+
 			onTurnEnd.Invoke();
 			Game.Ctx.CardOperator.EndTurn();
 
