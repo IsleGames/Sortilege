@@ -74,12 +74,6 @@ namespace Managers
                     yield return PopNextEvent();
                 }
             }
-            /*
-            stoppingTillDone = PopNextEvent();
-            while (EventQueue.Count > 0 && !stoppingTillDone)
-            {
-                stoppingTillDone = PopNextEvent();
-            } */
         }
 
         private void OnIEnumRunningEnd()
@@ -107,15 +101,10 @@ namespace Managers
         private IEnumerator PopNextEvent()
         {
             (IEnumerator move, bool stopTilDone) = EventQueue.Dequeue();
-            //bool ret = StopQueue[0];
             
-            Debugger.Log("Now running: " + move + " with remaining count " + runningAnimationCount + " + 1");
+            //Debugger.Log("Now running: " + move + " with remaining count " + runningAnimationCount + " + 1");
             
-            //runningAnimationCount += 1;
             
-            //EventQueue.RemoveAt(0);
-            //StopQueue.RemoveAt(0);
-
             if (stopTilDone)
             {
                 yield return StartCoroutine(move);

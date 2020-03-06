@@ -376,10 +376,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   direction: 1
-  Distance: 0
-  Speed: 0
-  PauseStart: 0
-  PauseEnd: 0
 --- !u!1001 &9027454070334575840
 PrefabInstance:
   m_ObjectHideFlags: 0

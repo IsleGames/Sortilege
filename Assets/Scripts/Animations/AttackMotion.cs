@@ -18,7 +18,7 @@ public class AttackMotion : MonoBehaviour
     {
         var unit = GetComponent<Unit>();
         unit.onAttack.AddListener(
-            delegate { Game.Ctx.AnimationOperator.PushAction(Move(), true); }
+            delegate { Game.Ctx.AnimationOperator.PushAction(MoveAnimation(), true); }
             );
     }
 
@@ -30,6 +30,7 @@ public class AttackMotion : MonoBehaviour
 
     private IEnumerator MoveAnimation()
     {
+        yield return null;
         yield return new WaitForSeconds(PauseStart);
         Vector3 initial_position = transform.position;
         Vector3 target_position = transform.position;
@@ -40,5 +41,7 @@ public class AttackMotion : MonoBehaviour
         yield return StartCoroutine(
             Utilities.MoveTo(gameObject, initial_position, Speed / 2));
         yield return new WaitForSeconds(PauseEnd);
+        //Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+        yield return null;
     }
 }
