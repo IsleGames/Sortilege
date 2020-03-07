@@ -9,6 +9,8 @@ namespace Managers
     public class GameManager : MonoBehaviour
     {
         private GameObject sceneFaderPrefab;
+        
+        
         private void Start()
         {
             sceneFaderPrefab = (GameObject)Resources.Load("Prefabs/SceneFader");
