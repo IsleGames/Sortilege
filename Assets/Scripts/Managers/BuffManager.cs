@@ -19,6 +19,7 @@ namespace Managers
         [NonSerialized]
         public float scaleFactor = .4f;
         
+        [SerializeField]
         protected Vector3 QueueCenter;
 
         [SerializeField]
@@ -35,7 +36,7 @@ namespace Managers
 
             RectTransform rect = transform.Find("BuffQueuePositionHolder").GetComponent<RectTransform>();
             QueueCenter = rect.anchoredPosition;
-            TotalBuffWidth = rect.rect.width * scaleFactor + offsetMargin;
+            TotalBuffWidth = rect.sizeDelta.x * scaleFactor + offsetMargin;
             SetAlign();
         }
 
