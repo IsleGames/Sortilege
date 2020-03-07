@@ -28,7 +28,7 @@ namespace Managers
 
 			if (Game.Ctx.UserOperator)
 			{
-				EnemyInitData = Game.Ctx.UserOperator.GetEnemyData(0);
+				EnemyInitData = Game.Ctx.UserOperator.GetEnemyData(Game.Ctx.GameOperator.GetRoundCount());
 			}
 			else
 			{

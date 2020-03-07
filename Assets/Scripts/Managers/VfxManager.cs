@@ -79,13 +79,13 @@ namespace Managers
              DarkenMask = transform.Find("RaycasterScreen").GetComponent<Image>();
          }
 
-         public void ShowTurnText(string text)
+         public void ShowTurnText(string text, bool dontDisappear = false)
          {
              GameObject newTurnBoardObj = Instantiate(turnToMoveBoardPrefab, Game.Ctx.UICanvas.transform);
              TurnToMoveBoard board = newTurnBoardObj.GetComponent<TurnToMoveBoard>();
 
              board.SetText(text);
-             board.StartAnimation();
+             board.StartAnimation(dontDisappear);
          }
 
          public void SetAllSortOrders()

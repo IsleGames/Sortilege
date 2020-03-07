@@ -129,10 +129,9 @@ namespace Managers
     // #endif
                     if (Game.Ctx.UserOperator)
                     {
-                        Game.Ctx.GameOperator.LoadSceneByName("AddCard");
+                        Game.Ctx.GameOperator.EndBattle();
                     }
-    
-    
+                    
                 }
                 else
                 {

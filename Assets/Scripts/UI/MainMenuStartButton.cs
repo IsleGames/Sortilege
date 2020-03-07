@@ -10,7 +10,7 @@ namespace UI
         private void Start()
         {
             GameManager gameOperator = FindObjectOfType<GameManager>();
-            GetComponent<Button>().onClick.AddListener(delegate { gameOperator.LoadSceneByName("Battle", true, 1.5f); });
+            GetComponent<Button>().onClick.AddListener(gameOperator.StartGame);
         }
     }
 }

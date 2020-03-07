@@ -60,8 +60,8 @@ namespace Managers
             foreach (var card in cardList)
             {
                 StartCoroutine(card.GetComponent<Select>().Abscond());
-            }
-            Game.Ctx.GameOperator.LoadSceneByName("Battle");
+            } 
+            Game.Ctx.GameOperator.EnterBattle();
         }
 
         private List<CardData> SelectCards()
