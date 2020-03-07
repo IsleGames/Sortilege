@@ -20,8 +20,8 @@ namespace Managers
 
         public void LoadCards()
         {
-            var all_cards = Resources.LoadAll("Card", typeof(CardData));
-            foreach (CardData card in all_cards){
+            var allCards = Resources.LoadAll("Card", typeof(CardData));
+            foreach (CardData card in allCards){
                 cardDataScript[card.title] = card;
                 Debugger.Log("Add " + card.title);
             }
