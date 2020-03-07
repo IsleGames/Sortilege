@@ -15,10 +15,10 @@ namespace Managers
             
             gameObject.AddComponent<UserManager>();
             
-            LoadSceneByName("StartMenu");
+            LoadSceneByName("StartMenu", false);
         }
 
-        public void LoadSceneByName(string sceneName, bool fade = false, float fadeTime = 1.5f)
+        public void LoadSceneByName(string sceneName, bool fade = true, float fadeTime = 1.5f)
         {
             IEnumerator loadIEnum = LoadSceneByNameIEnum(sceneName);
             
@@ -33,7 +33,7 @@ namespace Managers
             }
         }
 
-        private IEnumerator LoadSceneByNameIEnum(string sceneName)
+        public IEnumerator LoadSceneByNameIEnum(string sceneName)
         {
             SceneManager.LoadScene(sceneName);
             yield return null;

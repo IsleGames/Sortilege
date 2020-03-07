@@ -35,6 +35,7 @@ public class Game : MonoBehaviour
     public BattleManager BattleOperator;
     public AfterBattleRewardManager AfterBattleRewardOperator;
 
+    public GameManager GameOperator;
     public UserManager UserOperator;
 
     public SceneType sceneType;
@@ -68,6 +69,7 @@ public class Game : MonoBehaviour
         AfterBattleRewardOperator = GetComponent<AfterBattleRewardManager>();
         
         // Global Links
+        GameOperator = FindObjectOfType<GameManager>();
         UserOperator = FindObjectOfType<UserManager>();
 
         switch (sceneType)

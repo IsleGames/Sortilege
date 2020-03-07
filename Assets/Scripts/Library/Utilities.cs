@@ -22,7 +22,7 @@ namespace Library
 			return ret;
 		}
 
-		public static T DrawNoShuffle<T>(this IList<T> list)
+		public static T DrawFirst<T>(this IList<T> list)
 		{
 			T ret = list[0];
 			list.RemoveAt(0);

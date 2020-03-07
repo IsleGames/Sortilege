@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Managers;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,14 @@ namespace UI
     {
         public void FadeAndLoadScene(IEnumerator IEnumAfter, float duration = 2.0f)
         {
-            StartCoroutine(LoadScene(IEnumAfter, duration));
+            AnimationManager aOp = FindObjectOfType<AnimationManager>();
+
+            if (aOp)
+            {
+                aOp.PushAction(LoadScene(IEnumAfter, duration), true);
+            }
+            else
+                StartCoroutine(LoadScene(IEnumAfter, duration));
         }
 
         private IEnumerator LoadScene(IEnumerator IEnumAfter, float duration)

@@ -127,10 +127,10 @@ namespace Managers
     // #else
     //                 Application.Quit();
     // #endif
-                if (Game.Ctx.UserOperator)
-                {
-                    SceneManager.LoadScene("Scenes/AddCard");
-                }
+                    if (Game.Ctx.UserOperator)
+                    {
+                        Game.Ctx.GameOperator.LoadSceneByName("AddCard");
+                    }
     
     
                 }

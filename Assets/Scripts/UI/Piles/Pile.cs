@@ -210,7 +210,7 @@ namespace UI
 
         public Card DrawNoShuffle()
         {
-            Card drawnCard = _pile.DrawNoShuffle();
+            Card drawnCard = _pile.DrawFirst();
             AdjustAllPositions();
             return drawnCard;
         }

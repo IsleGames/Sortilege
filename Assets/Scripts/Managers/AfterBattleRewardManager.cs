@@ -21,7 +21,7 @@ namespace Managers
             // Wait a frame so every Awake and Start method is called
             yield return new WaitForEndOfFrame();
             
-            Debugger.Log(pile.Count());
+            // Debugger.Log(pile.Count());  
             pile.AdjustAllPositions();
 
             yield return null;
@@ -49,8 +49,19 @@ namespace Managers
                 pile.Add(card.GetComponent<Card>(), false);
             }
             
-            Debugger.Log(pile.Count());
-            
+            // Debugger.Log(pile.Count());
+        }
+
+        public void OnCardSelect(Card selectedCard)
+        {
+            Game.Ctx.UserOperator.Add(selectedCard.cardData);
+
+            List<Card> cardList = pile.DrawAll();
+            foreach (var card in cardList)
+            {
+                StartCoroutine(card.GetComponent<Select>().Abscond());
+            }
+            Game.Ctx.GameOperator.LoadSceneByName("Battle");
         }
 
         private List<CardData> SelectCards()
