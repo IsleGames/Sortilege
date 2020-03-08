@@ -46,6 +46,11 @@ namespace Managers
             
             TryRunEverything();
         }
+
+        public IEnumerator FadeOut(IEnumerator loadSceneIEnum)
+        {
+            yield return null;
+        }
         
         private void TryRunEverything() 
         {

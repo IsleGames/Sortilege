@@ -26,6 +26,15 @@ namespace Managers
         {
             enemyPrefab = (GameObject)Resources.Load("Prefabs/Enemy");
 
+			if (Game.Ctx.UserOperator)
+			{
+				EnemyInitData = Game.Ctx.UserOperator.GetEnemyData(Game.Ctx.GameOperator.GetRoundCount());
+			}
+			else
+			{
+				// keep cardList the same as in inspector
+			}
+            
             foreach (EnemyData cardData in EnemyInitData)
 			{
 				GameObject newEnemyObj = Instantiate(enemyPrefab, transform);
@@ -61,11 +70,12 @@ namespace Managers
                 enemyRectT.anchoredPosition = new Vector3(curX, curY, 0f);
                 
                 var rect = enemyRectT.rect;
-                enemyRectT.sizeDelta = new Vector2(locXdelta, rect.height);
+                float curSizeD = Mathf.Min(locXdelta, enemyRectT.sizeDelta.x);
+                enemyRectT.sizeDelta = new Vector2(curSizeD, rect.height);
 
                 var rectHealthTrans = EnemyList[i].GetComponentInChildren<HealthBar>().GetComponent<RectTransform>();
                 rectHealthTrans.sizeDelta = 
-                    new Vector2(locXdelta, rectHealthTrans.rect.height);
+                    new Vector2(curSizeD, rectHealthTrans.rect.height);
                 EnemyList[i].GetComponentInChildren<HealthBar>().SetRectSize();
                     
                 curX += locXdelta;

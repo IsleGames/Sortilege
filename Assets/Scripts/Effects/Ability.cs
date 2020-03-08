@@ -39,7 +39,7 @@ namespace Effects
                     switch (effect.affectiveUnit)
                     {
                         case UnitType.Player:
-                            effect.Apply(Game.Ctx.player, multiplier);
+                            effect.Apply(Game.Ctx.BattleOperator.player, multiplier);
                             break;
                         case UnitType.SingleEnemy:
                             effect.Apply(target, multiplier);
@@ -76,7 +76,7 @@ namespace Effects
                     switch (buffEffect.affectiveUnit)
                     {
                         case UnitType.Player:
-                            buffEffect.Apply(Game.Ctx.player, multiplier);
+                            buffEffect.Apply(Game.Ctx.BattleOperator.player, multiplier);
                             break;
                         case UnitType.SingleEnemy:
                             buffEffect.Apply(target, multiplier);

@@ -68,10 +68,13 @@ namespace Cards
 
         public void SetOrder()
         {
-            int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            SortOrderManager soM = Game.Ctx.SortOrderOperator;
+            
+            int sortOrder = soM.GetSortOrder();
+            
+            
             var canvas = GetComponent<Canvas>();
             var sg = GetComponent<SortingGroup>();
-            
             
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
@@ -79,30 +82,16 @@ namespace Cards
             sg.sortingLayerName = "Card";
             sg.sortingOrder = sortOrder;
             
-            
-            
             // bgSprite.sortingOrder = sortOrder;
-            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            
+            soM.GetSortOrder();
             borderSprite.sortingOrder = sortOrder;
+            
             // sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             // attRenderer.sortingOrder = sortOrder;
             // strRenderer.sortingOrder = sortOrder;
         }
-/*
-        IEnumerator MoveCard(Vector3 dest, float delay = 0)
-        {
-            Vector3 init = new Vector3(transform.position.x, transform.position.y);
-            float t = 0f;
-            yield return new WaitForSeconds(delay);
-            while (t < moveSpeed) {
-                float i = t / moveSpeed;
-                transform.SetPositionAndRotation(i * dest + (1f - i) * init,
-                    transform.rotation);
-                t += Time.deltaTime;
-                yield return null;
-            }
-        }
-  */  
+        
         public void Hide()
         {
             visible = false;

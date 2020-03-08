@@ -63,11 +63,10 @@ namespace Managers
          public Color notAvailableColor = new Color(0.5f, 0.5f, 0.5f);
          
          public Card draggedCard;
-         private static int sortOrder = 0;
 
          public GameObject turnToMoveBoardPrefab;
          public Image DarkenMask;
-         
+
          private void Awake()
          { 
              GetComponent<Canvas>().worldCamera = FindObjectOfType<Camera>();
@@ -80,34 +79,22 @@ namespace Managers
              DarkenMask = transform.Find("RaycasterScreen").GetComponent<Image>();
          }
 
-         public void ShowTurnText(string text)
+         public void ShowTurnText(string text, bool dontDisappear = false)
          {
              GameObject newTurnBoardObj = Instantiate(turnToMoveBoardPrefab, Game.Ctx.UICanvas.transform);
              TurnToMoveBoard board = newTurnBoardObj.GetComponent<TurnToMoveBoard>();
 
              board.SetText(text);
-             board.StartAnimation();
+             board.StartAnimation(dontDisappear);
          }
 
          public void SetAllSortOrders()
          {
-             ResetSortOrder();
+             Game.Ctx.SortOrderOperator.ResetSortOrder();
              Game.Ctx.CardOperator.pileDiscard.SetSortOrders();
              Game.Ctx.CardOperator.pileDeck.SetSortOrders();
              Game.Ctx.CardOperator.pileHand.SetSortOrders();
              Game.Ctx.CardOperator.pilePlay.SetSortOrders();
-         }
-
-         public void ResetSortOrder()
-         {
-             sortOrder = 0;
-         }
-
-         public int GetSortOrder()
-         {
-             int ret = sortOrder;
-             sortOrder += 1;
-             return ret;
          }
 
          public void SetAllBrightnessInAimMode(float alpha, bool isEnemyAtFront)

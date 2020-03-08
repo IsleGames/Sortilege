@@ -14,43 +14,22 @@ namespace _Editor
 {
     public class Cheats : MonoBehaviour
     {
-        // private Object _cardPrefab;
-/*
-        private void Start()
-        {
-            _cardPrefab = Resources.Load("Prefabs/Card");
-            
-        }
-
         public void Update()
         {
-            if (Input.GetKeyUp(KeyCode.Alpha1))
+            if (Input.GetKeyUp(KeyCode.E))
             {
-                PlayCard(0);
-            }
-            else if (Input.GetKeyUp(KeyCode.Alpha2))
-            {
-                PlayCard(1);
-            }
-            else if (Input.GetKeyUp(KeyCode.Alpha3))
-            {
-                PlayCard(2);
-            }
-            else if (Input.GetKeyUp(KeyCode.Alpha4))
-            {
-                PlayCard(3);
-            }
-            else if (Input.GetKeyUp(KeyCode.E))
-            {
-                // Game.Ctx.player.EndTurn();
+                Game.Ctx.EnemyOperator.InitEnemy();
+                Unit activeUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
+                activeUnit.GetComponent<Health>().Damage(activeUnit.GetComponent<Health>().hitPoints - 1f);
+    
+                while (activeUnit != null)
+                {
+                    activeUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
+                    activeUnit.GetComponent<Health>().Damage(100f);
+                }
             }
         }
-
-        private void PlayCard(int index)
-        {
-            // Game.Ctx.CardOperator.AddCardToQueue(Game.Ctx.CardOperator.Hand[index]);
-        }
-*/
+        
     }
 }
 

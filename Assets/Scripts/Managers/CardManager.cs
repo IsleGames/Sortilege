@@ -39,7 +39,7 @@ namespace Managers
 
 		public int cardsDrawnFirstTurn = 5;
 		public int cardsDrawnPerTurn = -1;
-		public int maxCardCount = 5;
+		// public int maxCardCount = 5;
 
 		public bool randomDraw = true;
 
@@ -51,16 +51,21 @@ namespace Managers
 
 		public void Start()
 		{
+			if (Game.Ctx.UserOperator)
+			{
+				CardList = Game.Ctx.UserOperator.GetCardData();
+			}
+			else
+			{
+				// keep cardList the same as in inspector
+			}
+			
             pileDeck = transform.Find("DeckPile").GetComponent<Pile>();
 			pileHand = transform.Find("HandPile").GetComponent<HandPile>();
 			pileDiscard = transform.Find("DiscardPile").GetComponent<Pile>();
 			pilePlay = transform.Find("PlayPile").GetComponent<PlayPile>();
 
-			/*if (CardList.Count > maxCardCount)
-			{
-				CardList.Shuffle();
-				CardList.RemoveRange(maxCardCount, CardList.Count - maxCardCount);
-			} */
+			pileDeck.Clear();
 
 			foreach (CardData cardData in CardList)
 			{
@@ -83,16 +88,7 @@ namespace Managers
 			pileDiscard.SetAllAvailabilities(true);
 		}
 
-        public Card MakeCard(CardData cardData)
-        {
-            GameObject newCardObj = Instantiate(cardPrefab);
-            Card newCard = newCardObj.GetComponent<Card>();
-
-            newCard.Initialize(cardData);
-            return newCard;
-        }
-
-        public void StartTurn()
+		public void StartTurn()
 		{
 			if (pilePlay.Count() > 0)
 				throw new InvalidConstraintException("PlayQueue is not empty at the start of the turn");
@@ -101,7 +97,7 @@ namespace Managers
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
 
 			Game.Ctx.VfxOperator.SetAllSortOrders();
-			DrawCards(Game.Ctx.turnCount == 1 ? cardsDrawnFirstTurn : cardsDrawnPerTurn, true, randomDraw);
+			DrawCards(Game.Ctx.BattleOperator.turnCount == 1 ? cardsDrawnFirstTurn : cardsDrawnPerTurn, true, randomDraw);
 		}
 
         public void EndTurn()

@@ -49,7 +49,7 @@ namespace Units.Enemies
 
 		public override void StartTurn()
 		{
-			if (Game.Ctx.activeUnit != this)
+			if (Game.Ctx.BattleOperator.activeUnit != this)
 			{
 				return;
 			}
@@ -80,7 +80,7 @@ namespace Units.Enemies
             for (int i = 0; i < 40; i++)
             {
 	            choice = Random.Range(0, abilityList.Count);
-	            if (abilityList[choice].activateTurnCount <= Game.Ctx.turnCount) break;
+	            if (abilityList[choice].activateTurnCount <= Game.Ctx.BattleOperator.turnCount) break;
             }
 
             abilityList[choice].ApplyAsEnemy(this);
@@ -88,7 +88,7 @@ namespace Units.Enemies
 		
 		public void EndTurn()
 		{
-			if (Game.Ctx.activeUnit != this)
+			if (Game.Ctx.BattleOperator.activeUnit != this)
 			{
 				return;
 			}
@@ -98,7 +98,7 @@ namespace Units.Enemies
             Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(0.8f), true);
 
             beingDamagedSomewhere = false;
-			Game.Ctx.Continue();
+			Game.Ctx.BattleOperator.Continue();
 		}
 	}
 }
