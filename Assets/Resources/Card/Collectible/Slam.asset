@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: DEEFENSE!
+  m_Name: Slam
   m_EditorClassIdentifier: 
-  title: DEE-FENSE!
-  strategy: 4
-  attribute: 1
-  description: Gain 8 armor. You don't draw cards next turn.
-  disableRetract: 0
+  title: Slam
+  strategy: 2
+  attribute: 0
+  description: Deal 6 damage, does not amplify
+  isSelfTarget: 0
   effectList:
   - affectiveUnit: 1
-    type: 2
-    amount: 8
+    type: 0
+    amount: 6
     maxDeviation: 0
     minStreak: 0
-    notAmplified: 0
+    notAmplified: 1
   buffList: []

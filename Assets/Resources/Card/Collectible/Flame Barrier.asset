@@ -10,30 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Arcane Blast
+  m_Name: Flame Barrier
   m_EditorClassIdentifier: 
-  title: Arcane Blast
+  title: Flame Barrier
   strategy: 5
-  attribute: 0
-  description: Deal 5 dmg. This card can at most deal 10 dmg.
-  disableRetract: 0
+  attribute: 2
+  description: Gain 3 armor, deal 1 dmg back to enemy who attacks you next turn
+  isSelfTarget: 0
   effectList:
-  - affectiveUnit: 1
-    type: 0
-    amount: 5
+  - affectiveUnit: 0
+    type: 2
+    amount: 3
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 1
-    type: 1
-    amount: 5
-    maxDeviation: 0
-    minStreak: 2
+  buffList:
+  - affectiveUnit: 0
+    type: 2
+    amount: 1
+    minStreak: 0
     notAmplified: 0
-  - affectiveUnit: 1
-    type: 0
-    amount: 10
-    maxDeviation: 0
-    minStreak: 2
-    notAmplified: 1
-  buffList: []

@@ -10,17 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Electric Shield
+  m_Name: DEEFENSE!
   m_EditorClassIdentifier: 
-  title: Electric Shield
-  strategy: 3
+  title: DEE-FENSE!
+  strategy: 4
   attribute: 1
-  description: 'Combo(4): Block next 2 attacks you receive'
-  disableRetract: 0
-  effectList: []
-  buffList:
+  description: Gain 8 armor. You don't draw cards next turn.
+  isSelfTarget: 0
+  effectList:
   - affectiveUnit: 0
-    type: 0
-    amount: 2
-    minStreak: 4
-    notAmplified: 1
+    type: 2
+    amount: 8
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
+  buffList: []

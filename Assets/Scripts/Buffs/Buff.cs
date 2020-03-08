@@ -92,6 +92,7 @@ namespace Buffs
 
 		    if (Mathf.Approximately(amount, 0f))
 		    {
+			    Debug.Log("removed");
 				GetComponentInParent<Unit>().onTurnEnd.RemoveListener(Plague);
 				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }

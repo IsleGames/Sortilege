@@ -10,24 +10,25 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Plague
+  m_Name: Mortal Strike
   m_EditorClassIdentifier: 
-  title: Plague
-  strategy: 5
+  title: Mortal Strike
+  strategy: 2
   attribute: 3
-  description: 'Place a debuff on all enemies, deal 1 damage at the start of their
-    turn. Combo(3): Deal 3 dmg to a single enemy.'
+  description: Deal 2 dmg. If you have less than 50% HP, damage is doubled and ignores
+    shield
   isSelfTarget: 0
   effectList:
   - affectiveUnit: 1
-    type: 0
-    amount: 3
+    type: 3
+    amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  buffList:
-  - affectiveUnit: 3
+  - affectiveUnit: 1
     type: 3
-    amount: 1
+    amount: 2
+    maxDeviation: 0
     minStreak: 0
     notAmplified: 0
+  buffList: []

@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Block!
+  m_Name: Noxious Shot
   m_EditorClassIdentifier: 
-  title: Block!
-  strategy: 3
-  attribute: 0
-  description: Increase Block by 3
-  disableRetract: 0
+  title: Noxious Shot
+  strategy: 2
+  attribute: 3
+  description: Deal 2 dmg, if this kills the enemy, restore 1 health
+  isSelfTarget: 0
   effectList:
-  - affectiveUnit: 0
-    type: 2
-    amount: 3
+  - affectiveUnit: 1
+    type: 0
+    amount: 1
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0

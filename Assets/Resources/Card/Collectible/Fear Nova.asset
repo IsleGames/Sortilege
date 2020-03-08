@@ -10,25 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: Mortal Strike
+  m_Name: Fear Nova
   m_EditorClassIdentifier: 
-  title: Mortal Strike
-  strategy: 2
-  attribute: 3
-  description: Deal 2 dmg. If you have less than 50% HP, damage is doubled and ignores
-    shield
-  disableRetract: 0
+  title: Fear Nova
+  strategy: 6
+  attribute: 0
+  description: Discard all your Deceiver cards in hand. Enemy can't move this turn.
+  isSelfTarget: 0
   effectList:
-  - affectiveUnit: 1
-    type: 3
-    amount: 2
+  - affectiveUnit: 0
+    type: 4
+    amount: 1
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
+  buffList:
   - affectiveUnit: 1
-    type: 3
-    amount: 2
-    maxDeviation: 0
+    type: 4
+    amount: 1
     minStreak: 0
     notAmplified: 0
-  buffList: []

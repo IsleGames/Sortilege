@@ -67,7 +67,7 @@ namespace Managers
         private List<CardData> SelectCards()
         {
             List<CardData> cards = new List<CardData>();
-            CardData[] all_cards = Resources.LoadAll<CardData>("Card");
+            CardData[] all_cards = Resources.LoadAll<CardData>("Card/Collectible");
         
             cards.AddRange(all_cards);
             cards.Shuffle();
