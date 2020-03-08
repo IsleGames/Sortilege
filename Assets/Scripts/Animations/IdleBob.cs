@@ -30,7 +30,7 @@ public class IdleBob : MonoBehaviour
     // Super hacky two-state FSM, with reset on transition
     public IEnumerator Bob() 
     {
-        Debug.Log("Begin");
+        //Debug.Log("Begin");
         while (true)
         {
             float t = 0;
