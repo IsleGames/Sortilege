@@ -161,7 +161,7 @@ namespace Cards
             if (playPile.Count() > 0 && GetComponent<Card>() ==
                 playPile.Get(playPile.Count() - 1))
             {
-                return Hint();
+                return Preview();
             }
 
             else

@@ -373,10 +373,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8497116602034066205}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 08427bf05a60d4ddcaec7a33fdb6cc31, type: 3}
+  m_Script: {fileID: 11500000, guid: 8bfe2177aec38db48b59ad3e82b1bdfa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Duration: 10
+  Duration: 3
 --- !u!114 &2613250773308827281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -389,10 +389,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1f63136d02e7d47bf08a7a09e3bd87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Duration: 0
-  Period: 0
-  Amplitude: 0
-  Enabled: 0
 --- !u!1001 &9027454070334575840
 PrefabInstance:
   m_ObjectHideFlags: 0
