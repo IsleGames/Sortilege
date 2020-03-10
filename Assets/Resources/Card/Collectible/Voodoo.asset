@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
+  m_Name: Voodoo
+  m_EditorClassIdentifier: 
+  title: Voodoo
+  strategy: 6
+  attribute: 3
+  description: Deal 2 damage to yourself and gain 2-4 amount of shield. If you are
+    not damaged by enemy this turn, restore 4 health
+  isSelfTarget: 0
+  effectList:
+  - affectiveUnit: 0
+    type: 0
+    amount: 2
+    maxDeviation: 0
+    minStreak: 0
+    notAmplified: 0
+  - affectiveUnit: 0
+    type: 2
+    amount: 3
+    maxDeviation: 1
+    minStreak: 0
+    notAmplified: 0
+  buffList:
+  - affectiveUnit: 0
+    type: 5
+    amount: 4
+    minStreak: 0
+    notAmplified: 0

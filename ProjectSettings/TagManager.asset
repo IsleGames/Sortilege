@@ -53,3 +53,6 @@ TagManager:
   - name: HighlightedObjects
     uniqueID: 2909931313
     locked: 0
+  - name: SceneMask
+    uniqueID: 4279977499
+    locked: 0

@@ -12,9 +12,7 @@ namespace Cards
         
         // Temporal Solution
         public bool animationLock;
-    
-        private Collider2D _coll;
-        
+
         [SerializeField]
         private bool triggerPlayArea, triggerHandArea;
 
@@ -30,8 +28,6 @@ namespace Cards
             animationLock = false;
 
             availability = true;
-            
-            _coll = GetComponent<Collider2D>();
         }
 
         private void Update()
@@ -72,7 +68,7 @@ namespace Cards
         
         public void RayCast2DTrigger()
         {
-            if (!Game.Ctx.player.waitingForAction) return;
+            if (!Game.Ctx.BattleOperator.player.waitingForAction) return;
             if (!availability) return;
             if (!isDragged && !Game.Ctx.VfxOperator.draggedCard && !animationLock)
             {

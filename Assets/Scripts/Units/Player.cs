@@ -21,7 +21,7 @@ namespace Units
 
 		public override void StartTurn()
 		{
-			if (Game.Ctx.activeUnit != this)
+			if (Game.Ctx.BattleOperator.activeUnit != this)
 			{
 				return;
 			}
@@ -52,8 +52,8 @@ namespace Units
 			Game.Ctx.CardOperator.EndTurn();
 
 			beingDamagedSomewhere = false;
-			if (Game.Ctx.activeUnit == this)
-				Game.Ctx.Continue();
+			if (Game.Ctx.BattleOperator.activeUnit == this)
+				Game.Ctx.BattleOperator.Continue();
 			else
 				throw new InvalidOperationException("Ending player's turn in non-player round");
 		}

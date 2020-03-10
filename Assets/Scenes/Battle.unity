@@ -1018,10 +1018,12 @@ GameObject:
   - component: {fileID: 1051549747}
   - component: {fileID: 1051549745}
   - component: {fileID: 1051549742}
+  - component: {fileID: 1051549751}
   - component: {fileID: 1051549746}
   - component: {fileID: 1051549744}
   - component: {fileID: 1051549749}
   - component: {fileID: 1051549748}
+  - component: {fileID: 1051549750}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -1046,12 +1048,9 @@ MonoBehaviour:
   VfxOperator: {fileID: 0}
   EnemyOperator: {fileID: 0}
   AnimationOperator: {fileID: 0}
-  player: {fileID: 0}
+  BattleOperator: {fileID: 0}
   isTutorial: 0
   fixRandomSeed: 0
-  turnCount: 0
-  activeUnit: {fileID: 0}
-  inSelectEnemyMode: 0
 --- !u!224 &1051549743
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1097,6 +1096,7 @@ MonoBehaviour:
   draggedCard: {fileID: 0}
   turnToMoveBoardPrefab: {fileID: 0}
   DarkenMask: {fileID: 0}
+  SortOrderOperator: {fileID: 0}
 --- !u!114 &1051549745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1222,6 +1222,33 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
   curEnemy: {fileID: 0}
   enemyPrefab: {fileID: 0}
+--- !u!114 &1051549750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051549741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf8815822804fb2b5fb35e352a69cb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1051549751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1051549741}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: caab960b3a3346c7889f830f32ae5af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  turnCount: 0
+  activeUnit: {fileID: 0}
 --- !u!1 &1201132061
 GameObject:
   m_ObjectHideFlags: 0

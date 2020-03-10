@@ -23,7 +23,7 @@ public class ShakeOnHit : MonoBehaviour
         var unit = GetComponent<Units.Unit>();
 
 
-        if (Game.Ctx.activeUnit != unit)
+        if (Game.Ctx.BattleOperator.activeUnit != unit)
         {
             while (t < Duration)
             {

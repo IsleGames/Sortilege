@@ -1,66 +1,46 @@
+using System.Collections.Generic;
 using System.IO;
+using System.Xml;
 using System.Xml.Serialization;
+using _Editor;
+using Cards;
+using Data;
 using UnityEngine;
 
 namespace Managers
 {
-//     public class SaveLoadManager
-//     {
-//         private const string PathExt = "/save";
-//         private readonly string _path;
-//
-//         public SaveLoadManager () {
-//             _path = Application.persistentDataPath + PathExt;
-//             
-//         }
-//
-//         /// <summary>
-//         /// Manually serialize out all of the GameData class and its information
-//         /// </summary>
-//         public void Save () {
-//             Debug.Log("Saving file: " + _path);
-//
-//             using (var file = File.Create(_path)) {
-//                 var data = new SaveData();
-//                 var writer = new XmlSerializer(typeof(SaveData));
-//                 writer.Serialize(file, data);
-//                 file.Close();
-//             }
-//         }
-//
-//         public void Load () {
-//             Debug.Log("Loading file: " + _path);
-//             if (!File.Exists(_path)) { return; } // how can our load be real if our file isn't real
-//
-//             using (var file = File.Open(_path, FileMode.Open)) {
-//                 var reader = new XmlSerializer(typeof(SaveData));
-//                 var data = reader.Deserialize(file) as SaveData;
-//                 file.Close();
-//                 CoreGame.Ctx.LoadData(data);
-//             }
-//         }
-//
-//         public class SaveData
-//         {
-//             public ScoreData Score;
-//             public PlayerGameData Player;
-//             public AsteroidsData Asteroids;
-//             public BulletsData Bullets;
-//
-//             public SaveData () {
-//                 Score = Game.Score.OnSave() as ScoreData;
-//                 Player = Game.Player.OnSave() as PlayerGameData;
-//                 Asteroids = Game.Asteroids.OnSave() as AsteroidsData;
-//                 Bullets = Game.Bullets.OnSave() as BulletsData;
-//             }
-//         }
-//     }
-//
-    public abstract class GameData { }
-
-    public interface ISaveLoad
+    public class DataManager : MonoBehaviour
     {
-        GameData OnSave ();
-        void OnLoad (GameData data);
+        protected Dictionary<string, CardData> cardDataScript = new Dictionary<string, CardData>();
+        protected Dictionary<string, EnemyData> enemyDataScript = new Dictionary<string, EnemyData>();
+
+        private void Start()
+        {
+            LoadAll();
+        }
+
+        public void LoadAll()
+        {
+            var allCards = Resources.LoadAll("Card", typeof(CardData));
+            foreach (CardData card in allCards){
+                cardDataScript[card.title] = card;
+                // Debugger.Log("Add " + card.title);
+            }
+            
+            var allEnemies = Resources.LoadAll("Enemy", typeof(EnemyData));
+            foreach (EnemyData enemy in allEnemies){
+                enemyDataScript[enemy.title] = enemy;
+            }
+        }
+
+        public CardData GetCard(string title)
+        {
+            return cardDataScript[title];
+        }        
+        
+        public EnemyData GetEnemy(string title)
+        {
+            return enemyDataScript[title];
+        }
     }
 }

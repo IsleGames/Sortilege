@@ -23,7 +23,7 @@ namespace Library
 			return ret;
 		}
 
-		public static T DrawNoShuffle<T>(this IList<T> list)
+		public static T DrawFirst<T>(this IList<T> list)
 		{
 			T ret = list[0];
 			list.RemoveAt(0);
@@ -97,10 +97,10 @@ namespace Library
             yield return null;
         }
 		
-		public static IEnumerator MoveAndScaleTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float k)
+		public static IEnumerator MoveAndScaleCardTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float k)
         {
 	        CardEvent cardEvent = obj.GetComponent<CardEvent>();
-	        cardEvent.animationLock = true;
+	        if (cardEvent) cardEvent.animationLock = true;
 	        
 	        Vector3 initPos = obj.transform.position;
             Vector3 initScale = obj.transform.localScale;
@@ -122,7 +122,7 @@ namespace Library
             obj.transform.position = targetPos;
             obj.transform.localScale = targetScale;
 
-            cardEvent.animationLock = false;
+            if (cardEvent) cardEvent.animationLock = false;
 
 	        Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;

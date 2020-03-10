@@ -1,0 +1,23 @@
+<enemies>
+	<round count='1'>
+		<enemy name="Slime" number='1' />
+	</round>
+	<round count='2'>
+		<enemy name="Slime" number='2' />
+	</round>
+	<round count='3'>
+		<enemy name="Skeleton Warrior" number='1' />
+	</round>
+	<round count='4'>
+		<enemy name="Slime" number='1' />
+		<enemy name="Skeleton Warrior" number='1' />
+	</round>
+	<round count='5'>
+		<enemy name="Slime" number='2' />
+		<enemy name="Skeleton Warrior" number='1' />
+	</round>
+	<round count='6'>
+		<enemy name="Skeleton Warrior" number='2' />
+	</round>
+</enemies>
+

@@ -91,10 +91,13 @@ namespace Cards
 
         public void SetOrder()
         {
-            int sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            SortOrderManager soM = Game.Ctx.SortOrderOperator;
+            
+            int sortOrder = soM.GetSortOrder();
+            
+            
             var canvas = GetComponent<Canvas>();
             var sg = GetComponent<SortingGroup>();
-            
             
             canvas.sortingLayerName = "Card";
             canvas.sortingOrder = sortOrder;
@@ -102,16 +105,16 @@ namespace Cards
             sg.sortingLayerName = "Card";
             sg.sortingOrder = sortOrder;
             
-            
-            
             // bgSprite.sortingOrder = sortOrder;
-            sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
+            
+            soM.GetSortOrder();
             borderSprite.sortingOrder = sortOrder;
+            
             // sortOrder = Game.Ctx.VfxOperator.GetSortOrder();
             // attRenderer.sortingOrder = sortOrder;
             // strRenderer.sortingOrder = sortOrder;
         }
-
+        
         public void Hide()
         {
             visible = false;
