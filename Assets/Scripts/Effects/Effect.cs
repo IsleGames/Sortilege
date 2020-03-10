@@ -38,7 +38,6 @@ namespace Effects
 
 		public EffectType type;
 		public float amount, maxDeviation;
-
 		public int minStreak;
 		public bool notAmplified;
 		
@@ -63,6 +62,37 @@ namespace Effects
 			this.maxDeviation = maxDeviation;
 		}
 
+        public float EffectSize(float multiplier)
+        {
+            if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
+            { return 0f; }
+
+            float total = amount;
+            if (!notAmplified)
+            {
+                total *= multiplier;
+            }
+
+            switch (type)
+            {
+                case EffectType.DiscardAllWithPerCardDamage:
+                    return total * Game.Ctx.CardOperator.pileHand.Count();
+                case EffectType.DamageOnDeceiverInDiscardPile:
+                    return total * Game.Ctx.CardOperator.pileDiscard.GetStrategyTypeCards(StrategyType.Deceiver).Count;
+                case EffectType.DiscardDeceiver:
+                    return 0f;
+                default:
+                    return total;
+            }
+        }
+
+        public (float, float) EffectRange(float multiplier )
+        {
+            float size = EffectSize(multiplier);
+            float deviation = notAmplified ? maxDeviation : maxDeviation * multiplier;
+            return (size - deviation, size + deviation);
+        }
+
 		public void Apply(Unit unit, float multiplier)
 		{
 			// if (!unit.GetComponent(affectiveUnit.ToString("G")))
@@ -70,18 +100,9 @@ namespace Effects
 			if (Game.Ctx.CardOperator.pilePlay.Count() < minStreak)
 				throw new InvalidOperationException("Minimum streak not satisfied for effect");
 
-			float localAmount, totAmount;
-			int counter;
 
-			if (Mathf.Approximately(maxDeviation, 0f))
-				localAmount = amount;
-			else
-				localAmount = Mathf.Round(Random.Range(amount - maxDeviation, amount + maxDeviation));
-			
-			if (notAmplified)
-				totAmount = localAmount;
-			else
-				totAmount = localAmount * multiplier;
+            (float low, float high) = EffectRange(multiplier);
+            float totAmount = Mathf.Round(Random.Range(low, high));
 			
 			switch (type)
 			{
@@ -101,19 +122,9 @@ namespace Effects
 					Game.Ctx.CardOperator.DiscardStrategyTypeCards(StrategyType.Deceiver);
 				    break;
 				case EffectType.DamageOnDeceiverInDiscardPile:
-					counter = Game.Ctx.CardOperator.pileDiscard.GetStrategyTypeCards(StrategyType.Deceiver).Count;
-					if (notAmplified)
-						totAmount = localAmount * counter;
-					else
-						totAmount = localAmount * counter * multiplier;
 					unit.GetComponent<Health>().Damage(totAmount);
 					break;
 				case EffectType.DiscardAllWithPerCardDamage:
-					counter = Game.Ctx.CardOperator.DiscardAllHandCards();
-					if (notAmplified)
-						totAmount = localAmount * counter;
-					else
-						totAmount = localAmount * counter * multiplier;
 					unit.GetComponent<Health>().Damage(totAmount);
 					break;
 			}

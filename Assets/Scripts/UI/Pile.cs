@@ -229,5 +229,6 @@ namespace UI
             _pile.Shuffle();
             AdjustAllPositions(stopFlag);
         }
+
     }
 }
