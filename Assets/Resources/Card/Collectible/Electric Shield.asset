@@ -15,12 +15,12 @@ MonoBehaviour:
   title: Electric Shield
   strategy: 5
   attribute: 1
-  description: 'Combo(4): Block next 2 attacks you receive'
+  description: 'Combo(3): Block next 2 attacks you receive'
   isSelfTarget: 0
   effectList: []
   buffList:
   - affectiveUnit: 0
     type: 0
     amount: 2
-    minStreak: 4
+    minStreak: 3
     notAmplified: 1

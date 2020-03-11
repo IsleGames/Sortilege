@@ -10,30 +10,50 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4493199f579a41a08660d1ed44f5286e, type: 3}
-  m_Name: Slime
+  m_Name: Demon
   m_EditorClassIdentifier: 
-  title: Slime
-  description: Weak as it may seems...
-  displayImage: {fileID: 21300000, guid: b57d88a32b3d2b14a8cf3b17992086df, type: 3}
-  maximumHealth: 6
-  initialBuffList: []
+  title: Demon
+  description: 
+  displayImage: {fileID: 21300000, guid: 8fdc2cb9771df1b4bb98c1d834a4572d, type: 3}
+  maximumHealth: 66
+  initialBuffList:
+  - affectiveUnit: 1
+    type: 0
+    amount: 1
+    minStreak: 0
+    notAmplified: 0
   abilityList:
-  - title: Attack
+  - title: 
     description: 
     effectList:
     - affectiveUnit: 0
       type: 0
-      amount: 2
+      amount: 10
       maxDeviation: 0
       minStreak: 0
       notAmplified: 0
     buffList: []
-  - title: Test
+  - title: 
     description: 
     effectList: []
     buffList:
+    - affectiveUnit: 1
+      type: 2
+      amount: 10
+      minStreak: 0
+      notAmplified: 0
+  - title: 
+    description: 
+    effectList:
     - affectiveUnit: 0
-      type: 3
-      amount: 3
+      type: 0
+      amount: 0
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList:
+    - affectiveUnit: 1
+      type: 5
+      amount: 10
       minStreak: 0
       notAmplified: 0

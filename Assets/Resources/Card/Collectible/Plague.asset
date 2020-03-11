@@ -15,8 +15,8 @@ MonoBehaviour:
   title: Plague
   strategy: 5
   attribute: 3
-  description: 'Place a debuff on all enemies, deal 1 damage at the start of their
-    turn. Combo(3): Deal 3 dmg to a single enemy.'
+  description: 'Put all enemies in posion(lose one dmg per turn) for 1 turn. Combo(3):
+    Deal 3 dmg to a single enemy.'
   isSelfTarget: 0
   effectList:
   - affectiveUnit: 1

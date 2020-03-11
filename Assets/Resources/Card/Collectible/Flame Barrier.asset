@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Flame Barrier
   m_EditorClassIdentifier: 
   title: Flame Barrier
-  strategy: 5
+  strategy: 6
   attribute: 2
-  description: Gain 3 armor, deal 1 dmg back to enemy who attacks you next turn
+  description: Gain 3 armor, deal 1 dmg back to the first enemy who attacks you next
+    turn
   isSelfTarget: 0
   effectList:
   - affectiveUnit: 0

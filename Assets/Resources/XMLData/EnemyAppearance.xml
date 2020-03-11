@@ -19,5 +19,10 @@
 	<round count='6'>
 		<enemy name="Skeleton Warrior" number='2' />
 	</round>
+	<round count='7'>
+		<enemy name="Skeleton Warrior" number='1' />
+		<enemy name="Demon" number='1' />
+		<enemy name="Skeleton Warrior" number='1' />
+	</round>
 </enemies>
 
