@@ -3,7 +3,7 @@ using System.Collections;
 using Library;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
+using UnityEditor;
 using UI;
 
 namespace Managers
@@ -76,6 +76,16 @@ namespace Managers
         {
             SceneManager.LoadScene(sceneName);
             yield return null;
+        }
+
+        public void EndGame()
+        {
+
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+            Application.Quit();
+#endif
         }
 
     }
