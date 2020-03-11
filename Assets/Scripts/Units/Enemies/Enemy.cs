@@ -60,8 +60,9 @@ namespace Units.Enemies
 			onTurnBegin.Invoke();
 			
 			// onAttack Event goes here
-            isUnitFlinched = false;
+
             onAttack.Invoke();
+            isUnitFlinched = false;
             if (!isUnitFlinched) 
             {
 	            Attack();

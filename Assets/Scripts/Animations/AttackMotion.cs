@@ -13,10 +13,11 @@ public class AttackMotion : MonoBehaviour
     float Speed = 0.5f;
     float PauseStart = 0.5f;
     float PauseEnd = 0.5f;
+    Unit unit;
 
     void Start()
     {
-        var unit = GetComponent<Unit>();
+        unit = GetComponent<Unit>();
         unit.onAttack.AddListener(
             delegate { Game.Ctx.AnimationOperator.PushAction(MoveAnimation(), true); }
             );
@@ -30,18 +31,24 @@ public class AttackMotion : MonoBehaviour
 
     private IEnumerator MoveAnimation()
     {
-        yield return null;
-        yield return new WaitForSeconds(PauseStart);
-        Vector3 initial_position = transform.position;
-        Vector3 target_position = transform.position;
-        target_position.x += (Distance * (direction == Direction.Right ? -1 : 1));
+        if (unit.isUnitFlinched)
+        {
+            yield return null;
+        }
+        else
+        {
+            yield return new WaitForSeconds(PauseStart);
+            Vector3 initial_position = transform.position;
+            Vector3 target_position = transform.position;
+            target_position.x += (Distance * (direction == Direction.Right ? -1 : 1));
 
-        yield return StartCoroutine(
-            Utilities.MoveTo(gameObject, target_position, Speed / 2));
-        yield return StartCoroutine(
-            Utilities.MoveTo(gameObject, initial_position, Speed / 2));
-        yield return new WaitForSeconds(PauseEnd);
-        //Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
-        yield return null;
+            yield return StartCoroutine(
+                Utilities.MoveTo(gameObject, target_position, Speed / 2));
+            yield return StartCoroutine(
+                Utilities.MoveTo(gameObject, initial_position, Speed / 2));
+            yield return new WaitForSeconds(PauseEnd);
+            //Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+        }
     }
 }

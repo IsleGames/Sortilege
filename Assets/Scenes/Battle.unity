@@ -1048,7 +1048,12 @@ MonoBehaviour:
   VfxOperator: {fileID: 0}
   EnemyOperator: {fileID: 0}
   AnimationOperator: {fileID: 0}
+  SortOrderOperator: {fileID: 0}
   BattleOperator: {fileID: 0}
+  AfterBattleRewardOperator: {fileID: 0}
+  GameOperator: {fileID: 0}
+  UserOperator: {fileID: 0}
+  sceneType: 0
   isTutorial: 0
   fixRandomSeed: 0
 --- !u!224 &1051549743
@@ -1096,7 +1101,6 @@ MonoBehaviour:
   draggedCard: {fileID: 0}
   turnToMoveBoardPrefab: {fileID: 0}
   DarkenMask: {fileID: 0}
-  SortOrderOperator: {fileID: 0}
 --- !u!114 &1051549745
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1162,7 +1166,6 @@ MonoBehaviour:
   buffPrefab: {fileID: 0}
   cardsDrawnFirstTurn: 5
   cardsDrawnPerTurn: 2
-  maxCardCount: 18
   randomDraw: 1
 --- !u!223 &1051549747
 Canvas:
@@ -1545,37 +1548,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1297397369}
   m_CullTransparentMesh: 0
---- !u!1 &1311467940 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5154927439535868010, guid: 928a7f197647a426ca39ef9f15455555,
-    type: 3}
-  m_PrefabInstance: {fileID: 805847742}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1311467945
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311467940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f2a129e3498ce704f866450edfb9f573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1311467946
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1311467940}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1ba633dd226b88a4fa3edcfd171e18ae, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  direction: 0
 --- !u!1 &1458641051
 GameObject:
   m_ObjectHideFlags: 0
