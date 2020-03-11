@@ -70,7 +70,7 @@ namespace Cards
                 bgSprite.color = Game.Ctx.VfxOperator.notAvailableColor;
             }
         }
-
+/*
         private void Update()
         {
             var ability = GetComponent<MetaData>().ability;
@@ -88,7 +88,7 @@ namespace Cards
         {
             cardText.text = Text();
         }
-
+*/
         public void SetOrder()
         {
             SortOrderManager soM = Game.Ctx.SortOrderOperator;

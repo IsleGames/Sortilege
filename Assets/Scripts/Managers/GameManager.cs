@@ -78,15 +78,33 @@ namespace Managers
             yield return null;
         }
 
-        public void EndGame()
+        public void EndGame(bool fade = true, float fadeTime = 1.5f)
         {
+            IEnumerator quitIEnum = QuitGame();
+            
+            if (fade)
+            {
+                GameObject sceneFader = Instantiate(sceneFaderPrefab);
+                sceneFader.GetComponent<SceneFader>().FadeAndLoadScene(quitIEnum, fadeTime);
+            }
+            else
+            {
+                StartCoroutine(quitIEnum);
+            }
 
+        }
+        
+        public IEnumerator QuitGame()
+        {
+            
 #if UNITY_EDITOR
             EditorApplication.ExitPlaymode();
 #else
             Application.Quit();
 #endif
+            yield return null;
         }
+
 
     }
 }

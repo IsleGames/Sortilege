@@ -1,16 +1,17 @@
-﻿
+﻿using Managers;
 using UnityEngine;
-using Managers;
 using UnityEngine.UI;
 
-public class MainMenuSceneQuitButton : MonoBehaviour
+namespace UI
 {
-    // Start is called before the first frame update
-    void Start()
+    public class MainMenuSceneQuitButton : MonoBehaviour
     {
-        GameManager gameOperator = FindObjectOfType<GameManager>();
-        GetComponent<Button>().onClick.AddListener(gameOperator.EndGame);
-
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            GameManager gameOperator = FindObjectOfType<GameManager>();
+            GetComponent<Button>().onClick.AddListener(delegate { gameOperator.EndGame(); });
+        }
     
+    }
 }

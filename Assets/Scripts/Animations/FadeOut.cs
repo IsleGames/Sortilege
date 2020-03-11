@@ -25,7 +25,7 @@ public class FadeOut : MonoBehaviour
         //
         var sprites = GetComponentsInChildren<SpriteRenderer>();
         var  images = GetComponentsInChildren<Image>();
-        var texts = GetComponentsInChildren<TMPro.TextMeshProUGUI>();
+        var texts = GetComponentsInChildren<TMPro.TextMeshPro>();
         List<IColorable> colorables = new List<IColorable>();
         foreach (var sprite in sprites)
         {
@@ -37,7 +37,7 @@ public class FadeOut : MonoBehaviour
         }
         foreach (var t in texts)
         {
-            colorables.Add(new TMPUI_C(t));
+            colorables.Add(new TMP_C(t));
         }
         yield return ImageUtilities.FadeToTransparent(colorables, 1f/Duration);
         Game.Ctx.EnemyOperator.Destroy(GetComponent<Units.Enemies.Enemy>());

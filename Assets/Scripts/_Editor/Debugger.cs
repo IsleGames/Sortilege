@@ -7,12 +7,13 @@ namespace _Editor
 {
     public class Debugger : MonoBehaviour
     {
-        public static bool EnableDebugOutput = true;
+        public static bool EnableDebugOutput = false;
 
-        public static void Log<T>(T obj, Object source = null)
+        public static void Log<T>( T obj, Object source = null)
         {
             if (EnableDebugOutput)
                 if (source == null)
+                    
                     Debug.Log(Time.time + " " + obj);
                 else
                     Debug.Log(Time.time + " " + obj, source);

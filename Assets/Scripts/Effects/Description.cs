@@ -128,7 +128,7 @@ public class EffectDescription
         string EnemyHealStr = $"{DescribeRange(-EnemyStatsLowBound.Damage, - EnemyStatsHighBound.Damage)} health";
         string SelfArmorStr = $"{(SelfStatsLowBound.Armor > 0 ? "Gain " : "Lose ")}{DescribeRange(SelfStatsLowBound.Armor, SelfStatsHighBound.Armor)} armor";
         string EnemyArmorStr = $"Enemy {(EnemyStatsLowBound.Armor > 0 ? "gains" : "loses")} {DescribeRange(EnemyStatsLowBound.Armor, EnemyStatsHighBound.Armor)} armor";
-        string DiscardDecieverStr = "Discard all Deciever cards.";
+        string DiscardDecieverStr = "Discard all Deceiver cards.";
         string desc = "";
 
         if (SelfStatsLowBound.Damage > 0)

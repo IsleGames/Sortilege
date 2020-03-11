@@ -50,10 +50,10 @@ namespace Library
         }
     }
 
-    public class TMPUI_C: IColorable
+    public class TMP_C: IColorable
     {
-        public TMPro.TextMeshProUGUI text;
-        public TMPUI_C(TextMeshProUGUI t)
+        public TMPro.TextMeshPro text;
+        public TMP_C(TextMeshPro t)
         {
             text = t;
         }
