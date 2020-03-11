@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Animations;
 using Data;
 using Effects;
 using Library;
@@ -75,10 +76,12 @@ namespace Units.Enemies
 			EndTurn();
 		}
 
-		private void Attack()
+		protected virtual void Attack()
 		{
 			// Randomize a skill
             // Todo: add enemyActionType
+
+            if (abilityList.Count == 0) return;
 
             int choice = 0;
             for (int i = 0; i < 40; i++)

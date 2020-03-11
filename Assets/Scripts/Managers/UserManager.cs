@@ -27,6 +27,11 @@ namespace Managers
         {
             DataOperator = FindObjectOfType<DataManager>();
             
+            LoadInitialData();
+        }
+
+        public void LoadInitialData()
+        {
             userOwnedCard = LoadDeckList();
             totalRound = GetTotalRoundCount();
         }

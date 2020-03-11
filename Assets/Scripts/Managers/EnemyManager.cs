@@ -26,7 +26,7 @@ namespace Managers
         {
             enemyPrefab = (GameObject)Resources.Load("Prefabs/Enemy");
 
-			if (Game.Ctx.UserOperator)
+			if (Game.Ctx.UserOperator && !Game.Ctx.isTutorial)
 			{
 				EnemyInitData = Game.Ctx.UserOperator.GetEnemyData(Game.Ctx.GameOperator.GetRoundCount());
 			}
@@ -47,6 +47,11 @@ namespace Managers
             SetAllPositions();
 
             curEnemy = null;
+        }
+
+        public void AddEnemy(Enemy enemy)
+        {
+            EnemyList.Add(enemy);
         }
 
         public void SetAllPositions()

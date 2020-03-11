@@ -10,7 +10,6 @@ namespace Units.Enemies
         
         private void Start()
         {
-
             imgSpriteRenderer = transform.Find("EnemySprite").GetComponent<SpriteRenderer>();
 
             imgSpriteRenderer.sprite = imgSprite;

@@ -27,25 +27,25 @@ namespace Units
 				case 0:
 					break;
 				case 1:
-					_instructionTMP.text = "Before you start your adventure, let's get familiar with the battle system.\nDrag your card into the yellow queue zone and click End Turn to play it.";
+					_instructionTMP.text = "Before you start your adventure, let's get familiar with the battle system.\nSelect your card by clicking it, then move it into the yellow chain zone. Click Attack button and choose your target to end your turn.";
 					break;
 				case 2:
 					_instructionTMP.text = "Great! Now you might notice you can't play both of your cards this turn. \nThis is because you can only play cards with same class/attribute as the last card you played this turn.\nJust gain some armors this turn.";
 					break;
 				case 3:
 					_instructionTMP.text =
-						"The effect of all cards you play this turn = Effect of last card you play * number of cards you play this turn. \nNow try maximize your damage by playing Slam > Flare Blitz > Toast The Avocado.";
+						"Only the last card takes effect, yet all the cards in the chain before increases its effect by 100%!\nNow try maximize your damage by playing Slam > Flare Blitz > Toast The Avocado.";
 					break;
 				case 4:
 					_instructionTMP.text =
-						"What? 11111 damage? The stupid game designer must fell asleep while coding. \nDon't worry, I will give you 2 extra cards. \nJust make sure you play Electric Shield the last because it requires streak >= 4 to trigger.";
+						"The Avocado awakes and is about to deal colossal amount of damage! \nPlay Electric Shield to block it! Keep in mind that the card requires a chain size of 4 to trigger.";
 					break;
 				case 5:
 					_instructionTMP.text =
-						"Phew.. That was close. We need to find some way to end this.";
+						"That was SO close. We need to find some way to end this.";
 					break;
 				case 6:
-					_instructionTMP.text = "TADA! I found the avocado peeler. However it requires streak >= 5 to take effect. \nSave your cards this turn..";
+					_instructionTMP.text = "And this is the the avocado peeler! The chain size of 5 means that it can not take effect this turn. \n You can save your card by doing nothing!";
 					break;
 				case 7:
 					_instructionTMP.text = "And also this turn. Trust me, we can end this..";
@@ -69,7 +69,7 @@ namespace Units
 						"Congrats! Even the game developer did not figure out how to come here.. \nAnyway, you are going to die. Die. Now.";
 					break;
 				default:
-					_instructionTMP.text = "Sometimes I miss those old good days when players don't try to break the game  :(";
+					_instructionTMP.text = "Sometimes I miss those old good days when players don't try to break the game :(";
 					break;
 			}
 		}

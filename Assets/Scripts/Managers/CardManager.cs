@@ -51,7 +51,7 @@ namespace Managers
 
 		public void Start()
 		{
-			if (Game.Ctx.UserOperator)
+			if (Game.Ctx.UserOperator && !Game.Ctx.isTutorial)
 			{
 				CardList = Game.Ctx.UserOperator.GetCardData();
 			}

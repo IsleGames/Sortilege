@@ -78,6 +78,11 @@ namespace Cards
                 {
                     return;
                 }
+
+                if (Game.Ctx.BattleOperator.inSelectEnemyMode)
+                {
+                    return;
+                }
                 
                 thisPile = Game.Ctx.CardOperator.GetCardPile(GetComponent<Card>());
 
