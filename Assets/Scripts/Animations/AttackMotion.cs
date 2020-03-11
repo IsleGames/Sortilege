@@ -2,6 +2,8 @@
 using UnityEngine;
 using Library;
 using Units;
+using UnityEngine.Networking;
+
 [RequireComponent(typeof(Unit))]
 public class AttackMotion : MonoBehaviour
 {
@@ -9,39 +11,52 @@ public class AttackMotion : MonoBehaviour
     public enum Direction { Left, Right };
 
     public Direction direction = Direction.Left;
-    float Distance = 100f;
-    float Speed = 0.5f;
-    float PauseStart = 0.5f;
-    float PauseEnd = 0.5f;
-    Unit unit;
+    private float Distance = 80f;
+    private float k = 0.3f;
+    private float PauseStart = 0.1f;
+    // private float PauseEnd = 0.05f;
+
+    private Vector3 initial_position;
+    private Vector3 target_position;
 
     void Start()
     {
-        unit = GetComponent<Unit>();
-        unit.onAttack.AddListener(
-            delegate { Game.Ctx.AnimationOperator.PushAction(MoveAnimation(), true); }
-            );
+        GetComponent<Unit>().onAttack.AddListener( MoveAnimation );
     }
 
-    public IEnumerator Move()
+    private void MoveAnimation()
     {
-        yield return StartCoroutine(MoveAnimation());
-
+        initial_position = transform.position;
+        
+        target_position = initial_position;
+        target_position.x += (Distance * (direction == Direction.Right ? -1 : 1));
+        
+        Game.Ctx.AnimationOperator.PushAction(AttackMove(), true);
+        Game.Ctx.AnimationOperator.PushAction(Utilities.MoveTo(gameObject, initial_position, k), false);
     }
 
-    private IEnumerator MoveAnimation()
+    private IEnumerator AttackMove()
     {
         yield return new WaitForSeconds(PauseStart);
-        Vector3 initial_position = transform.position;
-        Vector3 target_position = transform.position;
-        target_position.x += (Distance * (direction == Direction.Right ? -1 : 1));
 
-        yield return StartCoroutine(
-            Utilities.MoveTo(gameObject, target_position, Speed / 2));
-        yield return StartCoroutine(
-            Utilities.MoveTo(gameObject, initial_position, Speed / 2));
-        yield return new WaitForSeconds(PauseEnd);
-        //Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+        GameObject obj = gameObject;
+        
+        Vector3 init = obj.transform.position;
+
+        float p = 0.01f;
+        while (p < 1f - 1e-3)
+        {
+	        p += p * k;
+            
+            Vector3 current = target_position * p + init * (1 - p);
+            obj.transform.position = current;
+            
+            yield return null;
+        }
+
+        obj.transform.position = target_position;
+
+        Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
         yield return null;
     }
 }
