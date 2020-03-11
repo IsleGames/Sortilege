@@ -2,7 +2,7 @@ namespace Units.Enemies
 {
 	public class Avocado : Enemy
 	{
-		private void Attack()
+		protected override void Attack()
 		{
 			switch (Game.Ctx.BattleOperator.turnCount)
 			{

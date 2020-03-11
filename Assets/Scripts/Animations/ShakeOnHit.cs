@@ -1,41 +1,43 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Units.Unit))]
-public class ShakeOnHit : MonoBehaviour
+// [RequireComponent(typeof(Units.Unit))]
+namespace Animations
 {
-    float Duration = 0.5f;
-    float Period = 0.2f;
-    float Amplitude = 4f;
-    Units.Unit unit;
-
-    public void Start()
+    public class ShakeOnHit : MonoBehaviour
     {
-        unit = GetComponent<Units.Unit>();
-        unit.onDamage.AddListener(() => Game.Ctx.AnimationOperator.PushAction(Shake(), false));
-    }
+        float Duration = 0.5f;
+        float Period = 0.2f;
+        float Amplitude = 4f;
+        Units.Unit unit;
 
-    public IEnumerator Shake()
-    {
-        Vector3 initialposition = transform.position;
-        float t = 0;
-        var unit = GetComponent<Units.Unit>();
-
-
-        if (Game.Ctx.BattleOperator.activeUnit != unit)
+        public void Start()
         {
-            while (t < Duration)
-            {
-                var delta = Amplitude * Mathf.Cos(2 * Mathf.PI / Period * t);
-                t += Time.deltaTime;
-                var position = transform.position;
-                position.y += delta;
-                transform.position = position;
-                yield return new WaitForFixedUpdate();
-            }
-            transform.position = initialposition;
+            unit = GetComponent<Units.Unit>();
+            unit.onDamage.AddListener(() => Game.Ctx.AnimationOperator.PushAction(Shake(), false));
         }
-        yield return null;
+
+        public IEnumerator Shake()
+        {
+            Vector3 initialposition = transform.position;
+            float t = 0;
+            var unit = GetComponent<Units.Unit>();
+
+
+            if (Game.Ctx.BattleOperator.activeUnit != unit)
+            {
+                while (t < Duration)
+                {
+                    var delta = Amplitude * Mathf.Cos(2 * Mathf.PI / Period * t);
+                    t += Time.deltaTime;
+                    var position = transform.position;
+                    position.y += delta;
+                    transform.position = position;
+                    yield return new WaitForFixedUpdate();
+                }
+                transform.position = initialposition;
+            }
+            yield return null;
+        }
     }
 }
