@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 837e16d47d1e142268eec9b3a317ac1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maximumHitPoints: 100
+  maximumHitPoints: 50
   barrierHitPoints: 0
   onGoingEffectAmount: -1
   hitPoints: -1
