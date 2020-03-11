@@ -21,6 +21,7 @@ namespace Units.Enemies
 		public string description;
 		
         public List<Ability> abilityList;
+        public Ability nextAttack;
 		
 		public void Initialize(EnemyData enemyData)
 		{
@@ -46,7 +47,8 @@ namespace Units.Enemies
 	            };
 	            abilityList.Add(move);
             }
-            
+
+            ChooseAttack();
 			base.Initialize();
 		}
 
@@ -75,19 +77,26 @@ namespace Units.Enemies
 			EndTurn();
 		}
 
-		private void Attack()
+        private void ChooseAttack()
+        {
+            int choice = 0;
+            for (int i = 0; i < 40; i++)
+            {
+                choice = Random.Range(0, abilityList.Count);
+                if (abilityList[choice].activateTurnCount <= Game.Ctx.BattleOperator.turnCount) break;
+            }
+            nextAttack = abilityList[choice];
+
+        }
+
+        private void Attack()
 		{
 			// Randomize a skill
             // Todo: add enemyActionType
 
-            int choice = 0;
-            for (int i = 0; i < 40; i++)
-            {
-	            choice = Random.Range(0, abilityList.Count);
-	            if (abilityList[choice].activateTurnCount <= Game.Ctx.BattleOperator.turnCount) break;
-            }
-
-            abilityList[choice].ApplyAsEnemy(this);
+            
+            nextAttack.ApplyAsEnemy(this);
+            ChooseAttack();
 		}
 		
 		public void EndTurn()
