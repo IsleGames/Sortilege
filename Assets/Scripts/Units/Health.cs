@@ -79,7 +79,7 @@ namespace Units
             if (Mathf.Approximately(hitPoints, 0f))
             {
                 GetComponent<Unit>().onDead.Invoke();
-                GetComponent<BuffManager>().DestroyAll();
+                //GetComponent<BuffManager>().DestroyAll();
             }
         }
 

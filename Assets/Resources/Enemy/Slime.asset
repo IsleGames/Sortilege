@@ -19,11 +19,21 @@ MonoBehaviour:
   initialBuffList: []
   abilityList:
   - title: Attack
-    description: 
+    description: Deal 2 damage to player
     effectList:
     - affectiveUnit: 0
       type: 0
       amount: 2
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
+  - title: Vitality
+    description: Restore 3 health for all enemy units
+    effectList:
+    - affectiveUnit: 3
+      type: 1
+      amount: 3
       maxDeviation: 0
       minStreak: 0
       notAmplified: 0

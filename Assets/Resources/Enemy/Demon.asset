@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4493199f579a41a08660d1ed44f5286e, type: 3}
+  m_Name: Demon
+  m_EditorClassIdentifier: 
+  title: Demon
+  description: 
+  displayImage: {fileID: 21300000, guid: 8fdc2cb9771df1b4bb98c1d834a4572d, type: 3}
+  maximumHealth: 66
+  initialBuffList: []
+  abilityList:
+  - title: Fear Me
+    description: Deal 8 damage to the player
+    effectList:
+    - affectiveUnit: 0
+      type: 0
+      amount: 8
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
+  - title: Inner Fire
+    description: Deal 3 damage for each card in player's hand
+    effectList:
+    - affectiveUnit: 0
+      type: 6
+      amount: 3
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
+  - title: Tasty Soul
+    description: Deal 4 damage to player, restore 4 health
+    effectList:
+    - affectiveUnit: 0
+      type: 0
+      amount: 4
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    - affectiveUnit: 1
+      type: 1
+      amount: 4
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
+  - title: Sacrifice
+    description: Lose 6 health, restore adjacent units to full health
+    effectList:
+    - affectiveUnit: 2
+      type: 1
+      amount: 999
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    - affectiveUnit: 1
+      type: 0
+      amount: 6
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []

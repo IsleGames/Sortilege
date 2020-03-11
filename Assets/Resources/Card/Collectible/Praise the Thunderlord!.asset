@@ -10,18 +10,23 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b327d123434b54ddb896c7e7201a3bd3, type: 3}
-  m_Name: DEEFENSE!
+  m_Name: Praise the Thunderlord!
   m_EditorClassIdentifier: 
-  title: DEE-FENSE!
+  title: Praise the Thunderlord!
   strategy: 4
   attribute: 1
-  description: Gain 8 armor. You don't draw cards next turn.
+  description: 'Gain 2 armor. Combo(2): Block next attack you receive.'
   isSelfTarget: 0
   effectList:
   - affectiveUnit: 0
     type: 2
-    amount: 8
+    amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
-  buffList: []
+  buffList:
+  - affectiveUnit: 0
+    type: 0
+    amount: 1
+    minStreak: 0
+    notAmplified: 1
