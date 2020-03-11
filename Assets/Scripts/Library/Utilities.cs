@@ -127,7 +127,7 @@ namespace Library
             float p = 0;
             while (p < 1f - 5e-3)
             {
-	            if (cardEvent.isDragged) break;
+	            if (cardEvent?.isDragged ?? false) break;
 	            
                 p += (1 - p) * k;
                 
@@ -140,7 +140,7 @@ namespace Library
                 yield return null;
             }
 	        
-            if (!cardEvent.isDragged) {
+            if (!(cardEvent?.isDragged ?? true)) {
 	            
 				obj.transform.position = targetPos;
 				obj.transform.localScale = targetScale;
