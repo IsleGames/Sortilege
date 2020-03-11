@@ -41,7 +41,9 @@ public class IdleBob : MonoBehaviour
                 var position = transform.position;
                 position.y += delta;
                 transform.position = position;
+
                 yield return new WaitForFixedUpdate();
+                while (Game.Ctx.paused) yield return new WaitForFixedUpdate();
             };
 
             transform.position = initialPosition;

@@ -95,9 +95,11 @@ namespace Managers
 			
 			if (cardsDrawnPerTurn == -1)
 				throw new SerializationException("cardsDrawnEachTurn not Initialized");
-
+			
 			Game.Ctx.VfxOperator.SetAllSortOrders();
 			DrawCards(Game.Ctx.BattleOperator.turnCount == 1 ? cardsDrawnFirstTurn : cardsDrawnPerTurn, true, randomDraw);
+			
+			Game.Ctx.VfxOperator.ChangeMultiplierText(true, 0);
 		}
 
         public void EndTurn()

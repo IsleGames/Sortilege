@@ -58,7 +58,7 @@ namespace Units.Enemies
 			}
 
 			onTurnBegin.Invoke();
-			
+			Game.Ctx.VfxOperator.ChangeMultiplierText(false);
 			// onAttack Event goes here
 
             onAttack.Invoke();

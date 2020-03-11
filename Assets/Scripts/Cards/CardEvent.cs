@@ -74,11 +74,8 @@ namespace Cards
             if (!availability) return;
             if (!isDragged && !Game.Ctx.VfxOperator.draggedCard && !animationLock)
             {
-                // Debugger.Log(GetComponent<MetaData>().title + " MouseDown at " + Time.time + ", metadata name is " + GetComponent<MetaData>().title);
-    
                 if (!GetComponent<CardRender>().visible)
                 {
-                    // Debugger.Log(gameObject.name + " hided; HandPile virtual Card opening is " + Game.Ctx.CardOperator.pileHand.isVirtualOn + "; exit");
                     return;
                 }
                 
@@ -97,7 +94,6 @@ namespace Cards
                     Game.Ctx.CardOperator.pileHand.VirtualInitialize();
                 }
 
-                // Debugger.Log(gameObject.name + " is dragged");
                 isDragged = true;
                 GetComponent<CardRender>().OnSelectZoom();
             }
@@ -106,8 +102,6 @@ namespace Cards
                 Card card = GetComponent<Card>();
                 
                 // thisPile == Game.Ctx.CardOperator.pileHand could also work
-                
-                // Debugger.Log(gameObject.name + " drag ends");
                 
                 if (thisPile.gameObject.name == "HandPile" && triggerPlayArea)
                 {
@@ -127,6 +121,8 @@ namespace Cards
                 
                 thisPile = null;
                 isDragged = false;
+                
+                Game.Ctx.VfxOperator.ChangeMultiplierText(true, Game.Ctx.CardOperator.pilePlay.Count());
             }
         }
         
