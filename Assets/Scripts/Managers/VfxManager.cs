@@ -7,6 +7,7 @@ using Random = UnityEngine.Random;
 using Object = UnityEngine.Object;
 using Cards;
 using Effects;
+using TMPro;
 using UI;
 using Units.Enemies;
 using UnityEngine.Rendering;
@@ -86,6 +87,21 @@ namespace Managers
 
              board.SetText(text);
              board.StartAnimation(dontDisappear);
+         }
+
+         public void ChangeMultiplierText(bool isEnabled, int multiplier = 0)
+         {
+             var tmp = transform.Find("MultiplierText").GetComponent<TextMeshPro>();
+
+             if (isEnabled)
+             {
+                 tmp.enabled = true;
+                 tmp.text = $"x{multiplier}";
+             }
+             else
+             {
+                 tmp.enabled = false;
+             }
          }
 
          public void SetAllSortOrders()

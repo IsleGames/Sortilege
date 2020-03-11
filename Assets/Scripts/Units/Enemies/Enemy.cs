@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Animations;
 using Data;
 using Effects;
 using Library;
@@ -60,7 +61,7 @@ namespace Units.Enemies
 			}
 
 			onTurnBegin.Invoke();
-			
+			Game.Ctx.VfxOperator.ChangeMultiplierText(false);
 			// onAttack Event goes here
 
             onAttack.Invoke();
@@ -76,9 +77,25 @@ namespace Units.Enemies
 
 			EndTurn();
 		}
+    
+    protected virtual void Attack()
+    	{
+			// Randomize a skill
+            // Todo: add enemyActionType
 
-        private void ChooseAttack()
-        {
+            if (nextAttack != null)
+            {
+            nextAttack.ApplyAsEnemy(this);
+            }
+            ChooseAttack();
+		}
+    
+    private void ChooseAttack()
+      {
+            if (abilityList.Count == 0){
+            nextAttack = null;
+            return;
+
             int choice = 0;
             for (int i = 0; i < 40; i++)
             {
@@ -89,15 +106,7 @@ namespace Units.Enemies
 
         }
 
-        private void Attack()
-		{
-			// Randomize a skill
-            // Todo: add enemyActionType
-
-            
-            nextAttack.ApplyAsEnemy(this);
-            ChooseAttack();
-		}
+	
 		
 		public void EndTurn()
 		{

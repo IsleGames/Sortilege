@@ -154,7 +154,7 @@ namespace UI
         
         public void Add(Card card, bool adjust = true)
         {
-            Debugger.Log(card.gameObject.name);
+            // Debugger.Log(card.gameObject.name);
             
             _pile.Add(card);
             if (adjust) AdjustAllPositions();
