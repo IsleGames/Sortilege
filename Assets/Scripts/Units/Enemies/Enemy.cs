@@ -60,18 +60,21 @@ namespace Units.Enemies
 
 			onTurnBegin.Invoke();
 			Game.Ctx.VfxOperator.ChangeMultiplierText(false);
-			// onAttack Event goes here
 
-            onAttack.Invoke();
-            isUnitFlinched = false;
-            if (!isUnitFlinched) 
-            {
-	            Attack();
-            }
-            else
-            {
-	            // Some effect
-            }
+			if (!GetComponent<Health>().IsDead())
+			{
+				// onAttack Event goes here
+				onAttack.Invoke();
+				isUnitFlinched = false;
+				if (!isUnitFlinched) 
+				{
+					Attack();
+				}
+				else
+				{
+					// Some effect
+				}
+			}
 
 			EndTurn();
 		}
@@ -101,7 +104,6 @@ namespace Units.Enemies
 			}
 
 			onTurnEnd.Invoke();
-
 			
             Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(0.8f), true);
 

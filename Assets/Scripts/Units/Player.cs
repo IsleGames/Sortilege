@@ -29,6 +29,11 @@ namespace Units
 			onTurnBegin.Invoke();
 			Game.Ctx.CardOperator.StartTurn();
 
+			if (GetComponent<Health>().IsDead())
+			{
+				Game.Ctx.BattleOperator.CheckBattleEnd();
+				return;
+			}
 			waitingForAction = true;
 		}
 
