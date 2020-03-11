@@ -19,11 +19,27 @@ MonoBehaviour:
   initialBuffList: []
   abilityList:
   - title: Slash
-    description: Deals 5 damage
+    description: Deals 5 damage to player
     effectList:
     - affectiveUnit: 0
       type: 0
       amount: 5
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
+  - title: Slash
+    description: Deals 8 damage to player and 3 to itself
+    effectList:
+    - affectiveUnit: 0
+      type: 0
+      amount: 8
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    - affectiveUnit: 1
+      type: 0
+      amount: 3
       maxDeviation: 0
       minStreak: 0
       notAmplified: 0

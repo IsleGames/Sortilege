@@ -16,44 +16,57 @@ MonoBehaviour:
   description: 
   displayImage: {fileID: 21300000, guid: 8fdc2cb9771df1b4bb98c1d834a4572d, type: 3}
   maximumHealth: 66
-  initialBuffList:
-  - affectiveUnit: 1
-    type: 0
-    amount: 1
-    minStreak: 0
-    notAmplified: 0
+  initialBuffList: []
   abilityList:
-  - title: 
-    description: 
+  - title: Fear Me
+    description: Deal 8 damage to the player
     effectList:
     - affectiveUnit: 0
       type: 0
-      amount: 10
+      amount: 8
       maxDeviation: 0
       minStreak: 0
       notAmplified: 0
     buffList: []
-  - title: 
-    description: 
-    effectList: []
-    buffList:
-    - affectiveUnit: 1
-      type: 2
-      amount: 10
-      minStreak: 0
-      notAmplified: 0
-  - title: 
-    description: 
+  - title: Inner Fire
+    description: Deal 3 damage for each card in player's hand
     effectList:
     - affectiveUnit: 0
-      type: 0
-      amount: 0
+      type: 6
+      amount: 3
       maxDeviation: 0
       minStreak: 0
       notAmplified: 0
-    buffList:
-    - affectiveUnit: 1
-      type: 5
-      amount: 10
+    buffList: []
+  - title: Tasty Soul
+    description: Deal 4 damage to player, restore 4 health
+    effectList:
+    - affectiveUnit: 0
+      type: 0
+      amount: 4
+      maxDeviation: 0
       minStreak: 0
       notAmplified: 0
+    - affectiveUnit: 1
+      type: 1
+      amount: 4
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
+  - title: Sacrifice
+    description: Lose 6 health, restore adjacent units to full health
+    effectList:
+    - affectiveUnit: 2
+      type: 1
+      amount: 999
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    - affectiveUnit: 1
+      type: 0
+      amount: 6
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
