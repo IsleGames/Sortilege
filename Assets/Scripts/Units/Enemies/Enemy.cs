@@ -2,6 +2,8 @@ using System.Collections.Generic;
 using Data;
 using Effects;
 using Library;
+using TMPro;
+using UnityEditor.UI;
 using Random = UnityEngine.Random;
 using UnityEngine;
 
@@ -88,6 +90,7 @@ namespace Units.Enemies
             }
 
             abilityList[choice].ApplyAsEnemy(this);
+            GameObject.Find("Intent").GetComponent<TextMeshPro>().text = abilityList[choice].Info();
 		}
 		
 		public void EndTurn()
