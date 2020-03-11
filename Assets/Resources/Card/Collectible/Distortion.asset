@@ -14,13 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   title: Distortion
   strategy: 6
-  attribute: 0
-  description: Deal 1 dmg for each Deceiver card in your discard pile.
+  attribute: 1
+  description: Deal 2 dmg for each Deceiver card in your discard pile.
   isSelfTarget: 0
   effectList:
   - affectiveUnit: 1
     type: 5
-    amount: 1
+    amount: 2
     maxDeviation: 0
     minStreak: 0
     notAmplified: 0
