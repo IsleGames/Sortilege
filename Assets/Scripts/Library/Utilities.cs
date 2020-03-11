@@ -7,6 +7,7 @@ using Units;
 using UnityEngine;
 using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 namespace Library
 {
@@ -75,8 +76,6 @@ namespace Library
 		
 		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float k)
         {
-            // Todo: P-Controller
-            
             Vector3 init = obj.transform.position;
 
             float p = 0;
@@ -84,7 +83,28 @@ namespace Library
             {
                 p += (1 - p) * k;
                 
-                Vector3 current = pos * k + init * (1 - k);
+                Vector3 current = pos * p + init * (1 - p);
+                obj.transform.position = current;
+                
+                yield return null;
+            }
+
+            obj.transform.position = pos;
+            
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+        }
+		
+		public static IEnumerator MoveToRev(GameObject obj, Vector3 pos, float k)
+        {
+            Vector3 init = obj.transform.position;
+
+            float p = 0.01f;
+            while (p < 1f - 1e-3)
+            {
+	            p += p * k;
+                
+                Vector3 current = pos * p + init * (1 - p);
                 obj.transform.position = current;
                 
                 yield return null;
@@ -126,7 +146,7 @@ namespace Library
 	        Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;
         }
-		
+
 		public static IEnumerator WaitForSecs(float time)
 		{
 			yield return new WaitForSeconds(time);

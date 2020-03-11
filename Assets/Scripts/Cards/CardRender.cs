@@ -6,7 +6,6 @@ using UnityEngine;
 using TMPro;
 
 using Managers;
-using UI;
 using UnityEngine.Rendering;
 
 namespace Cards
@@ -18,8 +17,11 @@ namespace Cards
         // public float moveSpeed = 0.1f;
 
         private SpriteRenderer borderSprite, bgSprite, attRenderer, strRenderer;
+        private TextMeshProUGUI cardText;
+        EffectDescription effectDescription = new EffectDescription();
+        BuffDescription buffDescription = new BuffDescription();
 
-        [SerializeField] private float onSelectZoomScale = 1.1f;
+        private float onSelectZoomScale = 1.25f;
 
         public void Start()
         {
@@ -41,16 +43,19 @@ namespace Cards
 
             // Set name
             transform.Find("CardName").GetComponent<TextMeshProUGUI>().text = meta.title;
-            
+
             // Set rules text
-            transform.Find("CardText").GetComponent<TextMeshProUGUI>().text = GetComponent<MetaData>().description;
+            cardText = transform.Find("CardText").GetComponent<TextMeshProUGUI>();
+            cardText.text = GetComponent<MetaData>().description;
 
             SetOrder();
         }
+        
+
 
         public void OnSelectZoom()
         {
-            Vector3 newLocalScale = transform.localScale * onSelectZoomScale;
+            Vector3 newLocalScale = transform.localScale *  onSelectZoomScale;
             transform.localScale = newLocalScale;
         }
 
@@ -65,7 +70,25 @@ namespace Cards
                 bgSprite.color = Game.Ctx.VfxOperator.notAvailableColor;
             }
         }
+/*
+        private void Update()
+        {
+            var ability = GetComponent<MetaData>().ability;
+            effectDescription.Update(ability.effectList,
+                Game.Ctx.CardOperator.pilePlay.Count(),
+                Game.Ctx.CardOperator.pileDiscard
+                    .GetStrategyTypeCards(StrategyType.Deceiver).Count,
+                Game.Ctx.CardOperator.pileHand.Count());
 
+            buffDescription.Update(ability.buffEffectList,
+                Game.Ctx.CardOperator.pilePlay.Count());
+        }
+
+        private void LateUpdate()
+        {
+            cardText.text = Text();
+        }
+*/
         public void SetOrder()
         {
             SortOrderManager soM = Game.Ctx.SortOrderOperator;
@@ -116,6 +139,39 @@ namespace Cards
             foreach (var r in spRenderers) {
                 r.enabled = true;
             }
+        }
+
+        public string EffectPreview()
+        {
+            return effectDescription.ToString();
+        }
+
+        public string BuffPreview()
+        {
+            return buffDescription.ToString();
+        }
+
+        public string Preview()
+        {
+            return effectDescription.ToString() + "\n" +
+                     buffDescription.ToString();
+        }
+
+
+        private string Text()
+        {
+            var playPile = Game.Ctx.CardOperator.pilePlay;
+            if (playPile.Count() > 0 && GetComponent<Card>() ==
+                playPile.Get(playPile.Count() - 1))
+            {
+                return Preview();
+            }
+
+            else
+            {
+                return GetComponent<MetaData>().description;
+            }
+
         }
     }
     

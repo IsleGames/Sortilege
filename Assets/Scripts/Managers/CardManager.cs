@@ -175,10 +175,11 @@ namespace Managers
 					else
 						break;
 				
-				Card card = random? pileDeck.Draw() : pileDeck.DrawNoShuffle();
+				Card card = random ? pileDeck.Draw() : pileDeck.DrawNoShuffle();
                 // card.onDraw.Invoke();
                 drawList.Add(card);
 			}
+			pileDeck.AdjustAllPositions();
 			pileHand.AddRange(drawList);
 		}
 
@@ -193,7 +194,7 @@ namespace Managers
 				pileDiscard.AddRange(discardList, false, true);
 				
 				if (!_disableMetaTypeFiltering) onTopChange.Invoke();
-	        }
+            }
         }
 		
         public int DiscardAllHandCards()

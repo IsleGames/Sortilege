@@ -177,6 +177,16 @@ namespace UI
             VirtualDestroy();
             base.Clear();
         }
+
+        public Card Top()
+        {
+            if (base._pile.Count > 0)
+            {
+                return base._pile[base._pile.Count - 1];
+            }
+            else return null;
+        }
+
         public new void Insert(int index, Card card)
         {
             VirtualDestroy();

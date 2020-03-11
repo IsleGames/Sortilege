@@ -76,7 +76,7 @@ namespace Units
             
             GetComponent<Unit>().onHealthChange.Invoke();
             
-            if (!Mathf.Approximately(hitPoints, 0f))
+            if (Mathf.Approximately(hitPoints, 0f))
             {
                 GetComponent<Unit>().onDead.Invoke();
                 GetComponent<BuffManager>().DestroyAll();

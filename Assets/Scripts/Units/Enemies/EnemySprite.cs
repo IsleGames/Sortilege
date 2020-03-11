@@ -8,7 +8,7 @@ namespace Units.Enemies
     public class EnemySprite : MonoBehaviour
     {
         private Vector3 _originalScale;
-        public float onSelectZoomScale = 1.1f;
+        public float onSelectZoomScale = 1.35f;
 
         private void Start()
         {
@@ -33,6 +33,7 @@ namespace Units.Enemies
 
         public void OnMouseDown()
         {
+            if (Game.Ctx.paused) return;
             if (Game.Ctx.BattleOperator.inSelectEnemyMode)
             {
 				Game.Ctx.transform.GetComponentInChildren<CommandButton>().SetStatus(false);

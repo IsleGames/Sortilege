@@ -20,7 +20,7 @@ namespace UI
         public Health pHealth;
 
         [NonSerialized]
-        public float animationKFactor = 0.06f;
+        public float animationKFactor = 0.1f;
 
         private Rect _thisRect;
 

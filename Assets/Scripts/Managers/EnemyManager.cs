@@ -96,6 +96,12 @@ namespace Managers
             return ret;
         }
 
+        public void Destroy(Enemy enemy)
+        {
+            EnemyList.Remove(enemy);
+            Destroy(enemy.gameObject);
+        }
+
         private IEnumerator NextEnemy()
         {
             foreach (Enemy enemy in EnemyList)
