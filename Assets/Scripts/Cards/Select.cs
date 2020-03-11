@@ -11,12 +11,11 @@ namespace Cards
 
         private Direction dire = Direction.Up;
 
-        private void Start()
-        {
-        }
 
         private void OnMouseUp()
         {
+            if (Game.Ctx.paused) return;
+            
             dire = Direction.Down;
             Game.Ctx.AfterBattleRewardOperator.OnCardSelect(GetComponent<Card>());
         }

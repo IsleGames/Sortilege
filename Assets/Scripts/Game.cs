@@ -43,6 +43,8 @@ public class Game : MonoBehaviour
     public bool isTutorial;
     public bool fixRandomSeed;
 
+    public bool paused;
+
     public delegate void DelegateMethod();
 
     private void Awake()
@@ -51,6 +53,8 @@ public class Game : MonoBehaviour
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
+
+        paused = false;
     }
 
     private void Start()

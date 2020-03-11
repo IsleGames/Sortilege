@@ -31,24 +31,17 @@ public class AttackMotion : MonoBehaviour
 
     private IEnumerator MoveAnimation()
     {
-        if (unit.isUnitFlinched)
-        {
-            yield return null;
-        }
-        else
-        {
-            yield return new WaitForSeconds(PauseStart);
-            Vector3 initial_position = transform.position;
-            Vector3 target_position = transform.position;
-            target_position.x += (Distance * (direction == Direction.Right ? -1 : 1));
+        yield return new WaitForSeconds(PauseStart);
+        Vector3 initial_position = transform.position;
+        Vector3 target_position = transform.position;
+        target_position.x += (Distance * (direction == Direction.Right ? -1 : 1));
 
-            yield return StartCoroutine(
-                Utilities.MoveTo(gameObject, target_position, Speed / 2));
-            yield return StartCoroutine(
-                Utilities.MoveTo(gameObject, initial_position, Speed / 2));
-            yield return new WaitForSeconds(PauseEnd);
-            //Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
-            yield return null;
-        }
+        yield return StartCoroutine(
+            Utilities.MoveTo(gameObject, target_position, Speed / 2));
+        yield return StartCoroutine(
+            Utilities.MoveTo(gameObject, initial_position, Speed / 2));
+        yield return new WaitForSeconds(PauseEnd);
+        //Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+        yield return null;
     }
 }

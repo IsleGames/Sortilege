@@ -17,6 +17,8 @@ namespace UI
 
         public void Click()
         {
+            if (Game.Ctx.paused) return;
+            
 	        if (Game.Ctx.BattleOperator.player.waitingForAction)
 			{
 				SetStatus(!Game.Ctx.BattleOperator.inSelectEnemyMode);

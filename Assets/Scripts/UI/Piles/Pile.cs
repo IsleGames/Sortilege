@@ -204,14 +204,14 @@ namespace UI
         public Card Draw()
         {
             Card drawnCard = _pile.Draw();
-            AdjustAllPositions();
+            // AdjustAllPositions();
             return drawnCard;
         }
 
         public Card DrawNoShuffle()
         {
             Card drawnCard = _pile.DrawFirst();
-            AdjustAllPositions();
+            // AdjustAllPositions();
             return drawnCard;
         }
         

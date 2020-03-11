@@ -51,6 +51,8 @@ namespace Cards
 
         private void OnMouseUp()
         {
+            if (Game.Ctx.paused) return;
+            
             Vector3 p = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             
             RaycastHit2D[] hitArray = new RaycastHit2D[20];

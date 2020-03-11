@@ -34,11 +34,13 @@ public class InGameMenu : MonoBehaviour
     public void ShowMenu()
     {
         menu.enabled = true;
+        Game.Ctx.paused = true;
     }
 
     public void HideMenu()
     {
         menu.enabled = false;
+        Game.Ctx.paused = false;
     }
 
     public void QuitToMainMenu()

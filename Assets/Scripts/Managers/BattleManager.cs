@@ -122,11 +122,6 @@ namespace Managers
                     // Debugger.Log("player wins");
                     Game.Ctx.VfxOperator.ShowTurnText("Battle Complete");
                     
-    // #if UNITY_EDITOR
-    //                 UnityEditor.EditorApplication.isPlaying = false;
-    // #else
-    //                 Application.Quit();
-    // #endif
                     if (Game.Ctx.UserOperator)
                     {
                         Game.Ctx.GameOperator.EndBattle();

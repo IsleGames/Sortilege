@@ -21,7 +21,7 @@ namespace Cards
         EffectDescription effectDescription = new EffectDescription();
         BuffDescription buffDescription = new BuffDescription();
 
-        private float onSelectZoomScale = 1.7f;
+        private float onSelectZoomScale = 1.35f;
 
         public void Start()
         {
