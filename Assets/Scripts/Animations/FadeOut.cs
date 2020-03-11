@@ -1,52 +1,55 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using Library;
 using Units;
+using UnityEngine;
+using UnityEngine.UI;
 
-[RequireComponent(typeof(Units.Unit))]
-public class FadeOut : MonoBehaviour
+namespace Animations
 {
-    //SpriteRenderer loadingBackground;
-    public float Duration;
-
-    public void Start()
+    [RequireComponent(typeof(Units.Unit))]
+    public class FadeOut : MonoBehaviour
     {
-        var unit = GetComponent<Unit>();
-        unit.onDead.AddListener(
-            () => Game.Ctx.AnimationOperator.PushAction(
-                BlockingFade(), true)
-                );
-    }
+        //SpriteRenderer loadingBackground;
+        public float Duration;
 
-    public IEnumerator Fade()
-    {
-        //
-        var sprites = GetComponentsInChildren<SpriteRenderer>();
-        var  images = GetComponentsInChildren<Image>();
-        var texts = GetComponentsInChildren<TMPro.TextMeshPro>();
-        List<IColorable> colorables = new List<IColorable>();
-        foreach (var sprite in sprites)
+        public void Start()
         {
-            colorables.Add(new SpriteRendererC(sprite));
+            var unit = GetComponent<Unit>();
+            unit.onDead.AddListener(
+                () => Game.Ctx.AnimationOperator.PushAction(
+                    BlockingFade(), true)
+            );
         }
-        foreach (var image in images)
+
+        public IEnumerator Fade()
         {
-            colorables.Add(new ImageC(image));
+            //
+            var sprites = GetComponentsInChildren<SpriteRenderer>();
+            var  images = GetComponentsInChildren<Image>();
+            var texts = GetComponentsInChildren<TMPro.TextMeshPro>();
+            List<IColorable> colorables = new List<IColorable>();
+            foreach (var sprite in sprites)
+            {
+                colorables.Add(new SpriteRendererC(sprite));
+            }
+            foreach (var image in images)
+            {
+                colorables.Add(new ImageC(image));
+            }
+            foreach (var t in texts)
+            {
+                colorables.Add(new TMP_C(t));
+            }
+            yield return ImageUtilities.FadeToTransparent(colorables, 1f/Duration);
+            Game.Ctx.EnemyOperator.Destroy(GetComponent<Units.Enemies.Enemy>());
         }
-        foreach (var t in texts)
+
+        public IEnumerator BlockingFade()
         {
-            colorables.Add(new TMP_C(t));
+            yield return StartCoroutine(Fade());
         }
-        yield return ImageUtilities.FadeToTransparent(colorables, 1f/Duration);
-        Game.Ctx.EnemyOperator.Destroy(GetComponent<Units.Enemies.Enemy>());
+
+
     }
-
-    public IEnumerator BlockingFade()
-    {
-        yield return StartCoroutine(Fade());
-    }
-
-
 }

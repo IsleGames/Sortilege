@@ -127,6 +127,8 @@ namespace Library
             float p = 0;
             while (p < 1f - 5e-3)
             {
+	            if (cardEvent.isDragged) break;
+	            
                 p += (1 - p) * k;
                 
                 Vector3 curPos = targetPos * p + initPos * (1 - p);
@@ -137,11 +139,15 @@ namespace Library
                 
                 yield return null;
             }
+	        
+            if (!cardEvent.isDragged) {
+	            
+				obj.transform.position = targetPos;
+				obj.transform.localScale = targetScale;
+	
+				if (cardEvent) cardEvent.animationLock = false;
 
-            obj.transform.position = targetPos;
-            obj.transform.localScale = targetScale;
-
-            if (cardEvent) cardEvent.animationLock = false;
+            }
 
 	        Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;

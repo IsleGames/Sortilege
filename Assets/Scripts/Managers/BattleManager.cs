@@ -1,10 +1,12 @@
 using System;
 using System.Collections;
 using _Editor;
+using Library;
 using TMPro;
 using UnityEngine;
 
 using Units;
+using Units.Enemies;
 using UnityEngine.SceneManagement;
 
 namespace Managers
@@ -27,6 +29,14 @@ namespace Managers
         {
             player = transform.GetComponentInChildren<Player>();
             player.Initialize();
+
+            if (Game.Ctx.isTutorial)
+            {
+                Avocado avo = transform.GetComponentInChildren<Avocado>();
+                avo.Initialize();
+                
+                Game.Ctx.EnemyOperator.AddEnemy(avo);
+            }
             
             BattleSeq = NextStep();
             turnCount = 0;
@@ -124,7 +134,10 @@ namespace Managers
                     
                     if (Game.Ctx.UserOperator)
                     {
-                        Game.Ctx.GameOperator.EndBattle();
+                        if (!Game.Ctx.isTutorial)
+                            Game.Ctx.GameOperator.EndBattle();
+                        else
+                            Game.Ctx.GameOperator.LoadSceneByName("StartMenu");
                     }
                     
                 }
@@ -135,6 +148,9 @@ namespace Managers
                     if (Game.Ctx.isTutorial)
                     {
                         transform.GetComponentInChildren<TextMeshPro>().text = "oops.. You died.. Let's do it again.";
+                        
+                        Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(3f), true);
+                        Game.Ctx.GameOperator.LoadSceneByName("Tutorial");
                     }
                 }
             }
