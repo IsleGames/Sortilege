@@ -6,6 +6,7 @@ using Effects;
 using Library;
 using Managers;
 using Units;
+using UnityEditor.UI;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
@@ -90,9 +91,12 @@ namespace Buffs
 		    GetComponentInParent<Health>().Damage(1);
 		    amount -= 1;
 
+		    Debugger.Log(GetComponentInParent<Health>().hitPoints);
+		    if (GetComponentInParent<Health>().IsDead()) return;
+
 		    if (Mathf.Approximately(amount, 0f))
 		    {
-			    Debug.Log("removed");
+			    // Debug.Log("removed");
 				GetComponentInParent<Unit>().onTurnEnd.RemoveListener(Plague);
 				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }

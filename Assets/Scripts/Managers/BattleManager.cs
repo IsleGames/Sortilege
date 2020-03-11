@@ -78,6 +78,14 @@ namespace Managers
                 }
             }
         }
+
+        public void CheckBattleEnd()
+        {
+            if (IsBattleEnded())
+            {
+                EndGame();
+            }
+        }
         
         public void Continue()
         {

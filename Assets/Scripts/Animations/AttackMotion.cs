@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using _Editor;
 using Library;
 using Units;
 using UnityEngine;
@@ -39,7 +40,7 @@ namespace Animations
         private IEnumerator AttackMove()
         {
             yield return new WaitForSeconds(PauseStart);
-
+            
             GameObject obj = gameObject;
         
             Vector3 init = obj.transform.position;
@@ -58,6 +59,7 @@ namespace Animations
             obj.transform.position = target_position;
 
             Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            
             yield return null;
         }
     }
