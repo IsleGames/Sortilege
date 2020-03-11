@@ -36,7 +36,9 @@ namespace Cards
         public StrategyType strategy = StrategyType.None;
         public AttributeType attribute = AttributeType.None;
 
-        public UnitType target = UnitType.Unknown;
+        public UnitType target;
+
+        public Ability ability;
             
         public int level;
         public int maxLevel;

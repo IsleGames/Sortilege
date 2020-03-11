@@ -7,7 +7,7 @@ using Effects;
 
 namespace Data
 {
-    [UnityEngine.CreateAssetMenu(fileName = "New CardData", menuName = "Card Data", order = 51)]
+    [CreateAssetMenu(fileName = "New CardData", menuName = "Card Data", order = 51)]
     public class CardData : ScriptableObject
     {
         public string title;
@@ -15,8 +15,10 @@ namespace Data
         public StrategyType strategy;
         public AttributeType attribute;
         public string description;
+
+        public bool isSelfTarget = false;
         
-        public bool disableRetract = false;
+        // public bool disableRetract = false;
         
         public List<Effect> effectList;
         public List<BuffEffect> buffList;

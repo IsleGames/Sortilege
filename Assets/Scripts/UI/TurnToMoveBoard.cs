@@ -32,9 +32,12 @@ namespace UI
             boardTMPText.text = text;
         }
 
-        public void StartAnimation()
+        public void StartAnimation(bool dontDisappear)
         {
-            Game.Ctx.AnimationOperator.PushAnimation(FadeInOut(), true);
+            if (!dontDisappear)
+                Game.Ctx.AnimationOperator.PushAction(FadeInOut(), true);
+            else
+                Game.Ctx.AnimationOperator.PushAction(FadeInOnly(), true);
         }
 
         private void SetAlpha(float a)
@@ -48,8 +51,32 @@ namespace UI
             boardTMPText.color = newColor;
         }
 
+        private IEnumerator FadeInOnly()
+        {
+            // Debugger.Log("FadeInOut working");
+            // Debugger.Log("stoppingTillDone: " + Game.Ctx.AnimationOperator.stoppingTillDone);
+            
+            yield return null;
+
+            float p = 0f;
+            float totalTime = 0;
+            while (p < 1f)
+            {
+                totalTime += Time.deltaTime;
+                p = totalTime / fadeTime;
+                if (p >= 1f) p = 1f;
+
+                SetAlpha(p);
+
+                yield return null;
+            }
+        }
+        
         private IEnumerator FadeInOut()
         {
+            // Debugger.Log("FadeInOut working");
+            // Debugger.Log("stoppingTillDone: " + Game.Ctx.AnimationOperator.stoppingTillDone);
+            
             yield return null;
 
             float p = 0f;

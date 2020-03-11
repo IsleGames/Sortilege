@@ -1,90 +1,125 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using _Editor;
 using UnityEngine;
 using UnityEngine.Events;
-using Debug = System.Diagnostics.Debug;
+
+using _Editor;
 
 namespace Managers
 {
     public class AnimationManager : MonoBehaviour
     {
 		public UnityEvent onAnimationEnd = new UnityEvent();
+        
+        // All IEnumerators should call
+        //
+        //     Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+        //
+        // before the last yield return null;
 
-        public List<IEnumerator> EventQueue;
+        public Queue<(IEnumerator, bool)> EventQueue;
         public List<bool> StopQueue;
 
         [SerializeField]
         private int runningAnimationCount = 0;
         [SerializeField]
-        private bool stoppingTillDone = false;
+        public bool stoppingTillDone = false;
 
         private void Awake()
         {
-            EventQueue = new List<IEnumerator>();
+            EventQueue = new Queue<(IEnumerator, bool)>();
             StopQueue = new List<bool>();
         }
 
         private void Start()
         {
             onAnimationEnd.AddListener(OnIEnumRunningEnd);
+            StartCoroutine(RunEverything());
         }
 
-        public void PushAnimation(IEnumerator move, bool stopTillDone = false)
+        public void PushAction(IEnumerator move, bool stopTillDone = false)
         {
-            // Debugger.Log(EventQueue);
-            EventQueue.Add(move);
+            // Debugger.Log("Now adding to queue: " + move + "");
+            
+            EventQueue.Enqueue((move, stopTillDone));
             StopQueue.Add(stopTillDone);
             
             TryRunEverything();
         }
+
+        public IEnumerator FadeOut(IEnumerator loadSceneIEnum)
+        {
+            yield return null;
+        }
         
         private void TryRunEverything() 
         {
+            // Debugger.Log("Try Run with stoppingTillDone as " + stoppingTillDone);
+            
             if (stoppingTillDone) return;
+            
+            // Debugger.Log("Forced Running in try run");
+            
             RunEverything();
         }
 
-        private void RunEverything()
+        private IEnumerator RunEverything()
         {
-            if (EventQueue.Count == 0) return;
-            
-            stoppingTillDone = PopNextEvent();
-            while (EventQueue.Count > 0 && !stoppingTillDone)
+            // Debugger.Log("Forced Running");
+            while (true)
             {
-                stoppingTillDone = PopNextEvent();
-            } 
+
+                if (EventQueue.Count == 0)
+                {
+                    yield return null;
+                }
+                else
+                {
+                    yield return PopNextEvent();
+                }
+            }
         }
 
         private void OnIEnumRunningEnd()
         {
+
             if (runningAnimationCount > 0)
             {
+                // Debugger.Log("OnIEnumRunningEnd activated with remaining count " + runningAnimationCount  + " - 1");
+
                 runningAnimationCount -= 1;
+
                 if (runningAnimationCount == 0)
                 {
                     stoppingTillDone = false;
+
+                    // Debugger.Log("Forced Running on event ends");
+
                     RunEverything();
                 }
             }
-            else
-                throw new InvalidOperationException("OnIEnumRunningEnd called when remaining Event is empty");
+            else { };
+                //throw new InvalidOperationException("OnIEnumRunningEnd called when remaining Event is empty");
         }
 
-        private bool PopNextEvent()
+        private IEnumerator PopNextEvent()
         {
-            runningAnimationCount += 1;
+            (IEnumerator move, bool stopTilDone) = EventQueue.Dequeue();
             
-            IEnumerator move = EventQueue[0];
-            bool ret = StopQueue[0];
+            //Debugger.Log("Now running: " + move + " with remaining count " + runningAnimationCount + " + 1");
             
-            EventQueue.RemoveAt(0);
-            StopQueue.RemoveAt(0);
             
-            StartCoroutine(move);
+            if (stopTilDone)
+            {
+                yield return StartCoroutine(move);
+            }
+            else
+            {
+                StartCoroutine(move);
+                yield return null;
+            }
 
-            return ret;
         }
     }
 }

@@ -7,10 +7,18 @@ using Random = UnityEngine.Random;
 
 using _Editor;
 using Managers;
+using TMPro;
 using Units;
+using Units.Enemies;
 using Object = UnityEngine.Object;
 
 // ReSharper disable InconsistentNaming
+
+public enum SceneType : int
+{
+	Battle,
+    AfterBattleReward
+}
 
 public class Game : MonoBehaviour
 {
@@ -20,116 +28,62 @@ public class Game : MonoBehaviour
 
     public CardManager CardOperator;
     public VfxManager VfxOperator;
+    public EnemyManager EnemyOperator;
     public AnimationManager AnimationOperator;
+    public SortOrderManager SortOrderOperator;
+    
+    public BattleManager BattleOperator;
+    public AfterBattleRewardManager AfterBattleRewardOperator;
 
-    public Player player;
-    public Enemy enemy;
+    public GameManager GameOperator;
+    public UserManager UserOperator;
 
-    public int turnCount;
-    public Unit activeUnit;
+    public SceneType sceneType;
+    
+    public bool isTutorial;
+    public bool fixRandomSeed;
 
-    public delegate void RoutineMethod();
+    public bool paused;
 
-    public RoutineMethod RunningMethod;
-        
-    public IEnumerator BattleSeq;
+    public delegate void DelegateMethod();
 
-    private void Start()
+    private void Awake()
     {
         QualitySettings.vSyncCount = 1;
-        Random.InitState(42);
         Physics.queriesHitTriggers = true;
         
         Ctx = this;
 
+        paused = false;
+    }
+
+    private void Start()
+    {
+        if (fixRandomSeed) Random.InitState(42);
+        
         UICanvas = GameObject.Find("UICanvas");
 
         CardOperator = GetComponent<CardManager>();
         VfxOperator = GetComponent<VfxManager>();
+        EnemyOperator = GetComponent<EnemyManager>();
         AnimationOperator = GetComponent<AnimationManager>();
+        SortOrderOperator = GetComponent<SortOrderManager>();
 
-        player = transform.GetComponentInChildren<Player>();
-        player.Initialize();
-        enemy = transform.GetComponentInChildren<Enemy>();
-        enemy.Initialize();
-
-        turnCount = 0;
-
-        BattleSeq = NextStep();
-
-        StartCoroutine(ContinueAfterLoadScene());
-    }
-    
-    private IEnumerator ContinueAfterLoadScene()
-    {
-        // Wait a frame so every Awake and Start method is called
-        yield return new WaitForEndOfFrame();
+        BattleOperator = GetComponent<BattleManager>();
+        AfterBattleRewardOperator = GetComponent<AfterBattleRewardManager>();
         
-        CardOperator.pileDeck.AdjustAllPositions();
-        
-        Continue();
-    }
-    
-    private IEnumerator NextStep()
-    {
-        while (true)
-        {
-            turnCount += 1;
-            
-            Debugger.Log("player play");
-            VfxOperator.ShowTurnText("Player Turn");
-            
-            activeUnit = player;
-            RunningMethod = player.StartTurn;
-            yield return null;
-            
-            Debugger.Log("enemy play");
-            VfxOperator.ShowTurnText("Enemy Turn");
-            
-            activeUnit = enemy;
-            RunningMethod = enemy.StartTurn;
-            yield return null;
-        }
-    }
-    
-    public void Continue()
-    {
-        if (IsBattleEnded()) return;
-        BattleSeq.MoveNext();
-        RunningMethod();
-    }
-    
-    public bool IsBattleEnded()
-    {
-        return player.GetComponent<Health>().IsDead() || enemy.GetComponent<Health>().IsDead();
-    }
-    
-    public bool HasPlayerLost()
-    {
-        return player.GetComponent<Health>().IsDead();
-    }
+        // Global Links
+        GameOperator = FindObjectOfType<GameManager>();
+        UserOperator = FindObjectOfType<UserManager>();
 
-    public void EndGame()
-    {
-        if (IsBattleEnded())
+        switch (sceneType)
         {
-            if (!HasPlayerLost())
-            {
-                Debugger.Log("player wins");
-                VfxOperator.ShowTurnText("Battle Complete");
-                
-// #if UNITY_EDITOR
-//                 UnityEditor.EditorApplication.isPlaying = false;
-// #else
-//                 Application.Quit();
-// #endif
-
-            }
-            else
-            {
-                Debugger.Log("player lost");
-                VfxOperator.ShowTurnText("Battle Lost");
-            }
+            case SceneType.Battle:
+                StartCoroutine(BattleOperator.ContinueAfterLoadScene());
+                break;
+            case SceneType.AfterBattleReward:
+                StartCoroutine(AfterBattleRewardOperator.ContinueAfterLoadScene());
+                break;
         }
     }
 }

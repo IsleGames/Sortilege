@@ -1,6 +1,9 @@
 using System;
+using System.Collections;
 using System.Data;
+using _Editor;
 using Effects;
+using Library;
 using Managers;
 using Units;
 using UnityEngine;
@@ -56,7 +59,7 @@ namespace Buffs
 		    if (Mathf.Approximately(amount, 0f))
 		    {
 			    GetComponentInParent<Unit>().onDamage.RemoveListener(Block);
-			    GetComponentInParent<BuffManager>().Destroy(this);
+				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }
 	    }
 	    
@@ -67,29 +70,31 @@ namespace Buffs
 		    
 		    // You may go away without RemoveListener though
 		    GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Forge);
-		    GetComponentInParent<BuffManager>().Destroy(this);
+            Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 	    }
 	    
 	    // OnDamage Effect
 	    private void Thorns()
 	    {
-		    Game.Ctx.activeUnit.GetComponent<Health>().Damage(amount);
+		    // yield return new WaitForEndOfFrame();
+		    
+		    Game.Ctx.BattleOperator.activeUnit.GetComponent<Health>().Damage(amount);
 		    
 		    GetComponentInParent<Unit>().onDamage.RemoveListener(Thorns);
-		    GetComponentInParent<BuffManager>().Destroy(this);
+            Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 	    }
 	    
 	    // OnTurnEnd Effect
-	    // Todo: Make Plague Support Damage in Multiple Turns
 	    private void Plague()
 	    {
-		    GetComponent<Health>().Damage(1);
+		    GetComponentInParent<Health>().Damage(1);
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
 		    {
+			    Debug.Log("removed");
 				GetComponentInParent<Unit>().onTurnEnd.RemoveListener(Plague);
-				GetComponentInParent<BuffManager>().Destroy(this);
+				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }
 		    
 	    }
@@ -97,24 +102,33 @@ namespace Buffs
 	    // OnAttack Effect
 	    private void Flinch()
 	    {
-		    Game.Ctx.CardOperator.isCurrentCardFlinched = true;
+		    GetComponentInParent<Unit>().isUnitFlinched = true;
 		    amount -= 1;
 
 		    if (Mathf.Approximately(amount, 0f))
 		    {
 				GetComponentInParent<Unit>().onAttack.RemoveListener(Flinch);
-				GetComponentInParent<BuffManager>().Destroy(this);
+				Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
 		    }
 	    }
 	    
 	    // OnTurnBegin Effect
 	    private void Voodoo()
 	    {
-		    if (!GetComponent<Unit>().beingDamagedSomewhere)
-				GetComponent<Health>().Heal(amount);
+		    if (!GetComponentInParent<Unit>().beingDamagedSomewhere)
+				GetComponentInParent<Health>().Heal(amount);
 
 			GetComponentInParent<Unit>().onTurnBegin.RemoveListener(Voodoo);
-			GetComponentInParent<BuffManager>().Destroy(this);
+			
+            Game.Ctx.AnimationOperator.PushAction(DestroyAfterAnimation(),true);
+	    }
+
+	    private IEnumerator DestroyAfterAnimation()
+	    {
+		    Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+		    
+		    GetComponentInParent<BuffManager>().Destroy(this);
+		    yield return null;
 	    }
     }
 }

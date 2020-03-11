@@ -5,7 +5,9 @@ using _Editor;
 using Cards;
 using Units;
 using UnityEngine;
+using Debug = System.Diagnostics.Debug;
 using Random = UnityEngine.Random;
+using UnityEngine.UI;
 
 namespace Library
 {
@@ -19,7 +21,14 @@ namespace Library
 			list.RemoveAt(k);
 
 			return ret;
-		}  
+		}
+
+		public static T DrawFirst<T>(this IList<T> list)
+		{
+			T ret = list[0];
+			list.RemoveAt(0);
+			return ret;
+		}
 
 		// Source: https://stackoverflow.com/questions/273313/randomize-a-listt
 		public static void Shuffle<T>(this IList<T> list)  
@@ -67,8 +76,6 @@ namespace Library
 		
 		public static IEnumerator MoveTo(GameObject obj, Vector3 pos, float k)
         {
-            // Todo: P-Controller
-            
             Vector3 init = obj.transform.position;
 
             float p = 0;
@@ -76,7 +83,7 @@ namespace Library
             {
                 p += (1 - p) * k;
                 
-                Vector3 current = pos * k + init * (1 - k);
+                Vector3 current = pos * p + init * (1 - p);
                 obj.transform.position = current;
                 
                 yield return null;
@@ -88,10 +95,31 @@ namespace Library
             yield return null;
         }
 		
-		public static IEnumerator MoveAndScaleTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float k)
+		public static IEnumerator MoveToRev(GameObject obj, Vector3 pos, float k)
+        {
+            Vector3 init = obj.transform.position;
+
+            float p = 0.01f;
+            while (p < 1f - 1e-3)
+            {
+	            p += p * k;
+                
+                Vector3 current = pos * p + init * (1 - p);
+                obj.transform.position = current;
+                
+                yield return null;
+            }
+
+            obj.transform.position = pos;
+            
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+        }
+		
+		public static IEnumerator MoveAndScaleCardTo(GameObject obj, Vector3 targetPos, Vector3 targetScale, float k)
         {
 	        CardEvent cardEvent = obj.GetComponent<CardEvent>();
-	        cardEvent.animationLock = true;
+	        if (cardEvent) cardEvent.animationLock = true;
 	        
 	        Vector3 initPos = obj.transform.position;
             Vector3 initScale = obj.transform.localScale;
@@ -112,16 +140,22 @@ namespace Library
 
             obj.transform.position = targetPos;
             obj.transform.localScale = targetScale;
-            
-	        cardEvent.animationLock = false;
-            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+
+            if (cardEvent) cardEvent.animationLock = false;
+
+	        Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;
         }
-		
+
 		public static IEnumerator WaitForSecs(float time)
 		{
 			yield return new WaitForSeconds(time);
 	
+            Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
+            yield return null;
+		}
+		public static IEnumerator PlaceholderIEnum()
+		{
             Game.Ctx.AnimationOperator.onAnimationEnd.Invoke();
             yield return null;
 		}

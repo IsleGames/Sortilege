@@ -13,9 +13,7 @@ using _Editor;
 namespace Cards
 {
     public class Card : MonoBehaviour
-    { 
-        
-        [SerializeField]
+    {
         public CardData cardData { get; private set; }
 
         public void Info()
@@ -36,17 +34,14 @@ namespace Cards
             
             GetComponent<MetaData>().description = cardData.description;
 
-            GetComponent<Ability>().disableRetract = cardData.disableRetract;
-            GetComponent<Ability>().effectList = new List<Effect>(cardData.effectList);
-            GetComponent<Ability>().buffEffectList = new List<BuffEffect>(cardData.buffList);
+            // GetComponent<Ability>().disableRetract = cardData.disableRetract;
+            
+            GetComponent<MetaData>().ability.effectList = new List<Effect>(cardData.effectList);
+            GetComponent<MetaData>().ability.buffEffectList = new List<BuffEffect>(cardData.buffList);
         }
 
         public void SetAvailability(bool availability)
         {
-            // if (gameObject.name == "Arcane Punch")
-            // {
-            //     Debugger.Log(gameObject.name + " set to " + availability);
-            // }
             GetComponent<CardRender>().SetAvailability(availability);
             GetComponent<CardEvent>().availability = availability;
         } 
@@ -60,14 +55,7 @@ namespace Cards
         
         public void Apply(Unit target, float streakCount)
         {
-            // onAttack Event goes here
-            Game.Ctx.CardOperator.isCurrentCardFlinched = false;
-            Game.Ctx.player.onAttack.Invoke();
-            if (Game.Ctx.CardOperator.isCurrentCardFlinched) return;
-                
-            GetComponent<Ability>().Apply(target, streakCount);
-
-            if (Game.Ctx.IsBattleEnded()) Game.Ctx.EndGame();
+            GetComponent<MetaData>().ability.ApplyAsCard(target, streakCount);
         }
     }
 }
