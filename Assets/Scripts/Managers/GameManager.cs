@@ -27,10 +27,16 @@ namespace Managers
         public void StartGame()
         {
             roundCount = 0;
-            
+            GetComponent<UserManager>().LoadInitialData();
+
             LoadSceneByName("Battle", true, 1.5f);
         }
-
+        
+        public void StartTutorial()
+        {
+            LoadSceneByName("Tutorial", true, 1.5f);
+        }
+        
         public int GetRoundCount()
         {
             return roundCount;
