@@ -20,7 +20,7 @@ namespace Units
 			base.StartTurn();
 			
 			if (Game.Ctx.BattleOperator.turnCount == 4)
-				Game.Ctx.CardOperator.DrawCards(2, true, false);
+				Game.Ctx.CardOperator.DrawCards(1, true, false);
 			
 			switch (Game.Ctx.BattleOperator.turnCount)
 			{
@@ -38,7 +38,7 @@ namespace Units
 					break;
 				case 4:
 					_instructionTMP.text =
-						"The Avocado awakes and is about to deal colossal amount of damage! \nPlay Electric Shield to block it! Keep in mind that the card requires a chain size of 4 to trigger.";
+						"The Avocado awakes and is about to deal colossal amount of damage! \nPlay Electric Shield to block it! Keep in mind that the card requires a chain size of 3 to trigger.";
 					break;
 				case 5:
 					_instructionTMP.text =

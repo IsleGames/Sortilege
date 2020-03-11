@@ -28,3 +28,19 @@ MonoBehaviour:
       minStreak: 0
       notAmplified: 0
     buffList: []
+  - title: Bone Slash
+    description: Deal 8 damage and 3 damage to itself
+    effectList:
+    - affectiveUnit: 0
+      type: 0
+      amount: 8
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    - affectiveUnit: 1
+      type: 0
+      amount: 3
+      maxDeviation: 0
+      minStreak: 0
+      notAmplified: 0
+    buffList: []
