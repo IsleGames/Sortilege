@@ -16,7 +16,7 @@ namespace Cards
         [SerializeField]
         private bool triggerPlayArea, triggerHandArea;
 
-        [SerializeField] private bool isDragged;
+        [SerializeField] public bool isDragged;
         public Pile thisPile;
         
         // [SerializeField]
@@ -72,7 +72,7 @@ namespace Cards
         {
             if (!Game.Ctx.BattleOperator.player.waitingForAction) return;
             if (!availability) return;
-            if (!isDragged && !Game.Ctx.VfxOperator.draggedCard && !animationLock)
+            if (!isDragged && !Game.Ctx.VfxOperator.draggedCard)
             {
                 if (!GetComponent<CardRender>().visible)
                 {
