@@ -8,6 +8,7 @@ using UnityEngine;
 using Units;
 using Units.Enemies;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace Managers
 {
@@ -41,6 +42,18 @@ namespace Managers
             BattleSeq = NextStep();
             turnCount = 0;
             inSelectEnemyMode = false;
+
+            if (Game.Ctx.UserOperator && !Game.Ctx.isTutorial)
+            {
+                transform.Find("RoundText").GetComponent<TextMeshPro>().text =
+                    $"Round {Game.Ctx.GameOperator.roundCount + 1} / {Game.Ctx.UserOperator.totalRound}";
+            }
+            else
+            {
+                transform.Find("RoundText").GetComponent<TextMeshPro>().enabled = false;
+                transform.Find("RoundText").GetComponentInChildren<Image>().enabled = false;
+            }
+            
         
             // Wait a frame so every Awake and Start method is called
             yield return new WaitForEndOfFrame();
@@ -55,10 +68,20 @@ namespace Managers
             while (true)
             {
                 turnCount += 1;
-                
+
                 // Debugger.Warning("player play");
                 Game.Ctx.VfxOperator.ShowTurnText("Player Turn");
                 
+                // Init enemy choices
+                Game.Ctx.EnemyOperator.InitEnemy();
+                Enemy enemyUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
+    
+                while (enemyUnit != null)
+                {
+                    enemyUnit.DisableDisplay();
+                    enemyUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
+                }
+
                 activeUnit = player;
                 RunningMethod = activeUnit.StartTurn;
                 yield return null;
