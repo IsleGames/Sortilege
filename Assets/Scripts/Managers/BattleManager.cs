@@ -50,8 +50,11 @@ namespace Managers
             }
             else
             {
-                transform.Find("RoundText").GetComponent<TextMeshPro>().enabled = false;
-                transform.Find("RoundText").GetComponentInChildren<Image>().enabled = false;
+                if (!Game.Ctx.isTutorial)
+                {
+                    transform.Find("RoundText").GetComponent<TextMeshPro>().enabled = false;
+                    transform.Find("RoundText").GetComponentInChildren<Image>().enabled = false;
+                }
             }
             
         
@@ -176,12 +179,17 @@ namespace Managers
                 {
                     // Debugger.Log("player lost");
                     Game.Ctx.VfxOperator.ShowTurnText("Battle Lost");
+                    Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(3f), true);
+                        
                     if (Game.Ctx.isTutorial)
                     {
                         transform.GetComponentInChildren<TextMeshPro>().text = "oops.. You died.. Let's do it again.";
                         
-                        Game.Ctx.AnimationOperator.PushAction(Utilities.WaitForSecs(3f), true);
                         Game.Ctx.GameOperator.LoadSceneByName("Tutorial");
+                    }
+                    else
+                    {
+                        Game.Ctx.GameOperator.LoadSceneByName("StartMenu");
                     }
                 }
             }
