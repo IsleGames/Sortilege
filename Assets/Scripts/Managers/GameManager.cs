@@ -13,7 +13,7 @@ namespace Managers
         private GameObject sceneFaderPrefab;
 
         [SerializeField]
-        private int roundCount;
+        public int roundCount;
         
         private void Start()
         {

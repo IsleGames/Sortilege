@@ -14,7 +14,7 @@ namespace _Editor
 {
     public class Cheats : MonoBehaviour
     {
-        
+        /*
         public void Update()
         {
             if (Input.GetKeyUp(KeyCode.E))
@@ -30,7 +30,7 @@ namespace _Editor
                 }
             }
         }
-        
+        */
     }
 }
 
