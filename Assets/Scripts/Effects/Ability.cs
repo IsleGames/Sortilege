@@ -15,6 +15,8 @@ namespace Effects
     public class Ability
     {
         public int activateTurnCount = 1;
+
+        public string title, description;
         
         public List<Effect> effectList;
         public List<BuffEffect> buffEffectList;
@@ -110,15 +112,15 @@ namespace Effects
         
         public string Info()
         {
-            var text = "";
-            if (effectList != null)
-            {
-                foreach (var effect in effectList)
-                {
-                    text += effect?.Info() + "\n";
-                }
-            }
-            return text;
+            // var text = "";
+            // if (effectList != null)
+            // {
+            //     foreach (var effect in effectList)
+            //     {
+            //         text += effect?.Info() + "\n";
+            //     }
+            // }
+            return title + ": " + description;
         }
     }
 }

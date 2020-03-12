@@ -1127,7 +1127,24 @@ MonoBehaviour:
       m_Calls: []
   _disableMetaTypeFiltering: 0
   CardList:
+  - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
+  - {fileID: 11400000, guid: 399a92c6a46e643f8b368036a59e5033, type: 2}
+  - {fileID: 11400000, guid: 74b9cf3a7b5914966806113a063094a3, type: 2}
+  - {fileID: 11400000, guid: 2f59065f1ae904e39b05f5776c4a73c7, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
+  - {fileID: 11400000, guid: 369302a4ed85641b2bd88d9aa0899e94, type: 2}
+  - {fileID: 11400000, guid: e2003fb136ae84cec97ddf9288fece98, type: 2}
+  - {fileID: 11400000, guid: e2003fb136ae84cec97ddf9288fece98, type: 2}
+  - {fileID: 11400000, guid: d6107771234c94b26abd50df0aec040a, type: 2}
+  - {fileID: 11400000, guid: 7aa5add8f6e2a4b19b9b617fadad1048, type: 2}
+  - {fileID: 11400000, guid: 7e3fb7734a99e4d74a1d7ecd452c9590, type: 2}
+  - {fileID: 11400000, guid: 7e3fb7734a99e4d74a1d7ecd452c9590, type: 2}
+  - {fileID: 11400000, guid: 7e3fb7734a99e4d74a1d7ecd452c9590, type: 2}
   - {fileID: 11400000, guid: 8181d1809446d402ea00c83b30e6b3ef, type: 2}
+  - {fileID: 11400000, guid: 2e783bb8c95c944759359456cd2e8690, type: 2}
+  - {fileID: 11400000, guid: 2e783bb8c95c944759359456cd2e8690, type: 2}
+  - {fileID: 11400000, guid: 0340079d1f2bf4cfbbbbb81793f07fbe, type: 2}
   pileDeck: {fileID: 0}
   pileDiscard: {fileID: 0}
   pileHand: {fileID: 0}
@@ -1191,8 +1208,7 @@ MonoBehaviour:
   EnemyList: []
   EnemyInitData:
   - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
-  - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
-  - {fileID: 11400000, guid: 96c5a206ec02d43fba7e905b94914044, type: 2}
+  - {fileID: 11400000, guid: 3abc72ff471454571b74c3b2674e27d5, type: 2}
   curEnemy: {fileID: 0}
   enemyPrefab: {fileID: 0}
 --- !u!114 &1051549750
@@ -1628,7 +1644,7 @@ PrefabInstance:
     - target: {fileID: 4975116138548951238, guid: ceec76688164b4d2da7d9c495b8e7e08,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4975116138548951258, guid: ceec76688164b4d2da7d9c495b8e7e08,
         type: 3}

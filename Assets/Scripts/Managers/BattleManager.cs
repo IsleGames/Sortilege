@@ -55,10 +55,20 @@ namespace Managers
             while (true)
             {
                 turnCount += 1;
-                
+
                 // Debugger.Warning("player play");
                 Game.Ctx.VfxOperator.ShowTurnText("Player Turn");
                 
+                // Init enemy choices
+                Game.Ctx.EnemyOperator.InitEnemy();
+                Enemy enemyUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
+    
+                while (enemyUnit != null)
+                {
+                    enemyUnit.DisableDisplay();
+                    enemyUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
+                }
+
                 activeUnit = player;
                 RunningMethod = activeUnit.StartTurn;
                 yield return null;

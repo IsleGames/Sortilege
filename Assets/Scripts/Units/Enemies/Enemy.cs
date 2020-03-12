@@ -1,12 +1,14 @@
 using System.Collections.Generic;
+using _Editor;
 using Animations;
 using Data;
 using Effects;
 using Library;
 using TMPro;
-using UnityEditor.UI;
+// using UnityEditor.UI;
 using Random = UnityEngine.Random;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Units.Enemies
 {
@@ -22,6 +24,8 @@ namespace Units.Enemies
 
 		public string title;
 		public string description;
+
+		private int currentChoice;
 		
         public List<Ability> abilityList;
 		
@@ -37,20 +41,24 @@ namespace Units.Enemies
 
             GetComponent<Health>().maximumHitPoints = enemyData.maximumHealth;
             GetComponent<EnemyRender>().imgSprite = enemyData.displayImage;
-            onDead.AddListener(() => GetComponent<FadeOut>().BlockingFade());
-            onDead.AddListener(() => Debug.Log("Died"));
-
+            
             foreach (EnemyAbilityData moveData in enemyData.abilityList)
             {
 	            Ability move = new Ability
 	            {
+		            title = moveData.title,
+		            description = moveData.description,
 		            effectList = new List<Effect>(moveData.effectList),
 		            buffEffectList = new List<BuffEffect>(moveData.buffList)
 	            };
 	            abilityList.Add(move);
             }
             
+            DisableDisplay();
 			base.Initialize();
+
+			onDead.AddListener(() => GetComponent<FadeOut>().BlockingFade());
+            onDead.AddListener(() => Debug.Log("Died"));
 		}
 
 		public override void StartTurn()
@@ -81,8 +89,9 @@ namespace Units.Enemies
 			EndTurn();
 		}
 
-		protected virtual void Attack()
+		public void MakeChoiceAndDisplay()
 		{
+			Debugger.Log(gameObject.name + " displaying");
 			// Randomize a skill
             // Todo: add enemyActionType
 
@@ -95,8 +104,28 @@ namespace Units.Enemies
 	            if (abilityList[choice].activateTurnCount <= Game.Ctx.BattleOperator.turnCount) break;
             }
 
-            abilityList[choice].ApplyAsEnemy(this);
-            GameObject.Find("Intent").GetComponent<TextMeshPro>().text = abilityList[choice].Info();
+            transform.Find("Intent").GetComponent<TextMeshPro>().enabled = true;
+            transform.Find("Intent").Find("IntentImage").GetComponent<Image>().enabled = true;
+            transform.Find("Intent").GetComponent<TextMeshPro>().text = abilityList[choice].Info();
+
+            currentChoice = choice;
+		}
+
+		public void DisableDisplay()
+		{
+            transform.Find("Intent").Find("IntentImage").GetComponent<Image>().enabled = false;
+            transform.Find("Intent").GetComponent<TextMeshPro>().enabled = false;
+		}
+
+		protected virtual void Attack()
+		{
+			MakeChoiceAndDisplay();
+            abilityList[currentChoice].ApplyAsEnemy(this);
+            
+			if (GetComponent<Health>().IsDead())
+			{
+				Game.Ctx.BattleOperator.CheckBattleEnd();
+			}
 		}
 		
 		public void EndTurn()

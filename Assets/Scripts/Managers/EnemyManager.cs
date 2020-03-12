@@ -109,7 +109,8 @@ namespace Managers
 
         private IEnumerator NextEnemy()
         {
-            foreach (Enemy enemy in EnemyList)
+            List<Enemy> curEnemyList = new List<Enemy>(EnemyList);
+            foreach (Enemy enemy in curEnemyList)
                 if (!enemy.GetComponent<Health>().IsDead())
                 {
                     curEnemy = enemy;

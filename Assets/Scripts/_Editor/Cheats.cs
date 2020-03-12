@@ -14,7 +14,7 @@ namespace _Editor
 {
     public class Cheats : MonoBehaviour
     {
-        /*
+        
         public void Update()
         {
             if (Input.GetKeyUp(KeyCode.E))
@@ -26,11 +26,11 @@ namespace _Editor
                 while (activeUnit != null)
                 {
                     activeUnit = Game.Ctx.EnemyOperator.GetNextEnemy();
-                    activeUnit.GetComponent<Health>().Damage(100f);
+                    activeUnit.GetComponent<Health>().Damage(activeUnit.GetComponent<Health>().hitPoints - 1f);
                 }
             }
         }
-        */
+        
     }
 }
 
